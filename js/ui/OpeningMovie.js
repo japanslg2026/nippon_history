@@ -654,7 +654,8 @@ export class OpeningMovie {
     if (this.progressBar) this.progressBar.style.width = Math.min(100, (t / this.duration) * 100) + '%';
     if (this.timeDisplay) {
       const totalSec = Math.min(Math.floor(t), Math.floor(this.duration));
-      this.timeDisplay.textContent = `${Math.floor(totalSec / 60)}:${(totalSec % 60).toString().padStart(2, '0')} / 1:00`;
+      // スマホ画面は「/ 1:00」の分母表記を省略（経過時間のみ）
+      this.timeDisplay.textContent = `${Math.floor(totalSec / 60)}:${(totalSec % 60).toString().padStart(2, '0')}${window.SENGOKU_IS_PHONE ? '' : ' / 1:00'}`;
     }
     try {
       this.renderFrame(t, dt);

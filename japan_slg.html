@@ -21,9 +21,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&amp;family=Sawarabi+Mincho&amp;family=Yuji+Boku&amp;display=swap" rel="stylesheet">
 
   <!-- モジュール化されたCSSスタイルシート (1080p最適化・和風デザイン) -->
-  <link rel="stylesheet" href="css/style.css?v=20261024_allies">
+  <link rel="stylesheet" href="css/style.css?v=20261101_jukebox_opt">
   <link rel="stylesheet" href="css/encyclopedia.css?v=20261025_bgm">
-  <link rel="stylesheet" href="css/startscreen.css?v=20261025_ui48">
+  <link rel="stylesheet" href="css/startscreen.css?v=20261101_ui50">
   <script>
     // スマホ判定: 画面幅768px以下、タッチ主体、または ?mobile=1 / ?phone=1 パラメータ → スマホ用レスポンシブ新レイアウト
     (function(){var mm=function(q){return window.matchMedia&&matchMedia(q).matches;};
@@ -149,12 +149,12 @@
         <circle cx="16" cy="16" r="15" fill="#d4ac0d" stroke="#ffd700" stroke-width="2"></circle>
         <text x="16" y="21" font-family="'Yu Mincho', serif" font-size="15" font-weight="bold" fill="#fff" text-anchor="middle">長</text>
       </svg>
-      <div style="flex:1; min-width:0; display:flex; flex-direction:column; justify-content:center; gap:1px;">
-        <div style="display:flex; align-items:center; justify-content:space-between; line-height:1.15;">
+      <div class="id-col" style="flex:1; min-width:0; display:flex; flex-direction:column; justify-content:center; gap:1px;">
+        <div class="id-row id-row1" style="display:flex; align-items:center; justify-content:space-between; line-height:1.15;">
           <span id="statDaimyo" style="font-size:12.5pt; font-weight:bold; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">--</span>
           <span id="statPersonalityBadge" style="font-size:11pt; padding:1px 5px; border-radius:3px; background:rgba(52,152,219,0.18); color:#88ccff; border:1px solid rgba(52,152,219,0.4); white-space:nowrap;">--</span>
         </div>
-        <div style="display:flex; align-items:center; justify-content:space-between; line-height:1.15;">
+        <div class="id-row id-row2" style="display:flex; align-items:center; justify-content:space-between; line-height:1.15;">
           <span id="statClan" style="font-size:11.5pt; color:var(--gold-bright); font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">--</span>
           <span id="statAbilities" style="font-size:11.5pt; color:#e0e0e0; white-space:nowrap; font-family:sans-serif;">
             <span style="color:#ff8888; font-weight:bold;">武<span id="statMil">--</span></span>
@@ -165,7 +165,7 @@
       </div>
     </div>
     <div class="stat-card" id="probCard" style="border-color: #d4af37;">
-      <span class="label"><i data-lucide="target" style="width:13px; height:13px;"></i> 覇道進捗</span>
+      <span class="label"><i data-lucide="target" style="width:13px; height:13px;"></i> <span class="lbl-pc">覇道進捗</span><span class="lbl-sp">進捗</span></span>
       <span class="value" id="statProbability" style="color:#ffd700;">20%</span>
       <div class="prob-bar-track" style="margin-top:1px; height:4px;">
         <div class="prob-bar-fill" id="statProbBar" style="width: 20%;"></div>
@@ -173,27 +173,27 @@
       <span class="sub-value" id="statProbDesc">天下統一確率 二割</span>
     </div>
     <div class="stat-card">
-      <span class="label"><i data-lucide="map" style="width:13px; height:13px;"></i> 支配領国</span>
+      <span class="label"><i data-lucide="map" style="width:13px; height:13px;"></i> <span class="lbl-pc">支配領国</span></span>
       <span class="value" id="statProvinces" style="color:#fff;">1 / 77 国</span>
       <span class="sub-value" id="statProgression">天下統一まで 76国</span>
     </div>
     <div class="stat-card ap-highlight">
-      <span class="label"><i data-lucide="scroll" style="width:13px; height:13px;"></i> 軍令権<span class="stat-label-sub"> (行動力)</span></span>
+      <span class="label"><i data-lucide="scroll" style="width:13px; height:13px;"></i> <span class="lbl-pc">軍令権</span><span class="lbl-sp">軍令</span><span class="stat-label-sub"> (行動力)</span></span>
       <span class="value" id="statAp" style="color:var(--gold-bright);">3 / 3</span>
       <div class="ap-tokens-wrap" id="apTokensContainer" style="margin-top:1px;"></div>
     </div>
     <div class="stat-card">
-      <span class="label"><i data-lucide="coins" style="width:13px; height:13px;"></i> 備蓄金<span class="stat-label-sub"> (貫)</span></span>
+      <span class="label"><i data-lucide="coins" style="width:13px; height:13px;"></i> <span class="lbl-pc">備蓄金</span><span class="lbl-sp">金</span><span class="stat-label-sub"> (貫)</span></span>
       <span class="value" id="statGold" style="color:#ffd700;">400</span>
       <span class="sub-value">夏・冬に商業運上</span>
     </div>
     <div class="stat-card">
-      <span class="label"><i data-lucide="wheat" style="width:13px; height:13px;"></i> 兵糧米<span class="stat-label-sub"> (石)</span></span>
+      <span class="label"><i data-lucide="wheat" style="width:13px; height:13px;"></i> <span class="lbl-pc">兵糧米</span><span class="lbl-sp">米</span><span class="stat-label-sub"> (石)</span></span>
       <span class="value" id="statRice" style="color:#ffcc66;">600</span>
       <span class="sub-value">秋に収穫 / 毎季消費</span>
     </div>
     <div class="stat-card">
-      <span class="label"><i data-lucide="swords" style="width:13px; height:13px;"></i> 総動員兵力</span>
+      <span class="label"><i data-lucide="swords" style="width:13px; height:13px;"></i> <span class="lbl-pc">総動員兵力</span><span class="lbl-sp">兵</span></span>
       <span class="value" id="statTroops" style="color:#ff8888;">5,000</span>
       <span class="sub-value">全領地駐留総数</span>
     </div>
@@ -1609,7 +1609,10 @@
     <div class="modal-title" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); padding-bottom: 8px;">
       <span style="display:flex; align-items:center; gap:10px;">
         <span style="font-size:18pt;">🎻</span>
-        <span style="font-size:14pt; font-weight:bold; color:var(--gold-bright); letter-spacing:1px;">戦国管弦楽 響宴録 〜菅野よう子風 交響詩鑑賞＆音響調律〜</span>
+        <span class="jb-modal-title-text" style="font-size:14pt; font-weight:bold; color:var(--gold-bright); letter-spacing:1px;">
+          <span class="jb-title-pc">戦国管弦楽 響宴録 〜菅野よう子風 交響詩鑑賞＆音響調律〜</span>
+          <span class="jb-title-sp">戦国管弦楽 響宴録</span>
+        </span>
       </span>
       <button id="closeJukeboxBtn" style="background:none; border:none; color:#aaa; font-size:18pt; cursor:pointer; line-height:1;" title="閉じる">✕</button>
     </div>
@@ -1635,9 +1638,9 @@
               <span class="jb-eq-bar"></span>
             </div>
             <!-- コントロールボタン -->
-            <button class="jb-btn" id="jbPrevBtn" title="前の曲">⏮ 前曲</button>
-            <button class="jb-btn primary" id="jbPlayPauseBtn" title="再生・一時停止">⏸ 停止</button>
-            <button class="jb-btn" id="jbNextBtn" title="次の曲">⏭ 次曲</button>
+            <button class="jb-btn" id="jbPrevBtn" title="前の曲"><span class="jb-btn-icon">⏮</span><span class="jb-txt-pc"> 前曲</span><span class="jb-txt-sp"> 前</span></button>
+            <button class="jb-btn primary" id="jbPlayPauseBtn" title="再生・一時停止"><span class="jb-play-icon">⏸</span><span class="jb-play-text-pc"> 停止</span></button>
+            <button class="jb-btn" id="jbNextBtn" title="次の曲"><span class="jb-btn-icon">⏭</span><span class="jb-txt-pc"> 次曲</span><span class="jb-txt-sp"> 次</span></button>
           </div>
         </div>
 
@@ -1646,26 +1649,26 @@
         </div>
 
         <!-- 音量・設定コントロールバー -->
-        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; padding-top: 6px; border-top: 1px solid rgba(212,175,55,0.25);">
-          <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
-            <label style="display: flex; align-items: center; gap: 6px; font-size: 11pt; color: #f5eedc;">
+        <div class="jb-vol-controls-bar" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; padding-top: 6px; border-top: 1px solid rgba(212,175,55,0.25);">
+          <div class="jb-vol-sliders-row" style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+            <label class="jb-vol-label" style="display: flex; align-items: center; gap: 6px; font-size: 11pt; color: #f5eedc;">
               <span>主音量:</span>
               <input type="range" id="jbMasterVol" min="0" max="1" step="0.05" value="0.75" style="width: 80px;">
             </label>
-            <label style="display: flex; align-items: center; gap: 6px; font-size: 11pt; color: #f5eedc;">
+            <label class="jb-vol-label" style="display: flex; align-items: center; gap: 6px; font-size: 11pt; color: #f5eedc;">
               <span>BGM:</span>
               <input type="range" id="jbBgmVol" min="0" max="1" step="0.05" value="0.60" style="width: 80px;">
             </label>
-            <label style="display: flex; align-items: center; gap: 6px; font-size: 11pt; color: var(--gold-bright); cursor: pointer;" title="効果音（SE）だけを入り切り。BGM はそのまま">
+            <label class="jb-se-check-label" style="display: flex; align-items: center; gap: 6px; font-size: 11pt; color: var(--gold-bright); cursor: pointer;" title="効果音（SE）だけを入り切り。BGM はそのまま">
               <input type="checkbox" id="jbSeEnabledCheck" checked="" style="cursor: pointer; width: 16px; height: 16px;">
               <span id="jbSeEnabledLabel">効果音 ON</span>
             </label>
-            <label style="display: flex; align-items: center; gap: 6px; font-size: 11pt; color: #f5eedc;">
+            <label class="jb-vol-label jb-se-vol-label" style="display: flex; align-items: center; gap: 6px; font-size: 11pt; color: #f5eedc;">
               <span>効果音:</span>
               <input type="range" id="jbSeVol" min="0" max="1" step="0.05" value="0.85" style="width: 80px;">
             </label>
           </div>
-          <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+          <div class="jb-vol-options-row" style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
             <label style="display: flex; align-items: center; gap: 6px; font-size: 11pt; color: var(--gold-bright); cursor: pointer;">
               <input type="checkbox" id="jbDaimyoModeCheck" checked="" style="cursor: pointer; width: 16px; height: 16px;">
               <span>大名家専用BGM 優先再生</span>
@@ -1698,12 +1701,12 @@
     </div>
 
     <!-- モーダルフッター -->
-    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(212,175,55,0.3); padding-top: 10px; margin-top: 6px;">
-      <div style="font-size: 10pt; color: #999;">
+    <div class="jb-modal-footer" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(212,175,55,0.3); padding-top: 10px; margin-top: 6px;">
+      <div class="jb-footer-note" style="font-size: 10pt; color: #999;">
         ※ Web Audio API シンセサイザーによるリアルタイム合成交響楽です。外部音声ファイルの読み込み待機なく即座に鳴り響きます。
       </div>
-      <button class="turn-btn" id="closeJukeboxBtn2" style="width: auto; padding: 6px 20px; font-size: 11pt; margin: 0;">
-        閉じる
+      <button class="turn-btn jb-close-btn" id="closeJukeboxBtn2" style="width: auto; padding: 6px 20px; font-size: 11pt; margin: 0;">
+        <span class="jb-close-pc">閉じる</span><span class="jb-close-sp">✕</span>
       </button>
     </div>
   </div>
@@ -1858,9 +1861,9 @@
   <script src="js/bgm.js?v=20261031_sound_sync"></script>
 
   <!-- 3. 戦国天下統一伝 ゲームエンジン本体 -->
-  <script type="module" src="js/app.js?v=20261031_highlight_fix"></script>
+  <script type="module" src="js/app.js?v=20261101_jukebox_opt"></script>
   <script type="module" src="js/ui/Encyclopedia.js?v=20261025_d74"></script>
-  <script src="js/ui/StartScreenLayout.js?v=20261031_fix1"></script>
+  <script src="js/ui/StartScreenLayout.js?v=20261101_ui50"></script>
   <script src="js/ui/TitleBgm.js?v=20261031_sound_sync"></script>
 
 

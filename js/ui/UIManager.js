@@ -11352,7 +11352,7 @@ export const UIManagerMethods = {
 
           </div>
 
-          <span style="font-size: 10pt; color: var(--gold-bright);">▶ 演奏</span>
+          <span class="jb-track-play-badge" style="font-size: 10pt; color: var(--gold-bright);"><span class="jb-play-badge-pc">▶ 演奏</span><span class="jb-play-badge-sp">▶</span></span>
 
         `;
 
@@ -11475,7 +11475,7 @@ export const UIManagerMethods = {
 
     if (playPauseBtn) {
 
-      playPauseBtn.textContent = this.music.isBgmMuted ? '▶ 再生' : '⏸ 停止';
+      const isMuted = this.music.isBgmMuted; const icon = isMuted ? '▶' : '⏸'; const text = isMuted ? ' 再生' : ' 停止'; playPauseBtn.innerHTML = `<span class="jb-play-icon">${icon}</span><span class="jb-play-text-pc">${text}</span>`;
 
     }
 

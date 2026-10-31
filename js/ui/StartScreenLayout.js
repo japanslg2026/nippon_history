@@ -202,10 +202,8 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     bar.textContent = DIFF_INFO_MAP[dKey] || DIFF_INFO_MAP.normal;
   }
 
-  // Step 1: シナリオプレビューカード更新
+  // Step 1: シナリオプレビューカード・タイトル・解説更新
   function updateScenarioPreview() {
-    const prev = document.querySelector('.sl-phone-scen-preview');
-    if (!prev) return;
     const s = scen();
     if (!s) return;
     const yearText = s.year < 0 ? `前${Math.abs(s.year)}年` : `${s.year}年`;
@@ -214,10 +212,35 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     const sub = s.subtitle ? `〜${s.subtitle}〜` : '';
     const lore = s.lore_background || s.desc || '';
 
+    // ③ 勢力図のヘッダータイトル
+    const descName = document.querySelector('.sl-desc-name');
+    if (descName) descName.textContent = `${yearText} ${title}`;
+
+    // ① シナリオのヘッダータイトル（今選択中のシナリオのタイトル）
+    const scenCurTitle = document.querySelector('.sl-scen-cur-title');
+    if (scenCurTitle) {
+      scenCurTitle.textContent = `${yearText} ${title}`;
+      scenCurTitle.title = `${yearText} ${title} ${sub}`;
+    }
+
+    // ① シナリオの詳細解説ドロップダウン
+    const scenDescDrop = document.querySelector('.sl-scen-desc-drop');
+    if (scenDescDrop) {
+      scenDescDrop.innerHTML = `
+        <div class="sl-scen-drop-head">
+          <span class="sl-scen-drop-title">${esc(title)} <small style="font-size:12px; font-weight:normal; color:#ffd98a;">${esc(sub)}</small></span>
+          ${gengo ? `<span class="sl-scen-drop-gengo">${esc(gengo)}</span>` : ''}
+        </div>
+        <div class="sl-scen-drop-lore">${esc(lore)}</div>
+      `;
+    }
+
+    const prev = document.querySelector('.sl-phone-scen-preview');
+    if (!prev) return;
+
     let factionStr = '';
     const pl = playables();
     if (pl && pl.length) {
-      // 主要大名を優先してソート
       const sorted = [...pl].sort((a, b) => {
         const aMaj = isMajorClan(a.id, a.provCount || 1) ? 1 : 0;
         const bMaj = isMajorClan(b.id, b.provCount || 1) ? 1 : 0;
@@ -435,17 +458,31 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     });
     bar.querySelector('.sl-mbar-go').addEventListener('click', () => $('#slStartBtn')?.click());
 
-    // Step 1: シナリオ選択上部にプレビューカードを配置
+    // Step 1: 歴史シナリオのタイトル・カウントを非表示にし、選択中シナリオ名＋「詳細」ボタンに差し替え
     const scenPanel = $('.sl-scen', root);
-    const scenPreview = document.createElement('div');
-    scenPreview.className = 'sl-phone-scen-preview';
-    const scenWrap = $('.sl-scen-body', root);
-    if (scenWrap) scenWrap.before(scenPreview);
+    const scenHead = scenPanel && $('.sl-head', scenPanel);
+    if (scenHead) {
+      scenHead.innerHTML = '<span class="sl-scen-cur-title"></span><button type="button" class="sl-scen-more-btn" aria-expanded="false">詳細</button>';
+      const drop = document.createElement('div');
+      drop.className = 'sl-scen-desc-drop';
+      drop.hidden = true;
+      scenHead.after(drop);
+
+      const moreBtn = scenHead.querySelector('.sl-scen-more-btn');
+      moreBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        drop.hidden = !drop.hidden;
+        moreBtn.setAttribute('aria-expanded', drop.hidden ? 'false' : 'true');
+        moreBtn.classList.toggle('active', !drop.hidden);
+      });
+    }
 
     // シナリオボタンクリック時：プレビュー更新
     $('.sl-scen-body', root).addEventListener('click', (e) => {
       if (e.target.closest('.scenario-btn')) {
         setTimeout(() => updateScenarioPreview(), 60);
+        // シナリオを選んだら自動的に「② 大名選択」へ切り替える
+        setTimeout(() => setStep(2), 140);
       }
     });
 
@@ -519,6 +556,18 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
       });
     }
 
+    // Step 3: シナリオ解説パネルはシナリオ名＋「詳細」ボタンの1行にし、押すと全文を開閉
+    const descPanel = $('.sl-desc', root);
+    const descHead = descPanel && $('.sl-head', descPanel);
+    if (descHead) {
+      descHead.innerHTML = '<span class="sl-desc-name"></span><button type="button" class="sl-desc-more-btn" aria-expanded="false">詳細</button>';
+      const moreBtn = descHead.querySelector('.sl-desc-more-btn');
+      moreBtn.addEventListener('click', () => {
+        const open = descPanel.classList.toggle('sl-desc-open');
+        moreBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
+
     // Step 3: 家伝・固有戦法を独立カードとして表示
     const lore = $('.sl-map-lore', root);
     const descBody = $('.sl-desc-body', root);
@@ -580,7 +629,8 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
 
     const selWrap = $('.sl-mbar-sel');
     if (selWrap) {
-      selWrap.innerHTML = `${kamonHtml}<span class="sl-mbar-txt"><b>${esc(ci.leader || ci.name)}</b> <i class="sl-ic" aria-hidden="true">🏯</i>${n}国${tr != null ? ` <i class="sl-ic" aria-hidden="true">⚔️</i>${tr}` : ''}</span>`;
+      // 下部バーは文字切れを避けるため、大名家の家名（織田家・武田家など）のみ表示
+      selWrap.innerHTML = `${kamonHtml}<span class="sl-mbar-txt"><b>${esc(ci.name || ci.leader)}</b></span>`;
       selWrap.title = `${ci.leader || ci.name}・支配${n}国${tr != null ? '・兵力' + tr : ''}`;
     }
     if (goBtn) {

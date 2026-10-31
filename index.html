@@ -2102,7 +2102,23 @@
       display: none !important;
     }
 
+    /* スマホ専用：説明の開閉ピクトグラム／1行ヒント（PC表示は従来どおり） */
+    .sp-more-btn { display: none; }
+    .hint-sp { display: none; }
+    .mk-sb .sb-sp { display: none; }
+
     @media (max-width: 1100px) {
+      /* スマホ：シナリオ説明・大名概要の上をスワイプしても画面が下へスクロールできるよう、
+         ステージ全体の touch-action:none を解除し、地図本体（SVG領域）だけで無効化する */
+      .map-stage {
+        touch-action: auto;
+      }
+      .map-viewport-wrap {
+        touch-action: none;
+      }
+      .map-left-overlay-stack {
+        touch-action: pan-y;
+      }
       /* 日本列島を地図ボックス（SVG）の上下中央に配置 */
       #mapArchipelagoGroup {
         transform: translate(0px, -11px) rotate(1deg);
@@ -2450,7 +2466,88 @@
         padding: 1px 4px !important;
         font-size: 11pt !important;
         border-radius: 3px !important;
+        white-space: nowrap !important;
       }
+
+      /* === スマホ：開閉ピクトグラム（シナリオ副題の右／兵力の右隣） === */
+      .sp-more-btn {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        width: 28px;
+        height: 28px;
+        padding: 0 !important;
+        margin: 0 0 0 auto;
+        background: transparent;
+        border: none;
+        color: var(--gold-bright);
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .sp-more-btn svg {
+        width: 24px;
+        height: 24px;
+        fill: rgba(212, 175, 55, 0.14);
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        transition: transform 0.2s ease;
+      }
+      .sp-more-btn[aria-expanded="true"] svg {
+        transform: rotate(180deg);
+      }
+      .sp-more-btn:active svg {
+        fill: rgba(212, 175, 55, 0.4);
+      }
+
+      /* シナリオ説明：初期は「〜副題〜」の1行＋ピクトグラムのみ。ピクトグラムで全文展開 */
+      #mapScenBox .overlay-box-header {
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        border-bottom: none !important;
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+      }
+      #mapScenBox .overlay-box-sub {
+        flex: 1 1 auto;
+        min-width: 0;
+        color: var(--gold-bright) !important;
+        font-weight: bold;
+      }
+      #mapScenBox .overlay-box-title { display: none !important; }
+      #mapScenBox.no-subtitle .overlay-box-title { display: inline !important; }
+      #mapScenBox .overlay-box-body { display: none !important; }
+      #mapScenBox.is-expanded .overlay-box-header {
+        flex-wrap: wrap !important;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.35) !important;
+        padding-bottom: 2px !important;
+        margin-bottom: 3px !important;
+      }
+      #mapScenBox.is-expanded .overlay-box-title {
+        display: block !important;
+        flex: 1 0 100% !important;
+      }
+      #mapScenBox.is-expanded .overlay-box-body { display: block !important; }
+
+      /* 大名概要：未選択時は1行ヒント。選択時は「大名家〜当主」「支配〜兵力＋ピクトグラム」の2行のみ */
+      .hint-pc { display: none !important; }
+      .hint-sp { display: inline !important; white-space: nowrap; }
+      #mapDaimyoBox .daimyo-top-row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        justify-content: flex-start !important;
+        flex-wrap: nowrap !important;
+        gap: 2px !important;
+      }
+      #mapDaimyoBox .daimyo-metrics-group {
+        flex-wrap: nowrap !important;
+        width: 100% !important;
+      }
+      #mapDaimyoBox .daimyo-extra { display: none !important; }
+      #mapDaimyoBox .daimyo-more-btn { margin-left: 2px; }
+      #mapDaimyoBox.is-expanded .daimyo-extra { display: block !important; }
 
       .map-viewport-wrap {
         position: relative !important;
@@ -3074,9 +3171,19 @@
   }
   .mk-overlay .mk-filters .mk-sb-ic,
   .mk-filters .mk-sb-ic {
-    display: inline !important;
+    display: none !important; /* 並び順のピクトグラムは非表示 */
     font-size: 11pt !important;
   }
+  /* 並び順ラベルのスマホ用短縮表記（能力・武・内・計・版図） */
+  .mk-overlay .mk-filters .sb-pc,
+  .mk-filters .sb-pc { display: none !important; }
+  .mk-overlay .mk-filters .sb-sp,
+  .mk-filters .sb-sp { display: inline !important; }
+  /* 大名名鑑：シナリオ／地方のプルダウンとシナリオ登場家のみチェックボックスは非表示 */
+  .mk-overlay .mk-filters .mk-f.mk-f-hide-sp,
+  .mk-overlay .mk-filters .mk-f-chk,
+  .mk-filters .mk-f.mk-f-hide-sp,
+  .mk-filters .mk-f-chk { display: none !important; }
   .mk-overlay .mk-filters .mk-sb-l,
   .mk-filters .mk-sb-l {
     display: inline !important;
@@ -3102,7 +3209,7 @@
   /* 時代チップバー：1行横スクロール、端を綺麗に */
   .mk-overlay .mk-eras,
   .mk-eras {
-    display: flex !important;
+    display: none !important; /* 武将名鑑の時代区分ボタンは非表示 */
     position: relative !important;
     overflow-x: visible !important;
     scrollbar-width: none !important;
@@ -3299,6 +3406,7 @@
                 <div class="overlay-box-header">
                   <span class="overlay-box-title" id="overlayScenTitle">【1560年】桶狭間の戦い</span>
                   <span class="overlay-box-sub" id="overlayScenSub">尾張の風雲児と東海の巨星</span>
+                  <button type="button" class="sp-more-btn" id="scenMoreBtn" aria-expanded="false" aria-label="シナリオ説明の全文を表示／非表示" title="シナリオ説明を表示／非表示"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7 10l5 5 5-5"/></svg></button>
                 </div>
                 <div class="overlay-box-body" id="overlayScenDesc"></div>
               </div>
@@ -3318,7 +3426,7 @@
             <!-- 2段目：支配大名の概要 -->
             <div class="overlay-box-auto sp-unselected" id="mapDaimyoBox">
               <div id="daimyoDetailContent">
-                <div style="color:var(--text-sub); font-size:12pt;">地図上の国をクリックすると、その国を支配する大名家の概要が表示されます。</div>
+                <div style="color:var(--text-sub); font-size:12pt;"><span class="hint-pc">地図上の国をクリックすると、その国を支配する大名家の概要が表示されます。</span><span class="hint-sp">国をクリックすると大名の概要を表示</span></div>
               </div>
             </div>
 
@@ -3419,7 +3527,7 @@
   <div class="modal-backdrop hidden" id="aboutModal">
     <div class="modal-window narrow" role="dialog" aria-modal="true" aria-labelledby="aboutModalHeadTitle">
       <div class="modal-head">
-        <div class="modal-head-title" id="aboutModalHeadTitle">ℹ️ 「日本史 勢力図・人物一覧 ～日本通史総覧～」について</div>
+        <div class="modal-head-title" id="aboutModalHeadTitle"><span class="modal-head-title-pc">ℹ️ 「日本史 勢力図・人物一覧 ～日本通史総覧～」について</span><span class="modal-head-title-sp">ℹ️ 「日本史 勢力図・人物一覧」について</span></div>
         <button type="button" class="modal-close-btn" data-close="aboutModal" title="閉じる"><span class="about-close-txt-pc">✕ 閉じる</span><span class="about-close-txt-sp">×</span></button>
       </div>
       <div class="modal-body" id="aboutModalBody" style="line-height: 1.75; font-size: 12pt;"></div>
@@ -4885,7 +4993,7 @@
         var dBox = document.getElementById('mapDaimyoBox');
         if (dBox) dBox.classList.add('sp-unselected');
         document.getElementById('daimyoDetailContent').innerHTML =
-          '<div style="color:var(--text-sub); font-size:12pt;">地図上の国をクリックすると、その国を支配する大名家の概要が表示されます。</div>';
+          '<div style="color:var(--text-sub); font-size:12pt;"><span class="hint-pc">地図上の国をクリックすると、その国を支配する大名家の概要が表示されます。</span><span class="hint-sp">国をクリックすると大名の概要を表示</span></div>';
         document.getElementById('castleRegionBadge').textContent = '未選択';
         document.getElementById('castleDetailContent').innerHTML =
           '<div style="color:var(--text-sub); font-size:12pt;">地図上の国をクリックすると、その国の城郭と歴史解説が表示されます。</div>';
@@ -4906,7 +5014,10 @@
 
         // ---------- 1. 左上2段目：支配大名の概要 ----------
         var dBox = document.getElementById('mapDaimyoBox');
-        if (dBox) dBox.classList.remove('sp-unselected');
+        if (dBox) {
+          dBox.classList.remove('sp-unselected');
+          dBox.classList.remove('is-expanded'); // スマホ：国を選ぶたびに説明は折りたたみ状態から開始
+        }
         var daimyoBox = document.getElementById('daimyoDetailContent');
         if (!ownerId || !cEntry) {
           daimyoBox.innerHTML =
@@ -4936,10 +5047,13 @@
                 '<span class="metric-chip">支配 <b>' + cEntry.provIds.length + '</b>国</span>' +
                 '<span class="metric-chip">石高 <b>' + (cEntry.totalKoku / 10000).toFixed(1) + '</b>万石</span>' +
                 '<span class="metric-chip">兵力 <b>' + cEntry.totalTroops.toLocaleString() + '</b>人</span>' +
+                '<button type="button" class="sp-more-btn daimyo-more-btn" aria-expanded="false" aria-label="大名家の説明の全文を表示／非表示" title="大名家の説明を表示／非表示"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7 10l5 5 5-5"/></svg></button>' +
               '</div>' +
             '</div>' +
-            (tacticName ? '<div style="color:#ffdf80; font-size:12pt; margin-bottom:2px;">⚡ <b>【' + esc(tacticName) + '】</b> <span style="color:var(--text-sub);">' + esc(tacticDesc) + '</span></div>' : '') +
-            '<div style="color:#ece2ce; font-size:12pt;">' + esc(cleanLoreText(clanDesc)) + '</div>';
+            '<div class="daimyo-extra">' +
+              (tacticName ? '<div style="color:#ffdf80; font-size:12pt; margin-bottom:2px;">⚡ <b>【' + esc(tacticName) + '】</b> <span style="color:var(--text-sub);">' + esc(tacticDesc) + '</span></div>' : '') +
+              '<div style="color:#ece2ce; font-size:12pt;">' + esc(cleanLoreText(clanDesc)) + '</div>' +
+            '</div>';
         }
 
         // ---------- 2. 右側上段：領国と城郭の解説 ----------
@@ -5398,6 +5512,13 @@
         document.getElementById('overlayScenTitle').textContent = '【' + yStr + '】' + scen.title;
         document.getElementById('overlayScenSub').textContent = scen.subtitle ? '〜' + scen.subtitle + '〜' : (scen.gengo || '');
         document.getElementById('overlayScenDesc').textContent = scen.lore_background || scen.desc || '';
+        var scenBoxForSub = document.getElementById('mapScenBox');
+        if (scenBoxForSub) {
+          scenBoxForSub.classList.toggle('no-subtitle', !scen.subtitle); // 副題なしの場合はスマホでもタイトルを表示
+          scenBoxForSub.classList.remove('is-expanded'); // シナリオ切替時は折りたたみ状態から開始
+          var smb = document.getElementById('scenMoreBtn');
+          if (smb) smb.setAttribute('aria-expanded', 'false');
+        }
 
         computeScenarioState(scen);
 
@@ -5680,7 +5801,7 @@
             cardsEl.innerHTML = rows.map(function (r) {
               var badge = r.isBlank
                 ? '<span class="role-badge role-ronin">空白</span>'
-                : (r.isCap ? '<span class="role-badge role-daimyo">👑本拠</span>' : (r.govOff ? '<span class="role-badge role-governor">🏯城主</span>' : '<span class="role-badge role-vassal">城代</span>'));
+                : (r.isCap ? '<span class="role-badge role-daimyo" title="本拠">👑</span>' : (r.govOff ? '<span class="role-badge role-governor" title="城主">🏯</span>' : '<span class="role-badge role-vassal">城代</span>'));
               return (
                 '<div class="prov-card" data-row-prov="' + esc(r.p.id) + '">' +
                   '<div class="card-head-row">' +
@@ -5696,8 +5817,8 @@
                       '<span class="card-lbl">🏯 居城:</span> <span class="card-val">' + esc(r.p.castle) + '</span>' +
                     '</div>' +
                     '<div class="card-stats-row">' +
-                      '<span class="card-stat-pill highlight-gold"><span>🌾</span> <strong>' + (r.kokudaka / 10000).toFixed(1) + '万石</strong></span>' +
-                      '<span class="card-stat-pill"><span>👥</span> <strong>兵' + Math.max(1, Math.round(r.troops / 1000)) + '千人</strong></span>' +
+                      '<span class="card-stat-pill highlight-gold"><strong>' + Math.round(r.kokudaka / 10000) + '万石</strong></span>' +
+                      '<span class="card-stat-pill"><strong>兵' + Math.max(1, Math.round(r.troops / 1000)) + '千人</strong></span>' +
                       '<span class="stat-tag mil">武 ' + (r.military != null ? r.military : '—') + '</span>' +
                       '<span class="stat-tag pol">政 ' + (r.politics != null ? r.politics : '—') + '</span>' +
                       '<span class="stat-tag int">知 ' + (r.stratagem != null ? r.stratagem : '—') + '</span>' +
@@ -6000,8 +6121,8 @@
               var bYear = o.birthYear != null ? Number(o.birthYear) : (o.birth != null ? Number(o.birth) : null);
               var age = (bYear != null && year >= bYear) ? (year - bYear) : null;
               var statusBadge = o.isDaimyo
-                ? '<span class="role-badge role-daimyo">👑当主</span>'
-                : (o.assignedProvId ? '<span class="role-badge role-governor">🏯城主</span>' : (isRonin ? '<span class="role-badge role-ronin">🎋浪人</span>' : '<span class="role-badge role-vassal">家臣</span>'));
+                ? '<span class="role-badge role-daimyo" title="当主">👑</span>'
+                : (o.assignedProvId ? '<span class="role-badge role-governor" title="城主">🏯</span>' : (isRonin ? '<span class="role-badge role-ronin" title="浪人">浪</span>' : ''));
               var skillsTxt = o.skill || (o.tactics && o.tactics.length ? o.tactics.slice(0, 3).join('・') : '');
               return (
                 '<div class="off-card" data-row-off="' + esc(o.id) + '">' +
@@ -6300,11 +6421,13 @@
         if (this.ro) this.ro.disconnect();
       };
 
+      var SORT_SHORT = { total: '能力', military: '武', politic: '内', intel: '計', max: '版図' }; // スマホ用の短縮表記
       function sortBarHTML(keys) {
         return '<div class="mk-f mk-f-sort"><span>並び順</span><div class="mk-sortbar">' + keys.map(function (kv) {
           var k = kv[0], l = kv[1];
           var ic = (k === 'year' && keys[0][1] === '登場年') ? '📅' : (SORT_IC[k] || '・');
-          return '<button type="button" class="mk-sb" data-k="' + k + '" title="' + l + '"><b class="mk-sb-ic">' + ic + '</b><span class="mk-sb-l">' + l + '</span><i></i></button>';
+          var lbl = SORT_SHORT[k] ? '<span class="sb-pc">' + l + '</span><span class="sb-sp">' + SORT_SHORT[k] + '</span>' : l;
+          return '<button type="button" class="mk-sb" data-k="' + k + '" title="' + l + '"><b class="mk-sb-ic">' + ic + '</b><span class="mk-sb-l">' + lbl + '</span><i></i></button>';
         }).join('') + '</div></div>';
       }
 
@@ -6610,8 +6733,8 @@
           '<div class="mk-filters">' +
             '<label class="mk-f mk-f-search"><span>家名検索</span><input type="search" class="mk-q" placeholder="家名・当主名（例：織田、信長）"></label>' +
             '<label class="mk-f"><span>年代</span><select class="mk-era"><option value="">すべての時代</option>' + ERAS.filter(function (e) { return !e.officerOnly; }).map(function (e) { return optHTML(e.key, e.label); }).join('') + '</select></label>' +
-            '<label class="mk-f"><span>シナリオ</span><select class="mk-scen"><option value="">指定なし</option>' + scenarioOptionsHTML() + '</select></label>' +
-            '<label class="mk-f"><span>地方</span><select class="mk-reg"><option value="">すべての地方</option>' + DB.regions.map(function (r) { return optHTML(r, r); }).join('') + '</select></label>' +
+            '<label class="mk-f mk-f-hide-sp"><span>シナリオ</span><select class="mk-scen"><option value="">指定なし</option>' + scenarioOptionsHTML() + '</select></label>' +
+            '<label class="mk-f mk-f-hide-sp"><span>地方</span><select class="mk-reg"><option value="">すべての地方</option>' + DB.regions.map(function (r) { return optHTML(r, r); }).join('') + '</select></label>' +
             '<label class="mk-f"><span>国</span><select class="mk-prov"><option value="">すべての国</option>' + provOptionsHTML() + '</select></label>' +
             sortBarHTML([['max', '最大版図'], ['year', '登場年'], ['offs', '武将数'], ['count', '登場数'], ['name', '家名']]) +
             '<label class="mk-f mk-f-chk"><input type="checkbox" class="mk-only" checked><span>シナリオ登場家のみ</span></label>' +
@@ -6831,11 +6954,26 @@
 
         var scenBoxEl = document.getElementById('mapScenBox');
         if (scenBoxEl) {
-          scenBoxEl.onclick = function () {
-            if (window.innerWidth <= 768) {
-              scenBoxEl.classList.toggle('is-expanded');
-            }
-          };
+          // スマホ：ピクトグラムを押した時だけシナリオ説明の全文を開閉（ボックス自体のタップは画面スクロールを妨げない）
+          var scenMoreBtn = document.getElementById('scenMoreBtn');
+          if (scenMoreBtn) {
+            scenMoreBtn.onclick = function (e) {
+              e.stopPropagation();
+              var on = scenBoxEl.classList.toggle('is-expanded');
+              scenMoreBtn.setAttribute('aria-expanded', on ? 'true' : 'false');
+            };
+          }
+        }
+        // スマホ：大名家の説明は兵力右隣のピクトグラムで開閉（内容は再描画されるのでイベント委譲）
+        var daimyoBoxEl = document.getElementById('mapDaimyoBox');
+        if (daimyoBoxEl) {
+          daimyoBoxEl.addEventListener('click', function (e) {
+            var btn = e.target.closest('.daimyo-more-btn');
+            if (!btn) return;
+            e.stopPropagation();
+            var on = daimyoBoxEl.classList.toggle('is-expanded');
+            btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+          });
         }
         document.getElementById('provinceListModalBtn').onclick = openProvinceListModal;
         document.getElementById('officerListModalBtn').onclick = openOfficerListModal;
@@ -6861,7 +6999,7 @@
         document.getElementById('btnOpenAbout').onclick = function () {
           document.getElementById('aboutModalBody').innerHTML =
             '<div style="margin-bottom:14px;">' +
-              '<h3 style="color:var(--gold-bright); font-size:14pt; margin-bottom:6px;">🗾 日本史 勢力図・人物一覧 ～日本通史総覧～ について</h3>' +
+              '<h3 style="color:var(--gold-bright); font-size:14pt; margin-bottom:6px;">🗾 <span class="modal-head-title-pc">日本史 勢力図・人物一覧 ～日本通史総覧～ について</span><span class="modal-head-title-sp">日本史 勢力図・人物一覧 について</span></h3>' +
               '<p>紀元前663年（神武東征）から1877年（西南戦争）までの全 <b>' + State.scenarios.length + ' シナリオ・全国 ' + State.provinces.length + ' 領国・全 ' + State.officers.length.toLocaleString() + ' 名の人物列伝</b>を閲覧できる日本通史総覧アーカイブです。</p>' +
               '<p style="margin-top:6px; font-size:11pt; opacity:0.9;">※ 各領国の石高は、慶長郷帳（1604～1610年）をもとに推計した値です。</p>' +
             '</div>' +

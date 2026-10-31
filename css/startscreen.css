@@ -1130,3 +1130,117 @@ html body #startModal.sl-active.sl-active .sl-start-btn:active {
   transform: translateY(1px) scale(0.99);
   box-shadow: 0 0 12px rgba(255, 215, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.6) !important;
 }
+
+/* ==================== スマホ画面の表示簡素化（2026-11 追記） ==================== */
+/* オープニング：操作ボタンはピクトグラムのみ（音声／消音中／停止／スキップの文字は非表示） */
+html.sl-phone #openingMovieModal .opening-ctrl-btn .ctrl-text { display: none !important; }
+html.sl-phone #openingMovieModal .opening-ctrl-btn { padding: 4px 10px !important; gap: 0 !important; min-width: 40px; justify-content: center; }
+
+/* 初期画面：題字「戦国天下統一伝」が見切れないよう約2文字分圧縮 */
+html.sl-phone #startModal.sl-active .start-game-title {
+  font-size: 13px !important;
+  letter-spacing: 0 !important;
+  padding-left: 2px !important;
+  max-width: calc(100% - 214px) !important;
+  text-overflow: clip !important;
+}
+
+/* ① シナリオ：上部を占有するシナリオ説明カード（と「大名を選ぶ」ボタン）は非表示 */
+html.sl-phone .sl-phone-scen-preview { display: none !important; }
+
+/* ② 大名選択：難易度説明ボックス・大名家の家数ヘッダー・カードの詳細ボタンは非表示、難易度ボタンは上下を圧縮 */
+html.sl-phone .sl-diff-desc-bar { display: none !important; }
+html.sl-phone #startModal.sl-active .sl-daimyo > .sl-head { display: none !important; }
+html.sl-phone .sl-card-detail-btn { display: none !important; }
+html.sl-phone #startModal.sl-active .sl-diff { padding: 3px 8px !important; }
+html.sl-phone #startModal.sl-active .sl-diff .diff-option-btn { min-height: 26px !important; padding: 1px 2px !important; line-height: 1.2 !important; }
+
+/* ③ 勢力図：シナリオ解説はシナリオ名のみ1行表示し、右の「詳細」ボタンで全文を開閉 */
+.sl-root.sl-m .sl-desc .sl-head { align-items: center; gap: 8px; padding: 4px 8px !important; border-bottom: 0; }
+.sl-root.sl-m .sl-desc .sl-desc-name { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; letter-spacing: .03em; }
+.sl-desc-more-btn {
+  flex: 0 0 auto; min-height: 28px; padding: 2px 12px; font-size: 13px; font-weight: bold; font-family: inherit;
+  color: var(--sl-gold); background: rgba(212,175,55,0.12); border: 1px solid rgba(212,175,55,0.5); border-radius: 8px; cursor: pointer;
+}
+.sl-desc-more-btn:active { background: rgba(212,175,55,0.3); }
+.sl-root.sl-m .sl-desc:not(.sl-desc-open) .sl-body { display: none !important; }
+.sl-root.sl-m .sl-desc.sl-desc-open .sl-head { border-bottom: 1px solid var(--sl-line); }
+.sl-root.sl-m[data-step="3"] > .sl-desc:not(.sl-desc-open) { min-height: 0 !important; max-height: none !important; flex: 0 0 auto !important; }
+
+/* ① シナリオ：ヘッダーを選択中シナリオ名＋「詳細」ボタンの1行にし、詳細ボタンで解説を展開 */
+.sl-root.sl-m .sl-scen .sl-head {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 4px 8px !important;
+  border-bottom: 1px solid var(--sl-line) !important;
+}
+.sl-root.sl-m .sl-scen .sl-scen-cur-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: .03em;
+  font-size: 14px !important;
+  color: var(--sl-gold) !important;
+  font-weight: bold;
+}
+.sl-scen-more-btn {
+  flex: 0 0 auto;
+  min-height: 28px;
+  padding: 2px 12px;
+  font-size: 13px;
+  font-weight: bold;
+  font-family: inherit;
+  color: var(--sl-gold);
+  background: rgba(212,175,55,0.12);
+  border: 1px solid rgba(212,175,55,0.5);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.sl-scen-more-btn:active,
+.sl-scen-more-btn.active {
+  background: rgba(212,175,55,0.3);
+}
+.sl-scen-desc-drop {
+  flex: 0 0 auto;
+  background: linear-gradient(135deg, rgba(35, 25, 17, 0.96), rgba(20, 14, 9, 0.98));
+  border-bottom: 1px solid rgba(212, 175, 55, 0.45);
+  border-left: 3px solid var(--sl-gold);
+  padding: 8px 10px;
+  font-size: 13px !important;
+  line-height: 1.5;
+  color: #ece3cf;
+  max-height: 180px;
+  overflow-y: auto;
+}
+.sl-scen-desc-drop[hidden] {
+  display: none !important;
+}
+.sl-scen-drop-head {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.sl-scen-drop-title {
+  font-size: 13.5px;
+  font-weight: bold;
+  color: #fff;
+}
+.sl-scen-drop-title small {
+  font-size: 12px;
+  font-weight: normal;
+  color: #ffd98a;
+  margin-left: 4px;
+}
+.sl-scen-drop-gengo {
+  font-size: 11px;
+  color: #aaa;
+}
+.sl-scen-drop-lore {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: #ded3bf;
+}
