@@ -7034,6 +7034,17 @@ export const UIManagerMethods = {
     return `(${n})`;
 
   },
+  // スマホ委任プルダウン: 閉じている時はピクトグラムのみ表示
+  syncMobileGovernIcon() {
+    const sel = document.getElementById('mobileProvGovernSelect');
+    const icon = document.getElementById('mobileProvGovernIcon');
+    if (!sel || !icon) return;
+    const icons = { direct: '👑', military: '⚔️', domestic: '🌾', balanced: '⚖️', logistics: '🚚' };
+    icon.textContent = icons[sel.value] || icons.direct;
+    const opt = sel.options[sel.selectedIndex];
+    if (opt) sel.title = opt.textContent;
+  }
+
 
 
 
@@ -7433,6 +7444,7 @@ export const UIManagerMethods = {
           mobileGovWrap.style.display = 'inline-flex';
 
           mobileGovSelect.value = p.governance || 'direct';
+          this.syncMobileGovernIcon();
 
           mobileGovSelect.disabled = false;
 
@@ -7443,6 +7455,7 @@ export const UIManagerMethods = {
             const pcSelect = document.getElementById('singleProvGovernSelect');
 
             if (pcSelect) pcSelect.value = p.governance;
+            this.syncMobileGovernIcon();
 
             this.log(`【統治方針】${p.name}の方針を「${this.getGovernModeName(p.governance)}」に変更しました。`);
 
@@ -7477,6 +7490,7 @@ export const UIManagerMethods = {
           const mobSelect = document.getElementById('mobileProvGovernSelect');
 
           if (mobSelect) mobSelect.value = p.governance;
+          this.syncMobileGovernIcon();
 
           this.log(`【統治方針】${p.name}の方針を「${this.getGovernModeName(p.governance)}」に変更しました。`);
 
