@@ -389,7 +389,6 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
         <div class="scen-modal-sec-title">📖 歴史背景・天下情勢</div>
         <div class="scen-modal-lore">${esc(lore)}</div>
       </div>
-      ${factionHtml}
     `;
 
     modal.classList.remove('hidden');

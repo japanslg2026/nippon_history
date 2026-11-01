@@ -1881,6 +1881,9 @@
       flex-wrap: nowrap;
       overflow-x: auto;
     }
+    .modal-subbar-tabs.is-hidden-by-view {
+      display: none !important;
+    }
     .modal-search-box {
       display: flex;
       align-items: center;
@@ -1988,6 +1991,25 @@
       box-shadow: 0 2px 7px rgba(0, 0, 0, 0.6);
       transition: background 0.15s, border-color 0.15s, transform 0.1s;
     }
+    .clan-card {
+      background: linear-gradient(135deg, #241910 0%, #160e08 100%);
+      border: 1px solid var(--border-gold);
+      border-radius: 8px;
+      padding: 9px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      box-shadow: 0 2px 7px rgba(0, 0, 0, 0.6);
+      transition: background 0.15s, border-color 0.15s, transform 0.1s;
+    }
+    .clan-card:active { transform: scale(0.985); border-color: var(--gold-bright); background: #312216; }
+    .clan-card.is-mine { border-color: var(--gold-bright); box-shadow: 0 0 6px rgba(212, 175, 55, 0.5); }
+    .clan-card-rank { display: inline-block; min-width: 1.6em; text-align: center; font-size: 9pt; color: #1a1008; background: var(--gold-bright); border-radius: 3px; margin-right: 4px; }
+    .clan-card-leader { color: var(--gold-pale); font-size: 10pt; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .clan-card-sub { color: #aa9988; font-size: 9pt; }
+    .modal-view-switch { display: flex; gap: 6px; margin-bottom: 6px; }
+    .modal-view-switch .nav-btn { flex: 0 0 auto; min-width: 88px; }
     .prov-card:active, .off-card:active {
       transform: scale(0.985);
       border-color: var(--gold-bright);
@@ -2113,8 +2135,18 @@
       .map-stage {
         touch-action: auto;
       }
-      .map-viewport-wrap {
+      .map-viewport-wrap {
         touch-action: none;
+        /* 中間幅でも地図が高さ0にならないよう通常フローで高さを確保 */
+        position: relative;
+        inset: auto;
+        width: 100%;
+        height: auto;
+        min-height: 260px;
+        max-height: 70vh;
+        aspect-ratio: 965 / 520;
+        overflow: hidden;
+        flex-shrink: 0;
       }
       .map-left-overlay-stack {
         touch-action: pan-y;
@@ -2872,6 +2904,33 @@
         display: inline-flex !important;
         align-items: center !important;
       }
+      .clan-card {
+        padding: 7px 9px !important;
+        gap: 4px !important;
+        border-radius: 6px !important;
+      }
+      .clan-card .card-stats-row {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        gap: 3px !important;
+        align-items: center !important;
+      }
+      .clan-card .card-stat-pill {
+        flex: 0 0 auto !important;
+        padding: 2px 4px !important;
+        font-size: 11pt !important;
+        white-space: nowrap !important;
+      }
+      .clan-card .stat-tag {
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+        font-size: 11pt !important;
+        padding: 1px 3px !important;
+        text-align: center !important;
+      }
+      .clan-card-leader { font-size: 10pt !important; max-width: 50% !important; }
+      .modal-view-switch { width: 100% !important; margin-bottom: 4px !important; }
+      .modal-view-switch .nav-btn { flex: 1 1 0 !important; min-width: 0 !important; padding: 5px 2px !important; font-size: 11pt !important; }
       .prov-card .stat-tag {
         flex: 1 1 0 !important;
         min-width: 0 !important;
@@ -5614,7 +5673,9 @@
         var currentTab = activeClanId ? 'my' : 'all';
         var sortKey = 'kokudaka';
         var sortOrder = 'desc';
-        var searchQuery = '';
+        var viewMode = 'province'; // 'province' | 'clan'
+        var provSortKey = sortKey, provSortOrder = sortOrder;
+        var clanSortKey = 'kokudaka', clanSortOrder = 'desc';
         var year = Number(State.currentScenario ? State.currentScenario.year : 1560);
         var allProvs = Array.from(State.computedProvs.values());
         var myProvs = activeClanId ? allProvs.filter(function (p) { return p.ownerId === activeClanId; }) : [];
@@ -5630,16 +5691,16 @@
               '<button type="button" class="modal-close-btn" id="closeProvListBtn">✕</button>' +
             '</div>' +
             '<div class="modal-subbar">' +
-              '<div class="modal-subbar-tabs">' +
+              '<div class="modal-view-switch">' +
+                '<button type="button" class="nav-btn game-go" id="viewProvBtn">領国別</button>' +
+                '<button type="button" class="nav-btn" id="viewClanBtn">勢力別</button>' +
+              '</div>' +
+              '<div class="modal-subbar-tabs" id="provTabsWrap">' +
                 (activeClanId ? '<button type="button" class="nav-btn ' + (currentTab === 'my' ? 'game-go' : '') + '" id="tabProvMy"><span class="tab-txt-pc">' + esc(selectedClanName) + 'の領国 (' + myProvs.length + '国)</span><span class="tab-txt-sp">🏯 自国 (' + myProvs.length + ')</span></button>' : '') +
                 '<button type="button" class="nav-btn ' + (currentTab === 'all' ? 'game-go' : '') + '" id="tabProvAll"><span class="tab-txt-pc">天下の領国 (' + allProvs.length + '国)</span><span class="tab-txt-sp">🗾 全国 (' + allProvs.length + ')</span></button>' +
               '</div>' +
               '<div class="modal-subbar-controls">' +
-                '<div class="modal-search-box">' +
-                  '<span class="modal-search-label modal-search-label-pc">検索:</span><span class="modal-search-label modal-search-label-sp">🔍</span>' +
-                  '<input type="search" id="provListSearchInput" value="" placeholder="国名・城名・領主..." class="modal-search-input" autocomplete="off">' +
-                '</div>' +
-                '<div class="modal-sort-bar-wrap">' +
+                '<div class=\"modal-sort-bar-wrap\">' +
                   '<div class="modal-sort-chips" id="provSortChips"></div>' +
                 '</div>' +
               '</div>' +
@@ -5647,7 +5708,7 @@
             '<div class="modal-body modal-table-body">' +
               '<div class="modal-table-scroll">' +
                 '<table class="modal-data-table">' +
-                  '<thead><tr style="position:sticky; top:0; background:#261a12; border-bottom:2px solid var(--border-gold);">' +
+                  '<thead id="provListThead"><tr style="position:sticky; top:0; background:#261a12; border-bottom:2px solid var(--border-gold);">' +
                     '<th data-sort="name" style="padding:10px; color:var(--gold-bright); cursor:pointer; white-space:nowrap; font-size:12pt;">国名 <span data-sort-ic="name">↕</span></th>' +
                     '<th data-sort="castle" style="padding:10px; color:var(--gold-bright); cursor:pointer; white-space:nowrap; font-size:12pt;">居城 <span data-sort-ic="castle">↕</span></th>' +
                     '<th data-sort="region" style="padding:10px; color:var(--gold-bright); cursor:pointer; white-space:nowrap; font-size:12pt;">地方 <span data-sort-ic="region">↕</span></th>' +
@@ -5667,6 +5728,44 @@
           '</div>';
 
         var tbodyEl = document.getElementById('provListTableBody');
+        var theadEl = document.getElementById('provListThead');
+        var provTheadHtml = theadEl.innerHTML;
+        var CLAN_TH_STYLE = 'padding:10px; color:var(--gold-bright); cursor:pointer; white-space:nowrap; font-size:12pt;';
+        var clanTheadHtml = '<tr style="position:sticky; top:0; background:#261a12; border-bottom:2px solid var(--border-gold);">' +
+          [['familyName','大名家'],['leaderName','当主'],['capital','本拠'],['provCount','領国数'],['totalKoku','総石高'],['totalTroops','総兵力'],['military','武'],['politics','政'],['stratagem','知']].map(function (c) {
+            return '<th data-sort="' + c[0] + '" style="' + CLAN_TH_STYLE + '">' + c[1] + ' <span data-sort-ic="' + c[0] + '"></span></th>';
+          }).join('') + '</tr>';
+        var CLAN_SORT_ITEMS = [
+          { k: 'castle', label: '居城', sp: '居城', ic: '🏯' },
+          { k: 'kokudaka', label: '石高', sp: '石高', ic: '🌾' },
+          { k: 'troops', label: '兵力', sp: '兵力', ic: '👥' },
+          { k: 'military', label: '武勇', sp: '武', ic: '武' },
+          { k: 'politics', label: '内政', sp: '政', ic: '政' },
+          { k: 'stratagem', label: '知略', sp: '知', ic: '知' }
+        ];
+        function isTextKey(k) { return ['name','castle','region','owner','governor','familyName','leaderName','capital'].indexOf(k) !== -1; }
+        function bindHeaderSort() {
+          modal.querySelectorAll('[data-sort]').forEach(function (thEl) {
+            thEl.onclick = function () {
+              var k = thEl.getAttribute('data-sort');
+              if (sortKey === k) sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+              else { sortKey = k; sortOrder = isTextKey(k) ? 'asc' : 'desc'; }
+              renderList();
+            };
+          });
+        }
+        function setViewMode(m) {
+          if (m === viewMode) return;
+          if (viewMode === 'province') { provSortKey = sortKey; provSortOrder = sortOrder; } else { clanSortKey = sortKey; clanSortOrder = sortOrder; }
+          viewMode = m;
+          if (m === 'province') { sortKey = provSortKey; sortOrder = provSortOrder; theadEl.innerHTML = provTheadHtml; }
+          else { sortKey = clanSortKey; sortOrder = clanSortOrder; theadEl.innerHTML = clanTheadHtml; }
+          document.getElementById('viewProvBtn').classList.toggle('game-go', m === 'province');
+          document.getElementById('viewClanBtn').classList.toggle('game-go', m === 'clan');
+          var tw = document.getElementById('provTabsWrap'); if (tw) tw.classList.toggle('is-hidden-by-view', m === 'clan');
+          bindHeaderSort();
+          renderList();
+        }
         var tabMy = document.getElementById('tabProvMy');
         var tabAll = document.getElementById('tabProvAll');
 
@@ -5692,7 +5791,7 @@
           });
           var chipsEl = document.getElementById('provSortChips');
           if (chipsEl) {
-            chipsEl.innerHTML = PROV_SORT_ITEMS.map(function (item) {
+            chipsEl.innerHTML = (viewMode === 'clan' ? CLAN_SORT_ITEMS : PROV_SORT_ITEMS).map(function (item) {
               var isActive = sortKey === item.k;
               var arrow = isActive ? (sortOrder === 'asc' ? '▲' : '▼') : '';
               return '<button type="button" class="sort-chip-btn ' + (isActive ? 'active' : '') + '" data-prov-sort="' + item.k + '" title="' + item.label + 'で並べ替え" aria-label="' + item.label + '">' +
@@ -5709,7 +5808,7 @@
                   sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
                 } else {
                   sortKey = k;
-                  sortOrder = (k === 'name' || k === 'castle' || k === 'region' || k === 'owner' || k === 'governor') ? 'asc' : 'desc';
+                  sortOrder = isTextKey(k) ? 'asc' : 'desc';
                 }
                 renderList();
               };
@@ -5717,7 +5816,108 @@
           }
         }
 
+        function renderClanList() {
+          var cardsEl = document.getElementById('provCardsContainer');
+          var rows = Array.from(State.computedClans.values()).filter(function (c) { return c && c.provIds && c.provIds.length > 0; }).map(function (c) {
+            var capId = c.capitalProvId || c.provIds[0];
+            var capProv = State.computedProvs.get(capId);
+            var lo = c.leaderOfficer;
+            return {
+              c: c,
+              capId: capId,
+              familyName: getClanFamilyName(c.id, year) || String(c.id),
+              leaderName: c.leaderName || (lo ? lo.name : '') || '―',
+              capital: capProv ? (capProv.castle + '（' + capProv.name + '）') : '―',
+              capCastle: capProv ? capProv.castle : '―',
+              capName: capProv ? capProv.name : '',
+              provCount: c.provIds.length,
+              totalKoku: c.totalKoku || 0,
+              totalTroops: c.totalTroops || 0,
+              military: lo ? lo.military : null,
+              politics: lo ? lo.politic : null,
+              stratagem: lo ? lo.intel : null,
+              isMine: c.id === activeClanId
+            };
+          });
+          rows.sort(function (a, b) {
+            var diff = 0;
+            var latA = getProvNorthLat(a.capId);
+            var latB = getProvNorthLat(b.capId);
+            if (sortKey === 'familyName' || sortKey === 'leaderName' || sortKey === 'capital' || sortKey === 'castle') {
+              diff = latB - latA;
+              if (Math.abs(diff) < 0.001) {
+                var tieKey = sortKey === 'castle' ? 'capCastle' : sortKey;
+                diff = String(a[tieKey] || a.familyName).localeCompare(String(b[tieKey] || b.familyName), 'ja');
+              }
+            } else if (sortKey === 'kokudaka' || sortKey === 'totalKoku') {
+              diff = a.totalKoku - b.totalKoku;
+            } else if (sortKey === 'troops' || sortKey === 'totalTroops') {
+              diff = a.totalTroops - b.totalTroops;
+            } else if (sortKey === 'provCount') {
+              diff = a.provCount - b.provCount;
+            } else if (sortKey === 'military' || sortKey === 'politics' || sortKey === 'stratagem') {
+              diff = (a[sortKey] ?? -1) - (b[sortKey] ?? -1);
+            } else {
+              diff = latB - latA;
+            }
+            if (diff === 0) diff = a.totalKoku - b.totalKoku;
+            return sortOrder === 'desc' ? -diff : diff;
+          });
+          updateSortIcons();
+          if (rows.length === 0) {
+            tbodyEl.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:30px; color:#887766;">該当する勢力が見つかりません</td></tr>';
+            if (cardsEl) cardsEl.innerHTML = '<div style="text-align:center; padding:30px; color:#887766;">該当する勢力が見つかりません</div>';
+            return;
+          }
+          function nz(v) { return v != null ? v : '―'; }
+          tbodyEl.innerHTML = rows.map(function (r) {
+            return '<tr class="table-row-hover" data-row-clan="' + esc(r.capId) + '"' + (r.isMine ? ' style="background:rgba(212,175,55,0.12);"' : '') + '>' +
+              '<td style="padding:9px; font-weight:bold; color:var(--gold-bright);">' + esc(r.familyName) + '</td>' +
+              '<td style="padding:9px; color:#fff;">' + esc(r.leaderName) + '</td>' +
+              '<td style="padding:9px; color:var(--gold-pale);">' + esc(r.capital) + '</td>' +
+              '<td style="padding:9px; text-align:right; color:#fff;">' + r.provCount + '国</td>' +
+              '<td style="padding:9px; text-align:right; font-weight:bold; color:var(--gold-bright);">' + (r.totalKoku / 10000).toFixed(1) + '万石</td>' +
+              '<td style="padding:9px; text-align:right; color:#fff;">' + r.totalTroops.toLocaleString() + '人</td>' +
+              '<td style="padding:9px; text-align:right; color:#ff9999;">' + nz(r.military) + '</td>' +
+              '<td style="padding:9px; text-align:right; color:#99ff99;">' + nz(r.politics) + '</td>' +
+              '<td style="padding:9px; text-align:right; color:#99ccff;">' + nz(r.stratagem) + '</td>' +
+            '</tr>';
+          }).join('');
+          if (cardsEl) {
+            cardsEl.innerHTML = rows.map(function (r, i) {
+              return '<div class="clan-card' + (r.isMine ? ' is-mine' : '') + '" data-row-clan="' + esc(r.capId) + '">' +
+                '<div class="card-head-row">' +
+                  '<div class="card-title-group">' +
+                    '<span class="clan-card-rank">' + (i + 1) + '</span>' +
+                    '<span class="card-title-main">' + esc(r.familyName) + '</span>' +
+                  '</div>' +
+                  '<div class="clan-card-leader">当主 ' + esc(r.leaderName) + '</div>' +
+                '</div>' +
+                '<div class="card-info-row">' +
+                  '<div class="card-info-item"><span class="card-lbl">本拠:</span> <span class="card-val">' + esc(r.capCastle) + (r.capName ? '<span class="clan-card-sub">（' + esc(r.capName) + '）</span>' : '') + '</span></div>' +
+                  '<div class="card-stats-row">' +
+                    '<span class="card-stat-pill"><strong>' + r.provCount + '国</strong></span>' +
+                    '<span class="card-stat-pill highlight-gold"><strong>' + Math.round(r.totalKoku / 10000) + '万石</strong></span>' +
+                    '<span class="card-stat-pill"><strong>兵' + Math.max(1, Math.round(r.totalTroops / 1000)) + '千</strong></span>' +
+                    '<span class="stat-tag mil">武' + nz(r.military) + '</span>' +
+                    '<span class="stat-tag pol">政' + nz(r.politics) + '</span>' +
+                    '<span class="stat-tag int">知' + nz(r.stratagem) + '</span>' +
+                  '</div>' +
+                '</div>' +
+              '</div>';
+            }).join('');
+          }
+          modal.querySelectorAll('[data-row-clan]').forEach(function (el) {
+            el.onclick = function () {
+              var pid = el.getAttribute('data-row-clan');
+              modal.classList.add('hidden');
+              selectProvinceOnMap(pid);
+            };
+          });
+        }
+
         function renderList() {
+          if (viewMode === 'clan') { renderClanList(); return; }
           var allProvsNow = Array.from(State.computedProvs.values());
           var myProvsNow = activeClanId ? allProvsNow.filter(function (p) { return p.ownerId === activeClanId; }) : [];
           var source = (currentTab === 'my' && activeClanId) ? myProvsNow : allProvsNow;
@@ -5746,38 +5946,33 @@
               troops: p.troops
             };
           });
-
-          if (searchQuery) {
-            var q = searchQuery.trim().toLowerCase();
-            rows = rows.filter(function (r) {
-              return (r.p.name + ' ' + r.p.castle + ' ' + r.p.region + ' ' + r.ownerName + ' ' + r.govName).toLowerCase().indexOf(q) !== -1;
-            });
-          }
-
           rows.sort(function (a, b) {
             var diff = 0;
+            var latA = getProvNorthLat(a.p.id);
+            var latB = getProvNorthLat(b.p.id);
+            function ownerCapLat(r) {
+              if (!r.p.ownerId) return getProvNorthLat(r.p.id);
+              var ce = State.computedClans.get(r.p.ownerId);
+              var cid = (ce && (ce.capitalProvId || (ce.provIds && ce.provIds[0]))) || r.p.id;
+              return getProvNorthLat(cid);
+            }
             if (sortKey === 'name') {
-              diff = a.p.name.localeCompare(b.p.name, 'ja');
+              diff = latB - latA;
+              if (Math.abs(diff) < 0.001) diff = a.p.name.localeCompare(b.p.name, 'ja');
             } else if (sortKey === 'castle') {
-              // 居城：北から順（北緯が高い順。同緯度は城名五十音順）
-              var latA = getProvNorthLat(a.p.id);
-              var latB = getProvNorthLat(b.p.id);
               diff = latB - latA;
               if (Math.abs(diff) < 0.001) diff = a.p.castle.localeCompare(b.p.castle, 'ja');
             } else if (sortKey === 'region') {
-              // 地方：北から順（北海道→東北→関東→中部→近畿→中国→四国→九州。同地方内は北から順）
               var regA = REGION_NORTH_ORDER[a.p.region] || 99;
               var regB = REGION_NORTH_ORDER[b.p.region] || 99;
               diff = regA - regB;
-              if (diff === 0) {
-                var latA2 = getProvNorthLat(a.p.id);
-                var latB2 = getProvNorthLat(b.p.id);
-                diff = latB2 - latA2;
-              }
+              if (diff === 0) diff = latB - latA;
             } else if (sortKey === 'owner') {
-              diff = a.ownerName.localeCompare(b.ownerName, 'ja');
+              diff = ownerCapLat(b) - ownerCapLat(a);
+              if (Math.abs(diff) < 0.001) diff = a.ownerName.localeCompare(b.ownerName, 'ja');
             } else if (sortKey === 'governor') {
-              diff = a.govName.localeCompare(b.govName, 'ja');
+              diff = latB - latA;
+              if (Math.abs(diff) < 0.001) diff = a.govName.localeCompare(b.govName, 'ja');
             } else if (sortKey === 'military') {
               diff = (a.military ?? -1) - (b.military ?? -1);
             } else if (sortKey === 'politics') {
@@ -5867,34 +6062,9 @@
         if (tabMy) tabMy.onclick = function () { currentTab = 'my'; renderList(); };
         if (tabAll) tabAll.onclick = function () { currentTab = 'all'; renderList(); };
 
-        var sInput = document.getElementById('provListSearchInput');
-        var isComposing = false;
-        var searchDebounceTimer = null;
-        function doSearch() {
-          searchQuery = sInput.value;
-          renderList();
-        }
-
-        sInput.addEventListener('compositionstart', function () { isComposing = true; });
-        sInput.addEventListener('compositionend', function () {
-          isComposing = false;
-          clearTimeout(searchDebounceTimer);
-          doSearch();
-        });
-        sInput.addEventListener('input', function (e) {
-          if (isComposing || (e && e.isComposing)) return;
-          clearTimeout(searchDebounceTimer);
-          searchDebounceTimer = setTimeout(doSearch, 150);
-        });
-
-        modal.querySelectorAll('[data-sort]').forEach(function (thEl) {
-          thEl.onclick = function () {
-            var k = thEl.getAttribute('data-sort');
-            if (sortKey === k) sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-            else { sortKey = k; sortOrder = (k === 'name' || k === 'castle' || k === 'region' || k === 'owner' || k === 'governor') ? 'asc' : 'desc'; }
-            renderList();
-          };
-        });
+        bindHeaderSort();
+        document.getElementById('viewProvBtn').onclick = function () { setViewMode('province'); };
+        document.getElementById('viewClanBtn').onclick = function () { setViewMode('clan'); };
 
         document.getElementById('closeProvListBtn').onclick = function () {
           modal.classList.add('hidden');
@@ -6447,7 +6617,7 @@
         if (this.ro) this.ro.disconnect();
       };
 
-      var SORT_SHORT = { total: '能力', military: '武', politic: '内', intel: '計', max: '版図' }; // スマホ用の短縮表記
+      var SORT_SHORT = { total: '能力', military: '武', politic: '内', intel: '知', max: '版図' }; // スマホ用の短縮表記
       function sortBarHTML(keys) {
         return '<div class="mk-f mk-f-sort"><span>並び順</span><div class="mk-sortbar">' + keys.map(function (kv) {
           var k = kv[0], l = kv[1];
@@ -6582,9 +6752,9 @@
         body.innerHTML =
           '<div class="mk-filters">' +
             '<label class="mk-f mk-f-search"><span>名前検索</span><input type="search" class="mk-q" placeholder="武将名（例：信長）"></label>' +
-            '<label class="mk-f"><span>大名家</span><select class="mk-clan"><option value="">すべての大名家</option>' + clanOpts + '</select></label>' +
+            '<label class="mk-f mk-f-hide-sp"><span>大名家</span><select class="mk-clan"><option value="">すべての大名家</option>' + clanOpts + '</select></label>' +
             '<label class="mk-f"><span>年代</span><select class="mk-era"><option value="">すべての時代</option>' + ERAS.map(function (e) { return optHTML(e.key, e.label); }).join('') + '</select></label>' +
-            '<label class="mk-f"><span>シナリオ</span><select class="mk-scen"><option value="">指定なし</option>' + scenarioOptionsHTML() + '</select></label>' +
+            '<label class="mk-f mk-f-hide-sp"><span>シナリオ</span><select class="mk-scen"><option value="">指定なし</option>' + scenarioOptionsHTML() + '</select></label>' +
             '<label class="mk-f"><span>国</span><select class="mk-prov"><option value="">すべての国</option>' + provOptionsHTML() + '</select></label>' +
             sortBarHTML([['year', '年齢'], ['total', '能力合計'], ['military', '武勇'], ['politic', '内政'], ['intel', '知略']]) +
             '<button type="button" class="mk-reset">条件解除</button>' +

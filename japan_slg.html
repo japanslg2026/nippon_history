@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja"><head>
   <meta charset="UTF-8">
   <style data-tippy-stylesheet="">.tippy-box[data-animation=fade][data-state=hidden]{opacity:0}[data-tippy-root]{max-width:calc(100vw - 10px)}.tippy-box{position:relative;background-color:#333;color:#fff;border-radius:4px;font-size:14px;line-height:1.4;white-space:normal;outline:0;transition-property:transform,visibility,opacity}.tippy-box[data-placement^=top]>.tippy-arrow{bottom:0}.tippy-box[data-placement^=top]>.tippy-arrow:before{bottom:-7px;left:0;border-width:8px 8px 0;border-top-color:initial;transform-origin:center top}.tippy-box[data-placement^=bottom]>.tippy-arrow{top:0}.tippy-box[data-placement^=bottom]>.tippy-arrow:before{top:-7px;left:0;border-width:0 8px 8px;border-bottom-color:initial;transform-origin:center bottom}.tippy-box[data-placement^=left]>.tippy-arrow{right:0}.tippy-box[data-placement^=left]>.tippy-arrow:before{border-width:8px 0 8px 8px;border-left-color:initial;right:-7px;transform-origin:center left}.tippy-box[data-placement^=right]>.tippy-arrow{left:0}.tippy-box[data-placement^=right]>.tippy-arrow:before{left:-7px;border-width:8px 8px 8px 0;border-right-color:initial;transform-origin:center right}.tippy-box[data-inertia][data-state=visible]{transition-timing-function:cubic-bezier(.54,1.5,.38,1.11)}.tippy-arrow{width:16px;height:16px;color:#333}.tippy-arrow:before{content:"";position:absolute;border-color:transparent;border-style:solid}.tippy-content{position:relative;padding:5px 9px;z-index:1}</style><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='bg' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%233a1e12'/%3E%3Cstop offset='100%25' stop-color='%23120805'/%3E%3C/radialGradient%3E%3ClinearGradient id='gold' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23ffe082'/%3E%3Cstop offset='50%25' stop-color='%23d4af37'/%3E%3Cstop offset='100%25' stop-color='%23aa7c11'/%3E%3C/linearGradient%3E%3ClinearGradient id='blade' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23ffffff'/%3E%3Cstop offset='60%25' stop-color='%23cccccc'/%3E%3Cstop offset='100%25' stop-color='%23777777'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23bg)' stroke='url(%23gold)' stroke-width='2.5'/%3E%3Cpath d='M14 50 L48 16 L50 18 L16 52 Z' fill='url(%23blade)'/%3E%3Cpath d='M50 50 L16 16 L14 18 L48 52 Z' fill='url(%23blade)'/%3E%3Cpath d='M32 10 Q38 18 46 20 Q36 24 32 30 Q28 24 18 20 Q26 18 32 10 Z' fill='url(%23gold)'/%3E%3Ccircle cx='32' cy='32' r='8' fill='%23c0392b' stroke='url(%23gold)' stroke-width='1.5'/%3E%3Ccircle cx='32' cy='32' r='4' fill='url(%23gold)'/%3E%3C/svg%3E">
@@ -23,7 +23,7 @@
   <!-- モジュール化されたCSSスタイルシート (1080p最適化・和風デザイン) -->
   <link rel="stylesheet" href="css/style.css?v=20261101_jukebox_opt">
   <link rel="stylesheet" href="css/encyclopedia.css?v=20261025_bgm">
-  <link rel="stylesheet" href="css/startscreen.css?v=20261101_ui51">
+  <link rel="stylesheet" href="css/startscreen.css?v=20261101_ui53">
   <script>
     // スマホ判定: 画面幅768px以下、タッチ主体、または ?mobile=1 / ?phone=1 パラメータ → スマホ用レスポンシブ新レイアウト
     (function(){var mm=function(q){return window.matchMedia&&matchMedia(q).matches;};
@@ -1571,9 +1571,6 @@
 
     <!-- アクションボタン群 (大名で出陣スタートボタン ＋ 別の大名を選び直すボタン) -->
     <div class="daimyo-popup-footer-actions" style="display:flex; gap:12px; justify-content:center; align-items:center; padding-top:6px; border-top:1px solid rgba(212,175,55,0.3);">
-      <button class="daimyo-popup-cancel-btn" id="daimyoPopupCancelBtn" style="min-width:200px;">
-        ↩️ 別の大名を選び直す
-      </button>
       <button class="daimyo-popup-start-btn" id="daimyoPopupStartBtn" style="flex:1; max-width:480px; margin:0; padding:12px 24px; font-size:13.5pt;">
         ⚔️ この大名で天下統一へ出陣！
       </button>
@@ -1881,7 +1878,7 @@
   <script src="js/bgm.js?v=20261031_sound_sync"></script>
 
   <!-- 3. 戦国天下統一伝 ゲームエンジン本体 -->
-  <script type="module" src="js/app.js?v=20261101_ui51"></script>
+  <script type="module" src="js/app.js?v=20261101_ui57"></script>
   <script type="module" src="js/ui/Encyclopedia.js?v=20261025_d74"></script>
   <script src="js/ui/StartScreenLayout.js?v=20261101_ui51"></script>
   <script src="js/ui/TitleBgm.js?v=20261031_sound_sync"></script>

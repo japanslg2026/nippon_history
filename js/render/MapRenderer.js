@@ -507,6 +507,18 @@ export const MapRendererMethods = {
         e.stopPropagation();
       }, true);
 
+      // 領国ポリゴン外（海域など）クリックで輪郭ハイライトを解除
+      wrapper.addEventListener('click', (e) => {
+        if (this.mapSuppressClick) return;
+        if (e.target.closest && e.target.closest('.map-ctrl-btn, .prov-path, button, a, input, select, textarea')) return;
+        if (!this.selectedProvId) return;
+        if (typeof this.clearProvinceSelection === 'function') this.clearProvinceSelection();
+        else {
+          this.selectedProvId = null;
+          this.updateMapDisplay();
+        }
+      });
+
       wrapper.addEventListener('wheel', (e) => {
         e.preventDefault();
         const rect = wrapper.getBoundingClientRect();
@@ -700,7 +712,7 @@ export const MapRendererMethods = {
     // 1. 各タイルの色・クラス・インラインスタイルの差分更新（[93位] 高速化最適化）
     this.provinces.forEach(p => {
       const isMine = p.ownerId === this.playerClanId;
-      const isSelected = p.id === this.selectedProvId;
+      const isSelected = p.id === this.selectedProvId && !this.hideSelectionOutline;
       const fillCol = this.getProvinceColor(p);
       const kamonId = p.ownerId ? this.getClanKamonId(p.ownerId) : '';
       const cached = this._mapTileCache[p.id];
@@ -810,7 +822,7 @@ export const MapRendererMethods = {
     // 選択領国の最前面アウトライン更新（境界線・海岸線・領国全体の輪郭よりも最優先で前面表示）
     const selOutline = this._selectedOutline || document.getElementById('provSelectedOutline');
     if (selOutline) {
-      if (this.selectedProvId) {
+      if (this.selectedProvId && !this.hideSelectionOutline) {
         const selPath = document.getElementById(`path-${this.selectedProvId}`);
         const selProv = this.provinces.find(p => p.id === this.selectedProvId);
         const d = (selPath && selPath.getAttribute('d')) || (selProv && (selProv.svgPath || selProv.d)) || '';
@@ -844,7 +856,7 @@ export const MapRendererMethods = {
       const prov2 = provMap.get(p2);
       const o1 = prov1 ? prov1.ownerId : null;
       const o2 = prov2 ? prov2.ownerId : null;
-      const isSelBorder = this.selectedProvId && (p1 === this.selectedProvId || p2 === this.selectedProvId);
+      const isSelBorder = this.selectedProvId && !this.hideSelectionOutline && (p1 === this.selectedProvId || p2 === this.selectedProvId);
 
       if (o1 && o2 && o1 === o2) {
         // 同一大名領国内の境界線：非表示にして完全一体化
@@ -884,7 +896,7 @@ export const MapRendererMethods = {
       this._coastElements.forEach(({ el, p }) => {
         const prov = provMap.get(p);
         const o = prov ? prov.ownerId : null;
-        const isSelectedProv = this.selectedProvId && p === this.selectedProvId;
+        const isSelectedProv = this.selectedProvId && !this.hideSelectionOutline && p === this.selectedProvId;
 
         if (isSelectedProv) {
           // 選んだ国の海岸線：領国全体の輪郭よりも優先表示（純白、繊細な1.1pxで太すぎない）

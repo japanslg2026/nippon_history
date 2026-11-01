@@ -7059,11 +7059,41 @@ export const UIManagerMethods = {
 
 
 
+  clearProvinceSelection() {
+    // 輪郭ハイライトは消すが、右側の領国軍情と軍令は自大名（観戦時は最後に操作した大名）の本拠地に連動させる
+    const home = (typeof this.getPlayerHomeProvince === 'function') ? this.getPlayerHomeProvince() : null;
+    if (home && home.id) {
+      this.selectProvince(home.id);
+      this.hideSelectionOutline = true;
+      this.updateMapDisplay();
+      return;
+    }
+    this.hideSelectionOutline = false;
+    this.selectedProvId = null;
+    this.updateMapDisplay();
+    const badge = document.getElementById('selectedProvBadge');
+    if (badge) {
+      badge.textContent = '';
+    }
+    const loreBtn = document.getElementById('btnMobileCastleLore');
+    if (loreBtn) loreBtn.classList.add('is-hidden');
+    const detailBox = document.getElementById('provDetailBox');
+    if (detailBox) {
+      detailBox.classList.add('hidden');
+      detailBox.innerHTML = '';
+    }
+  },
+
   // 領国の選択と詳細表示,
 
 
 
   selectProvince(provId) {
+
+    if (!provId) {
+      this.clearProvinceSelection();
+      return;
+    }
 
     // diplomacy perspective: 他勢力領をクリックしたら視点を切替
 
@@ -7079,6 +7109,7 @@ export const UIManagerMethods = {
 
     }
 
+    this.hideSelectionOutline = false;
     this.selectedProvId = provId;
 
     const p = this.provinces.find(x => x.id === provId);
