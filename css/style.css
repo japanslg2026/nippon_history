@@ -6050,3 +6050,41 @@
     background: #1c130d;
   }
 }
+
+/* 世継ぎ選択：スマホで家督継承ボタンが見切れないように (heirfix) */
+@media (max-width: 768px), (max-height: 700px) {
+  .swal2-container:has(.heir-selection-popup) {
+    padding: max(8px, env(safe-area-inset-top)) 8px max(16px, calc(env(safe-area-inset-bottom) + 12px)) 8px !important;
+    align-items: center !important;
+    overflow-y: auto !important;
+  }
+  .heir-selection-popup {
+    width: calc(100vw - 16px) !important;
+    max-height: calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    padding: 12px 12px calc(14px + env(safe-area-inset-bottom)) 12px !important;
+    box-sizing: border-box !important;
+    margin: auto !important;
+  }
+  .heir-selection-popup .swal2-html-container {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .heir-selection-popup .swal2-actions {
+    flex: 0 0 auto !important;
+    margin: 8px auto 0 auto !important;
+    padding-bottom: 4px !important;
+    width: 100% !important;
+  }
+  .heir-selection-popup .swal2-confirm {
+    max-width: 100% !important;
+    white-space: normal !important;
+    line-height: 1.4 !important;
+    padding: 10px 16px !important;
+    font-size: 10.5pt !important;
+  }
+}
