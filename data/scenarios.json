@@ -118075,11 +118075,14 @@
         "isDaimyo": false
       },
       "off_jd_041": {
-        "clanId": "tokugawa",
+        "clanId": "ronin",
         "defaultProv": "shima",
-        "assignedProvId": "shima",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "assignedProvId": null,
+        "location": "shima",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_furuta_shigemasu": {
         "clanId": "ronin",
