@@ -10518,6 +10518,32 @@
     },
     "playables": [
       {
+        "id": "abe",
+        "difficulty": "中級",
+        "winRate": 64,
+        "startProvId": "mutsu",
+        "provCount": 8,
+        "myProvinces": [
+          "ezo",
+          "nishi_tsugaru",
+          "higashi_tsugaru",
+          "mutsu",
+          "rikuchu",
+          "kasai",
+          "osaki",
+          "rikuzen"
+        ],
+        "gold": 1400,
+        "rice": 1700,
+        "personality": "domestic",
+        "officerId": "off_dm_abe_939",
+        "desc": "陸奥奥六郡の俘囚長。中央の乱を横目に、多賀城の北で半独立の勢力を保つ。",
+        "name": "安倍忠良",
+        "color": "#515a5a",
+        "crest": "安",
+        "kamonSvgId": "kamon-abe"
+      },
+      {
         "id": "kiyohara",
         "difficulty": "上級",
         "winRate": 50,
@@ -10525,10 +10551,10 @@
         "provCount": 6,
         "myProvinces": [
           "ugo",
-          "uzen",
           "kakunodate",
           "yokote",
           "shonai",
+          "uzen",
           "yonezawa_date"
         ],
         "gold": 900,
@@ -10536,30 +10562,97 @@
         "personality": "aggressive",
         "officerId": "off_kiyohara_mitsuyori",
         "desc": "出羽の清原氏。秋田・山形を地盤に、のちの前九年の役で源氏に味方する北の豪族。",
-        "name": "清原光頼"
+        "name": "清原光頼",
+        "color": "#4a235a",
+        "crest": "清",
+        "kamonSvgId": "kamon-kiyohara"
       },
       {
-        "id": "abe",
-        "difficulty": "中級",
-        "winRate": 64,
-        "startProvId": "rikuchu",
-        "provCount": 8,
+        "id": "heian_court",
+        "difficulty": "初級",
+        "winRate": 88,
+        "startProvId": "yamashiro",
+        "provCount": 69,
         "myProvinces": [
-          "mutsu",
-          "rikuchu",
-          "rikuzen",
-          "nishi_tsugaru",
-          "higashi_tsugaru",
-          "kasai",
-          "osaki",
-          "ezo"
+          "soma",
+          "iwashiro",
+          "tamura",
+          "iwaki",
+          "shirakawa",
+          "sado",
+          "echigo",
+          "noto",
+          "etchu",
+          "north_shinano",
+          "kaga",
+          "oki",
+          "hida",
+          "echizen",
+          "musashi",
+          "south_shinano",
+          "kai",
+          "tango",
+          "wakasa",
+          "mino",
+          "sagami",
+          "tajima",
+          "inaba",
+          "north_omi",
+          "hoki",
+          "izumo",
+          "owari",
+          "suruga",
+          "tamba",
+          "south_omi",
+          "mimasaka",
+          "izu",
+          "yamashiro",
+          "mikawa",
+          "totomi",
+          "harima",
+          "settsu",
+          "iwami",
+          "bicchu",
+          "bizen",
+          "iga",
+          "bingo",
+          "shima",
+          "yamato",
+          "aki",
+          "aki_koriyama",
+          "izumi",
+          "tsushima",
+          "awaji",
+          "sanuki",
+          "nagato",
+          "suo",
+          "saika_wakayama",
+          "kii_kichu",
+          "kinan_kumano",
+          "awa_shikoku",
+          "iyo",
+          "buzen",
+          "chikuzen",
+          "tosa_kochi",
+          "tosa_nakamura",
+          "hizen",
+          "hirado",
+          "chikugo",
+          "bungo",
+          "omura",
+          "higo_kumamoto",
+          "higo_hitoyoshi",
+          "shimabara"
         ],
-        "gold": 1400,
-        "rice": 1700,
+        "gold": 8600,
+        "rice": 10200,
         "personality": "domestic",
-        "officerId": "off_dm_abe_939",
-        "desc": "陸奥奥六郡の俘囚長。中央の乱を横目に、多賀城の北で半独立の勢力を保つ。",
-        "name": "安倍忠良"
+        "officerId": "off_fujiwara_yorimichi_1028",
+        "desc": "関白藤原頼通。父道長の死の年に摂関の座を預かり、房総の平忠常追討を諸国の武士へ命じる。",
+        "name": "藤原頼通",
+        "color": "#76649e",
+        "crest": "平",
+        "kamonSvgId": "kamon-heian_court"
       },
       {
         "id": "fujiwara_hidesato",
@@ -10568,9 +10661,9 @@
         "startProvId": "shimotsuke",
         "provCount": 4,
         "myProvinces": [
-          "kozuke",
-          "shimotsuke",
           "nasu",
+          "shimotsuke",
+          "kozuke",
           "koga"
         ],
         "gold": 900,
@@ -10578,7 +10671,31 @@
         "personality": "balanced",
         "officerId": "off_fujiwara_kanemitsu",
         "desc": "下野・上野の秀郷流。俵藤太の後裔として坂東の北を押さえ、朝廷の追討に兵を出す。",
-        "name": "藤原兼光"
+        "name": "藤原兼光",
+        "color": "#145a32",
+        "crest": "藤",
+        "kamonSvgId": "kamon-fujiwara"
+      },
+      {
+        "id": "taira_sadamori",
+        "difficulty": "中級",
+        "winRate": 60,
+        "startProvId": "ise",
+        "provCount": 3,
+        "myProvinces": [
+          "hitachi",
+          "tsuchiura",
+          "ise"
+        ],
+        "gold": 900,
+        "rice": 1100,
+        "personality": "balanced",
+        "officerId": "off_taira_naokata",
+        "desc": "平貞盛の後裔。伊勢と常陸を押さえ、房総の同族忠常に対する最初の追討側に立つ。",
+        "name": "平直方",
+        "color": "#7d6608",
+        "crest": "平",
+        "kamonSvgId": "kamon-sadamori"
       },
       {
         "id": "taira_tadatsune",
@@ -10597,88 +10714,10 @@
         "difficulty": "中級",
         "winRate": 65,
         "personality": "aggressive",
-        "desc": "房総三カ国に覇を唱え、朝廷に対して反旗を翻した坂東平氏の巨頭。五カ年にわたり官軍を翻弄した猛将。"
-      },
-      {
-        "id": "heian_court",
-        "difficulty": "初級",
-        "winRate": 88,
-        "startProvId": "yamashiro",
-        "provCount": 66,
-        "myProvinces": [
-          "musashi",
-          "sagami",
-          "iwaki",
-          "iwashiro",
-          "kai",
-          "north_shinano",
-          "south_shinano",
-          "echigo",
-          "etchu",
-          "noto",
-          "kaga",
-          "echizen",
-          "wakasa",
-          "hida",
-          "mino",
-          "owari",
-          "mikawa",
-          "totomi",
-          "suruga",
-          "izu",
-          "north_omi",
-          "south_omi",
-          "shima",
-          "iga",
-          "yamashiro",
-          "yamato",
-          "izumi",
-          "settsu",
-          "tamba",
-          "tango",
-          "tajima",
-          "harima",
-          "inaba",
-          "hoki",
-          "izumo",
-          "iwami",
-          "mimasaka",
-          "bizen",
-          "bicchu",
-          "bingo",
-          "aki",
-          "suo",
-          "nagato",
-          "sanuki",
-          "awa_shikoku",
-          "iyo",
-          "kii",
-          "buzen",
-          "bungo",
-          "chikuzen",
-          "chikugo",
-          "hizen",
-          "tsushima",
-          "sado",
-          "awaji",
-          "oki",
-          "soma",
-          "tamura",
-          "shirakawa",
-          "hirado",
-          "omura",
-          "shimabara",
-          "higo_kumamoto",
-          "higo_hitoyoshi",
-          "tosa_kochi",
-          "tosa_nakamura"
-        ],
-        "gold": 8600,
-        "rice": 10200,
-        "personality": "domestic",
-        "officerId": "off_fujiwara_yorimichi_1028",
-        "desc": "関白藤原頼通。父道長の死の年に摂関の座を預かり、房総の平忠常追討を諸国の武士へ命じる。",
-        "name": "藤原頼通"
+        "desc": "房総三カ国に覇を唱え、朝廷に対して反旗を翻した坂東平氏の巨頭。五カ年にわたり官軍を翻弄した猛将。",
+        "color": "#b03a2e",
+        "crest": "房",
+        "kamonSvgId": "kamon-masakado"
       },
       {
         "id": "minamoto_tsunemoto",
@@ -10694,25 +10733,10 @@
         "personality": "balanced",
         "officerId": "off_minamoto_yorinobu_1028",
         "desc": "河内源氏の祖。甲斐守として東国に縁を持ち、のちに忠常が戦わずして降った相手。坂東武士を家人に組み込む岐路に立つ。",
-        "name": "源頼信"
-      },
-      {
-        "id": "taira_sadamori",
-        "difficulty": "中級",
-        "winRate": 60,
-        "startProvId": "ise",
-        "provCount": 3,
-        "myProvinces": [
-          "hitachi",
-          "ise",
-          "tsuchiura"
-        ],
-        "gold": 900,
-        "rice": 1100,
-        "personality": "balanced",
-        "officerId": "off_taira_masanori",
-        "desc": "平貞盛の後裔。伊勢と常陸を押さえ、房総の同族忠常に対する最初の追討側に立つ。",
-        "name": "平正度"
+        "name": "源頼信",
+        "color": "#283747",
+        "crest": "清",
+        "kamonSvgId": "kamon-genji"
       },
       {
         "id": "shimazu_proto",
@@ -10722,16 +10746,19 @@
         "provCount": 4,
         "myProvinces": [
           "hyuga",
+          "nobeoka",
           "satsuma",
-          "osumi",
-          "nobeoka"
+          "osumi"
         ],
         "gold": 1150,
         "rice": 1400,
         "personality": "balanced",
         "officerId": "off_tomo_kanechika_1028",
         "desc": "薩摩・大隅・日向の在地豪族。南九州の独立した武力を保つ。",
-        "name": "伴兼親"
+        "name": "伴兼親",
+        "color": "#117a65",
+        "crest": "薩",
+        "kamonSvgId": "kamon-shimazu"
       },
       {
         "id": "ryukyu",
@@ -10748,7 +10775,10 @@
         "officerId": "off_ryukyu_anji_heian",
         "desc": "南海に浮かぶ海洋交易国家・琉球王国。首里城を拠点に明・東南アジア・日本を結ぶ海上ネットワークを誇る。",
         "name": "天孫氏按司",
-        "leaderName": "天孫氏按司"
+        "leaderName": "天孫氏按司",
+        "color": "#c0392b",
+        "crest": "琉",
+        "kamonSvgId": "kamon-ryukyu"
       }
     ],
     "officerAffiliations": {
@@ -11269,6 +11299,16 @@
         "clanId": "heian_court",
         "defaultProv": "yamashiro",
         "isDaimyo": false
+      },
+      "off_tanabe_maro_1028": {
+        "clanId": "heian_court",
+        "defaultProv": "harima",
+        "assignedProvId": "harima",
+        "location": "harima",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       }
     },
     "castleLores": {
@@ -18103,7 +18143,7 @@
       },
       {
         "id": "shimazu",
-        "name": "河辺道房",
+        "name": "島津忠久",
         "difficulty": "上級",
         "winRate": 48,
         "startProvId": "satsuma",
@@ -18114,7 +18154,7 @@
         "gold": 1200,
         "rice": 1500,
         "personality": "balanced",
-        "officerId": "off_genpei_chr_132",
+        "officerId": "off_shimazu_proto_tadahisa",
         "desc": "島津荘下司・惟宗忠久（島津忠久）を祖とする南九州の雄。薩摩に拠点を築き、武家の秩序を打ち立てる。",
         "color": "#2c3e50",
         "crest": "島",
@@ -19500,10 +19540,14 @@
         "isDaimyo": false
       },
       "off_pl1180_122": {
-        "clanId": "kikuchi",
+        "clanId": "ronin",
         "defaultProv": "higo_kumamoto",
-        "assignedProvId": "higo_kumamoto",
-        "isDaimyo": false
+        "assignedProvId": null,
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1180_123": {
         "clanId": "taira",
@@ -31969,10 +32013,10 @@
         "gold": 2500,
         "rice": 3000,
         "personality": "balanced",
-        "officerId": "off_pl1331_064",
+        "officerId": "off_hist_1325_nasu_sukekiyo",
         "desc": "下野の名門那須氏当主・那須資清。烏山城に拠る。",
         "kamonSvgId": "kamon-nasu",
-        "name": "細川皇海",
+        "name": "那須資清",
         "color": "#b7950b",
         "crest": "那"
       },
@@ -32295,9 +32339,9 @@
         "gold": 1150,
         "rice": 1400,
         "personality": "aggressive",
-        "officerId": "off_moriyoshi_shinno",
+        "officerId": "off_godaiho_tenno",
         "desc": "不屈の情熱で親政復活を志す大帝。笠置山に拠り、隠岐配流の逆境をも乗り越えて武士たちに幕府打倒を呼びかける。",
-        "name": "護良親王",
+        "name": "後醍醐天皇",
         "color": "#884ea0",
         "crest": "建",
         "kamonSvgId": "kamon-godaiho"
@@ -34360,6 +34404,26 @@
         "defaultProv": "iwami",
         "assignedProvId": "iwami",
         "isDaimyo": true
+      },
+      "off_dm_kikuchi_1336": {
+        "clanId": "hojo_kamakura",
+        "defaultProv": "higo_kumamoto",
+        "assignedProvId": "higo_kumamoto",
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
+      },
+      "off_kikuchi_takeshige": {
+        "clanId": "hojo_kamakura",
+        "defaultProv": "higo_kumamoto",
+        "assignedProvId": "higo_kumamoto",
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       }
     },
     "castleLores": {
@@ -36097,10 +36161,14 @@
         "isDaimyo": false
       },
       "off_pl1331_012": {
-        "clanId": "kikuchi",
+        "clanId": "ronin",
         "defaultProv": "higo_kumamoto",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "assignedProvId": null,
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1331_015": {
         "clanId": "godaiho",
@@ -41152,10 +41220,14 @@
         "isDaimyo": false
       },
       "off_pl1274_003": {
-        "clanId": "kikuchi",
+        "clanId": "ronin",
         "defaultProv": "higo_kumamoto",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "assignedProvId": null,
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1274_053": {
         "clanId": "ronin",
@@ -41206,10 +41278,14 @@
         "ignoreLifespan": true
       },
       "off_pl1331_012": {
-        "clanId": "kikuchi",
+        "clanId": "ronin",
         "defaultProv": "higo_kumamoto",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "assignedProvId": null,
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1331_017": {
         "clanId": "nitta",
@@ -41308,8 +41384,12 @@
       "off_pl1350_013": {
         "clanId": "kikuchi",
         "defaultProv": "higo_kumamoto",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "assignedProvId": "higo_kumamoto",
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       },
       "off_pl1350_014": {
         "clanId": "kusunoki",
@@ -41465,10 +41545,14 @@
         "isDaimyo": false
       },
       "off_pl1359_001": {
-        "clanId": "kikuchi",
+        "clanId": "ronin",
         "defaultProv": "higo_kumamoto",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "assignedProvId": null,
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1359_002": {
         "clanId": "kamakura_fu",
@@ -43999,10 +44083,14 @@
         "isDaimyo": false
       },
       "off_pl1331_012": {
-        "clanId": "kikuchi",
+        "clanId": "ronin",
         "defaultProv": "higo_kumamoto",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "assignedProvId": null,
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1331_018": {
         "clanId": "utsunomiya",
@@ -44228,8 +44316,12 @@
       "off_pl1359_001": {
         "clanId": "kikuchi",
         "defaultProv": "higo_kumamoto",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "assignedProvId": "higo_kumamoto",
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1359_002": {
         "clanId": "kamakura_fu",
@@ -44472,9 +44564,14 @@
         "isDaimyo": false
       },
       "off_pl1359_009": {
-        "clanId": "kikuchi",
+        "clanId": "ronin",
         "defaultProv": "higo_kumamoto",
-        "isDaimyo": false
+        "assignedProvId": null,
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1359_010": {
         "clanId": "kamakura_fu",
@@ -69828,7 +69925,7 @@
         "isDaimyo": false
       },
       "off_kai_soun": {
-        "clanId": "sagara",
+        "clanId": "ronin",
         "defaultProv": "higo_kumamoto",
         "isDaimyo": false
       },
@@ -77999,6 +78096,10 @@
         "clanId": "mori",
         "defaultProv": "aki",
         "isDaimyo": false
+      },
+      "off_kai_soun": {
+        "clanId": "aso",
+        "defaultProv": "higo_kumamoto"
       }
     },
     "castleLores": {
@@ -79611,9 +79712,9 @@
         "gold": 650,
         "rice": 800,
         "personality": "defensive",
-        "officerId": "off_kai_soun",
+        "officerId": "off_pl1570_144",
         "desc": "肥後北中部の阿蘇神社大宮司の系譜。智勇兼備の名将・甲斐宗運の補佐のもと、大友・島津・相良の抗争の狭間で領国を守る。",
-        "name": "甲斐宗運",
+        "name": "阿蘇惟将",
         "color": "#196f3d",
         "crest": "阿",
         "kamonSvgId": "kamon-aso"
@@ -80693,10 +80794,14 @@
         "ignoreLifespan": true
       },
       "off_pl1570_144": {
-        "clanId": "ronin",
+        "clanId": "aso",
         "defaultProv": "higo_kumamoto",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "assignedProvId": "higo_kumamoto",
+        "location": "higo_kumamoto",
+        "isDaimyo": true,
+        "isLeader": true,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       },
       "off_pl1570_145": {
         "clanId": "ronin",
@@ -81916,6 +82021,11 @@
       "off_pl1590_105": {
         "clanId": "imagawa",
         "defaultProv": "mikawa",
+        "isDaimyo": false
+      },
+      "off_kai_soun": {
+        "clanId": "aso",
+        "defaultProv": "higo_kumamoto",
         "isDaimyo": false
       }
     },
@@ -83179,10 +83289,14 @@
         "ignoreLifespan": true
       },
       "off_pl1570_144": {
-        "clanId": "ronin",
+        "clanId": "aso",
         "defaultProv": "higo_kumamoto",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "assignedProvId": "higo_kumamoto",
+        "location": "higo_kumamoto",
+        "isDaimyo": true,
+        "isLeader": true,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       },
       "off_pl1570_145": {
         "clanId": "ronin",
@@ -84726,6 +84840,11 @@
       "off_jd_261": {
         "clanId": "ronin",
         "defaultProv": "south_omi"
+      },
+      "off_kai_soun": {
+        "clanId": "aso",
+        "defaultProv": "higo_kumamoto",
+        "isDaimyo": false
       }
     },
     "gengo": "元亀元年",
@@ -85645,7 +85764,7 @@
         "personality": "domestic",
         "officerId": "off_tokugawa_ieyasu",
         "desc": "徳川家康。今川の人質から独立し、織田信長と同盟して三河・遠江・駿河を平定。関ヶ原の戦いを制して二百六十年の江戸幕府を開いた。",
-        "name": "徳川家康",
+        "name": "松平元康",
         "color": "#096d3f",
         "crest": "徳",
         "kamonSvgId": "kamon-tokugawa"
@@ -85981,9 +86100,9 @@
         "gold": 650,
         "rice": 800,
         "personality": "defensive",
-        "officerId": "off_kai_soun",
+        "officerId": "off_pl1570_144",
         "desc": "肥後北中部の阿蘇神社大宮司の系譜。智勇兼備の名将・甲斐宗運の補佐のもと、大友・島津・相良の抗争の狭間で領国を守る。",
-        "name": "甲斐宗運",
+        "name": "阿蘇惟将",
         "color": "#196f3d",
         "crest": "阿",
         "kamonSvgId": "kamon-aso"
@@ -87631,9 +87750,9 @@
         "gold": 650,
         "rice": 800,
         "personality": "defensive",
-        "officerId": "off_kai_soun",
+        "officerId": "off_pl1570_144",
         "desc": "肥後北中部の阿蘇神社大宮司の系譜。智勇兼備の名将・甲斐宗運の補佐のもと、大友・島津・相良の抗争の狭間で領国を守る。",
-        "name": "甲斐宗運",
+        "name": "阿蘇惟将",
         "color": "#196f3d",
         "crest": "阿",
         "kamonSvgId": "kamon-aso"
@@ -88798,10 +88917,14 @@
         "ignoreLifespan": true
       },
       "off_pl1570_144": {
-        "clanId": "ronin",
+        "clanId": "aso",
         "defaultProv": "higo_kumamoto",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "assignedProvId": "higo_kumamoto",
+        "location": "higo_kumamoto",
+        "isDaimyo": true,
+        "isLeader": true,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       },
       "off_pl1570_145": {
         "clanId": "ronin",
@@ -88818,8 +88941,12 @@
       "off_pl1570_147": {
         "clanId": "ronin",
         "defaultProv": "higo_kumamoto",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "assignedProvId": null,
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1570_149": {
         "clanId": "tsuchimochi",
@@ -90594,6 +90721,11 @@
       "off_jd_261": {
         "clanId": "ronin",
         "defaultProv": "south_omi"
+      },
+      "off_kai_soun": {
+        "clanId": "aso",
+        "defaultProv": "higo_kumamoto",
+        "isDaimyo": false
       }
     },
     "castleLores": {
@@ -92960,10 +93092,14 @@
         "isDaimyo": false
       },
       "off_pl1570_144": {
-        "clanId": "ronin",
+        "clanId": "otomo",
         "defaultProv": "higo_kumamoto",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "assignedProvId": "higo_kumamoto",
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       },
       "off_pl1570_145": {
         "clanId": "ronin",
@@ -92980,8 +93116,12 @@
       "off_pl1570_147": {
         "clanId": "otomo",
         "defaultProv": "higo_kumamoto",
+        "assignedProvId": "higo_kumamoto",
+        "location": "higo_kumamoto",
         "isDaimyo": false,
-        "clearAssignment": true
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1570_149": {
         "clanId": "tsuchimochi",
@@ -94205,15 +94345,20 @@
       "off_kai_soun": {
         "clanId": "otomo",
         "defaultProv": "higo_kumamoto",
-        "assignedProvId": "higo_kumamoto",
+        "assignedProvId": null,
         "isDaimyo": false,
-        "clearAssignment": false
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_kikuchi_norinao": {
-        "clanId": "otomo",
+        "clanId": "ronin",
         "defaultProv": "higo_kumamoto",
+        "assignedProvId": null,
+        "location": "higo_kumamoto",
         "isDaimyo": false,
-        "clearAssignment": true
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_hist_1524_shiba_akizane": {
         "clanId": "shiba_oshu",
@@ -94527,6 +94672,20 @@
       "off_jd_261": {
         "clanId": "ronin",
         "defaultProv": "south_omi"
+      },
+      "off_konishi_yukinaga": {
+        "clanId": "ronin",
+        "defaultProv": "north_omi",
+        "assignedProvId": null,
+        "location": "north_omi",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
+      },
+      "off_egami_ietane": {
+        "clanId": "ryuzoji",
+        "defaultProv": "hizen"
       }
     },
     "castleLores": {
@@ -96827,10 +96986,14 @@
         "isDaimyo": false
       },
       "off_pl1570_144": {
-        "clanId": "ronin",
+        "clanId": "otomo",
         "defaultProv": "higo_kumamoto",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "assignedProvId": "higo_kumamoto",
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       },
       "off_pl1570_145": {
         "clanId": "ronin",
@@ -98077,15 +98240,20 @@
       "off_kai_soun": {
         "clanId": "otomo",
         "defaultProv": "higo_kumamoto",
-        "assignedProvId": "higo_kumamoto",
+        "assignedProvId": null,
         "isDaimyo": false,
-        "clearAssignment": false
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_kikuchi_norinao": {
-        "clanId": "otomo",
+        "clanId": "ronin",
         "defaultProv": "higo_kumamoto",
+        "assignedProvId": null,
+        "location": "higo_kumamoto",
         "isDaimyo": false,
-        "clearAssignment": true
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_hist_1524_shiba_akizane": {
         "clanId": "shiba_oshu",
@@ -98483,6 +98651,45 @@
       "off_jd_261": {
         "clanId": "ronin",
         "defaultProv": "south_omi"
+      },
+      "off_egami_ietane": {
+        "clanId": "ryuzoji",
+        "defaultProv": "hizen"
+      },
+      "off_konishi_yukinaga": {
+        "clanId": "ronin",
+        "defaultProv": "north_omi",
+        "assignedProvId": null,
+        "location": "north_omi",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
+      },
+      "off_otomo_sorin": {
+        "clanId": "otomo",
+        "defaultProv": "bungo",
+        "assignedProvId": "bungo",
+        "location": "bungo",
+        "isDaimyo": true,
+        "isLeader": true,
+        "isCastleLord": true,
+        "ignoreLifespan": true
+      },
+      "off_usuki_akisumi": {
+        "clanId": "otomo",
+        "defaultProv": "bungo",
+        "isDaimyo": false
+      },
+      "off_dm_otomo_1600": {
+        "clanId": "otomo",
+        "defaultProv": "bungo",
+        "assignedProvId": "bungo",
+        "location": "bungo",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       }
     },
     "castleLores": {
@@ -99360,7 +99567,7 @@
         "personality": "domestic",
         "officerId": "off_tokugawa_ieyasu",
         "desc": "三河・遠江に加え甲州征伐の功により駿河を領有した徳川家康。盟友信長との絆を深めつつ、東海に強固な基盤を確立する。",
-        "name": "徳川家康",
+        "name": "松平元康",
         "color": "#096d3f",
         "crest": "徳",
         "kamonSvgId": "kamon-tokugawa"
@@ -100317,10 +100524,14 @@
         "isDaimyo": false
       },
       "off_pl1570_144": {
-        "clanId": "ronin",
+        "clanId": "otomo",
         "defaultProv": "higo_kumamoto",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "assignedProvId": "higo_kumamoto",
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       },
       "off_pl1570_146": {
         "clanId": "ryuzoji",
@@ -102017,16 +102228,13 @@
       "off_egami_ietane": {
         "clanId": "ryuzoji",
         "defaultProv": "chikugo",
-        "assignedProvId": "chikugo",
         "isDaimyo": false
       },
       "off_monchujo_munekage": {
         "clanId": "otomo",
         "defaultProv": "higo_kumamoto",
-        "assignedProvId": "higo_kumamoto",
-        "location": "higo_kumamoto",
+        "assignedProvId": null,
         "isDaimyo": false,
-        "isLeader": false,
         "isCastleLord": false,
         "ignoreLifespan": true
       },
@@ -102189,6 +102397,14 @@
         "isDaimyo": false,
         "ignoreLifespan": true,
         "clearAssignment": true
+      },
+      "off_kai_soun": {
+        "clanId": "otomo",
+        "defaultProv": "higo_kumamoto",
+        "assignedProvId": null,
+        "isDaimyo": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       }
     },
     "castleLores": {
@@ -103147,7 +103363,7 @@
         "personality": "domestic",
         "officerId": "off_tokugawa_ieyasu",
         "desc": "東海道五カ国を治める大大名。織田信雄と結び、精強な三河武士団を率いて秀吉と激突する。",
-        "name": "徳川家康",
+        "name": "松平元康",
         "color": "#096d3f",
         "crest": "徳",
         "kamonSvgId": "kamon-tokugawa"
@@ -104009,9 +104225,13 @@
       },
       "off_pl1570_128": {
         "clanId": "ronin",
-        "defaultProv": "chikugo",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "defaultProv": "chikuzen",
+        "assignedProvId": null,
+        "location": "chikuzen",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1570_130": {
         "clanId": "ryuzoji",
@@ -104658,15 +104878,23 @@
       },
       "off_pl1590_073": {
         "clanId": "shimazu",
-        "defaultProv": "satsuma",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "defaultProv": "chikugo",
+        "assignedProvId": "chikugo",
+        "location": "chikugo",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1590_075": {
         "clanId": "shimazu",
-        "defaultProv": "higo_kumamoto",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "defaultProv": "higo_hitoyoshi",
+        "assignedProvId": "higo_hitoyoshi",
+        "location": "higo_hitoyoshi",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1590_077": {
         "clanId": "otomo",
@@ -105727,15 +105955,23 @@
       },
       "off_egami_ietane": {
         "clanId": "ryuzoji",
-        "defaultProv": "chikugo",
-        "assignedProvId": "chikugo",
-        "isDaimyo": false
+        "defaultProv": "hizen",
+        "assignedProvId": "hizen",
+        "location": "hizen",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_monchujo_munekage": {
-        "clanId": "otomo",
+        "clanId": "ronin",
         "defaultProv": "chikugo",
-        "assignedProvId": "chikugo",
-        "isDaimyo": false
+        "assignedProvId": null,
+        "location": "chikugo",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_miura_tojumaru": {
         "clanId": "ukita",
@@ -105832,6 +106068,118 @@
       "off_jd_261": {
         "clanId": "toyotomi",
         "defaultProv": "settsu"
+      },
+      "off_kikuchi_takemune": {
+        "clanId": "ronin",
+        "defaultProv": "higo_kumamoto",
+        "assignedProvId": null,
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
+      },
+      "off_kikuchi_norinao": {
+        "clanId": "ronin",
+        "defaultProv": "higo_kumamoto",
+        "assignedProvId": null,
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
+      },
+      "off_jd_259": {
+        "clanId": "shimazu",
+        "defaultProv": "higo_hitoyoshi",
+        "assignedProvId": "higo_hitoyoshi",
+        "location": "higo_hitoyoshi",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
+      },
+      "off_marume_nagayoshi": {
+        "clanId": "shimazu",
+        "defaultProv": "higo_hitoyoshi",
+        "assignedProvId": "higo_hitoyoshi",
+        "location": "higo_hitoyoshi",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
+      },
+      "off_jd_033": {
+        "clanId": "ronin",
+        "defaultProv": "bicchu",
+        "assignedProvId": null,
+        "location": "bicchu",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
+      },
+      "off_jd_035": {
+        "clanId": "mori",
+        "defaultProv": "bingo",
+        "assignedProvId": null,
+        "isDaimyo": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
+      },
+      "off_jd_034": {
+        "clanId": "mori",
+        "defaultProv": "bingo",
+        "assignedProvId": "bingo",
+        "location": "bingo",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": true,
+        "ignoreLifespan": true
+      },
+      "off_jd_031": {
+        "clanId": "ukita",
+        "defaultProv": "bizen",
+        "assignedProvId": "bizen",
+        "location": "bizen",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
+      },
+      "off_jd_056": {
+        "clanId": "ukita",
+        "defaultProv": "bizen",
+        "assignedProvId": "bizen",
+        "location": "bizen",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
+      },
+      "off_jd_419": {
+        "clanId": "ukita",
+        "defaultProv": "bizen",
+        "assignedProvId": "bizen",
+        "location": "bizen",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
+      },
+      "off_arima_toyo-uji": {
+        "clanId": "tokugawa",
+        "defaultProv": "totomi"
+      },
+      "off_shimazu_yoshihiro": {
+        "clanId": "shimazu",
+        "defaultProv": "chikugo",
+        "assignedProvId": "chikugo",
+        "location": "chikugo",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       }
     },
     "castleLores": {
@@ -106641,7 +106989,7 @@
         "personality": "balanced",
         "officerId": "off_toyotomi_hideyoshi",
         "desc": "関白・太政大臣。二十万余の西国大動員軍を率い、天下惣無事のため九州親征に乗り出す。",
-        "name": "豊臣秀吉",
+        "name": "羽柴秀吉",
         "color": "#b7950b",
         "crest": "豊",
         "kamonSvgId": "kamon-toyotomi"
@@ -106773,7 +107121,7 @@
         "personality": "domestic",
         "officerId": "off_tokugawa_ieyasu",
         "desc": "秀吉に臣従した東海の巨頭。領国経営を固めつつ中央の動向を注視する。",
-        "name": "徳川家康",
+        "name": "松平元康",
         "color": "#096d3f",
         "crest": "徳",
         "kamonSvgId": "kamon-tokugawa"
@@ -107574,9 +107922,11 @@
       },
       "off_pl1570_152": {
         "clanId": "shimazu",
-        "defaultProv": "satsuma",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "defaultProv": "higo_kumamoto",
+        "assignedProvId": null,
+        "isDaimyo": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1570_153": {
         "clanId": "shimazu",
@@ -109217,7 +109567,12 @@
       "off_shimazu_yoshihiro": {
         "clanId": "shimazu",
         "defaultProv": "higo_kumamoto",
-        "isDaimyo": false
+        "assignedProvId": "higo_kumamoto",
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       },
       "off_shimazu_iehisa": {
         "clanId": "shimazu",
@@ -109271,7 +109626,7 @@
       },
       "off_arima_toyo-uji": {
         "clanId": "toyotomi",
-        "defaultProv": "settsu",
+        "defaultProv": "totomi",
         "isDaimyo": false
       },
       "off_jd_033": {
@@ -109302,12 +109657,20 @@
       "off_succ_sagara_1570_136": {
         "clanId": "shimazu",
         "defaultProv": "higo_hitoyoshi",
-        "isDaimyo": false
+        "assignedProvId": "higo_hitoyoshi",
+        "location": "higo_hitoyoshi",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       },
       "off_jd_259": {
         "clanId": "shimazu",
         "defaultProv": "higo_hitoyoshi",
-        "isDaimyo": false
+        "assignedProvId": null,
+        "isDaimyo": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_marume_nagayoshi": {
         "clanId": "shimazu",
@@ -110915,10 +111278,14 @@
         "isDaimyo": false
       },
       "off_pl1570_106": {
-        "clanId": "toyotomi",
+        "clanId": "ukita",
         "defaultProv": "bizen",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "assignedProvId": "bizen",
+        "location": "bizen",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1570_107": {
         "clanId": "toyotomi",
@@ -110927,10 +111294,14 @@
         "isDaimyo": false
       },
       "off_pl1570_108": {
-        "clanId": "toyotomi",
+        "clanId": "ukita",
         "defaultProv": "bizen",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "assignedProvId": "bizen",
+        "location": "bizen",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1570_109": {
         "clanId": "mori",
@@ -110971,7 +111342,7 @@
         "isDaimyo": false
       },
       "off_pl1570_126": {
-        "clanId": "toyotomi",
+        "clanId": "ronin",
         "defaultProv": "hyuga",
         "assignedProvId": null,
         "location": "hyuga",
@@ -111023,10 +111394,14 @@
         "isDaimyo": false
       },
       "off_pl1570_147": {
-        "clanId": "kato",
+        "clanId": "ronin",
         "defaultProv": "higo_kumamoto",
-        "assignedProvId": "higo_kumamoto",
-        "isDaimyo": false
+        "assignedProvId": null,
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1570_150": {
         "clanId": "shimazu",
@@ -111548,10 +111923,14 @@
         "isDaimyo": false
       },
       "off_pl1590_066": {
-        "clanId": "toyotomi",
-        "defaultProv": "bizen",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "clanId": "ronin",
+        "defaultProv": "iwami",
+        "assignedProvId": null,
+        "location": "iwami",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1590_067": {
         "clanId": "mori",
@@ -113160,7 +113539,7 @@
       },
       "off_arima_toyo-uji": {
         "clanId": "toyotomi",
-        "defaultProv": "settsu",
+        "defaultProv": "totomi",
         "isDaimyo": false
       },
       "off_kyogoku_takatomo": {
@@ -113260,10 +113639,14 @@
         "clearAssignment": true
       },
       "off_mizuno_katsunari": {
-        "clanId": "ronin",
-        "defaultProv": "higo_kumamoto",
+        "clanId": "tokugawa",
+        "defaultProv": "suruga",
+        "assignedProvId": "suruga",
+        "location": "suruga",
         "isDaimyo": false,
-        "clearAssignment": true
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_yamana_toyokuni": {
         "clanId": "toyotomi",
@@ -113355,6 +113738,10 @@
         "clanId": "toyotomi",
         "defaultProv": "tajima",
         "isDaimyo": false
+      },
+      "off_egami_ietane": {
+        "clanId": "ryuzoji",
+        "defaultProv": "hizen"
       }
     },
     "castleLores": {
@@ -114937,10 +115324,14 @@
         "isDaimyo": false
       },
       "off_pl1570_147": {
-        "clanId": "kato",
+        "clanId": "ronin",
         "defaultProv": "higo_kumamoto",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "assignedProvId": null,
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1570_150": {
         "clanId": "shimazu",
@@ -116976,7 +117367,6 @@
       "off_arima_toyo-uji": {
         "clanId": "toyotomi",
         "defaultProv": "totomi",
-        "assignedProvId": null,
         "location": "totomi",
         "isDaimyo": false,
         "isLeader": false,
@@ -117067,6 +117457,10 @@
       "off_jd_261": {
         "clanId": "toyotomi",
         "defaultProv": "bungo"
+      },
+      "off_egami_ietane": {
+        "clanId": "ryuzoji",
+        "defaultProv": "hizen"
       }
     },
     "castleLores": {
@@ -118574,10 +118968,14 @@
         "isDaimyo": false
       },
       "off_pl1570_147": {
-        "clanId": "kato",
+        "clanId": "ronin",
         "defaultProv": "higo_kumamoto",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "assignedProvId": null,
+        "location": "higo_kumamoto",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1570_150": {
         "clanId": "shimazu",
@@ -120612,7 +121010,6 @@
       "off_arima_toyo-uji": {
         "clanId": "tokugawa",
         "defaultProv": "totomi",
-        "assignedProvId": "totomi",
         "clearAssignment": false,
         "isDaimyo": false,
         "location": "totomi",
@@ -124699,7 +125096,7 @@
         "clanId": "tokugawa",
         "defaultProv": "tamba",
         "assignedProvId": "tamba",
-        "location": "nobeoka",
+        "location": "tamba",
         "isDaimyo": false,
         "isLeader": false,
         "isCastleLord": true,
@@ -128143,6 +128540,10 @@
       "off_edo_tokugawa_1609_93": {
         "clanId": "tokugawa",
         "isDaimyo": false
+      },
+      "off_arima_toyo-uji": {
+        "clanId": "tokugawa",
+        "defaultProv": "tamba"
       }
     },
     "castleLores": {
@@ -160311,6 +160712,14 @@
       "off_jd_261": {
         "clanId": "toyotomi",
         "defaultProv": "settsu"
+      },
+      "off_kai_soun": {
+        "clanId": "ronin",
+        "defaultProv": "higo_kumamoto"
+      },
+      "off_egami_ietane": {
+        "clanId": "ryuzoji",
+        "defaultProv": "hizen"
       }
     },
     "owners": {
