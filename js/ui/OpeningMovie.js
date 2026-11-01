@@ -192,6 +192,27 @@ export class OpeningMovie {
         if (!this.isPlaying) return;
         if (e.target && e.target.closest && e.target.closest('#openingPauseBtn, #openingMuteBtn')) return;
         if (performance.now() - (this._startedAt || 0) < this.TAP_GRACE_MS) return;
+        // スマホ（タッチ端末）: 自動再生制限で音が止まっている間の最初のタップは「音を出す」操作として扱い、
+        // オープニングを閉じない（従来はこのタップで即終了し、スマホでオープニングが流れなかった）。PC は従来通り。
+        const coarse = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+        const actx = this.music && this.music.ctx;
+        if (coarse && !this.isMuted && !this._tapUnlocked && (this._audioBlocked || this._ctxBlockedAtDown || !actx || actx.state !== 'running')) {
+          this._tapUnlocked = true;
+          e.stopPropagation();
+          e.preventDefault();
+          try {
+            if (this.music && typeof this.music.init === 'function') this.music.init();
+            const c = this.music && this.music.ctx;
+            const go = () => { try { if (typeof this.music.playTrack === 'function') this.music.playTrack('op', true); } catch (_) {} };
+            if (c && c.state !== 'running') c.resume().then(go).catch(() => {}); else go();
+          } catch (_) {}
+          this._audioBlocked = false;
+          if (this.muteBtn) {
+            this.muteBtn.innerHTML = '<span class="ctrl-icon">🔊</span><span class="ctrl-text">音声</span>';
+            this.muteBtn.title = '音声を消音';
+          }
+          return;
+        }
         e.stopPropagation();
         e.preventDefault();
         this.stop();
@@ -246,6 +267,16 @@ export class OpeningMovie {
     this.lastFrameTime = this.startTime;
     this.pausedMoment = 0;
     this.elapsed = 0;
+    this._tapUnlocked = false;
+    this._ctxBlockedAtDown = false;
+    // 押下時点の音声状態を記録（他の解除処理が click 前に resume してしまうため、click 時点では判定できない）
+    if (!this._boundDownProbe) {
+      this._boundDownProbe = () => {
+        const c = this.music && this.music.ctx;
+        this._ctxBlockedAtDown = !c || c.state !== 'running';
+      };
+      ['pointerdown', 'touchstart'].forEach(t => window.addEventListener(t, this._boundDownProbe, { capture: true, passive: true }));
+    }
     this.audioTriggers = {};
     this.shakeIntensity = 0;
     this.flashOpacity = 0;

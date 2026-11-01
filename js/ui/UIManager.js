@@ -18,7 +18,7 @@
 
 
 
-import { OpeningMovie } from './OpeningMovie.js?v=20261031_sound_sync';
+import { OpeningMovie } from './OpeningMovie.js?v=20261101_mobfix1';
 
 
 
@@ -7043,7 +7043,7 @@ export const UIManagerMethods = {
     icon.textContent = icons[sel.value] || icons.direct;
     const opt = sel.options[sel.selectedIndex];
     if (opt) sel.title = opt.textContent;
-  }
+  },
 
 
 
