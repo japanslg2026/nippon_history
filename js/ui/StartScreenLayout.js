@@ -617,7 +617,7 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     syncEraTabsVisibility();
 
     // 難易度ボタンからピクトグラムを削除し、初級・中級・上級・超級に設定
-    document.querySelectorAll('.diff-option-btn').forEach(b => {
+    document.querySelectorAll('#startModal .diff-option-btn[data-diff]').forEach(b => {
       b.querySelectorAll('.sl-dicon').forEach(el => el.remove());
       const k = b.dataset.diff;
       const label = DIFF_NAME_MAP[k] || '中級';
@@ -696,7 +696,7 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     if (diff) $('.sl-diff', root).appendChild(diff);
     $('.sl-desc-body', root).appendChild(desc);
     buildMap($('.sl-map-body', root));
-    document.querySelectorAll('.diff-option-btn .diff-btn-name').forEach(n => { n.textContent = n.textContent.replace(/[【】]/g, ''); });
+    document.querySelectorAll('#startModal .diff-option-btn[data-diff] .diff-btn-name').forEach(n => { n.textContent = n.textContent.replace(/[【】]/g, ''); });
 
     if (IS_PHONE) buildPhone(root);
 

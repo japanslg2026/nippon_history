@@ -1337,6 +1337,7 @@ class SengokuMusicEngine {
     this.timerId = setInterval(() => {
       this.scheduleAhead();
     }, SengokuMusicEngine.SCHEDULER_TICK_MS);
+    this.maybePrerender(trackKey); // smartphone: offline pre-render then buffer loop
 
     // バッジ等のUI更新通知
     const badge = document.getElementById('bgmTitleBadge');
@@ -1407,10 +1408,180 @@ class SengokuMusicEngine {
     }
   }
 
+  // ---- Mobile BGM pre-render (2026-11-01 offline) ----
+  // On smartphones, one full loop of the current track is rendered once with OfflineAudioContext
+  // into an AudioBuffer, then looped by an AudioBufferSourceNode (no per-step oscillator work).
+  // While rendering, the realtime scheduler keeps playing; when the buffer is ready we hand over
+  // seamlessly at the next scheduled step. PC (non-mobile) keeps the realtime path unchanged.
+  usePrerender() {
+    if (typeof window === 'undefined') return false;
+    if (window.SENGOKU_BGM_PRERENDER === false) return false;
+    if (!(window.OfflineAudioContext || window.webkitOfflineAudioContext)) return false;
+    if (window.SENGOKU_BGM_PRERENDER === true) return true;
+    if (this._isMobileCached === undefined) {
+      const ua = navigator.userAgent || '';
+      this._isMobileCached = (/Android|iPhone|iPad|iPod|Mobile/i.test(ua) ||
+        (navigator.maxTouchPoints > 1 && /Macintosh/.test(ua))) &&
+        (!window.matchMedia || window.matchMedia('(pointer: coarse)').matches);
+    }
+    return this._isMobileCached;
+  }
+
+  // Steps in one seamless loop: LCM of all part lengths (quiet tracks alternate texture each melody loop).
+  prerenderLoopSteps(track) {
+    const gcd = (a, b) => { while (b) { [a, b] = [b, a % b]; } return a; };
+    const lcm = (a, b) => (a / gcd(a, b)) * b;
+    const len = Math.max(32, track.melody?.length || 32);
+    let L = len;
+    const parts = [track.melody?.length, (track.chords?.length || 0) * 4, (track.bass?.length || 0) * 4,
+      track.arpeggio?.length, track.drums?.length, 32];
+    parts.forEach(n => { if (n > 0) L = lcm(L, n); });
+    const quiet = track.id === 'tea' || track.id === 'winter' || track.id === 'tragedy' || track.id === 'diplomacy';
+    if (quiet && (L / len) % 2 === 1) L *= 2;
+    const stepSec = (track.tempoMs || 250) / 1000;
+    if (L * stepSec > SengokuMusicEngine.PRERENDER_MAX_SEC) L = len * (quiet ? 2 : 1); // cap length (memory/time)
+    return L;
+  }
+
+  renderTrackBuffer(trackKey) {
+    this._prerenderCache = this._prerenderCache || new Map();
+    this._prerenderJobs = this._prerenderJobs || new Map();
+    if (this._prerenderCache.has(trackKey)) return Promise.resolve(this._prerenderCache.get(trackKey));
+    if (this._prerenderJobs.has(trackKey)) return this._prerenderJobs.get(trackKey);
+    const track = this.tracks[trackKey];
+    const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+    if (!track || !OAC || !this.ctx) return Promise.resolve(null);
+    const steps = this.prerenderLoopSteps(track);
+    const stepSec = Math.max(0.05, (track.tempoMs || 250) / 1000);
+    const loopSec = steps * stepSec;
+    const tailSec = SengokuMusicEngine.PRERENDER_TAIL_SEC;
+    const rate = SengokuMusicEngine.PRERENDER_RATE;
+    const loopLen = Math.round(loopSec * rate);
+    const total = loopLen + Math.ceil(tailSec * rate);
+    let off;
+    try { off = new OAC(2, total, rate); } catch (e) { return Promise.resolve(null); }
+
+    // Swap the engine onto the offline graph, schedule every step synchronously, then restore.
+    const keys = ['ctx', 'trackBus', 'trackWet', 'convolver', '_silentSink', 'stepIndex', 'stepMs',
+      'currentTrack', '_softStartSteps', '_skipFirstPercussion', 'isBgmMuted', '_seDepth', '_bgmDepth'];
+    const saved = {};
+    keys.forEach(k => { saved[k] = this[k]; });
+    try {
+      const liveIr = this.convolver && this.convolver.buffer;
+      this.ctx = off;
+      this._silentSink = null;
+      this.trackBus = off.createGain();
+      this.trackBus.connect(off.destination);
+      this.trackWet = null;
+      this.convolver = null;
+      if (liveIr) {
+        this.convolver = off.createConvolver();
+        this.convolver.buffer = liveIr;
+        const wetOut = off.createGain();
+        wetOut.gain.value = this.convolverGain ? this.convolverGain.gain.value : 0.48;
+        this.convolver.connect(wetOut);
+        wetOut.connect(off.destination);
+        this.trackWet = off.createGain();
+        this.trackWet.connect(this.convolver);
+      }
+      this.currentTrack = trackKey;
+      this.stepIndex = 0;
+      this.stepMs = track.tempoMs;
+      this._softStartSteps = 0;
+      this._skipFirstPercussion = false;
+      this.isBgmMuted = false;
+      this._seDepth = 0;
+      this._bgmDepth = 0;
+      for (let i = 0; i < steps; i++) this.playStep(0.001 + i * stepSec);
+    } catch (e) {
+      console.warn('BGM prerender scheduling failed:', e);
+      off = null;
+    } finally {
+      keys.forEach(k => { this[k] = saved[k]; });
+    }
+    if (!off) return Promise.resolve(null);
+
+    const job = new Promise((resolve) => {
+      const done = (buf) => {
+        this._prerenderJobs.delete(trackKey);
+        if (!buf) { resolve(null); return; }
+        // Fold the tail (reverb / release past loop end) back onto the head for a seamless loop.
+        let out;
+        try {
+          out = this.ctx.createBuffer(2, loopLen, rate);
+          for (let ch = 0; ch < 2; ch++) {
+            const src = buf.getChannelData(ch);
+            const dst = out.getChannelData(ch);
+            dst.set(src.subarray(0, loopLen));
+            for (let i = loopLen; i < src.length; i++) dst[(i - loopLen) % loopLen] += src[i];
+          }
+        } catch (e) { resolve(null); return; }
+        const entry = { buffer: out, loopSec: loopLen / rate, stepSec, steps };
+        this._prerenderCache.delete(trackKey);
+        this._prerenderCache.set(trackKey, entry);
+        while (this._prerenderCache.size > SengokuMusicEngine.PRERENDER_CACHE_MAX) {
+          this._prerenderCache.delete(this._prerenderCache.keys().next().value);
+        }
+        resolve(entry);
+      };
+      try {
+        const r = off.startRendering();
+        if (r && typeof r.then === 'function') r.then(done, () => done(null));
+        else off.oncomplete = (ev) => done(ev.renderedBuffer); // old webkit
+      } catch (e) { done(null); }
+    });
+    this._prerenderJobs.set(trackKey, job);
+    return job;
+  }
+
+  // Called after playTrack started the realtime scheduler. Hands over to buffer playback when ready.
+  maybePrerender(trackKey) {
+    if (!this.usePrerender() || this.isBgmMuted || !this.ctx) return;
+    const token = (this._prerenderToken = (this._prerenderToken || 0) + 1);
+    this.renderTrackBuffer(trackKey).then(entry => {
+      if (!entry || token !== this._prerenderToken || this.currentTrack !== trackKey || !this.timerId || !this.trackBus || this._bufMode) return;
+      this.startBufferPlayback(entry);
+    }).catch(() => {});
+  }
+
+  startBufferPlayback(entry) {
+    if (!this.ctx || !this.trackBus) return;
+    const now = this.ctx.currentTime;
+    // Next un-scheduled step: realtime voices already booked up to nextStepTime keep sounding.
+    let at = this.nextStepTime;
+    let step = this.stepIndex;
+    if (!(at > now + 0.02)) { at = now + 0.05; }
+    const offset = ((step % entry.steps) * entry.stepSec) % entry.loopSec;
+    try {
+      const src = this.ctx.createBufferSource();
+      src.buffer = entry.buffer;
+      src.loop = true;
+      src.loopStart = 0;
+      src.loopEnd = entry.loopSec;
+      src.connect(this.trackBus); // reverb is baked into the buffer
+      src.start(at, offset);
+      this._bufSrc = src;
+      this._bufMode = true; // scheduleAhead becomes a no-op
+    } catch (e) {
+      console.warn('BGM buffer playback failed, staying realtime:', e);
+      this._bufSrc = null;
+      this._bufMode = false;
+    }
+  }
+
+  stopBufferPlayback(fadeSec = 0.12) {
+    const src = this._bufSrc;
+    this._bufSrc = null;
+    this._bufMode = false;
+    this._prerenderToken = (this._prerenderToken || 0) + 1;
+    if (src && this.ctx) {
+      try { src.stop(this.ctx.currentTime + fadeSec + 0.05); } catch (e) {}
+    }
+  }
   // ---- BGM 先読みスケジューラ（2026-10-11 aq） ----
   // 今から LOOKAHEAD 秒先までの拍を予約する。メインスレッドが一時的に塞がっても、予約済みの音は鳴り続ける。
   scheduleAhead() {
-    if (!this.ctx) return;
+    if (!this.ctx || this._bufMode) return; // buffer loop playing (mobile pre-render)
     const now = this.ctx.currentTime;
     const stepSec = Math.max(0.05, (this.stepMs || 250) / 1000);
     if (!(this.nextStepTime > 0)) this.nextStepTime = now + 0.03;
@@ -1447,6 +1618,7 @@ class SengokuMusicEngine {
   }
 
   retireTrackBus(fadeSec = 0.12) {
+    this.stopBufferPlayback(fadeSec);
     const buses = [this.trackBus, this.trackWet].filter(Boolean);
     this.trackBus = null;
     this.trackWet = null;
@@ -3179,6 +3351,10 @@ SengokuMusicEngine.LOOKAHEAD_SEC = 1.5;
 SengokuMusicEngine.HOME_TRACKS = ['spring', 'summer', 'autumn', 'winter', 'oda', 'takeda', 'uesugi', 'date', 'mori_choso', 'shimazu', 'hojo'];
 SengokuMusicEngine.SOFT_START_STEPS = 8;
 SengokuMusicEngine.SCHEDULER_TICK_MS = 50;
+SengokuMusicEngine.PRERENDER_RATE = 24000;      // mobile pre-render sample rate (memory: ~11MB/min stereo)
+SengokuMusicEngine.PRERENDER_MAX_SEC = 150;     // longest loop to pre-render
+SengokuMusicEngine.PRERENDER_TAIL_SEC = 3;      // reverb tail folded back to loop head
+SengokuMusicEngine.PRERENDER_CACHE_MAX = 3;     // tracks kept in memory
 
 // 未定義メソッド呼び出し時の安全フォールバック（例外クラッシュ完全防止Proxy）
 const _rawSengokuMusic = new SengokuMusicEngine();

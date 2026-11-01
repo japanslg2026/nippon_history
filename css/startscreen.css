@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Kaisei+Opti:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kaisei+Opti:wght@800&display=swap');
 /* 初期選択画面 フルウィンドウレイアウト (StartScreenLayout.js) */
 body.sl-start-open { overflow: hidden !important; }
 #startModal.sl-active { padding: 0 !important; align-items: stretch !important; justify-content: stretch !important; background: #0f0d0b !important; overflow: hidden !important; }
@@ -612,6 +612,12 @@ html.sl-phone #startModal.sl-active .sl-diff .diff-option-btn.selected {
 }
 
 /* 選択中大名へのクイックジャンプバー */
+/* ui55: モバイルでは地方チップを5列グリッドで折り返し（右端切れ防止） */
+@media (max-width: 600px) {
+  .sl-region-chips { display: grid !important; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; overflow: visible; width: 100%; box-sizing: border-box; }
+  .sl-reg-chip { min-width: 0; padding: 4px 2px; text-align: center; font-size: 12px !important; }
+}
+
 .sl-daimyo-jump-bar {
   display: flex;
   align-items: center;
