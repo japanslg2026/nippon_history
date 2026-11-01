@@ -1010,6 +1010,18 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => tryBuild()); else tryBuild();
   window.addEventListener('load', () => tryBuild());
 
-  setInterval(() => { const m = $('#startModal'); if (m) document.body.classList.toggle('sl-start-open', !m.classList.contains('hidden') && getComputedStyle(m).display !== 'none'); }, 500);
+  // 500ms毎のgetComputedStyleポーリングを廃止し、モーダルのclass/style変化時のみ判定（スマホの負荷軽減）
+  const syncOpen = () => {
+    const m = $('#startModal'); if (!m) return;
+    const open = !m.classList.contains('hidden') && m.style.display !== 'none' && getComputedStyle(m).display !== 'none';
+    document.body.classList.toggle('sl-start-open', open);
+    document.documentElement.classList.toggle('sl-start-open', open);
+  };
+  const watchOpen = () => {
+    const m = $('#startModal'); if (!m) { setTimeout(watchOpen, 200); return; }
+    syncOpen();
+    new MutationObserver(syncOpen).observe(m, { attributes: true, attributeFilter: ['class', 'style'] });
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', watchOpen); else watchOpen();
   window.SengokuStartLayout = { selectClan, refresh: queueRefresh, get selected() { return selected; }, setStep: (n) => setStep(n) };
 })();

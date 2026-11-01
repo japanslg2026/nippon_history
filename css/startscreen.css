@@ -1430,3 +1430,11 @@ html.sl-phone .sl-map-touch-info {
   font-size: 10px;
   color: #e6c35c;
 }
+
+/* ===== fix: スマホのスタート画面中は背面ページのスクロールを止める =====
+   style.css のスマホ用 html{overflow-y:auto} と #game-container{min-height:100dvh + 下余白76px} により
+   背面の文書が画面より高くなり、リストのスワイプが背面へ連鎖→アドレスバー伸縮→100dvh再計算で表示が揺れ・下部ボタンが欠けていた */
+html.sl-start-open, html.sl-start-open body { overflow: hidden !important; height: 100% !important; overscroll-behavior: none; }
+html.sl-start-open #game-container { height: 100dvh !important; min-height: 0 !important; max-height: 100dvh !important; overflow: hidden !important; padding-bottom: 0 !important; }
+html.sl-phone #startModal.sl-active { height: 100dvh !important; max-height: 100dvh !important; }
+html.sl-phone #startModal.sl-active .sl-body { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }

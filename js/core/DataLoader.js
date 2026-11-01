@@ -15,7 +15,7 @@ export class DataLoader {
    */
   static async loadAllData() {
     try {
-      const v = '20261031_officers_add';
+      const v = '20261101_perf1'; // japan_slg.html の preload と同じ値にすること
       const [scenarios, officers, provinces, clansData, governorsData, eventsData, mapBordersData] = await Promise.all([
         DataLoader.fetchJson(`data/scenarios.json?v=${v}`),
         DataLoader.fetchJson(`data/officers.json?v=${v}`),
@@ -23,7 +23,7 @@ export class DataLoader {
         DataLoader.fetchJson(`data/clans.json?v=${v}`),
         DataLoader.fetchJson(`data/governors.json?v=${v}`),
         DataLoader.fetchJson(`data/events.json?v=${v}`),
-        DataLoader.fetchJson(`data/map_borders.json?v=${v}`).catch(() => null)
+        (typeof window !== 'undefined' && window.MAP_BORDERS_DATA) ? Promise.resolve(null) : DataLoader.fetchJson(`data/map_borders.json?v=${v}`).catch(() => null)
       ]);
 
       if (mapBordersData && typeof window !== 'undefined') {
