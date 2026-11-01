@@ -1312,6 +1312,17 @@ class SengokuMusicEngine {
       softStart = true;                                                           // 場面曲からは静かにクロスフェード
     }
 
+    // smartphone: pre-exported audio file (HTML5 Audio). Falls back to synth if the file is missing.
+    if (this.useFileBgm() && this.hasBgmFile(trackKey)) {
+      this.currentTrack = trackKey;
+      this.stepIndex = 0;
+      this.playFileTrack(trackKey, softStart ? Math.max(0.5, SengokuMusicEngine.SOFT_START_STEPS * (this.tracks[trackKey].tempoMs || 250) / 1000) : 0.4);
+      const fb = document.getElementById('bgmTitleBadge');
+      if (fb && !this.isBgmMuted) fb.textContent = `?? ${this.tracks[trackKey].name}`;
+      return;
+    }
+    if (this._fileCur) this.stopFileBgm(0.12);
+
     this.currentTrack = trackKey;
     this.stepIndex = 0;
     this._softStartSteps = softStart ? SengokuMusicEngine.SOFT_START_STEPS : 0;
@@ -1351,6 +1362,7 @@ class SengokuMusicEngine {
       clearInterval(this.timerId);
       this.timerId = null;
     }
+    if (this._fileCur || this._fileMode) this.stopFileBgm(0.12);
     // 先読みで予約済みの音も止める
     this.retireTrackBus();
   }
@@ -1578,10 +1590,244 @@ class SengokuMusicEngine {
       try { src.stop(this.ctx.currentTime + fadeSec + 0.05); } catch (e) {}
     }
   }
+  // ---- Mobile BGM from pre-exported audio files (2026-11-01 file) ----
+  // Smartphones play audio/bgm/<trackId>.m4a (AAC) or .mp3 via HTML5 Audio (loop=true): hardware decode,
+  // no per-step Web Audio work, so game-logic load cannot cause dropouts. PC keeps the realtime path.
+  // Fallback when a file is missing / fails: existing OfflineAudioContext pre-render, then realtime.
+  // Flags: window.SENGOKU_BGM_FILE = true|false (force on/off), window.SENGOKU_BGM_FILE_MODE = 'element'|'buffer'
+  //  'buffer' = fetch + decodeAudioData + AudioBufferSourceNode loop (gapless, gain-ramp crossfades).
+  isMobileDevice() {
+    if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
+    if (this._isMobileDev === undefined) {
+      const ua = navigator.userAgent || '';
+      this._isMobileDev = (/Android|iPhone|iPad|iPod|Mobile/i.test(ua) ||
+        (navigator.maxTouchPoints > 1 && /Macintosh/.test(ua))) &&
+        (!window.matchMedia || window.matchMedia('(pointer: coarse)').matches);
+    }
+    return this._isMobileDev;
+  }
+
+  useFileBgm() {
+    if (typeof window === 'undefined' || typeof Audio === 'undefined') return false;
+    if (window.SENGOKU_BGM_FILE === false) return false;
+    if (window.SENGOKU_BGM_FILE === true) return true;
+    return this.isMobileDevice();
+  }
+
+  bgmFileExt() {
+    if (this._bgmExt === undefined) {
+      let ext = '.mp3';
+      try {
+        const a = document.createElement('audio');
+        // AAC (m4a) first: Safari/iOS & Android Chrome decode it in hardware and honour gapless priming.
+        if (a.canPlayType('audio/mp4; codecs="mp4a.40.2"')) ext = '.m4a';
+        else if (!a.canPlayType('audio/mpeg')) ext = '.mp3';
+      } catch (e) {}
+      this._bgmExt = ext;
+    }
+    return this._bgmExt;
+  }
+
+  // trackId -> URL. Default: audio/bgm/<trackId>.<ext>. Override per track via window.SENGOKU_BGM_FILES = { id: 'url' }.
+  bgmFileUrl(trackKey) {
+    const map = (typeof window !== 'undefined' && window.SENGOKU_BGM_FILES) || null;
+    if (map && map[trackKey]) return map[trackKey];
+    if (!SengokuMusicEngine.BGM_FILE_TRACKS.includes(trackKey)) return null;
+    return SengokuMusicEngine.BGM_FILE_BASE + trackKey + this.bgmFileExt() + '?v=' + SengokuMusicEngine.BGM_FILE_VERSION;
+  }
+
+  hasBgmFile(trackKey) {
+    if (this._fileMissing && this._fileMissing.has(trackKey)) return false;
+    return !!this.bgmFileUrl(trackKey);
+  }
+
+  fileTargetVolume() {
+    if (this.isMuted || this.isBgmMuted) return 0;
+    return Math.max(0, Math.min(1, this.masterVolume * this.bgmVolume * SengokuMusicEngine.BGM_FILE_GAIN));
+  }
+
+  // iOS ignores HTMLMediaElement.volume: route through Web Audio gain there.
+  _elementVolumeWorks() {
+    if (this._elVolOk === undefined) {
+      try { const a = new Audio(); a.volume = 0.5; this._elVolOk = Math.abs(a.volume - 0.5) < 0.01; } catch (e) { this._elVolOk = true; }
+    }
+    return this._elVolOk;
+  }
+
+  playFileTrack(trackKey, fadeSec = 0.4) {
+    const url = this.bgmFileUrl(trackKey);
+    if (!url) return false;
+    // Leave realtime / pre-render paths
+    if (this.timerId) { clearInterval(this.timerId); this.timerId = null; }
+    if (this._bufSrc) this.stopBufferPlayback(0.12);
+    this.retireTrackBus(0.12);
+    this.stopFileBgm(fadeSec);
+    this._fileMode = true;
+    this._fileKey = trackKey;
+    const token = (this._fileToken = (this._fileToken || 0) + 1);
+    // Keeps external "is playing" checks (timerId) working; also self-heals a paused element.
+    this.timerId = setInterval(() => this._fileWatchdog(), 1000);
+    const mode = (typeof window !== 'undefined' && window.SENGOKU_BGM_FILE_MODE) || 'element';
+    if (mode === 'buffer' && this.ctx && this.bgmGain) this._playFileBuffer(trackKey, url, token, fadeSec);
+    else this._playFileElement(trackKey, url, token, fadeSec);
+    this._bindFileVisibility();
+    return true;
+  }
+
+  _fileFail(trackKey, token) {
+    (this._fileMissing = this._fileMissing || new Set()).add(trackKey);
+    console.warn('[BGM] file missing/failed, falling back to synth:', trackKey);
+    if (token !== this._fileToken || this._fileKey !== trackKey) return;
+    this._fileMode = false;
+    this._fileKey = null;
+    this._stopFileNodes(this._fileCur, 0);
+    this._fileCur = null;
+    if (this.timerId) { clearInterval(this.timerId); this.timerId = null; }
+    if (this.currentTrack === trackKey) this.playTrack(trackKey, true);
+  }
+
+  _playFileElement(trackKey, url, token, fadeSec) {
+    const audio = new Audio();
+    audio.preload = 'auto';
+    audio.loop = true;
+    audio.setAttribute('playsinline', '');
+    const cur = { kind: 'element', audio, gain: null, key: trackKey };
+    if (!this._elementVolumeWorks() && this.ctx && this.bgmGain && this.ctx.createMediaElementSource) {
+      try {
+        const srcNode = this.ctx.createMediaElementSource(audio);
+        cur.gain = this.ctx.createGain();
+        cur.gain.gain.setValueAtTime(0, this.ctx.currentTime);
+        srcNode.connect(cur.gain);
+        cur.gain.connect(this.bgmGain); // bgmGain/masterGain already carry volume & mute
+        cur.srcNode = srcNode;
+      } catch (e) { cur.gain = null; }
+    }
+    audio.addEventListener('error', () => this._fileFail(trackKey, token), { once: true });
+    audio.src = url;
+    this._fileCur = cur;
+    this._fadeFile(cur, fadeSec, true);
+    this._tryPlayFile(cur);
+  }
+
+  _playFileBuffer(trackKey, url, token, fadeSec) {
+    this._fileBufCache = this._fileBufCache || new Map();
+    const cur = { kind: 'buffer', key: trackKey, gain: this.ctx.createGain(), src: null };
+    cur.gain.gain.setValueAtTime(0, this.ctx.currentTime);
+    cur.gain.connect(this.bgmGain);
+    this._fileCur = cur;
+    const get = this._fileBufCache.has(trackKey) ? Promise.resolve(this._fileBufCache.get(trackKey))
+      : fetch(url).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); })
+          .then(ab => new Promise((res, rej) => this.ctx.decodeAudioData(ab, res, rej)));
+    get.then(buf => {
+      this._fileBufCache.set(trackKey, buf);
+      while (this._fileBufCache.size > 3) this._fileBufCache.delete(this._fileBufCache.keys().next().value);
+      if (token !== this._fileToken || this._fileCur !== cur) return;
+      const src = this.ctx.createBufferSource();
+      src.buffer = buf; src.loop = true;
+      src.connect(cur.gain); src.start();
+      cur.src = src;
+      this._fadeFile(cur, fadeSec, true);
+    }).catch(() => this._fileFail(trackKey, token));
+  }
+
+  _tryPlayFile(cur) {
+    if (!cur || cur.kind !== 'element' || this.isMuted || this.isBgmMuted) return;
+    if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume().catch(() => {});
+    let p;
+    try { p = cur.audio.play(); } catch (e) { p = null; }
+    if (p && typeof p.catch === 'function') {
+      p.catch(err => {
+        if (err && err.name === 'NotAllowedError' && !this._fileGestureBound) {
+          // Autoplay blocked: retry on next user gesture
+          this._fileGestureBound = true;
+          const retry = () => {
+            this._fileGestureBound = false;
+            ['touchend', 'click', 'keydown'].forEach(ev => document.removeEventListener(ev, retry, true));
+            if (this._fileCur === cur) this._tryPlayFile(cur);
+          };
+          ['touchend', 'click', 'keydown'].forEach(ev => document.addEventListener(ev, retry, true));
+        }
+      });
+    }
+  }
+
+  // Fade a file voice in (to target volume) or out. Element w/o gain node: volume stepped by timer.
+  _fadeFile(cur, sec, fadeIn) {
+    if (!cur) return;
+    const target = fadeIn ? (cur.gain ? 1 : this.fileTargetVolume()) : 0;
+    if (cur.gain && this.ctx) {
+      const g = cur.gain.gain, t = this.ctx.currentTime;
+      try { g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(target, t + Math.max(0.02, sec)); } catch (e) {}
+      return;
+    }
+    const a = cur.audio;
+    if (!a) return;
+    if (cur.fadeTimer) clearInterval(cur.fadeTimer);
+    if (!(sec > 0)) { a.volume = target; return; }
+    const from = fadeIn ? 0 : a.volume, t0 = Date.now();
+    if (fadeIn) a.volume = 0;
+    cur.fadeTimer = setInterval(() => {
+      const k = Math.min(1, (Date.now() - t0) / (sec * 1000));
+      const end = fadeIn ? this.fileTargetVolume() : 0; // follow live volume changes
+      try { a.volume = Math.max(0, Math.min(1, from + (end - from) * k)); } catch (e) {}
+      if (k >= 1) { clearInterval(cur.fadeTimer); cur.fadeTimer = null; }
+    }, 40);
+  }
+
+  _stopFileNodes(cur, fadeSec) {
+    if (!cur) return;
+    this._fadeFile(cur, fadeSec, false);
+    setTimeout(() => {
+      if (cur.fadeTimer) clearInterval(cur.fadeTimer);
+      if (cur.audio) { try { cur.audio.pause(); cur.audio.removeAttribute('src'); cur.audio.load(); } catch (e) {} }
+      if (cur.src) { try { cur.src.stop(); } catch (e) {} }
+      [cur.srcNode, cur.gain].forEach(n => { if (n) try { n.disconnect(); } catch (e) {} });
+    }, Math.round(Math.max(0, fadeSec) * 1000) + 60);
+  }
+
+  stopFileBgm(fadeSec = 0.12) {
+    const cur = this._fileCur;
+    this._fileCur = null;
+    this._fileMode = false;
+    this._fileKey = null;
+    this._fileToken = (this._fileToken || 0) + 1;
+    this._stopFileNodes(cur, fadeSec);
+  }
+
+  // Called from setVolume / setBgmVolume / setAllMuted.
+  applyFileVolume() {
+    const cur = this._fileCur;
+    if (!cur) return;
+    if (cur.kind === 'element') {
+      if (!cur.gain && !cur.fadeTimer) { try { cur.audio.volume = this.fileTargetVolume(); } catch (e) {} }
+      if (this.isMuted || this.isBgmMuted) { try { cur.audio.pause(); } catch (e) {} }
+      else if (cur.audio.paused) this._tryPlayFile(cur);
+    }
+    // buffer / routed element: bgmGain & masterGain already updated by caller
+  }
+
+  _fileWatchdog() {
+    const cur = this._fileCur;
+    if (!cur || cur.kind !== 'element' || this.isMuted || this.isBgmMuted) return;
+    if (typeof document !== 'undefined' && document.hidden) return;
+    if (cur.audio.paused && cur.audio.src) this._tryPlayFile(cur);
+  }
+
+  _bindFileVisibility() {
+    if (this._fileVisBound || typeof document === 'undefined') return;
+    this._fileVisBound = true;
+    document.addEventListener('visibilitychange', () => {
+      const cur = this._fileCur;
+      if (!cur || cur.kind !== 'element') return;
+      if (document.hidden) { try { cur.audio.pause(); } catch (e) {} }
+      else this._tryPlayFile(cur);
+    });
+  }
+
   // ---- BGM 先読みスケジューラ（2026-10-11 aq） ----
   // 今から LOOKAHEAD 秒先までの拍を予約する。メインスレッドが一時的に塞がっても、予約済みの音は鳴り続ける。
   scheduleAhead() {
-    if (!this.ctx || this._bufMode) return; // buffer loop playing (mobile pre-render)
+    if (!this.ctx || this._bufMode || this._fileMode) return; // buffer loop / audio file playing (mobile pre-render)
     const now = this.ctx.currentTime;
     const stepSec = Math.max(0.05, (this.stepMs || 250) / 1000);
     if (!(this.nextStepTime > 0)) this.nextStepTime = now + 0.03;
@@ -3251,6 +3497,7 @@ class SengokuMusicEngine {
       const target = this.isMuted ? 0 : this.masterVolume;
       this.masterGain.gain.setValueAtTime(target, this.ctx.currentTime);
     }
+    this.applyFileVolume();
   }
 
   setBgmVolume(val) {
@@ -3260,6 +3507,7 @@ class SengokuMusicEngine {
       const target = this.isBgmMuted ? 0 : this.bgmVolume;
       this.bgmGain.gain.setValueAtTime(target, this.ctx.currentTime);
     }
+    this.applyFileVolume();
   }
 
   setSeVolume(val) {
@@ -3298,6 +3546,7 @@ class SengokuMusicEngine {
       }));
       try { window.SengokuSoundSync?.syncAllUI?.(); } catch (_) {}
     }
+    this.applyFileVolume();
     return isM;
   }
 
@@ -3355,6 +3604,13 @@ SengokuMusicEngine.PRERENDER_RATE = 24000;      // mobile pre-render sample rate
 SengokuMusicEngine.PRERENDER_MAX_SEC = 150;     // longest loop to pre-render
 SengokuMusicEngine.PRERENDER_TAIL_SEC = 3;      // reverb tail folded back to loop head
 SengokuMusicEngine.PRERENDER_CACHE_MAX = 3;     // tracks kept in memory
+// Mobile file BGM (audio/bgm/<trackId>.m4a|.mp3). Add a track: export file(s) with tools/export_bgm, then add its id here.
+SengokuMusicEngine.BGM_FILE_BASE = 'audio/bgm/';
+SengokuMusicEngine.BGM_FILE_VERSION = '20261101_file1'; // bump when re-exporting audio
+SengokuMusicEngine.BGM_FILE_GAIN = 1.0;               // file level relative to masterVolume*bgmVolume
+SengokuMusicEngine.BGM_FILE_TRACKS = ['op', 'spring', 'summer', 'autumn', 'winter', 'oda', 'takeda', 'uesugi', 'date',
+  'mori_choso', 'shimazu', 'hojo', 'tea', 'diplomacy', 'march', 'battle', 'battle_intense', 'siege', 'crisis',
+  'advantage', 'event', 'shogun', 'victory', 'tragedy'];
 
 // 未定義メソッド呼び出し時の安全フォールバック（例外クラッシュ完全防止Proxy）
 const _rawSengokuMusic = new SengokuMusicEngine();
