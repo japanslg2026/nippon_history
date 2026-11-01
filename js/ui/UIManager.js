@@ -1211,7 +1211,15 @@ export const UIManagerMethods = {
 
     if (startBtn) {
 
-      startBtn.innerHTML = `⚔️ 【${d.name}（${d.clan}）】で天下統一へ出陣！`;
+      if (window.SENGOKU_IS_PHONE || window.innerWidth <= 768) {
+
+        startBtn.innerHTML = '⚔️ 天下統一へ出陣';
+
+      } else {
+
+        startBtn.innerHTML = `⚔️ 【${d.name}（${d.clan}）】で天下統一へ出陣！`;
+
+      }
 
     }
 

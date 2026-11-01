@@ -2089,10 +2089,10 @@
     /* ==================== タブレット・スマートフォン向けレスポンシブデザイン ==================== */
 
     /* ==================== PC・スマホ レスポンシブ切り替えユーティリティ（PC表示完全保持） ==================== */
-    .nav-text-sp, .tl-text-sp, .tab-txt-sp, .modal-search-label-sp, .sort-chip-txt-sp, .mk-tab-sp, .modal-head-title-sp, .bio-close-txt-sp, .about-close-txt-sp, .era-txt-sp, .nav-btn-sp-only {
+    .nav-text-sp, .tl-text-sp, .tab-txt-sp, .modal-search-label-sp, .sort-chip-txt-sp, .mk-tab-sp, .modal-head-title-sp, .bio-close-txt-sp, .about-close-txt-sp, .era-txt-sp, .prov-stat-sp, .nav-btn-sp-only {
       display: none !important;
     }
-    .brand-title-sub, .nav-text-pc, .tl-text-pc, .tab-txt-pc, .modal-search-label-pc, .sort-chip-txt-pc, .mk-tab-pc, .modal-head-title-pc, .bio-close-txt-pc, .about-close-txt-pc, .era-txt-pc, .nav-btn-pc-only {
+    .brand-title-sub, .nav-text-pc, .tl-text-pc, .tab-txt-pc, .modal-search-label-pc, .sort-chip-txt-pc, .mk-tab-pc, .modal-head-title-pc, .bio-close-txt-pc, .about-close-txt-pc, .era-txt-pc, .prov-stat-pc, .nav-btn-pc-only {
       display: inline-flex;
     }
     #officerBioModal {
@@ -2246,6 +2246,9 @@
       .about-close-txt-sp { display: inline !important; font-weight: bold !important; }
       .era-txt-pc { display: none !important; }
       .era-txt-sp { display: inline !important; }
+      .prov-stat-pc { display: none !important; }
+      .prov-stat-sp { display: inline !important; }
+      .modal-search-label-sp:empty { display: none !important; }
 
       /* === ヘッダーナビゲーションの1行均等配置（見切れ完全根絶） === */
       .top-header {
@@ -2735,7 +2738,7 @@
         min-width: auto !important;
         max-width: none !important;
         font-size: 11pt !important;
-        padding: 4px 10px !important;
+        padding: 4px 7px !important;
         flex-direction: row !important;
         align-items: center !important;
         justify-content: center !important;
@@ -2853,6 +2856,29 @@
         font-size: 11pt !important;
         padding: 1px 4px !important;
         white-space: nowrap !important;
+      }
+      .prov-card .card-stats-row {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        gap: 3px !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+      }
+      .prov-card .card-stat-pill {
+        flex: 0 0 auto !important;
+        padding: 2px 4px !important;
+        font-size: 11pt !important;
+        white-space: nowrap !important;
+        display: inline-flex !important;
+        align-items: center !important;
+      }
+      .prov-card .stat-tag {
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+        font-size: 11pt !important;
+        padding: 1px 3px !important;
+        white-space: nowrap !important;
+        text-align: center !important;
       }
 
       /* === 大名名鑑・武将名鑑モーダル（mk-overlay）のヘッダー・タブ最適化（見切れ完全根絶） === */
@@ -5078,8 +5104,8 @@
 
           '<div class="stat-pills-grid-2">' +
             '<div class="stat-pill">' +
-              '<span class="stat-pill-label">表高（石高）</span>' +
-              '<span class="stat-pill-val">' + (pEntry.kokudaka / 10000).toFixed(1) + ' 万石</span>' +
+              '<span class="stat-pill-label"><span class="prov-stat-pc">表高（石高）</span><span class="prov-stat-sp">石高</span></span>' +
+              '<span class="stat-pill-val"><span class="prov-stat-pc">' + (pEntry.kokudaka / 10000).toFixed(1) + ' 万石</span><span class="prov-stat-sp">' + (pEntry.kokudaka / 10000).toFixed(1).replace(/\.0$/, '') + '万石</span></span>' +
             '</div>' +
             '<div class="stat-pill">' +
               '<span class="stat-pill-label">駐留兵力</span>' +
@@ -5801,7 +5827,7 @@
             cardsEl.innerHTML = rows.map(function (r) {
               var badge = r.isBlank
                 ? '<span class="role-badge role-ronin">空白</span>'
-                : (r.isCap ? '<span class="role-badge role-daimyo" title="本拠">👑</span>' : (r.govOff ? '<span class="role-badge role-governor" title="城主">🏯</span>' : '<span class="role-badge role-vassal">城代</span>'));
+                : (r.isCap ? '<span class="role-badge role-daimyo" title="本拠">👑</span>' : (r.govOff ? '<span class="role-badge role-governor" title="城主">🏯</span>' : ''));
               return (
                 '<div class="prov-card" data-row-prov="' + esc(r.p.id) + '">' +
                   '<div class="card-head-row">' +
@@ -5810,7 +5836,7 @@
                       '<span class="card-badge-region">' + esc(r.p.region) + '</span>' +
                       '<span class="card-badge-clan" style="color:var(--gold-bright); font-weight:bold;">' + esc(r.ownerName) + '</span>' +
                     '</div>' +
-                    '<div>' + badge + ' ' + esc(r.govName) + '</div>' +
+                    '<div>' + (badge ? badge + ' ' : '') + esc(r.govName) + '</div>' +
                   '</div>' +
                   '<div class="card-info-row">' +
                     '<div class="card-info-item">' +
@@ -5819,9 +5845,9 @@
                     '<div class="card-stats-row">' +
                       '<span class="card-stat-pill highlight-gold"><strong>' + Math.round(r.kokudaka / 10000) + '万石</strong></span>' +
                       '<span class="card-stat-pill"><strong>兵' + Math.max(1, Math.round(r.troops / 1000)) + '千人</strong></span>' +
-                      '<span class="stat-tag mil">武 ' + (r.military != null ? r.military : '—') + '</span>' +
-                      '<span class="stat-tag pol">政 ' + (r.politics != null ? r.politics : '—') + '</span>' +
-                      '<span class="stat-tag int">知 ' + (r.stratagem != null ? r.stratagem : '—') + '</span>' +
+                      '<span class="stat-tag mil">武' + (r.military != null ? r.military : '—') + '</span>' +
+                      '<span class="stat-tag pol">政' + (r.politics != null ? r.politics : '—') + '</span>' +
+                      '<span class="stat-tag int">知' + (r.stratagem != null ? r.stratagem : '—') + '</span>' +
                     '</div>' +
                   '</div>' +
                 '</div>'
@@ -5924,13 +5950,13 @@
             '</div>' +
             '<div class="modal-subbar">' +
               '<div class="modal-subbar-tabs">' +
-                (activeClanId ? '<button type="button" class="nav-btn ' + (currentTab === 'my' ? 'game-go' : '') + '" id="tabOffMy"><span class="tab-txt-pc">' + esc(selectedClanName) + 'の武将 (' + myActive.length + '名)</span><span class="tab-txt-sp">⚔️ 配下 (' + myActive.length + ')</span></button>' : '') +
-                '<button type="button" class="nav-btn ' + (currentTab === 'ronin' ? 'game-go' : '') + '" id="tabOffRonin"><span class="tab-txt-pc">浪人・未仕官 (' + roninActive.length + '名)</span><span class="tab-txt-sp">🎋 浪人 (' + roninActive.length + ')</span></button>' +
-                '<button type="button" class="nav-btn ' + (currentTab === 'all' ? 'game-go' : '') + '" id="tabOffAll"><span class="tab-txt-pc">天下の武将 (' + allActive.length + '名)</span><span class="tab-txt-sp">👥 全員 (' + allActive.length + ')</span></button>' +
+                (activeClanId ? '<button type="button" class="nav-btn ' + (currentTab === 'my' ? 'game-go' : '') + '" id="tabOffMy"><span class="tab-txt-pc">' + esc(selectedClanName) + 'の武将 (' + myActive.length + '名)</span><span class="tab-txt-sp">配下 (' + myActive.length + ')</span></button>' : '') +
+                '<button type="button" class="nav-btn ' + (currentTab === 'ronin' ? 'game-go' : '') + '" id="tabOffRonin"><span class="tab-txt-pc">浪人・未仕官 (' + roninActive.length + '名)</span><span class="tab-txt-sp">浪人 (' + roninActive.length + ')</span></button>' +
+                '<button type="button" class="nav-btn ' + (currentTab === 'all' ? 'game-go' : '') + '" id="tabOffAll"><span class="tab-txt-pc">天下の武将 (' + allActive.length + '名)</span><span class="tab-txt-sp">全員 (' + allActive.length + ')</span></button>' +
               '</div>' +
               '<div class="modal-subbar-controls">' +
                 '<div class="modal-search-box">' +
-                  '<span class="modal-search-label modal-search-label-pc">検索:</span><span class="modal-search-label modal-search-label-sp">🔍</span>' +
+                  '<span class="modal-search-label modal-search-label-pc">検索:</span><span class="modal-search-label modal-search-label-sp"></span>' +
                   '<input type="search" id="offListSearchInput" value="" placeholder="武将名・所属・特技..." class="modal-search-input" autocomplete="off">' +
                 '</div>' +
                 '<div class="modal-sort-bar-wrap">' +
@@ -6999,7 +7025,7 @@
         document.getElementById('btnOpenAbout').onclick = function () {
           document.getElementById('aboutModalBody').innerHTML =
             '<div style="margin-bottom:14px;">' +
-              '<h3 style="color:var(--gold-bright); font-size:14pt; margin-bottom:6px;">🗾 <span class="modal-head-title-pc">日本史 勢力図・人物一覧 ～日本通史総覧～ について</span><span class="modal-head-title-sp">日本史 勢力図・人物一覧 について</span></h3>' +
+              '<h3 class="modal-head-title-pc" style="color:var(--gold-bright); font-size:14pt; margin-bottom:6px;">🗾 日本史 勢力図・人物一覧 ～日本通史総覧～ について</h3>' +
               '<p>紀元前663年（神武東征）から1877年（西南戦争）までの全 <b>' + State.scenarios.length + ' シナリオ・全国 ' + State.provinces.length + ' 領国・全 ' + State.officers.length.toLocaleString() + ' 名の人物列伝</b>を閲覧できる日本通史総覧アーカイブです。</p>' +
               '<p style="margin-top:6px; font-size:11pt; opacity:0.9;">※ 各領国の石高は、慶長郷帳（1604～1610年）をもとに推計した値です。</p>' +
             '</div>' +

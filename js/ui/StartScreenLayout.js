@@ -335,43 +335,73 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     if (bar) bar.style.display = 'none';
   }
 
-  // 地図タップ時の領国情報バー更新
+  // 地図タップ時の領国情報バー更新（ユーザー要望：この大名を選択ボックスは省略）
   function updateMapTouchInfo(provId) {
-    let bar = document.querySelector('.sl-map-touch-info');
-    if (!bar) {
-      bar = document.createElement('div');
-      bar.className = 'sl-map-touch-info';
-      document.querySelector('.sl-map-body')?.appendChild(bar);
-    }
-    if (!provId) {
-      bar.style.display = 'none';
-      return;
-    }
-    bar.style.display = 'flex';
-    const o = owners()[provId];
-    const pName = provName(provId);
-    const troops = getProvTroops(provId);
+    const bar = document.querySelector('.sl-map-touch-info');
+    if (bar) bar.style.display = 'none';
+  }
 
-    if (!o) {
-      bar.innerHTML = `<span class="sl-map-touch-txt"><b>【${esc(pName)}】</b> 空白地</span>`;
-      return;
-    }
-    const ci = clanInfo(o);
-    if (!ci.playable) {
-      bar.innerHTML = `<span class="sl-map-touch-txt"><b>【${esc(pName)}】</b> ${esc(ci.name)}（選択不可）</span>`;
-      return;
+  // シナリオ全体詳細モーダル（①シナリオおよび③勢力図の詳細ボタン共通）
+  function openScenarioDetailModal() {
+    const s = scen();
+    if (!s) return;
+    const modal = document.getElementById('scenarioDetailModal');
+    if (!modal) return;
+    const body = document.getElementById('scenarioDetailBody');
+    if (!body) return;
+
+    const yearText = s.year < 0 ? `前${Math.abs(s.year)}年` : `${s.year}年`;
+    const gengo = s.gengo ? `年号: ${s.gengo}` : '';
+    const title = s.title || '';
+    const sub = s.subtitle ? `〜${s.subtitle}〜` : '';
+    const lore = s.lore_background || s.desc || '';
+
+    let factionHtml = '';
+    const pl = playables();
+    if (pl && pl.length) {
+      const sorted = [...pl].sort((a, b) => {
+        const aMaj = isMajorClan(a.id, a.provCount || 1) ? 1 : 0;
+        const bMaj = isMajorClan(b.id, b.provCount || 1) ? 1 : 0;
+        return bMaj - aMaj;
+      });
+      const chips = sorted.map(x => {
+        const maj = isMajorClan(x.id, x.provCount || 1);
+        return `<span class="scen-modal-clan-chip ${maj ? 'major' : ''}">${esc(x.name || x.clan)}<small>（${x.provCount || 1}国）</small></span>`;
+      }).join('');
+      factionHtml = `
+        <div class="scen-modal-section">
+          <div class="scen-modal-sec-title">🏯 参戦各大名家（全${pl.length}家）</div>
+          <div class="scen-modal-clans-grid">${chips}</div>
+        </div>
+      `;
     }
 
-    const isSelected = (selected === o);
-    bar.innerHTML = `
-      <span class="sl-map-touch-txt"><b>【${esc(pName)}】</b> ${esc(ci.name)}（${esc(ci.leader)} / 兵${troops}）</span>
-      <button type="button" class="sl-map-touch-select-btn">${isSelected ? '選択中 ✓' : 'この大名を選択'}</button>
+    body.innerHTML = `
+      <div class="scen-modal-header-card">
+        <div class="scen-modal-badge-row">
+          <span class="scen-modal-year">${esc(yearText)}</span>
+          ${gengo ? `<span class="scen-modal-gengo">${esc(gengo)}</span>` : ''}
+        </div>
+        <div class="scen-modal-title">${esc(title)}</div>
+        ${sub ? `<div class="scen-modal-sub">${esc(sub)}</div>` : ''}
+      </div>
+      <div class="scen-modal-section">
+        <div class="scen-modal-sec-title">📖 歴史背景・天下情勢</div>
+        <div class="scen-modal-lore">${esc(lore)}</div>
+      </div>
+      ${factionHtml}
     `;
-    bar.querySelector('.sl-map-touch-select-btn')?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      selectClan(o, { scroll: true });
-      updateMapTouchInfo(provId);
-    });
+
+    modal.classList.remove('hidden');
+
+    const closeBtn = document.getElementById('scenarioDetailCloseBtn');
+    const closeFooterBtn = document.getElementById('scenarioDetailCloseFooterBtn');
+    const close = () => modal.classList.add('hidden');
+    if (closeBtn) closeBtn.onclick = close;
+    if (closeFooterBtn) closeFooterBtn.onclick = close;
+    modal.onclick = (e) => {
+      if (e.target === modal) close();
+    };
   }
 
   // 大名詳細ポップアップ（#daimyoPopup）の3段固定構造化
@@ -431,6 +461,10 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
         b.classList.toggle('on', on);
         b.setAttribute('aria-selected', on);
       });
+      // ①シナリオでは一番下の大名家・出陣バーを非表示（省略）
+      if (bar) {
+        bar.style.display = (String(n) === '1') ? 'none' : 'flex';
+      }
       if (String(n) === '1') {
         updateScenarioPreview();
         syncEraTabsVisibility();
@@ -471,9 +505,7 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
       const moreBtn = scenHead.querySelector('.sl-scen-more-btn');
       moreBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        drop.hidden = !drop.hidden;
-        moreBtn.setAttribute('aria-expanded', drop.hidden ? 'false' : 'true');
-        moreBtn.classList.toggle('active', !drop.hidden);
+        openScenarioDetailModal();
       });
     }
 
@@ -562,9 +594,9 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     if (descHead) {
       descHead.innerHTML = '<span class="sl-desc-name"></span><button type="button" class="sl-desc-more-btn" aria-expanded="false">詳細</button>';
       const moreBtn = descHead.querySelector('.sl-desc-more-btn');
-      moreBtn.addEventListener('click', () => {
-        const open = descPanel.classList.toggle('sl-desc-open');
-        moreBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      moreBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openScenarioDetailModal();
       });
     }
 
