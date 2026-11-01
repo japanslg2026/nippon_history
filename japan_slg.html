@@ -28,9 +28,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&amp;family=Sawarabi+Mincho&amp;family=Yuji+Boku&amp;display=swap" rel="stylesheet">
 
   <!-- モジュール化されたCSSスタイルシート (1080p最適化・和風デザイン) -->
-  <link rel="stylesheet" href="css/style.css?v=20261101_mobfix1">
+  <link rel="stylesheet" href="css/style.css?v=20261101_mobfix3">
   <link rel="stylesheet" href="css/encyclopedia.css?v=20261025_bgm">
-  <link rel="stylesheet" href="css/startscreen.css?v=20261101_mobfix2">
+  <link rel="stylesheet" href="css/startscreen.css?v=20261101_mobfix3">
   <script>
     // スマホ判定: 画面幅768px以下、タッチ主体、または ?mobile=1 / ?phone=1 パラメータ → スマホ用レスポンシブ新レイアウト
     (function(){var mm=function(q){return window.matchMedia&&matchMedia(q).matches;};
@@ -1504,6 +1504,7 @@
         <div id="popupProvCount" style="font-size:12pt; color:var(--gold); margin-top:4px;">支配: --国</div>
       </div>
     </div>
+    <div class="daimyo-popup-scrollable-body">
 
     <!-- 能力値 & 初期資源バー (5列均等) -->
     <div class="daimyo-popup-stats" style="display:grid; grid-template-columns:repeat(5, 1fr); gap:8px; margin-bottom:12px;">
@@ -1576,6 +1577,7 @@
         </div>
       </div>
     </div>
+    </div><!-- /scrollable-body -->
 
     <!-- アクションボタン群 (大名で出陣スタートボタン ＋ 別の大名を選び直すボタン) -->
     <div class="daimyo-popup-footer-actions" style="display:flex; gap:12px; justify-content:center; align-items:center; padding-top:6px; border-top:1px solid rgba(212,175,55,0.3);">
@@ -1883,14 +1885,14 @@
   <script defer src="js/data/map_borders.js?v=20261031_border"></script>
   
   <!-- 2. 菅野よう子風 洗練和風交響BGMエンジン (全15曲) -->
-  <script defer src="js/bgm.js?v=20261101_mobfix1"></script>
-  <script defer src="js/MobileAudioKeepAlive.js?v=20261101_mobfix1"></script>
+  <script defer src="js/bgm.js?v=20261101_mobfix3"></script>
+  <script defer src="js/MobileAudioKeepAlive.js?v=20261101_mobfix3"></script>
 
   <!-- 3. 戦国天下統一伝 ゲームエンジン本体 -->
-  <script type="module" src="js/app.js?v=20261101_mobfix1"></script>
+  <script type="module" src="js/app.js?v=20261101_mobfix3"></script>
   <script type="module" src="js/ui/Encyclopedia.js?v=20261025_d74"></script>
-  <script defer src="js/ui/StartScreenLayout.js?v=20261101_mobfix1"></script>
-  <script defer src="js/ui/TitleBgm.js?v=20261101_mobfix1"></script>
+  <script defer src="js/ui/StartScreenLayout.js?v=20261101_mobfix3"></script>
+  <script defer src="js/ui/TitleBgm.js?v=20261101_mobfix3"></script>
 
 
 
