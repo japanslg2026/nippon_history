@@ -75580,6 +75580,16 @@
       "off_honjo_tsunemitsu": {
         "clanId": "amago",
         "defaultProv": "iwami"
+      },
+      "off_jd_250": {
+        "clanId": "ronin",
+        "defaultProv": "hoki",
+        "assignedProvId": null,
+        "location": "hoki",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       }
     },
     "castleLores": {
@@ -79236,9 +79246,9 @@
       },
       "off_jd_015": {
         "clanId": "mori",
-        "defaultProv": "aki_koriyama",
-        "assignedProvId": "aki_koriyama",
-        "location": "aki_koriyama",
+        "defaultProv": "bingo",
+        "assignedProvId": "bingo",
+        "location": "bingo",
         "isDaimyo": false,
         "isLeader": false,
         "isCastleLord": false,
@@ -79256,9 +79266,13 @@
       },
       "off_jd_250": {
         "clanId": "ronin",
-        "defaultProv": "inaba",
+        "defaultProv": "hoki",
+        "assignedProvId": null,
+        "location": "hoki",
         "isDaimyo": false,
-        "clearAssignment": true
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_shimizu_muneharu": {
         "clanId": "mimura",
@@ -83458,6 +83472,16 @@
         "isLeader": false,
         "isCastleLord": false,
         "ignoreLifespan": true
+      },
+      "off_jd_250": {
+        "clanId": "ronin",
+        "defaultProv": "hoki",
+        "assignedProvId": null,
+        "location": "hoki",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       }
     },
     "castleLores": {
@@ -86325,7 +86349,13 @@
       },
       "off_kobayakawa_takakage": {
         "clanId": "mori",
-        "defaultProv": "bingo"
+        "defaultProv": "bingo",
+        "assignedProvId": "bingo",
+        "location": "bingo",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       },
       "off_kikkawa_motoharu": {
         "clanId": "mori",
@@ -86339,7 +86369,11 @@
       },
       "off_jd_034": {
         "clanId": "mori",
-        "defaultProv": "bingo"
+        "defaultProv": "bingo",
+        "assignedProvId": null,
+        "isDaimyo": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_maeno_nagayasu": {
         "clanId": "oda",
@@ -92282,7 +92316,13 @@
       },
       "off_kobayakawa_takakage": {
         "clanId": "mori",
-        "defaultProv": "bingo"
+        "defaultProv": "bingo",
+        "assignedProvId": "bingo",
+        "location": "bingo",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       },
       "off_kikkawa_motoharu": {
         "clanId": "mori",
@@ -92394,6 +92434,14 @@
         "location": "shimousa",
         "isDaimyo": false,
         "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
+      },
+      "off_shimizu_muneharu": {
+        "clanId": "mori",
+        "defaultProv": "bingo",
+        "assignedProvId": null,
+        "isDaimyo": false,
         "isCastleLord": false,
         "ignoreLifespan": true
       }
@@ -100500,7 +100548,13 @@
       },
       "off_kobayakawa_takakage": {
         "clanId": "mori",
-        "defaultProv": "bingo"
+        "defaultProv": "bingo",
+        "assignedProvId": "bingo",
+        "location": "bingo",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       },
       "off_kikkawa_motoharu": {
         "clanId": "mori",
@@ -100574,6 +100628,14 @@
         "location": "shimousa",
         "isDaimyo": false,
         "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
+      },
+      "off_jd_015": {
+        "clanId": "mori",
+        "defaultProv": "bingo",
+        "assignedProvId": null,
+        "isDaimyo": false,
         "isCastleLord": false,
         "ignoreLifespan": true
       }
@@ -104376,8 +104438,14 @@
         "defaultProv": "harima"
       },
       "off_nanjo_mototsugu": {
-        "clanId": "ronin",
-        "defaultProv": "hoki"
+        "clanId": "mori",
+        "defaultProv": "hoki",
+        "assignedProvId": "hoki",
+        "location": "hoki",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       },
       "off_jd_030": {
         "clanId": "ukita",
@@ -111136,9 +111204,13 @@
       },
       "off_pl1614_042": {
         "clanId": "mori",
-        "defaultProv": "bingo",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "defaultProv": "bicchu",
+        "assignedProvId": "bicchu",
+        "location": "bicchu",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1614_043": {
         "clanId": "tokugawa",
@@ -112009,6 +112081,24 @@
       "off_dm_ando_1582": {
         "clanId": "ando",
         "defaultProv": "ugo"
+      },
+      "off_jd_035": {
+        "clanId": "mori",
+        "defaultProv": "bingo",
+        "assignedProvId": null,
+        "isDaimyo": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
+      },
+      "off_jd_015": {
+        "clanId": "mori",
+        "defaultProv": "bingo",
+        "assignedProvId": "bingo",
+        "location": "bingo",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       }
     },
     "castleLores": {
@@ -114870,9 +114960,13 @@
       },
       "off_pl1614_042": {
         "clanId": "mori",
-        "defaultProv": "bingo",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "defaultProv": "bicchu",
+        "assignedProvId": "bicchu",
+        "location": "bicchu",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1614_043": {
         "clanId": "tokugawa",
@@ -116086,6 +116180,24 @@
       "off_dm_ando_1582": {
         "clanId": "ando",
         "defaultProv": "ugo"
+      },
+      "off_jd_035": {
+        "clanId": "mori",
+        "defaultProv": "bingo",
+        "assignedProvId": null,
+        "isDaimyo": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
+      },
+      "off_jd_015": {
+        "clanId": "mori",
+        "defaultProv": "bingo",
+        "assignedProvId": "bingo",
+        "location": "bingo",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       }
     },
     "castleLores": {
@@ -118729,9 +118841,13 @@
       },
       "off_pl1614_042": {
         "clanId": "mori",
-        "defaultProv": "bingo",
-        "clearAssignment": true,
-        "isDaimyo": false
+        "defaultProv": "bicchu",
+        "assignedProvId": "bicchu",
+        "location": "bicchu",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
       },
       "off_pl1614_043": {
         "clanId": "tokugawa",
@@ -163590,8 +163706,14 @@
         "defaultProv": "settsu"
       },
       "off_nanjo_mototsugu": {
-        "clanId": "ronin",
-        "defaultProv": "hoki"
+        "clanId": "godaiho",
+        "defaultProv": "hoki",
+        "assignedProvId": "hoki",
+        "location": "hoki",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       },
       "off_pl1570_094": {
         "clanId": "miyoshi",
@@ -164796,9 +164918,9 @@
         "gold": 2500,
         "rice": 3000,
         "personality": "aggressive",
-        "officerId": "off_godaiho_tenno",
+        "officerId": "off_nanjo_mototsugu",
         "desc": "不屈の情熱で鎌倉幕府を打倒した大帝。公家親政を開くも武士の反発を招き、吉野に南朝を樹立して正統を掲げた。",
-        "name": "後醍醐天皇",
+        "name": "南条元続",
         "color": "#884ea0",
         "crest": "建",
         "kamonSvgId": "kamon-godaiho"

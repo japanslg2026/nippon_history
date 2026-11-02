@@ -1588,7 +1588,7 @@
     "chikuzen": "off_tachibana_dosetsu",
     "awaji": "off_jd_012",
     "iwami": "off_masuda_fujikane",
-    "bingo": "off_jd_034",
+    "bingo": "off_kobayakawa_takakage",
     "oki": "off_oki_tamekiyo",
     "mino": "off_takigawa_kazumasu",
     "totomi": "off_okubo_tadayo",
@@ -1623,7 +1623,7 @@
     "kaga": "off_shimotsuma_rairen",
     "yamashiro": "off_jd_016",
     "izumi": "off_hachiya_yoritaka",
-    "bingo": "off_shimizu_muneharu",
+    "bingo": "off_kobayakawa_takakage",
     "suo": "off_ichikawa_tsuneyoshi",
     "nagato": "off_naito_takaharu",
     "inaba": "off_yamana_toyokuni",
@@ -1724,7 +1724,7 @@
     "kawachi": "off_jd_019",
     "izumi": "off_sakuma_nobumori",
     "bicchu": "off_shimizu_muneharu",
-    "bingo": "off_jd_015",
+    "bingo": "off_kobayakawa_takakage",
     "suo": "off_ichikawa_tsuneyoshi",
     "nagato": "off_naito_takaharu",
     "inaba": "off_yamana_toyokuni",
@@ -1806,7 +1806,8 @@
     "higo_kumamoto": "off_pl1570_144",
     "kaga": "off_sakuma_morimasa",
     "mimasaka": "off_miura_sadahiro",
-    "bungo": "off_tachibana_muneshige"
+    "bungo": "off_tachibana_muneshige",
+    "hoki": "off_nanjo_mototsugu"
   },
   "1584": {
     "yamashiro": "off_ishida_mitsunari",
@@ -1892,7 +1893,7 @@
     "hoki": "off_nanjo_mototsugu",
     "izu": "off_hojo_ujinori",
     "izumo": "off_kikkawa_hiroie",
-    "bingo": "off_jd_035",
+    "bingo": "off_jd_015",
     "chikuzen": "off_shimazu_toshihisa",
     "iwami": "off_masuda_motoyoshi",
     "bicchu": "off_jd_034",
@@ -1947,7 +1948,7 @@
     "shimousa": "off_chiba_naoshige_bridge",
     "mikawa": "off_honda_tadakatsu",
     "harima": "off_pl1590_060",
-    "bingo": "off_jd_035",
+    "bingo": "off_jd_015",
     "suo": "off_jd_036",
     "nagato": "off_naito_takaharu",
     "noto": "off_jd_422",
@@ -4267,7 +4268,7 @@
       "chikuzen": "off_tachibana_dosetsu",
       "awaji": "off_jd_012",
       "iwami": "off_masuda_fujikane",
-      "bingo": "off_jd_034",
+      "bingo": "off_kobayakawa_takakage",
       "oki": "off_oki_tamekiyo",
       "mino": "off_takigawa_kazumasu",
       "totomi": "off_okubo_tadayo",
@@ -4302,7 +4303,7 @@
       "kaga": "off_shimotsuma_rairen",
       "yamashiro": "off_jd_016",
       "izumi": "off_hachiya_yoritaka",
-      "bingo": "off_shimizu_muneharu",
+      "bingo": "off_kobayakawa_takakage",
       "suo": "off_ichikawa_tsuneyoshi",
       "nagato": "off_naito_takaharu",
       "inaba": "off_yamana_toyokuni",
@@ -4403,7 +4404,7 @@
       "kawachi": "off_jd_019",
       "izumi": "off_sakuma_nobumori",
       "bicchu": "off_shimizu_muneharu",
-      "bingo": "off_jd_015",
+      "bingo": "off_kobayakawa_takakage",
       "suo": "off_ichikawa_tsuneyoshi",
       "nagato": "off_naito_takaharu",
       "inaba": "off_yamana_toyokuni",
@@ -4485,7 +4486,8 @@
       "higo_kumamoto": "off_pl1570_144",
       "kaga": "off_sakuma_morimasa",
       "mimasaka": "off_miura_sadahiro",
-      "bungo": "off_tachibana_muneshige"
+      "bungo": "off_tachibana_muneshige",
+      "hoki": "off_nanjo_mototsugu"
     },
     "1584": {
       "yamashiro": "off_ishida_mitsunari",
@@ -4571,7 +4573,7 @@
       "hoki": "off_nanjo_mototsugu",
       "izu": "off_hojo_ujinori",
       "izumo": "off_kikkawa_hiroie",
-      "bingo": "off_jd_035",
+      "bingo": "off_jd_015",
       "chikuzen": "off_shimazu_toshihisa",
       "iwami": "off_masuda_motoyoshi",
       "bicchu": "off_jd_034",
@@ -4626,7 +4628,7 @@
       "shimousa": "off_chiba_naoshige_bridge",
       "mikawa": "off_honda_tadakatsu",
       "harima": "off_pl1590_060",
-      "bingo": "off_jd_035",
+      "bingo": "off_jd_015",
       "suo": "off_jd_036",
       "nagato": "off_naito_takaharu",
       "noto": "off_jd_422",
@@ -5510,7 +5512,8 @@
       "tosa_nakamura": "off_pl1570_119",
       "higo_hitoyoshi": "off_dm_sagara_1560",
       "nobeoka": "off_pl1570_149",
-      "saika_wakayama": "off_suzuki_shigekane"
+      "saika_wakayama": "off_suzuki_shigekane",
+      "hoki": "off_nanjo_mototsugu"
     }
   },
   "jodaiClans": {
@@ -6119,7 +6122,7 @@
     "1570": {
       "bizen": "off_pl1570_106",
       "bicchu": "off_mimura_motochika",
-      "bingo": "off_jd_034",
+      "bingo": "off_kobayakawa_takakage",
       "yamashiro": "off_ashikaga_yoshiaki",
       "yamato": "off_jd_015",
       "tosa_nakamura": "off_pl1570_119",
@@ -6164,7 +6167,7 @@
       "harima": "off_dm_akamatsu_1570",
       "bizen": "off_dm_uragami_1546",
       "bicchu": "off_mimura_motochika",
-      "bingo": "off_shimizu_muneharu",
+      "bingo": "off_kobayakawa_takakage",
       "suo": "off_ichikawa_tsuneyoshi",
       "nagato": "off_naito_takaharu",
       "tajima": "off_dm_yamana_1546",
@@ -6275,7 +6278,7 @@
       "tango": "off_isshiki_yoshimichi",
       "bizen": "off_dm_ukita_1560",
       "bicchu": "off_shimizu_muneharu",
-      "bingo": "off_jd_015",
+      "bingo": "off_kobayakawa_takakage",
       "suo": "off_ichikawa_tsuneyoshi",
       "nagato": "off_naito_takaharu",
       "tajima": "off_dm_yamana_1546",
@@ -6327,7 +6330,8 @@
       "kaga": "off_sakuma_morimasa",
       "mimasaka": "off_miura_sadahiro",
       "owari": "off_oda_nobukatsu",
-      "bungo": "off_tachibana_muneshige"
+      "bungo": "off_tachibana_muneshige",
+      "hoki": "off_nanjo_mototsugu"
     },
     "1584": {
       "musashi": "off_hojo_ujiteru",
@@ -6353,7 +6357,7 @@
       "iyo": "off_kobayakawa_takakage",
       "hizen": "off_ryuzoji_masaie",
       "bicchu": "off_jd_034",
-      "bingo": "off_jd_035",
+      "bingo": "off_jd_015",
       "awa_shikoku": "off_hachisuka_iemasa",
       "kawachi": "off_katagiri_katsumoto",
       "tosa_nakamura": "off_kira_chikasane",
@@ -6391,7 +6395,8 @@
       "harima": "off_pl1590_060",
       "mino": "off_ikeda_terumasa",
       "awaji": "off_sengoku_hidehisa",
-      "inaba": "off_miyabe_keijun"
+      "inaba": "off_miyabe_keijun",
+      "bingo": "off_jd_015"
     },
     "1592": {
       "chikugo": "off_tachibana_muneshige",
@@ -6642,7 +6647,8 @@
     "allstar_feudal": {
       "tosa_nakamura": "off_pl1570_119",
       "higo_hitoyoshi": "off_dm_sagara_1560",
-      "saika_wakayama": "off_suzuki_shigekane"
+      "saika_wakayama": "off_suzuki_shigekane",
+      "hoki": "off_nanjo_mototsugu"
     }
   },
   "-663": {
@@ -6799,6 +6805,7 @@
     "tosa_nakamura": "off_pl1570_119",
     "higo_hitoyoshi": "off_dm_sagara_1560",
     "nobeoka": "off_pl1570_149",
-    "saika_wakayama": "off_suzuki_shigekane"
+    "saika_wakayama": "off_suzuki_shigekane",
+    "hoki": "off_nanjo_mototsugu"
   }
 }
