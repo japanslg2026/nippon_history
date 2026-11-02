@@ -74053,8 +74053,13 @@
       },
       "off_naito_takaharu": {
         "clanId": "ouchi",
-        "defaultProv": "iwami",
-        "isDaimyo": false
+        "defaultProv": "nagato",
+        "assignedProvId": "nagato",
+        "location": "nagato",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       },
       "off_sho_sei": {
         "clanId": "ryukyu",
@@ -75579,7 +75584,13 @@
       },
       "off_honjo_tsunemitsu": {
         "clanId": "amago",
-        "defaultProv": "iwami"
+        "defaultProv": "izumo",
+        "assignedProvId": "izumo",
+        "location": "izumo",
+        "isDaimyo": false,
+        "isLeader": false,
+        "isCastleLord": true,
+        "ignoreLifespan": true
       },
       "off_jd_250": {
         "clanId": "ronin",
@@ -75588,6 +75599,14 @@
         "location": "hoki",
         "isDaimyo": false,
         "isLeader": false,
+        "isCastleLord": false,
+        "ignoreLifespan": true
+      },
+      "off_ouchi_teruhiro": {
+        "clanId": "ouchi",
+        "defaultProv": "nagato",
+        "assignedProvId": null,
+        "isDaimyo": false,
         "isCastleLord": false,
         "ignoreLifespan": true
       }
@@ -83398,11 +83417,13 @@
         "ignoreLifespan": true
       },
       "off_kikkawa_motoharu": {
-        "clanId": "amago",
+        "clanId": "mori",
         "defaultProv": "iwami",
-        "assignedProvId": null,
+        "assignedProvId": "iwami",
+        "location": "iwami",
         "isDaimyo": false,
-        "isCastleLord": false,
+        "isLeader": false,
+        "isCastleLord": true,
         "ignoreLifespan": true
       },
       "off_shimizu_muneharu": {

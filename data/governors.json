@@ -1450,10 +1450,8 @@
   "1546": {
     "musashi": "off_hojo_genan",
     "izu": "off_hojo_tsunashige",
-    "hoki": "off_honjo_tsunemitsu",
-    "nagato": "off_ouchi_teruhiro",
+    "nagato": "off_naito_takaharu",
     "osumi": "off_kimotsuki_kanetsugu",
-    "iwami": "off_naito_takaharu",
     "sanuki": "off_shinohara_nagafusa",
     "awaji": "off_atagi_fuyuyasu",
     "buzen": "off_aso_hiroyasu",
@@ -1484,7 +1482,8 @@
     "echigo": "off_uesugi_kenshin",
     "kozuke": "off_nagano_narimasa",
     "oki": "off_oki_tamekiyo",
-    "mimasaka": "off_jd_055"
+    "mimasaka": "off_jd_055",
+    "izumo": "off_honjo_tsunemitsu"
   },
   "1555": {
     "totomi": "off_asahina_yasutomo",
@@ -1559,7 +1558,8 @@
     "mikawa": "off_yamada_kagetaka",
     "nagato": "off_naito_takaharu",
     "mimasaka": "off_jd_055",
-    "rikuzen": "off_pl1570_161"
+    "rikuzen": "off_pl1570_161",
+    "iwami": "off_kikkawa_motoharu"
   },
   "1570": {
     "suruga": "off_anayama_baisetsu",
@@ -4130,10 +4130,8 @@
     "1546": {
       "musashi": "off_hojo_genan",
       "izu": "off_hojo_tsunashige",
-      "hoki": "off_honjo_tsunemitsu",
-      "nagato": "off_ouchi_teruhiro",
+      "nagato": "off_naito_takaharu",
       "osumi": "off_kimotsuki_kanetsugu",
-      "iwami": "off_naito_takaharu",
       "sanuki": "off_shinohara_nagafusa",
       "awaji": "off_atagi_fuyuyasu",
       "buzen": "off_aso_hiroyasu",
@@ -4164,7 +4162,8 @@
       "echigo": "off_uesugi_kenshin",
       "kozuke": "off_nagano_narimasa",
       "oki": "off_oki_tamekiyo",
-      "mimasaka": "off_jd_055"
+      "mimasaka": "off_jd_055",
+      "izumo": "off_honjo_tsunemitsu"
     },
     "1555": {
       "totomi": "off_asahina_yasutomo",
@@ -4239,7 +4238,8 @@
       "mikawa": "off_yamada_kagetaka",
       "nagato": "off_naito_takaharu",
       "mimasaka": "off_jd_055",
-      "rikuzen": "off_pl1570_161"
+      "rikuzen": "off_pl1570_161",
+      "iwami": "off_kikkawa_motoharu"
     },
     "1570": {
       "suruga": "off_anayama_baisetsu",
@@ -6073,7 +6073,9 @@
       "higo_hitoyoshi": "off_dm_sagara_16_yoshishige",
       "aki_koriyama": "off_mori_motonari",
       "oki": "off_oki_tamekiyo",
-      "mimasaka": "off_jd_055"
+      "mimasaka": "off_jd_055",
+      "izumo": "off_honjo_tsunemitsu",
+      "nagato": "off_naito_takaharu"
     },
     "1555": {
       "buzen": "off_pl1570_131",
@@ -6117,7 +6119,8 @@
       "nagato": "off_naito_takaharu",
       "mimasaka": "off_jd_055",
       "yonezawa_date": "off_dm_date_1560",
-      "rikuzen": "off_pl1570_161"
+      "rikuzen": "off_pl1570_161",
+      "iwami": "off_kikkawa_motoharu"
     },
     "1570": {
       "bizen": "off_pl1570_106",
