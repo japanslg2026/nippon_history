@@ -2135,7 +2135,8 @@
       .map-stage {
         touch-action: auto;
       }
-      .map-viewport-wrap {
+      .map-viewport-wrap {
+
         touch-action: none;
         /* 中間幅でも地図が高さ0にならないよう通常フローで高さを確保 */
         position: relative;
@@ -2146,7 +2147,8 @@
         max-height: 70vh;
         aspect-ratio: 965 / 520;
         overflow: hidden;
-        flex-shrink: 0;
+        flex-shrink: 0;
+
       }
       .map-left-overlay-stack {
         touch-action: pan-y;
@@ -4244,17 +4246,47 @@
           if (!isAliveAndAdult && !(affEntry && affEntry.ignoreLifespan)) continue;
 
           var copy = Object.assign({}, master, {
+            origName: master.name,
             isDaimyo: false,
             defaultProv: officerProvAtYear(master, year) || master.defaultProv,
             assignedProvId: null
           });
 
-          if (copy.id === 'off_toyotomi_hideyoshi') copy.name = year >= 1586 ? '豊臣秀吉' : '羽柴秀吉';
-          if (copy.id === 'off_toyotomi_hidenaga') copy.name = year >= 1586 ? '豊臣秀長' : '羽柴秀長';
-          if (copy.id === 'off_toyotomi_hidetsugu') copy.name = year >= 1586 ? '豊臣秀次' : '羽柴秀次';
+          // 主要大名・武将の年代別自動改名ロジック
+          if (copy.id === 'off_toyotomi_hideyoshi') {
+            copy.name = year >= 1585 ? '豊臣秀吉' : (year >= 1573 ? '羽柴秀吉' : '木下秀吉');
+          }
+          if (copy.id === 'off_toyotomi_hidenaga') copy.name = year >= 1585 ? '豊臣秀長' : '羽柴秀長';
+          if (copy.id === 'off_toyotomi_hidetsugu') copy.name = year >= 1585 ? '豊臣秀次' : '羽柴秀次';
           if (copy.id === 'off_tokugawa_ieyasu') copy.name = year >= 1563 ? '徳川家康' : '松平元康';
-          if (copy.id === 'off_uesugi_kenshin') copy.name = year >= 1561 ? '上杉謙信' : '長尾景虎';
           if (copy.id === 'off_tsugaru_tamenobu') copy.name = year >= 1590 ? '津軽為信' : '大浦為信';
+          if (copy.id === 'off_takeda_shingen') copy.name = year >= 1559 ? '武田信玄' : '武田晴信';
+          if (copy.id === 'off_uesugi_kenshin') {
+            copy.name = year >= 1570 ? '上杉謙信' : (year > 1561 ? '上杉輝虎' : (year === 1561 ? '上杉政虎' : '長尾景虎'));
+          }
+          if (copy.id === 'off_otomo_sorin') copy.name = year >= 1562 ? '大友宗麟' : '大友義鎮';
+          if (copy.id === 'off_shimazu_yoshihisa') {
+            copy.name = year >= 1592 ? '島津龍伯' : (year >= 1566 ? '島津義久' : '島津忠良');
+          }
+          if (copy.id === 'off_saito_dosan') {
+            copy.name = year >= 1554 ? '斎藤道三' : (year >= 1538 ? '斎藤利政' : '長井規秀');
+          }
+          if (copy.id === 'off_tachibana_dosetsu') copy.name = year >= 1575 ? '立花道雪' : '戸次鑑連';
+          if (copy.id === 'off_hosokawa_tadaoki') copy.name = year >= 1620 ? '細川三斎' : '細川忠興';
+          if (copy.id === 'off_shimazu_yoshihiro') copy.name = year >= 1602 ? '島津惟新' : '島津義弘';
+          if (copy.id === 'off_mori_terumoto') copy.name = year >= 1625 ? '毛利幻庵' : '毛利輝元';
+          if (copy.id === 'off_kobayakawa_hideaki') {
+            copy.name = year >= 1601 ? '小早川秀詮' : (year >= 1595 ? '小早川秀秋' : '木下秀俊');
+          }
+          if (copy.id === 'off_yamagata_masakage') copy.name = year >= 1565 ? '山県昌景' : '飯富昌景';
+          if (copy.id === 'off_miyoshi_nagayoshi') copy.name = year >= 1548 ? '三好長慶' : '三好利長';
+          if (copy.id === 'off_hist_1522_ota_sukemasa') copy.name = year >= 1565 ? '太田三楽斎' : '太田資正';
+          if (copy.id === 'off_pl1590_027') copy.name = year >= 1570 ? '梶原政景' : '太田政景';
+          if (copy.id === 'off_ashina_moriuji') copy.name = year >= 1561 ? '蘆名止々斎' : '蘆名盛氏';
+          if (copy.id === 'off_tsukahara_bokuden') copy.name = year >= 1540 ? '塚原卜伝' : '塚原高幹';
+          if (copy.id === 'off_miyamoto_musashi') copy.name = year >= 1605 ? '宮本武蔵' : '宮本玄信';
+          if (copy.id === 'off_yagyu_muneyoshi') copy.name = year >= 1565 ? '柳生石舟斎' : '柳生宗厳';
+          if (copy.id === 'off_pl1570_009') copy.name = year >= 1600 ? '織田有楽斎' : '織田長益';
 
           if (affEntry) {
             if (typeof affEntry === 'string') {
@@ -4286,7 +4318,7 @@
             }
           }
 
-          var govProv = Object.keys(histGovs).find(function (pid) { return histGovs[pid] === copy.id || histGovs[pid] === copy.name; });
+          var govProv = Object.keys(histGovs).find(function (pid) { return histGovs[pid] === copy.id || histGovs[pid] === copy.name || histGovs[pid] === copy.origName; });
           if (govProv) {
             var pEntry = State.computedProvs.get(govProv);
             if (pEntry && pEntry.ownerId && activeOwnersSet.has(pEntry.ownerId)) {
@@ -4321,7 +4353,7 @@
           }
           var rosterName = getClanRosterLeaderName(cid, year, scen);
           if (!leader && rosterName) {
-            leader = clanOffs.find(function (o) { return o.name === rosterName; });
+            leader = clanOffs.find(function (o) { return o.name === rosterName || o.origName === rosterName; });
           }
           if (!leader && clanOffs.length > 0) {
             leader = clanOffs.slice().sort(function (a, b) {
@@ -4350,7 +4382,7 @@
           var targetGov = histGovs[pid];
           if (targetGov) {
             var gOff = activeOfficers.find(function (o) {
-              return (o.id === targetGov || o.name === targetGov) && o.clanId === pEntry.ownerId && !o.isDaimyo;
+              return (o.id === targetGov || o.name === targetGov || o.origName === targetGov) && o.clanId === pEntry.ownerId && !o.isDaimyo;
             });
             if (gOff) {
               pEntry.governor = gOff;
