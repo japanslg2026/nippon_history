@@ -279,8 +279,8 @@
     },
     "ando": {
       "family": "安東家",
-      "color": "#247cba",
-      "kamon": "kamon-ando",
+      "color": "#2f7a78",
+      "kamon": "kamon-ando-northern",
       "capital_pref": [
         "akita",
         "aomori"
@@ -1040,7 +1040,7 @@
         "1493": "河野教通",
         "1495": "河野教通",
         "1531": "河野通宣",
-        "1538": "河野通宣",
+        "1538": "村上義忠",
         "1542": "河野通直",
         "1546": "河野通宣",
         "1555": "河野通宣",
@@ -2324,8 +2324,8 @@
         "1582": "羽柴秀吉",
         "1584": "羽柴秀吉",
         "1587": "豊臣秀吉",
-        "1590": "豊臣秀吉",
-        "1592": "羽柴秀吉",
+        "1590": "福島正則",
+        "1592": "福島正則",
         "1599": "豊臣秀頼",
         "1600": "豊臣秀頼",
         "1614": "豊臣秀頼",
@@ -2638,7 +2638,7 @@
     },
     "okayama": {
       "family": "池田家",
-      "color": "#258b76",
+      "color": "#3f5c9a",
       "kamon": "kamon-okayama",
       "capital_pref": [
         "okayama"
@@ -2792,7 +2792,7 @@
     },
     "tosa": {
       "family": "土佐藩山内家",
-      "color": "#2c3e50",
+      "color": "#365a9c",
       "kamon": "kamon-yamanouchi",
       "capital_pref": [
         "kochi"
@@ -2885,7 +2885,7 @@
     },
     "fukui_matsudaira": {
       "family": "福井藩越前松平家",
-      "color": "#16a085",
+      "color": "#8a4a36",
       "kamon": "kamon-fukui",
       "capital_pref": [
         "fukui"
@@ -2908,7 +2908,7 @@
     },
     "matsue": {
       "family": "松江藩松平家",
-      "color": "#34495e",
+      "color": "#2f6f68",
       "kamon": "kamon-matsue",
       "capital_pref": [
         "shimane"
@@ -2931,7 +2931,7 @@
     },
     "tottori": {
       "family": "鳥取藩池田家",
-      "color": "#64864b",
+      "color": "#7a5a90",
       "kamon": "kamon-tottori",
       "capital_pref": [
         "tottori"
@@ -2954,8 +2954,8 @@
     },
     "kumamoto_hosokawa": {
       "family": "熊本藩細川家",
-      "color": "#1abc9c",
-      "kamon": "kamon-hosokawa",
+      "color": "#596146",
+      "kamon": "kamon-kumamoto-hosokawa",
       "capital_pref": [
         "higo_kumamoto"
       ],
@@ -3715,8 +3715,8 @@
     },
     "ako_ronin": {
       "family": "赤穂浪士",
-      "color": "#641e16",
-      "kamon": "kamon-asano",
+      "color": "#7b1e32",
+      "kamon": "kamon-ako-ronin",
       "capital_pref": [
         "harima"
       ],
@@ -4132,6 +4132,7 @@
         "1573": "九鬼嘉隆",
         "1576": "九鬼嘉隆",
         "1582": "九鬼嘉隆",
+        "1584": "九鬼嘉隆",
         "1590": "九鬼嘉隆",
         "1600": "九鬼守隆",
         "default": "九鬼嘉隆"
@@ -4295,20 +4296,24 @@
       "desc": "近江の名門・蒲生氏。信長に器量を認められ、会津九十二万石を領した智勇兼備の英主・蒲生氏郷。利休七哲の筆頭としても名高い。",
       "leaders": {
         "1592": "蒲生氏郷",
+        "1600": "蒲生秀行",
         "default": "蒲生氏郷"
       }
     },
     "sakai": {
       "family": "酒井家",
-      "color": "#b03a2e",
-      "kamon": "kamon-sakai",
+      "color": "#8a6b3f",
+      "kamon": "kamon-sakai-harima",
       "leaders": {
-        "1853": "酒井忠惇",
+        "1853": "酒井忠顕",
         "1860": "酒井忠惇",
         "1866": "酒井忠惇",
         "1868": "酒井忠邦",
         "default": "酒井忠顕"
-      }
+      },
+      "tactic": "",
+      "tacticDesc": "",
+      "desc": ""
     },
     "gamou": {
       "family": "蒲生家",
@@ -4319,8 +4324,9 @@
       ],
       "tactic": "鯰尾兜の疾風",
       "tacticDesc": "蒲生氏郷自ら銀の鯰尾兜を戴き先鋒を疾走、敵陣を電光石火の勢いで粉砕する。",
-      "desc": "会津藩第二代藩主・蒲生忠郷。母は家康の三女・振姫。若松城を治め奥羽に威を示した。",
+      "desc": "家中の内紛（蒲生騒動）の鎮圧に苦しみ、一度は宇都宮への減転封を経験した。のち徳川家康との縁を深めて会津藩への返り咲きを果たした。初代藩主・蒲生氏郷、第二代藩主・蒲生秀行、第三代藩主・蒲生忠郷。",
       "leaders": {
+        "1600": "蒲生秀行",
         "1614": "蒲生忠郷",
         "default": "蒲生忠郷"
       }
@@ -4336,6 +4342,9 @@
       "tacticDesc": "賤ヶ岳の七本槍筆頭・福島正則の剛勇が先陣を切り、敵前衛を圧倒的武力で粉砕する。",
       "desc": "豊臣子飼いの猛将・福島正則。賤ヶ岳の戦いで一番槍の武名を挙げ、関ヶ原では東軍の先鋒として奮戦。安芸・備後四十九万八千石を領した。",
       "leaders": {
+        "1590": "福島正則",
+        "1592": "福島正則",
+        "1600": "福島正則",
         "1614": "福島正則",
         "default": "福島正則"
       }
@@ -4373,7 +4382,7 @@
     },
     "todo": {
       "family": "藤堂家",
-      "color": "#2e4053",
+      "color": "#69819b",
       "kamon": "kamon-todo",
       "capital_pref": [
         "ise"
@@ -5500,6 +5509,120 @@
       "leaders": {
         "1154": "源為朝",
         "default": "源為朝"
+      }
+    },
+    "clan_8849": {
+      "family": "加藤家",
+      "color": "#3e5fac",
+      "kamon": "kamon-kato-yoshiaki-sagari-fuji",
+      "capital_pref": [
+        "iwashiro"
+      ],
+      "tactic": "会津若松",
+      "tacticDesc": "全軍の士気と攻撃力を高めて敵陣を突破する。",
+      "desc": "江戸時代前期の大名。陸奥国会津藩の第2代藩主。水口藩加藤家2代。",
+      "leaders": {
+        "1600": "加藤嘉明",
+        "1614": "加藤嘉明",
+        "1637": "加藤明成",
+        "default": "加藤喜明"
+      }
+    },
+    "murakami_noshima": {
+      "family": "能島村上水軍",
+      "color": "#6e5d29",
+      "kamon": "kamon-murakami",
+      "capital_pref": [
+        "noshima"
+      ],
+      "tactic": "瀬戸内の潮流戦",
+      "tacticDesc": "急潮と島嶼の地の利を生かした水軍戦で、敵軍を攪乱する。",
+      "desc": "能島を本拠とし、来島・因島の村上氏とともに瀬戸内海の航路を掌握した海上勢力。",
+      "leaders": {
+        "1336": "得能通綱",
+        "1350": "忽那義範",
+        "1391": "村上義顕",
+        "1457": "村上雅房",
+        "1495": "村上隆勝",
+        "1531": "村上義雅",
+        "1538": "村上義忠",
+        "1555": "村上武吉",
+        "1560": "村上武吉",
+        "1570": "村上武吉",
+        "1573": "村上武吉",
+        "1577": "村上武吉",
+        "1582": "村上武吉",
+        "1584": "村上武吉",
+        "default": "村上武吉",
+        "allstar_feudal": "村上元吉"
+      }
+    },
+    "saionji_iyo": {
+      "family": "伊予西園寺家",
+      "color": "#6c3483",
+      "kamon": "kamon-saionji",
+      "capital_pref": [
+        "uwajima"
+      ],
+      "tactic": "宇和荘の結束",
+      "tacticDesc": "宇和郡の国人衆を結集して、南予の守りを固める。",
+      "desc": "宇和郡に下向した公家西園寺氏の流れを汲み、松葉城・黒瀬城を拠点に南予を支配した武家。",
+      "leaders": {
+        "1331": "西園寺公重",
+        "1350": "西園寺公俊",
+        "1391": "西園寺公継",
+        "1438": "西園寺住周",
+        "1467": "西園寺公宣",
+        "1531": "西園寺実充",
+        "1576": "西園寺公広",
+        "1577": "西園寺公広",
+        "default": "西園寺実充",
+        "allstar_feudal": "西園寺公広"
+      }
+    },
+    "iyo_utsunomiya": {
+      "family": "伊予宇都宮家",
+      "color": "#7d6608",
+      "kamon": "kamon-utsunomiya",
+      "capital_pref": [
+        "oshu"
+      ],
+      "tactic": "大洲盆地の防衛",
+      "tacticDesc": "肱川流域の城砦網を活用し、侵攻軍を迎え撃つ。",
+      "desc": "喜多郡・大洲地方に根を張り、肱川流域を支配した宇都宮氏の庶流。",
+      "leaders": {
+        "1331": "宇都宮宗泰",
+        "1391": "宇都宮泰輔",
+        "1457": "宇都宮家綱",
+        "1493": "宇都宮宣綱",
+        "1546": "宇都宮豊綱",
+        "1555": "宇都宮豊綱",
+        "1560": "宇都宮豊綱",
+        "default": "宇都宮宣綱"
+      }
+    },
+    "uwajima_date": {
+      "family": "宇和島伊達家",
+      "color": "#5a3d86",
+      "kamon": "kamon-uwajima-date",
+      "capital_pref": [
+        "uwajima"
+      ],
+      "tactic": "宇和島十万石",
+      "tacticDesc": "伊達家の軍制を南予に根付かせ、領内を統率する。",
+      "desc": "伊達政宗の長子・秀宗を祖とし、宇和島を治めた伊予宇和島藩伊達家。",
+      "leaders": {
+        "1600": "伊達秀宗",
+        "1637": "伊達秀宗",
+        "1651": "伊達秀宗",
+        "1702": "伊達宗利",
+        "1721": "伊達村豊",
+        "1789": "伊達村候",
+        "1837": "伊達宗城",
+        "1853": "伊達宗城",
+        "1860": "伊達宗城",
+        "1866": "伊達宗城",
+        "default": "伊達秀宗"
       }
     }
   },
@@ -7016,6 +7139,22 @@
       "personality": "aggressive",
       "title": "鎮西惣追捕使",
       "note": "剛勇無双の弓取り・九州を席巻した鎮西八郎"
+    },
+    "clan_8849": {
+      "military": 75,
+      "politics": 75,
+      "stratagem": 75,
+      "personality": "balanced",
+      "title": "新興の雄",
+      "note": ""
+    },
+    "sakai": {
+      "military": 70,
+      "politics": 70,
+      "stratagem": 70,
+      "personality": "balanced",
+      "title": "戦国大名",
+      "note": ""
     }
   },
   "capitals": {
@@ -7150,9 +7289,9 @@
     "takeda_kazusa": "kazusa",
     "gamo": "iwashiro",
     "fukushima": "aki",
-    "gamou": "iwashiro",
+    "gamou": "shimotsuke",
     "shiba_oshu": "rikuchu",
-    "todo": "ise",
+    "todo": "uwajima",
     "ryukyu": "ryukyu",
     "yamatai": "chikuzen",
     "kuna": "higo_kumamoto",
@@ -7198,6 +7337,13 @@
     "kudo": "hyuga",
     "naka_no_oe": "settsu",
     "soga": "yamato",
-    "minamoto_tametomo": "higo_kumamoto"
+    "minamoto_tametomo": "higo_kumamoto",
+    "clan_8849": "iwashiro",
+    "ako_ronin": "harima",
+    "sakai": "harima",
+    "murakami_noshima": "noshima",
+    "saionji_iyo": "uwajima",
+    "iyo_utsunomiya": "oshu",
+    "uwajima_date": "uwajima"
   }
 }

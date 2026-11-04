@@ -380,7 +380,7 @@
     "kasai": "off_fujiwara_kiyohira",
     "yamashiro": "off_oe_no_masafusa",
     "izu": "off_jd_352",
-    "tanba": "off_fujiwara_akitsuna_heian",
+    "tamba": "off_fujiwara_akitsuna_heian",
     "higo_kumamoto": "off_ooe_hironori_heian"
   },
   "1154": {
@@ -889,7 +889,10 @@
     "nishi_tsugaru": "off_succ_ando_1265_2",
     "hida": "off_jd_224",
     "iwami": "off_masuda_kanemi",
-    "oki": "off_pl1274_042"
+    "oki": "off_pl1274_042",
+    "oshu": "off_utsunomiya_muneyasu",
+    "uwajima": "off_saionji_kinshige",
+    "noshima": "off_pl1331_072"
   },
   "1333": {
     "ezo": "off_ezo_leader_1331",
@@ -917,7 +920,6 @@
     "suruga": "off_succ_imagawa_1304_41",
     "mimasaka": "off_akamatsu_sadanori",
     "izu": "off_uesugi_shigenori",
-    "yamashiro": "off_godaiho_tenno",
     "mikawa": "off_isshiki_norouji",
     "harima": "off_akamatsu_enshin",
     "bicchu": "off_ko_no_moroyasu",
@@ -950,7 +952,9 @@
     "musashi": "off_uesugi_noriaki_first",
     "shimousa": "off_dm_chiba_1331",
     "iwami": "off_masuda_kanemi",
-    "bizen": "off_kojima_takanori"
+    "bizen": "off_kojima_takanori",
+    "oshu": "off_utsunomiya_muneyasu",
+    "uwajima": "off_saionji_kinshige"
   },
   "1336": {
     "iga": "off_jd_364",
@@ -975,7 +979,9 @@
     "mikawa": "off_ko_no_moroyasu",
     "izumo": "off_dm_enyo_1331",
     "hyuga": "off_ito_sukemune",
-    "sagami": "off_ko_no_moronao"
+    "sagami": "off_ko_no_moronao",
+    "oshu": "off_utsunomiya_muneyasu",
+    "uwajima": "off_saionji_kinshige"
   },
   "1350": {
     "mikawa": "off_pl1331_079",
@@ -1011,7 +1017,10 @@
     "echigo": "off_pl1359_002",
     "awa_boshu": "off_satomi_yoshitane",
     "izumo": "off_jd_325",
-    "higo_kumamoto": "off_pl1350_013"
+    "higo_kumamoto": "off_pl1350_013",
+    "oshu": "off_utsunomiya_muneyasu",
+    "uwajima": "off_saionji_kintoshi",
+    "noshima": "off_murakami_morikiyo"
   },
   "1359": {
     "uzen": "off_pl1350_001",
@@ -1043,7 +1052,10 @@
     "echigo": "off_pl1359_005",
     "shimousa": "off_chiba_ujitane",
     "oki": "off_jd_399",
-    "mimasaka": "off_akamatsu_sadanori"
+    "mimasaka": "off_akamatsu_sadanori",
+    "oshu": "off_utsunomiya_muneyasu",
+    "uwajima": "off_saionji_kintoshi",
+    "noshima": "off_murakami_morikiyo"
   },
   "1391": {
     "bizen": "off_jd_411",
@@ -1071,7 +1083,10 @@
     "kaga": "off_pl1400_037",
     "koga": "off_jd_368",
     "awa_boshu": "off_satomi_yoshinori",
-    "north_omi": "off_kyogoku_takamitsu"
+    "north_omi": "off_kyogoku_takamitsu",
+    "oshu": "off_utsunomiya_yasusuke",
+    "uwajima": "off_saionji_kintsugu",
+    "noshima": "off_murakami_yoshiaki"
   },
   "1400": {
     "hida": "off_anegakoji_tadatsuna",
@@ -1108,7 +1123,10 @@
     "kii_kichu": "off_jd_409",
     "satsuma": "off_pl1400_034",
     "north_omi": "off_succ_kyogoku_1385_79",
-    "awaji": "off_jd_416"
+    "awaji": "off_jd_416",
+    "oshu": "off_utsunomiya_yasusuke",
+    "uwajima": "off_saionji_kintsugu",
+    "noshima": "off_murakami_yoshiaki"
   },
   "1438": {
     "north_omi": "off_succ_kyogoku_1385_79",
@@ -1150,7 +1168,10 @@
     "mikawa": "off_pl1438_045",
     "etchu": "off_shiina_yoritane",
     "izu": "off_jd_405",
-    "nagato": "off_naito_takemori"
+    "nagato": "off_naito_takemori",
+    "oshu": "off_utsunomiya_yasusuke",
+    "uwajima": "off_saionji_sumichika",
+    "noshima": "off_murakami_yoshiaki"
   },
   "1457": {
     "mutsu": "off_jd_370",
@@ -1233,7 +1254,10 @@
     "omura": "off_hist_1446_omura_sumiharu",
     "osumi": "off_pl1438_077",
     "saika_wakayama": "off_suzuki_shigeuji",
-    "kinan_kumano": "off_horiuchi_ujitada"
+    "kinan_kumano": "off_horiuchi_ujitada",
+    "oshu": "off_utsunomiya_yasutsuna",
+    "uwajima": "off_saionji_sumichika",
+    "noshima": "off_murakami_masafusa"
   },
   "1467": {
     "iwami": "off_masuda_sadakane",
@@ -1268,7 +1292,10 @@
     "suo": "off_dm_ouchi_1467",
     "satsuma": "off_dm_shimazu_1467",
     "osumi": "off_pl1438_077",
-    "ryukyu": "off_sho_toku"
+    "ryukyu": "off_sho_toku",
+    "oshu": "off_utsunomiya_yasutsuna",
+    "uwajima": "off_saionji_norisuke",
+    "noshima": "off_murakami_masafusa"
   },
   "1493": {
     "awa_shikoku": "off_hosokawa_shigeyuki",
@@ -1300,7 +1327,10 @@
     "chikugo": "off_kamachi_haruhisa",
     "ise": "off_kitabatake_masasato",
     "izu": "off_hojo_soun",
-    "iwami": "off_hist_1495_masuda_munekane"
+    "iwami": "off_hist_1495_masuda_munekane",
+    "oshu": "off_utsunomiya_nobutsuna",
+    "uwajima": "off_saionji_norisuke",
+    "noshima": "off_murakami_masafusa"
   },
   "1495": {
     "izu": "off_daidoji_shigetoki",
@@ -1329,7 +1359,10 @@
     "chikugo": "off_kamachi_haruhisa",
     "ise": "off_kitabatake_masasato",
     "shimousa": "off_dm_chiba_1495",
-    "iwami": "off_hist_1495_masuda_munekane"
+    "iwami": "off_hist_1495_masuda_munekane",
+    "oshu": "off_utsunomiya_nobutsuna",
+    "uwajima": "off_saionji_norisuke",
+    "noshima": "off_murakami_takakatsu"
   },
   "1531": {
     "izumi": "off_miyoshi_motonaga",
@@ -1356,7 +1389,10 @@
     "kii_kichu": "off_yukawa_naomasa",
     "awaji": "off_atagi_sanetoshi",
     "izumo": "off_dm_amago_1546",
-    "iwami": "off_honjo_tsunemitsu"
+    "iwami": "off_honjo_tsunemitsu",
+    "oshu": "off_utsunomiya_nobutsuna",
+    "uwajima": "off_saionji_sanemitsu",
+    "noshima": "off_murakami_yoshimasa"
   },
   "1538": {
     "izumi": "off_jd_249",
@@ -1384,7 +1420,10 @@
     "izumo": "off_amago_kunihisa",
     "mimasaka": "off_jd_055",
     "sagami": "off_hojo_ujiyasu",
-    "musashi": "off_toyama_tsunakage"
+    "musashi": "off_toyama_tsunakage",
+    "oshu": "off_utsunomiya_nobutsuna",
+    "uwajima": "off_saionji_sanemitsu",
+    "noshima": "off_murakami_yoshimasa"
   },
   "1546": {
     "musashi": "off_hojo_genan",
@@ -1418,7 +1457,10 @@
     "yamashiro": "off_ashikaga_yoshiteru",
     "kozuke": "off_nagano_narimasa",
     "oki": "off_oki_tamekiyo",
-    "mimasaka": "off_jd_055"
+    "mimasaka": "off_jd_055",
+    "oshu": "off_utsunomiya_nobutsuna",
+    "uwajima": "off_saionji_sanemitsu",
+    "noshima": "off_murakami_yoshimasa"
   },
   "1555": {
     "totomi": "off_asahina_yasutomo",
@@ -1454,7 +1496,10 @@
     "aki": "off_kumagai_nobunao",
     "aki_koriyama": "off_mori_takamoto",
     "izumo": "off_dm_amago_1560",
-    "iwami": "off_honjo_tsunemitsu"
+    "iwami": "off_honjo_tsunemitsu",
+    "oshu": "off_utsunomiya_nobutsuna",
+    "uwajima": "off_saionji_sanemitsu",
+    "noshima": "off_murakami_yoshimasa"
   },
   "1560": {
     "totomi": "off_asahina_yasutomo",
@@ -1492,7 +1537,10 @@
     "nagato": "off_naito_takaharu",
     "mimasaka": "off_jd_055",
     "rikuzen": "off_pl1570_161",
-    "iwami": "off_honjo_tsunemitsu"
+    "iwami": "off_honjo_tsunemitsu",
+    "oshu": "off_utsunomiya_nobutsuna",
+    "uwajima": "off_saionji_sanemitsu",
+    "noshima": "off_murakami_yoshimasa"
   },
   "1570": {
     "suruga": "off_anayama_baisetsu",
@@ -1539,7 +1587,10 @@
     "bizen": "off_pl1570_106",
     "tamba": "off_hatano_hideharu",
     "aki_koriyama": "off_mori_terumoto",
-    "south_omi": "off_niwa_nagahide"
+    "south_omi": "off_niwa_nagahide",
+    "oshu": "off_utsunomiya_nobutsuna",
+    "uwajima": "off_saionji_sanemitsu",
+    "noshima": "off_murakami_yoshimasa"
   },
   "1573": {
     "musashi": "off_hojo_ujiteru",
@@ -1583,7 +1634,10 @@
     "kii_kichu": "off_yukawa_naoharu",
     "echigo": "off_amakasu_kagemochi",
     "shimousa": "off_pl1570_181",
-    "south_omi": "off_niwa_nagahide"
+    "south_omi": "off_niwa_nagahide",
+    "oshu": "off_utsunomiya_nobutsuna",
+    "uwajima": "off_saionji_sanemitsu",
+    "noshima": "off_murakami_yoshimasa"
   },
   "1576": {
     "suruga": "off_anayama_baisetsu",
@@ -1632,7 +1686,10 @@
     "mikawa": "off_matsudaira_nobuyasu",
     "kii_kichu": "off_yukawa_naoharu",
     "mimasaka": "off_miura_sadahiro",
-    "tsuchiura": "off_hist_1522_ota_sukemasa"
+    "tsuchiura": "off_hist_1522_ota_sukemasa",
+    "oshu": "off_utsunomiya_nobutsuna",
+    "uwajima": "off_saionji_sanemitsu",
+    "noshima": "off_murakami_takeyoshi"
   },
   "1577": {
     "musashi": "off_hojo_ujiteru",
@@ -1680,7 +1737,10 @@
     "higo_kumamoto": "off_pl1570_144",
     "kozuke": "off_pl1570_067",
     "mimasaka": "off_miura_sadahiro",
-    "tsuchiura": "off_hist_1522_ota_sukemasa"
+    "tsuchiura": "off_hist_1522_ota_sukemasa",
+    "oshu": "off_utsunomiya_nobutsuna",
+    "uwajima": "off_saionji_sanemitsu",
+    "noshima": "off_murakami_takeyoshi"
   },
   "1582": {
     "owari": "off_oda_nobukatsu",
@@ -1713,7 +1773,7 @@
     "izumo": "off_kikkawa_motoharu",
     "iwami": "off_masuda_fujikane",
     "awa_shikoku": "off_jd_022",
-    "iyo": "off_jd_023",
+    "iyo": "off_kaneko_motoie",
     "kazusa": "off_masaki_yoritada",
     "nagato": "off_naito_takaharu",
     "oki": "off_oki_kiyomasa_sengoku",
@@ -1737,20 +1797,21 @@
     "tsuchiura": "off_hist_1522_ota_sukemasa",
     "mino": "off_oda_nobutada",
     "mikawa": "off_sakakibara_yasumasa",
-    "north_omi": "off_ishida_mitsunari"
+    "north_omi": "off_ishida_mitsunari",
+    "uwajima": "off_pl1570_118",
+    "noshima": "off_murakami_takeyoshi"
   },
   "1584": {
     "yamashiro": "off_maeda_geni",
-    "yamato": "off_tsutsui_junkei",
+    "yamato": "off_toyotomi_hidenaga",
     "mino": "off_ikeda_tsuneoki",
     "north_omi": "off_hori_hidemasa",
-    "south_omi": "off_gamo_ujisato",
+    "south_omi": "off_toyotomi_hidetsugu",
     "echizen": "off_niwa_nagahide",
     "kaga": "off_maeda_toshiie",
     "suruga": "off_honda_tadakatsu",
     "kai": "off_torii_mototada",
     "south_shinano": "off_succ_ogasawara_1545_115",
-    "suo": "off_ichikawa_tsuneyoshi",
     "hyuga": "off_shimazu_iehisa",
     "osumi": "off_hongo_tadamori",
     "kozuke": "off_daidoji_masashige",
@@ -1759,7 +1820,7 @@
     "kawachi": "off_hachisuka_iemasa",
     "izumi": "off_nakamura_kazuuji",
     "wakasa": null,
-    "iyo": "off_jd_023",
+    "iyo": "off_kaneko_motoie",
     "izumo": "off_kikkawa_motoharu",
     "awaji": "off_sengoku_hidehisa",
     "inaba": "off_miyabe_keijun",
@@ -1792,7 +1853,9 @@
     "shimousa": "off_chiba_kunitane",
     "tsuchiura": "off_hist_1522_ota_sukemasa",
     "hizen": "off_ryuzoji_masaie",
-    "bungo": "off_takahashi_shoun"
+    "bungo": "off_takahashi_shoun",
+    "suo": "off_pl1590_145",
+    "noshima": "off_murakami_takeyoshi"
   },
   "1587": {
     "yamato": "off_toyotomi_hidenaga",
@@ -1845,35 +1908,36 @@
     "yamashiro": "off_maeda_geni",
     "owari": "off_oda_nobukatsu",
     "etchu": "off_sassa_narimasa",
-    "mino": "off_ikeda_terumasa"
+    "mino": "off_ikeda_terumasa",
+    "izumi": "off_nakamura_kazuuji",
+    "saika_wakayama": "off_jd_027",
+    "aki": "off_kumagai_nobunao",
+    "noshima": "off_murakami_takeyoshi"
   },
   "1590": {
-    "owari": null,
+    "owari": "off_toyotomi_hidetsugu",
     "echizen": null,
     "kaga": "off_jd_457",
-    "tamba": "off_maeda_geni",
     "kai": "off_hiraiwa_chikayoshi",
     "musashi": "off_hojo_ujiteru",
     "kozuke": "off_daidoji_masashige",
-    "yamato": "off_mashita_nagamori",
+    "yamato": "off_toyotomi_hidenaga",
     "izumo": "off_kikkawa_hiroie",
-    "iyo": "off_fukushima_masanori",
-    "south_omi": "off_toyotomi_hidetsugu",
     "etchu": null,
-    "wakasa": null,
+    "wakasa": "off_asano_nagamasa",
     "hida": "off_kanamori_nagachika",
     "mino": "off_ikeda_terumasa",
-    "ise": "off_pl1590_095",
+    "ise": "off_gamo_ujisato",
     "north_omi": "off_ishida_mitsunari",
     "iga": "off_tsutsui_sadatsugu",
     "tango": "off_hosokawa_fujitaka",
     "kawachi": "off_katagiri_katsumoto",
-    "izumi": "off_jd_028",
+    "izumi": "off_nakamura_kazuuji",
     "tajima": null,
     "inaba": "off_miyabe_keijun",
     "sanuki": "off_ikoma_chikamasa",
     "awa_shikoku": "off_hachisuka_iemasa",
-    "awaji": null,
+    "awaji": "off_kato_yoshiaki",
     "shimousa": "off_chiba_naoshige_bridge",
     "mikawa": "off_honda_tadakatsu",
     "harima": "off_pl1590_060",
@@ -1885,7 +1949,6 @@
     "rikuzen": "off_katakura_kagenori",
     "totomi": "off_ii_naomasa",
     "iwami": "off_masuda_fujikane",
-    "yamashiro": "off_toyotomi_hidenaga",
     "higo_hitoyoshi": "off_dm_sagara_19_yorifusa",
     "tosa_nakamura": "off_pl1570_122",
     "shirakawa": "off_hist_1578_shirakawa_yoshichika",
@@ -1900,12 +1963,12 @@
     "oki": "off_oki_kiyomasa_sengoku",
     "echigo": "off_naoe_kanetsugu",
     "tsuchiura": "off_hist_1522_ota_sukemasa",
-    "south_shinano": "off_succ_ogasawara_1545_115"
+    "south_shinano": "off_succ_ogasawara_1545_115",
+    "yamashiro": "off_maeda_geni",
+    "kii_kichu": "off_todo_takatora"
   },
   "1592": {
-    "yamashiro": "off_toyotomi_hidetsugu",
     "north_omi": "off_ishida_mitsunari",
-    "echizen": "off_otani_yoshitsugu",
     "sagami": "off_okubo_tadachika",
     "kozuke": "off_ii_naomasa",
     "shimousa": "off_torii_mototada",
@@ -1916,13 +1979,10 @@
     "etchu": "off_dm_maeda_1600",
     "totomi": "off_yamauchi_kazutoyo",
     "mikawa": "off_tanaka_yoshimasa",
-    "south_omi": "off_pl1590_114",
-    "yamato": "off_todo_takatora",
-    "tamba": "off_maeda_geni",
-    "harima": "off_koide_yoshimasa",
+    "south_omi": "off_toyotomi_hidetsugu",
+    "harima": "off_ikeda_terumasa",
     "sanuki": "off_ikoma_chikamasa",
     "awa_shikoku": "off_hachisuka_iemasa",
-    "iyo": "off_fukushima_masanori",
     "bungo": "off_jd_261",
     "iga": "off_tsutsui_sadatsugu",
     "kawachi": "off_katagiri_katsumoto",
@@ -1954,13 +2014,19 @@
     "satsuma": "off_pl1590_070",
     "tango": "off_hosokawa_fujitaka",
     "shima": "off_kuki_yoshitaka",
-    "ise": "off_jd_059",
     "kinan_kumano": "off_horiuchi_ujiyoshi",
     "wakasa": "off_asano_nagamasa",
-    "south_shinano": "off_pl1590_118"
+    "south_shinano": "off_pl1590_118",
+    "ise": "off_jd_059",
+    "kii_kichu": "off_todo_takatora",
+    "mino": "off_pl1590_087",
+    "tajima": "off_yamana_toyokuni",
+    "yamashiro": "off_maeda_geni",
+    "echizen": "off_otani_yoshitsugu"
   },
   "1600": {
-    "sagami": "off_pl1590_003",
+    "sagami": "off_okubo_tadachika",
+    "shimotsuke": "off_pl1590_014",
     "shimousa": "off_pl1614_044",
     "kozuke": "off_ii_naomasa",
     "osumi": "off_hongo_tadamori",
@@ -1988,8 +2054,6 @@
     "nobeoka": "off_pl1590_074",
     "rikuzen": "off_katakura_kagenori",
     "mikawa": "off_mizuno_katsunari",
-    "suruga": "off_pl1570_021",
-    "owari": "off_fukushima_masanori",
     "saika_wakayama": "off_jd_027",
     "ise": "off_pl1614_037",
     "izumo": "off_kikkawa_hiroie",
@@ -2005,23 +2069,23 @@
     "yamashiro": "off_maeda_geni",
     "nagato": "off_pl1590_144",
     "bungo": "off_jd_261",
-    "kai": "off_hiraiwa_chikayoshi",
     "kinan_kumano": "off_horiuchi_ujiyoshi",
     "echizen": "off_otani_yoshitsugu",
     "iga": "off_tsutsui_sadatsugu",
     "koga": "off_yuki_hideyasu",
-    "tango": "off_hosokawa_fujitaka"
+    "tango": "off_hosokawa_fujitaka",
+    "nasu": "off_pl1590_020",
+    "kai": "off_dm_asano_1600",
+    "uwajima": "off_pl1614_144"
   },
   "1614": {
     "yamashiro": "off_itakura_katsushige",
     "echizen": "off_matsudaira_tadanao",
-    "ise": "off_todo_takatora",
     "kozuke": "off_sakai_tadayo",
     "kawachi": "off_katagiri_katsumoto",
     "izumi": "off_kimura_shigenari",
     "osumi": "off_hongo_tadamori",
     "shimotsuke": "off_honda_masazumi",
-    "shimousa": "off_hist_1633_doi_toshikatsu",
     "sagami": "off_okubo_tadachika",
     "hida": "off_kanamori_arishige",
     "totomi": "off_pl1614_067",
@@ -2053,21 +2117,23 @@
     "soma": "off_soma_toshitane",
     "nishi_tsugaru": "off_tsugaru_nobuhira",
     "aki": "off_fukushima_masanori",
-    "awaji": "off_wakisaka_yasuharu",
     "rikuzen": "off_katakura_kagenori",
-    "iyo": "off_kato_yoshiaki",
     "harima": "off_succ_okayama_1584_117",
     "north_shinano": "off_sanada_nobuyuki",
     "echigo": "off_succ2_matsudaira_1592",
     "north_omi": "off_jd_031",
     "yamato": "off_yagyu_munenori",
     "musashi": "off_tokugawa_hidetada",
-    "bicchu": "off_pl1637_096"
+    "bicchu": "off_pl1637_096",
+    "koga": "off_hist_1633_doi_toshikatsu",
+    "tsuchiura": "off_pl1590_111",
+    "kai": "off_pl1614_112",
+    "uwajima": "off_jd_042",
+    "oshu": "off_wakisaka_yasuharu"
   },
   "1637": {
     "bingo": "off_mizuno_katsunari",
     "mikawa": "off_itakura_shigemasa",
-    "ise": "off_todo_takatsugu",
     "echigo": "off_edo_tokugawa_1616_82",
     "kozuke": "off_edo_tokugawa_1592_95",
     "shimousa": "off_edo_tokugawa_1609_75",
@@ -2115,8 +2181,11 @@
     "hizen": "off_nabeshima_katsushige",
     "shimabara": "off_amakusa_shiro",
     "nasu": "off_hist_1610_nasu_sukekage",
-    "koga": "off_hist_1619_okudaira_tadamasa",
-    "kai": "off_pl1614_122"
+    "koga": "off_hist_1633_doi_toshikatsu",
+    "shimotsuke": "off_honda_masazumi",
+    "tsuchiura": "off_hist_1669_tsuchiya_kazunao",
+    "kai": "off_pl1637_022",
+    "ise": "off_pl1614_061"
   },
   "1651": {
     "kozuke": "off_edo_tokugawa_1592_95",
@@ -2162,7 +2231,10 @@
     "nobeoka": "off_pl1637_121",
     "nasu": "off_hist_1610_nasu_sukekage",
     "shimabara": "off_pl1637_008",
-    "ise": "off_todo_takatsugu"
+    "ise": "off_todo_takatsugu",
+    "shimotsuke": "off_pl1651_070",
+    "koga": "off_hist_1644_doi_toshitaka",
+    "tsuchiura": "off_hist_1669_tsuchiya_kazunao"
   },
   "1702": {
     "mikawa": "off_kira_yoshihisa",
@@ -2175,7 +2247,7 @@
     "iyo": "off_matsudaira_sadanori",
     "buzen": "off_ogasawara_tadamoto",
     "totomi": "off_jd_086",
-    "kozuke": "off_jd_079",
+    "kozuke": "off_pl1702_069",
     "shimousa": "off_jd_081",
     "izu": "off_jd_099",
     "suruga": "off_jd_077",
@@ -2209,12 +2281,13 @@
     "koga": "off_pl1702_115",
     "settsu": "off_pl1702_145",
     "echigo": "off_pl1702_096",
-    "nasu": "off_hist_1708_nasu_suketoyo"
+    "nasu": "off_hist_1708_nasu_suketoyo",
+    "oshu": "off_pl1702_090"
   },
   "1721": {
     "suruga": "off_mizuno_tadayuki",
     "kai": "off_ooka_tadatane",
-    "kozuke": "off_matsudaira_norisato_toba",
+    "kozuke": "off_pl1702_069",
     "bingo": "off_abe_masatomo",
     "sanuki": "off_matsudaira_yoritoyo",
     "iyo": "off_matsudaira_sadahide",
@@ -2300,11 +2373,11 @@
     "kasai": "off_hist_1782_tamura_murasuke",
     "nobeoka": "off_naito_masanobu",
     "koga": "off_hist_1759_matsudaira_yasuyoshi",
-    "nasu": "off_hist_1780_nasu_suketatsu"
+    "nasu": "off_hist_1780_nasu_suketatsu",
+    "shimotsuke": "off_pl1789_083"
   },
   "1837": {
     "shimotsuke": "off_edo_tokugawa_1800_44",
-    "kozuke": "off_edo_tokugawa_1819_40",
     "shimousa": "off_edo_tokugawa_1810_19",
     "kazusa": "off_edo_tokugawa_1815_70",
     "awa_boshu": "off_edo_tokugawa_1808_71",
@@ -2350,11 +2423,13 @@
     "kasai": "off_hist_1827_tamura_kuniaki",
     "nobeoka": "off_pl1853_098",
     "oki": "off_jd_381",
-    "nasu": "off_hist_1816_nasu_sukenori_2"
+    "nasu": "off_hist_1816_nasu_sukenori_2",
+    "kozuke": "off_edo_tokugawa_1810_45",
+    "koga": "off_hist_1822_doi_toshitsura"
   },
   "1853": {
-    "shimotsuke": "off_edo_tokugawa_1800_44",
-    "kozuke": "off_edo_tokugawa_1819_40",
+    "shimotsuke": "off_pl1853_130",
+    "kozuke": "off_edo_tokugawa_1810_45",
     "shimousa": "off_edo_tokugawa_1810_19",
     "kazusa": "off_edo_tokugawa_1815_70",
     "awa_boshu": "off_edo_tokugawa_1808_71",
@@ -2405,8 +2480,8 @@
     "nasu": "off_hist_1851_nasu_sukeoki"
   },
   "1860": {
-    "shimotsuke": "off_edo_tokugawa_1800_44",
-    "kozuke": "off_edo_tokugawa_1819_40",
+    "shimotsuke": "off_pl1853_130",
+    "kozuke": "off_edo_tokugawa_1810_45",
     "shimousa": "off_edo_tokugawa_1810_19",
     "kazusa": "off_edo_tokugawa_1815_70",
     "awa_boshu": "off_edo_tokugawa_1808_71",
@@ -2465,8 +2540,7 @@
     "sanuki": "off_matsudaira_yoritane",
     "iyo": "off_matsudaira_sadanori_last",
     "kazusa": "off_hayashi_tadataka",
-    "kozuke": "off_edo_tokugawa_1805_55",
-    "shimousa": "off_edo_tokugawa_1814_72",
+    "kozuke": "off_edo_tokugawa_1810_45",
     "awa_boshu": "off_edo_tokugawa_1808_71",
     "hida": "off_edo_tokugawa_1802_65",
     "mino": "off_jd_066",
@@ -2483,7 +2557,6 @@
     "tamba": "off_jd_065",
     "suruga": "off_jd_068",
     "noto": "off_jd_379",
-    "kai": "off_jd_289",
     "settsu": "off_edo_tokugawa_1816_24",
     "tango": "off_jd_291",
     "izu": "off_jd_341",
@@ -2495,7 +2568,11 @@
     "osaki": "off_hist_1843_date_kuninao",
     "iwami": "off_pl1853_119",
     "oki": "off_jd_381",
-    "nasu": "off_hist_1851_nasu_sukeoki"
+    "nasu": "off_hist_1851_nasu_sukeoki",
+    "shimotsuke": "off_pl1853_130",
+    "musashi": "off_edo_tokugawa_1814_72",
+    "iga": "off_edo_tokugawa_1813_34",
+    "oshu": "off_kato_yasuaki"
   },
   "1868": {
     "suo": "off_pl1853_176",
@@ -2518,8 +2595,7 @@
     "iwami": "off_jd_430",
     "south_shinano": "off_jd_431",
     "south_omi": "off_jd_432",
-    "kozuke": "off_edo_tokugawa_1817_46",
-    "shimousa": "off_edo_tokugawa_1814_72",
+    "kozuke": "off_edo_tokugawa_1810_45",
     "kazusa": "off_edo_tokugawa_1815_70",
     "mikawa": "off_edo_tokugawa_1809_42",
     "higo_hitoyoshi": "off_dm_sagara_34_yorimoto",
@@ -2528,7 +2604,8 @@
     "tajima": "off_sengoku_masakata",
     "harima": "off_pl1853_131",
     "nasu": "off_hist_1851_nasu_sukeoki",
-    "bizen": "off_edo_okayama_1823_205"
+    "bizen": "off_edo_okayama_1823_205",
+    "musashi": "off_edo_tokugawa_1814_72"
   },
   "1877": {
     "mutsu": "off_shima_isei",
@@ -2581,7 +2658,6 @@
     "osumi": "off_kirino_toshiaki",
     "sado": "off_tatsumi_kanzaburo",
     "awaji": "off_jd_072",
-    "higo_kumamoto": "off_tani_tateki",
     "tosa_kochi": "off_koike_kuniomi",
     "nishi_tsugaru": "off_yamada_hidenori",
     "ezo": "off_kuroda_kiyotaka",
@@ -2971,7 +3047,7 @@
       "kasai": "off_fujiwara_kiyohira",
       "yamashiro": "off_oe_no_masafusa",
       "izu": "off_jd_352",
-      "tanba": "off_fujiwara_akitsuna_heian",
+      "tamba": "off_fujiwara_akitsuna_heian",
       "higo_kumamoto": "off_ooe_hironori_heian"
     },
     "1154": {
@@ -3480,7 +3556,10 @@
       "nishi_tsugaru": "off_succ_ando_1265_2",
       "hida": "off_jd_224",
       "iwami": "off_masuda_kanemi",
-      "oki": "off_pl1274_042"
+      "oki": "off_pl1274_042",
+      "oshu": "off_utsunomiya_muneyasu",
+      "uwajima": "off_saionji_kinshige",
+      "noshima": "off_pl1331_072"
     },
     "1333": {
       "ezo": "off_ezo_leader_1331",
@@ -3508,7 +3587,6 @@
       "suruga": "off_succ_imagawa_1304_41",
       "mimasaka": "off_akamatsu_sadanori",
       "izu": "off_uesugi_shigenori",
-      "yamashiro": "off_godaiho_tenno",
       "mikawa": "off_isshiki_norouji",
       "harima": "off_akamatsu_enshin",
       "bicchu": "off_ko_no_moroyasu",
@@ -3541,7 +3619,9 @@
       "musashi": "off_uesugi_noriaki_first",
       "shimousa": "off_dm_chiba_1331",
       "iwami": "off_masuda_kanemi",
-      "bizen": "off_kojima_takanori"
+      "bizen": "off_kojima_takanori",
+      "oshu": "off_utsunomiya_muneyasu",
+      "uwajima": "off_saionji_kinshige"
     },
     "1336": {
       "iga": "off_jd_364",
@@ -3566,7 +3646,9 @@
       "mikawa": "off_ko_no_moroyasu",
       "izumo": "off_dm_enyo_1331",
       "hyuga": "off_ito_sukemune",
-      "sagami": "off_ko_no_moronao"
+      "sagami": "off_ko_no_moronao",
+      "oshu": "off_utsunomiya_muneyasu",
+      "uwajima": "off_saionji_kinshige"
     },
     "1350": {
       "mikawa": "off_pl1331_079",
@@ -3602,7 +3684,10 @@
       "echigo": "off_pl1359_002",
       "awa_boshu": "off_satomi_yoshitane",
       "izumo": "off_jd_325",
-      "higo_kumamoto": "off_pl1350_013"
+      "higo_kumamoto": "off_pl1350_013",
+      "oshu": "off_utsunomiya_muneyasu",
+      "uwajima": "off_saionji_kintoshi",
+      "noshima": "off_murakami_morikiyo"
     },
     "1359": {
       "uzen": "off_pl1350_001",
@@ -3634,7 +3719,10 @@
       "echigo": "off_pl1359_005",
       "shimousa": "off_chiba_ujitane",
       "oki": "off_jd_399",
-      "mimasaka": "off_akamatsu_sadanori"
+      "mimasaka": "off_akamatsu_sadanori",
+      "oshu": "off_utsunomiya_muneyasu",
+      "uwajima": "off_saionji_kintoshi",
+      "noshima": "off_murakami_morikiyo"
     },
     "1391": {
       "bizen": "off_jd_411",
@@ -3662,7 +3750,10 @@
       "kaga": "off_pl1400_037",
       "koga": "off_jd_368",
       "awa_boshu": "off_satomi_yoshinori",
-      "north_omi": "off_kyogoku_takamitsu"
+      "north_omi": "off_kyogoku_takamitsu",
+      "oshu": "off_utsunomiya_yasusuke",
+      "uwajima": "off_saionji_kintsugu",
+      "noshima": "off_murakami_yoshiaki"
     },
     "1400": {
       "hida": "off_anegakoji_tadatsuna",
@@ -3699,7 +3790,10 @@
       "kii_kichu": "off_jd_409",
       "satsuma": "off_pl1400_034",
       "north_omi": "off_succ_kyogoku_1385_79",
-      "awaji": "off_jd_416"
+      "awaji": "off_jd_416",
+      "oshu": "off_utsunomiya_yasusuke",
+      "uwajima": "off_saionji_kintsugu",
+      "noshima": "off_murakami_yoshiaki"
     },
     "1438": {
       "north_omi": "off_succ_kyogoku_1385_79",
@@ -3741,7 +3835,10 @@
       "mikawa": "off_pl1438_045",
       "etchu": "off_shiina_yoritane",
       "izu": "off_jd_405",
-      "nagato": "off_naito_takemori"
+      "nagato": "off_naito_takemori",
+      "oshu": "off_utsunomiya_yasusuke",
+      "uwajima": "off_saionji_sumichika",
+      "noshima": "off_murakami_yoshiaki"
     },
     "1457": {
       "mutsu": "off_jd_370",
@@ -3824,7 +3921,10 @@
       "omura": "off_hist_1446_omura_sumiharu",
       "osumi": "off_pl1438_077",
       "saika_wakayama": "off_suzuki_shigeuji",
-      "kinan_kumano": "off_horiuchi_ujitada"
+      "kinan_kumano": "off_horiuchi_ujitada",
+      "oshu": "off_utsunomiya_yasutsuna",
+      "uwajima": "off_saionji_sumichika",
+      "noshima": "off_murakami_masafusa"
     },
     "1467": {
       "iwami": "off_masuda_sadakane",
@@ -3859,7 +3959,10 @@
       "suo": "off_dm_ouchi_1467",
       "satsuma": "off_dm_shimazu_1467",
       "osumi": "off_pl1438_077",
-      "ryukyu": "off_sho_toku"
+      "ryukyu": "off_sho_toku",
+      "oshu": "off_utsunomiya_yasutsuna",
+      "uwajima": "off_saionji_norisuke",
+      "noshima": "off_murakami_masafusa"
     },
     "1493": {
       "awa_shikoku": "off_hosokawa_shigeyuki",
@@ -3891,7 +3994,10 @@
       "chikugo": "off_kamachi_haruhisa",
       "ise": "off_kitabatake_masasato",
       "izu": "off_hojo_soun",
-      "iwami": "off_hist_1495_masuda_munekane"
+      "iwami": "off_hist_1495_masuda_munekane",
+      "oshu": "off_utsunomiya_nobutsuna",
+      "uwajima": "off_saionji_norisuke",
+      "noshima": "off_murakami_masafusa"
     },
     "1495": {
       "izu": "off_daidoji_shigetoki",
@@ -3920,7 +4026,10 @@
       "chikugo": "off_kamachi_haruhisa",
       "ise": "off_kitabatake_masasato",
       "shimousa": "off_dm_chiba_1495",
-      "iwami": "off_hist_1495_masuda_munekane"
+      "iwami": "off_hist_1495_masuda_munekane",
+      "oshu": "off_utsunomiya_nobutsuna",
+      "uwajima": "off_saionji_norisuke",
+      "noshima": "off_murakami_takakatsu"
     },
     "1531": {
       "izumi": "off_miyoshi_motonaga",
@@ -3947,7 +4056,10 @@
       "kii_kichu": "off_yukawa_naomasa",
       "awaji": "off_atagi_sanetoshi",
       "izumo": "off_dm_amago_1546",
-      "iwami": "off_honjo_tsunemitsu"
+      "iwami": "off_honjo_tsunemitsu",
+      "oshu": "off_utsunomiya_nobutsuna",
+      "uwajima": "off_saionji_sanemitsu",
+      "noshima": "off_murakami_yoshimasa"
     },
     "1538": {
       "izumi": "off_jd_249",
@@ -3975,7 +4087,10 @@
       "izumo": "off_amago_kunihisa",
       "mimasaka": "off_jd_055",
       "sagami": "off_hojo_ujiyasu",
-      "musashi": "off_toyama_tsunakage"
+      "musashi": "off_toyama_tsunakage",
+      "oshu": "off_utsunomiya_nobutsuna",
+      "uwajima": "off_saionji_sanemitsu",
+      "noshima": "off_murakami_yoshimasa"
     },
     "1546": {
       "musashi": "off_hojo_genan",
@@ -4009,7 +4124,10 @@
       "yamashiro": "off_ashikaga_yoshiteru",
       "kozuke": "off_nagano_narimasa",
       "oki": "off_oki_tamekiyo",
-      "mimasaka": "off_jd_055"
+      "mimasaka": "off_jd_055",
+      "oshu": "off_utsunomiya_nobutsuna",
+      "uwajima": "off_saionji_sanemitsu",
+      "noshima": "off_murakami_yoshimasa"
     },
     "1555": {
       "totomi": "off_asahina_yasutomo",
@@ -4045,7 +4163,10 @@
       "aki": "off_kumagai_nobunao",
       "aki_koriyama": "off_mori_takamoto",
       "izumo": "off_dm_amago_1560",
-      "iwami": "off_honjo_tsunemitsu"
+      "iwami": "off_honjo_tsunemitsu",
+      "oshu": "off_utsunomiya_nobutsuna",
+      "uwajima": "off_saionji_sanemitsu",
+      "noshima": "off_murakami_yoshimasa"
     },
     "1560": {
       "totomi": "off_asahina_yasutomo",
@@ -4083,7 +4204,10 @@
       "nagato": "off_naito_takaharu",
       "mimasaka": "off_jd_055",
       "rikuzen": "off_pl1570_161",
-      "iwami": "off_honjo_tsunemitsu"
+      "iwami": "off_honjo_tsunemitsu",
+      "oshu": "off_utsunomiya_nobutsuna",
+      "uwajima": "off_saionji_sanemitsu",
+      "noshima": "off_murakami_yoshimasa"
     },
     "1570": {
       "suruga": "off_anayama_baisetsu",
@@ -4130,7 +4254,10 @@
       "bizen": "off_pl1570_106",
       "tamba": "off_hatano_hideharu",
       "aki_koriyama": "off_mori_terumoto",
-      "south_omi": "off_niwa_nagahide"
+      "south_omi": "off_niwa_nagahide",
+      "oshu": "off_utsunomiya_nobutsuna",
+      "uwajima": "off_saionji_sanemitsu",
+      "noshima": "off_murakami_yoshimasa"
     },
     "1573": {
       "musashi": "off_hojo_ujiteru",
@@ -4174,7 +4301,10 @@
       "kii_kichu": "off_yukawa_naoharu",
       "echigo": "off_amakasu_kagemochi",
       "shimousa": "off_pl1570_181",
-      "south_omi": "off_niwa_nagahide"
+      "south_omi": "off_niwa_nagahide",
+      "oshu": "off_utsunomiya_nobutsuna",
+      "uwajima": "off_saionji_sanemitsu",
+      "noshima": "off_murakami_yoshimasa"
     },
     "1576": {
       "suruga": "off_anayama_baisetsu",
@@ -4223,7 +4353,10 @@
       "mikawa": "off_matsudaira_nobuyasu",
       "kii_kichu": "off_yukawa_naoharu",
       "mimasaka": "off_miura_sadahiro",
-      "tsuchiura": "off_hist_1522_ota_sukemasa"
+      "tsuchiura": "off_hist_1522_ota_sukemasa",
+      "oshu": "off_utsunomiya_nobutsuna",
+      "uwajima": "off_saionji_sanemitsu",
+      "noshima": "off_murakami_takeyoshi"
     },
     "1577": {
       "musashi": "off_hojo_ujiteru",
@@ -4271,7 +4404,10 @@
       "higo_kumamoto": "off_pl1570_144",
       "kozuke": "off_pl1570_067",
       "mimasaka": "off_miura_sadahiro",
-      "tsuchiura": "off_hist_1522_ota_sukemasa"
+      "tsuchiura": "off_hist_1522_ota_sukemasa",
+      "oshu": "off_utsunomiya_nobutsuna",
+      "uwajima": "off_saionji_sanemitsu",
+      "noshima": "off_murakami_takeyoshi"
     },
     "1582": {
       "owari": "off_oda_nobukatsu",
@@ -4304,7 +4440,7 @@
       "izumo": "off_kikkawa_motoharu",
       "iwami": "off_masuda_fujikane",
       "awa_shikoku": "off_jd_022",
-      "iyo": "off_jd_023",
+      "iyo": "off_kaneko_motoie",
       "kazusa": "off_masaki_yoritada",
       "nagato": "off_naito_takaharu",
       "oki": "off_oki_kiyomasa_sengoku",
@@ -4328,20 +4464,21 @@
       "tsuchiura": "off_hist_1522_ota_sukemasa",
       "mino": "off_oda_nobutada",
       "mikawa": "off_sakakibara_yasumasa",
-      "north_omi": "off_ishida_mitsunari"
+      "north_omi": "off_ishida_mitsunari",
+      "uwajima": "off_pl1570_118",
+      "noshima": "off_murakami_takeyoshi"
     },
     "1584": {
       "yamashiro": "off_maeda_geni",
-      "yamato": "off_tsutsui_junkei",
+      "yamato": "off_toyotomi_hidenaga",
       "mino": "off_ikeda_tsuneoki",
       "north_omi": "off_hori_hidemasa",
-      "south_omi": "off_gamo_ujisato",
+      "south_omi": "off_toyotomi_hidetsugu",
       "echizen": "off_niwa_nagahide",
       "kaga": "off_maeda_toshiie",
       "suruga": "off_honda_tadakatsu",
       "kai": "off_torii_mototada",
       "south_shinano": "off_succ_ogasawara_1545_115",
-      "suo": "off_ichikawa_tsuneyoshi",
       "hyuga": "off_shimazu_iehisa",
       "osumi": "off_hongo_tadamori",
       "kozuke": "off_daidoji_masashige",
@@ -4350,7 +4487,7 @@
       "kawachi": "off_hachisuka_iemasa",
       "izumi": "off_nakamura_kazuuji",
       "wakasa": null,
-      "iyo": "off_jd_023",
+      "iyo": "off_kaneko_motoie",
       "izumo": "off_kikkawa_motoharu",
       "awaji": "off_sengoku_hidehisa",
       "inaba": "off_miyabe_keijun",
@@ -4383,7 +4520,9 @@
       "shimousa": "off_chiba_kunitane",
       "tsuchiura": "off_hist_1522_ota_sukemasa",
       "hizen": "off_ryuzoji_masaie",
-      "bungo": "off_takahashi_shoun"
+      "bungo": "off_takahashi_shoun",
+      "suo": "off_pl1590_145",
+      "noshima": "off_murakami_takeyoshi"
     },
     "1587": {
       "yamato": "off_toyotomi_hidenaga",
@@ -4436,35 +4575,36 @@
       "yamashiro": "off_maeda_geni",
       "owari": "off_oda_nobukatsu",
       "etchu": "off_sassa_narimasa",
-      "mino": "off_ikeda_terumasa"
+      "mino": "off_ikeda_terumasa",
+      "izumi": "off_nakamura_kazuuji",
+      "saika_wakayama": "off_jd_027",
+      "aki": "off_kumagai_nobunao",
+      "noshima": "off_murakami_takeyoshi"
     },
     "1590": {
-      "owari": null,
+      "owari": "off_toyotomi_hidetsugu",
       "echizen": null,
       "kaga": "off_jd_457",
-      "tamba": "off_maeda_geni",
       "kai": "off_hiraiwa_chikayoshi",
       "musashi": "off_hojo_ujiteru",
       "kozuke": "off_daidoji_masashige",
-      "yamato": "off_mashita_nagamori",
+      "yamato": "off_toyotomi_hidenaga",
       "izumo": "off_kikkawa_hiroie",
-      "iyo": "off_fukushima_masanori",
-      "south_omi": "off_toyotomi_hidetsugu",
       "etchu": null,
-      "wakasa": null,
+      "wakasa": "off_asano_nagamasa",
       "hida": "off_kanamori_nagachika",
       "mino": "off_ikeda_terumasa",
-      "ise": "off_pl1590_095",
+      "ise": "off_gamo_ujisato",
       "north_omi": "off_ishida_mitsunari",
       "iga": "off_tsutsui_sadatsugu",
       "tango": "off_hosokawa_fujitaka",
       "kawachi": "off_katagiri_katsumoto",
-      "izumi": "off_jd_028",
+      "izumi": "off_nakamura_kazuuji",
       "tajima": null,
       "inaba": "off_miyabe_keijun",
       "sanuki": "off_ikoma_chikamasa",
       "awa_shikoku": "off_hachisuka_iemasa",
-      "awaji": null,
+      "awaji": "off_kato_yoshiaki",
       "shimousa": "off_chiba_naoshige_bridge",
       "mikawa": "off_honda_tadakatsu",
       "harima": "off_pl1590_060",
@@ -4476,7 +4616,6 @@
       "rikuzen": "off_katakura_kagenori",
       "totomi": "off_ii_naomasa",
       "iwami": "off_masuda_fujikane",
-      "yamashiro": "off_toyotomi_hidenaga",
       "higo_hitoyoshi": "off_dm_sagara_19_yorifusa",
       "tosa_nakamura": "off_pl1570_122",
       "shirakawa": "off_hist_1578_shirakawa_yoshichika",
@@ -4491,12 +4630,12 @@
       "oki": "off_oki_kiyomasa_sengoku",
       "echigo": "off_naoe_kanetsugu",
       "tsuchiura": "off_hist_1522_ota_sukemasa",
-      "south_shinano": "off_succ_ogasawara_1545_115"
+      "south_shinano": "off_succ_ogasawara_1545_115",
+      "yamashiro": "off_maeda_geni",
+      "kii_kichu": "off_todo_takatora"
     },
     "1592": {
-      "yamashiro": "off_toyotomi_hidetsugu",
       "north_omi": "off_ishida_mitsunari",
-      "echizen": "off_otani_yoshitsugu",
       "sagami": "off_okubo_tadachika",
       "kozuke": "off_ii_naomasa",
       "shimousa": "off_torii_mototada",
@@ -4507,13 +4646,10 @@
       "etchu": "off_dm_maeda_1600",
       "totomi": "off_yamauchi_kazutoyo",
       "mikawa": "off_tanaka_yoshimasa",
-      "south_omi": "off_pl1590_114",
-      "yamato": "off_todo_takatora",
-      "tamba": "off_maeda_geni",
-      "harima": "off_koide_yoshimasa",
+      "south_omi": "off_toyotomi_hidetsugu",
+      "harima": "off_ikeda_terumasa",
       "sanuki": "off_ikoma_chikamasa",
       "awa_shikoku": "off_hachisuka_iemasa",
-      "iyo": "off_fukushima_masanori",
       "bungo": "off_jd_261",
       "iga": "off_tsutsui_sadatsugu",
       "kawachi": "off_katagiri_katsumoto",
@@ -4545,13 +4681,19 @@
       "satsuma": "off_pl1590_070",
       "tango": "off_hosokawa_fujitaka",
       "shima": "off_kuki_yoshitaka",
-      "ise": "off_jd_059",
       "kinan_kumano": "off_horiuchi_ujiyoshi",
       "wakasa": "off_asano_nagamasa",
-      "south_shinano": "off_pl1590_118"
+      "south_shinano": "off_pl1590_118",
+      "ise": "off_jd_059",
+      "kii_kichu": "off_todo_takatora",
+      "mino": "off_pl1590_087",
+      "tajima": "off_yamana_toyokuni",
+      "yamashiro": "off_maeda_geni",
+      "echizen": "off_otani_yoshitsugu"
     },
     "1600": {
-      "sagami": "off_pl1590_003",
+      "sagami": "off_okubo_tadachika",
+      "shimotsuke": "off_pl1590_014",
       "shimousa": "off_pl1614_044",
       "kozuke": "off_ii_naomasa",
       "osumi": "off_hongo_tadamori",
@@ -4579,8 +4721,6 @@
       "nobeoka": "off_pl1590_074",
       "rikuzen": "off_katakura_kagenori",
       "mikawa": "off_mizuno_katsunari",
-      "suruga": "off_pl1570_021",
-      "owari": "off_fukushima_masanori",
       "saika_wakayama": "off_jd_027",
       "ise": "off_pl1614_037",
       "izumo": "off_kikkawa_hiroie",
@@ -4596,23 +4736,23 @@
       "yamashiro": "off_maeda_geni",
       "nagato": "off_pl1590_144",
       "bungo": "off_jd_261",
-      "kai": "off_hiraiwa_chikayoshi",
       "kinan_kumano": "off_horiuchi_ujiyoshi",
       "echizen": "off_otani_yoshitsugu",
       "iga": "off_tsutsui_sadatsugu",
       "koga": "off_yuki_hideyasu",
-      "tango": "off_hosokawa_fujitaka"
+      "tango": "off_hosokawa_fujitaka",
+      "nasu": "off_pl1590_020",
+      "kai": "off_dm_asano_1600",
+      "uwajima": "off_pl1614_144"
     },
     "1614": {
       "yamashiro": "off_itakura_katsushige",
       "echizen": "off_matsudaira_tadanao",
-      "ise": "off_todo_takatora",
       "kozuke": "off_sakai_tadayo",
       "kawachi": "off_katagiri_katsumoto",
       "izumi": "off_kimura_shigenari",
       "osumi": "off_hongo_tadamori",
       "shimotsuke": "off_honda_masazumi",
-      "shimousa": "off_hist_1633_doi_toshikatsu",
       "sagami": "off_okubo_tadachika",
       "hida": "off_kanamori_arishige",
       "totomi": "off_pl1614_067",
@@ -4644,21 +4784,23 @@
       "soma": "off_soma_toshitane",
       "nishi_tsugaru": "off_tsugaru_nobuhira",
       "aki": "off_fukushima_masanori",
-      "awaji": "off_wakisaka_yasuharu",
       "rikuzen": "off_katakura_kagenori",
-      "iyo": "off_kato_yoshiaki",
       "harima": "off_succ_okayama_1584_117",
       "north_shinano": "off_sanada_nobuyuki",
       "echigo": "off_succ2_matsudaira_1592",
       "north_omi": "off_jd_031",
       "yamato": "off_yagyu_munenori",
       "musashi": "off_tokugawa_hidetada",
-      "bicchu": "off_pl1637_096"
+      "bicchu": "off_pl1637_096",
+      "koga": "off_hist_1633_doi_toshikatsu",
+      "tsuchiura": "off_pl1590_111",
+      "kai": "off_pl1614_112",
+      "uwajima": "off_jd_042",
+      "oshu": "off_wakisaka_yasuharu"
     },
     "1637": {
       "bingo": "off_mizuno_katsunari",
       "mikawa": "off_itakura_shigemasa",
-      "ise": "off_todo_takatsugu",
       "echigo": "off_edo_tokugawa_1616_82",
       "kozuke": "off_edo_tokugawa_1592_95",
       "shimousa": "off_edo_tokugawa_1609_75",
@@ -4706,8 +4848,11 @@
       "hizen": "off_nabeshima_katsushige",
       "shimabara": "off_amakusa_shiro",
       "nasu": "off_hist_1610_nasu_sukekage",
-      "koga": "off_hist_1619_okudaira_tadamasa",
-      "kai": "off_pl1614_122"
+      "koga": "off_hist_1633_doi_toshikatsu",
+      "shimotsuke": "off_honda_masazumi",
+      "tsuchiura": "off_hist_1669_tsuchiya_kazunao",
+      "kai": "off_pl1637_022",
+      "ise": "off_pl1614_061"
     },
     "1651": {
       "kozuke": "off_edo_tokugawa_1592_95",
@@ -4753,7 +4898,10 @@
       "nobeoka": "off_pl1637_121",
       "nasu": "off_hist_1610_nasu_sukekage",
       "shimabara": "off_pl1637_008",
-      "ise": "off_todo_takatsugu"
+      "ise": "off_todo_takatsugu",
+      "shimotsuke": "off_pl1651_070",
+      "koga": "off_hist_1644_doi_toshitaka",
+      "tsuchiura": "off_hist_1669_tsuchiya_kazunao"
     },
     "1702": {
       "mikawa": "off_kira_yoshihisa",
@@ -4766,7 +4914,7 @@
       "iyo": "off_matsudaira_sadanori",
       "buzen": "off_ogasawara_tadamoto",
       "totomi": "off_jd_086",
-      "kozuke": "off_jd_079",
+      "kozuke": "off_pl1702_069",
       "shimousa": "off_jd_081",
       "izu": "off_jd_099",
       "suruga": "off_jd_077",
@@ -4800,12 +4948,13 @@
       "koga": "off_pl1702_115",
       "settsu": "off_pl1702_145",
       "echigo": "off_pl1702_096",
-      "nasu": "off_hist_1708_nasu_suketoyo"
+      "nasu": "off_hist_1708_nasu_suketoyo",
+      "oshu": "off_pl1702_090"
     },
     "1721": {
       "suruga": "off_mizuno_tadayuki",
       "kai": "off_ooka_tadatane",
-      "kozuke": "off_matsudaira_norisato_toba",
+      "kozuke": "off_pl1702_069",
       "bingo": "off_abe_masatomo",
       "sanuki": "off_matsudaira_yoritoyo",
       "iyo": "off_matsudaira_sadahide",
@@ -4891,11 +5040,11 @@
       "kasai": "off_hist_1782_tamura_murasuke",
       "nobeoka": "off_naito_masanobu",
       "koga": "off_hist_1759_matsudaira_yasuyoshi",
-      "nasu": "off_hist_1780_nasu_suketatsu"
+      "nasu": "off_hist_1780_nasu_suketatsu",
+      "shimotsuke": "off_pl1789_083"
     },
     "1837": {
       "shimotsuke": "off_edo_tokugawa_1800_44",
-      "kozuke": "off_edo_tokugawa_1819_40",
       "shimousa": "off_edo_tokugawa_1810_19",
       "kazusa": "off_edo_tokugawa_1815_70",
       "awa_boshu": "off_edo_tokugawa_1808_71",
@@ -4941,11 +5090,13 @@
       "kasai": "off_hist_1827_tamura_kuniaki",
       "nobeoka": "off_pl1853_098",
       "oki": "off_jd_381",
-      "nasu": "off_hist_1816_nasu_sukenori_2"
+      "nasu": "off_hist_1816_nasu_sukenori_2",
+      "kozuke": "off_edo_tokugawa_1810_45",
+      "koga": "off_hist_1822_doi_toshitsura"
     },
     "1853": {
-      "shimotsuke": "off_edo_tokugawa_1800_44",
-      "kozuke": "off_edo_tokugawa_1819_40",
+      "shimotsuke": "off_pl1853_130",
+      "kozuke": "off_edo_tokugawa_1810_45",
       "shimousa": "off_edo_tokugawa_1810_19",
       "kazusa": "off_edo_tokugawa_1815_70",
       "awa_boshu": "off_edo_tokugawa_1808_71",
@@ -4996,8 +5147,8 @@
       "nasu": "off_hist_1851_nasu_sukeoki"
     },
     "1860": {
-      "shimotsuke": "off_edo_tokugawa_1800_44",
-      "kozuke": "off_edo_tokugawa_1819_40",
+      "shimotsuke": "off_pl1853_130",
+      "kozuke": "off_edo_tokugawa_1810_45",
       "shimousa": "off_edo_tokugawa_1810_19",
       "kazusa": "off_edo_tokugawa_1815_70",
       "awa_boshu": "off_edo_tokugawa_1808_71",
@@ -5056,8 +5207,7 @@
       "sanuki": "off_matsudaira_yoritane",
       "iyo": "off_matsudaira_sadanori_last",
       "kazusa": "off_hayashi_tadataka",
-      "kozuke": "off_edo_tokugawa_1805_55",
-      "shimousa": "off_edo_tokugawa_1814_72",
+      "kozuke": "off_edo_tokugawa_1810_45",
       "awa_boshu": "off_edo_tokugawa_1808_71",
       "hida": "off_edo_tokugawa_1802_65",
       "mino": "off_jd_066",
@@ -5074,7 +5224,6 @@
       "tamba": "off_jd_065",
       "suruga": "off_jd_068",
       "noto": "off_jd_379",
-      "kai": "off_jd_289",
       "settsu": "off_edo_tokugawa_1816_24",
       "tango": "off_jd_291",
       "izu": "off_jd_341",
@@ -5086,7 +5235,11 @@
       "osaki": "off_hist_1843_date_kuninao",
       "iwami": "off_pl1853_119",
       "oki": "off_jd_381",
-      "nasu": "off_hist_1851_nasu_sukeoki"
+      "nasu": "off_hist_1851_nasu_sukeoki",
+      "shimotsuke": "off_pl1853_130",
+      "musashi": "off_edo_tokugawa_1814_72",
+      "iga": "off_edo_tokugawa_1813_34",
+      "oshu": "off_kato_yasuaki"
     },
     "1868": {
       "suo": "off_pl1853_176",
@@ -5109,8 +5262,7 @@
       "iwami": "off_jd_430",
       "south_shinano": "off_jd_431",
       "south_omi": "off_jd_432",
-      "kozuke": "off_edo_tokugawa_1817_46",
-      "shimousa": "off_edo_tokugawa_1814_72",
+      "kozuke": "off_edo_tokugawa_1810_45",
       "kazusa": "off_edo_tokugawa_1815_70",
       "mikawa": "off_edo_tokugawa_1809_42",
       "higo_hitoyoshi": "off_dm_sagara_34_yorimoto",
@@ -5119,7 +5271,8 @@
       "tajima": "off_sengoku_masakata",
       "harima": "off_pl1853_131",
       "nasu": "off_hist_1851_nasu_sukeoki",
-      "bizen": "off_edo_okayama_1823_205"
+      "bizen": "off_edo_okayama_1823_205",
+      "musashi": "off_edo_tokugawa_1814_72"
     },
     "1877": {
       "mutsu": "off_shima_isei",
@@ -5172,7 +5325,6 @@
       "osumi": "off_kirino_toshiaki",
       "sado": "off_tatsumi_kanzaburo",
       "awaji": "off_jd_072",
-      "higo_kumamoto": "off_tani_tateki",
       "tosa_kochi": "off_koike_kuniomi",
       "nishi_tsugaru": "off_yamada_hidenori",
       "ezo": "off_kuroda_kiyotaka",
@@ -5692,7 +5844,8 @@
       "chikuzen": "off_pl1331_114",
       "kasai": "off_hist_1333_kasai_kiyosada",
       "shimotsuke": "off_pl1331_063",
-      "oki": "off_pl1274_042"
+      "oki": "off_pl1274_042",
+      "noshima": "off_pl1331_072"
     },
     "1333": {
       "oki": "off_jd_399",
@@ -6052,7 +6205,8 @@
       "mikawa": "off_matsudaira_nobuyasu",
       "mimasaka": "off_miura_sadahiro",
       "tsuchiura": "off_hist_1522_ota_sukemasa",
-      "mino": "off_oda_nobutada"
+      "mino": "off_oda_nobutada",
+      "noshima": "off_murakami_takeyoshi"
     },
     "1577": {
       "ezo": "off_dm_kakizaki_1546",
@@ -6118,7 +6272,8 @@
       "higo_kumamoto": "off_pl1570_144",
       "kozuke": "off_pl1570_067",
       "mimasaka": "off_miura_sadahiro",
-      "tsuchiura": "off_hist_1522_ota_sukemasa"
+      "tsuchiura": "off_hist_1522_ota_sukemasa",
+      "noshima": "off_murakami_takeyoshi"
     },
     "1582": {
       "echizen": "off_shibata_katsuie",
@@ -6147,11 +6302,14 @@
       "tango": "off_hosokawa_fujitaka",
       "mino": "off_oda_nobutada",
       "mikawa": "off_sakakibara_yasumasa",
-      "north_omi": "off_ishida_mitsunari"
+      "north_omi": "off_ishida_mitsunari",
+      "iyo": "off_kaneko_motoie",
+      "uwajima": "off_pl1570_118",
+      "noshima": "off_murakami_takeyoshi"
     },
     "1584": {
       "musashi": "off_hojo_ujiteru",
-      "iyo": "off_jd_023",
+      "iyo": "off_kaneko_motoie",
       "kozuke": "off_daidoji_masashige",
       "sanuki": "off_jd_021",
       "awa_shikoku": "off_jd_022",
@@ -6170,10 +6328,13 @@
       "tango": "off_hosokawa_fujitaka",
       "koga": "off_pl1570_179",
       "yamashiro": "off_maeda_geni",
-      "yamato": "off_tsutsui_junkei",
+      "yamato": "off_toyotomi_hidenaga",
       "hizen": "off_ryuzoji_masaie",
       "bungo": "off_takahashi_shoun",
-      "south_shinano": "off_succ_ogasawara_1545_115"
+      "south_shinano": "off_succ_ogasawara_1545_115",
+      "south_omi": "off_toyotomi_hidetsugu",
+      "suo": "off_pl1590_145",
+      "noshima": "off_murakami_takeyoshi"
     },
     "1587": {
       "iyo": "off_kobayakawa_takakage",
@@ -6205,13 +6366,16 @@
       "yamashiro": "off_maeda_geni",
       "owari": "off_oda_nobukatsu",
       "etchu": "off_sassa_narimasa",
-      "mino": "off_ikeda_terumasa"
+      "mino": "off_ikeda_terumasa",
+      "izumi": "off_nakamura_kazuuji",
+      "saika_wakayama": "off_jd_027",
+      "aki": "off_kumagai_nobunao",
+      "noshima": "off_murakami_takeyoshi"
     },
     "1590": {
       "bungo": "off_dm_otomo_1600",
       "chikugo": "off_tachibana_muneshige",
       "hizen": "off_ryuzoji_masaie",
-      "iyo": "off_fukushima_masanori",
       "shimousa": "off_chiba_naoshige_bridge",
       "musashi": "off_hojo_ujiteru",
       "suruga": "off_tokugawa_ieyasu",
@@ -6228,13 +6392,20 @@
       "echigo": "off_naoe_kanetsugu",
       "harima": "off_pl1590_060",
       "mino": "off_ikeda_terumasa",
-      "awaji": "off_sengoku_hidehisa",
+      "awaji": "off_kato_yoshiaki",
       "inaba": "off_miyabe_keijun",
       "bingo": "off_jd_015",
       "tsuchiura": "off_hist_1522_ota_sukemasa",
       "tango": "off_hosokawa_fujitaka",
       "kozuke": "off_daidoji_masashige",
-      "south_shinano": "off_succ_ogasawara_1545_115"
+      "south_shinano": "off_succ_ogasawara_1545_115",
+      "yamato": "off_toyotomi_hidenaga",
+      "yamashiro": "off_maeda_geni",
+      "ise": "off_gamo_ujisato",
+      "kii_kichu": "off_todo_takatora",
+      "izumi": "off_nakamura_kazuuji",
+      "wakasa": "off_asano_nagamasa",
+      "owari": "off_toyotomi_hidetsugu"
     },
     "1592": {
       "chikugo": "off_tachibana_muneshige",
@@ -6247,8 +6418,6 @@
       "nishi_tsugaru": "off_tsugaru_tamenobu",
       "aki": "off_mori_terumoto",
       "hida": "off_kanamori_nagachika",
-      "iyo": "off_fukushima_masanori",
-      "yamato": "off_todo_takatora",
       "nagato": "off_naito_takaharu",
       "suo": "off_pl1590_145",
       "iwami": "off_masuda_fujikane",
@@ -6258,13 +6427,20 @@
       "satsuma": "off_pl1590_070",
       "tango": "off_hosokawa_fujitaka",
       "shima": "off_kuki_yoshitaka",
-      "south_omi": "off_pl1590_114",
-      "ise": "off_jd_059",
+      "south_omi": "off_toyotomi_hidetsugu",
       "kinan_kumano": "off_horiuchi_ujiyoshi",
       "koga": "off_yuki_hideyasu",
-      "south_shinano": "off_pl1590_118"
+      "south_shinano": "off_pl1590_118",
+      "ise": "off_jd_059",
+      "kii_kichu": "off_todo_takatora",
+      "mino": "off_pl1590_087",
+      "harima": "off_ikeda_terumasa",
+      "tajima": "off_yamana_toyokuni",
+      "yamashiro": "off_maeda_geni",
+      "echizen": "off_otani_yoshitsugu"
     },
     "1600": {
+      "shimotsuke": "off_pl1590_014",
       "yamato": "off_mashita_nagamori",
       "chikugo": "off_tachibana_muneshige",
       "sanuki": "off_ikoma_chikamasa",
@@ -6276,7 +6452,6 @@
       "koga": "off_yuki_hideyasu",
       "mikawa": "off_ikeda_terumasa",
       "suruga": "off_nakamura_kazuuji",
-      "owari": "off_fukushima_masanori",
       "saika_wakayama": "off_jd_027",
       "ise": "off_pl1590_100",
       "izumo": "off_kikkawa_hiroie",
@@ -6289,11 +6464,14 @@
       "nagato": "off_naito_takaharu",
       "inaba": "off_jd_338",
       "bungo": "off_jd_261",
-      "kai": "off_hiraiwa_chikayoshi",
       "echigo": "off_hori_hideharu",
       "south_shinano": "off_jd_264",
       "kinan_kumano": "off_horiuchi_ujiyoshi",
-      "tango": "off_hosokawa_fujitaka"
+      "tango": "off_hosokawa_fujitaka",
+      "nasu": "off_pl1590_020",
+      "sagami": "off_okubo_tadachika",
+      "kai": "off_dm_asano_1600",
+      "uwajima": "off_pl1614_144"
     },
     "1614": {
       "iwashiro": "off_gamo_tadazato",
@@ -6303,7 +6481,6 @@
       "chikugo": "off_pl1614_097",
       "kozuke": "off_sakai_tadayo",
       "kazusa": "off_honda_tadatomo",
-      "shimousa": "off_hist_1633_doi_toshikatsu",
       "sagami": "off_okubo_tadachika",
       "iwaki": "off_pl1614_044",
       "ryukyu": "off_sho_nei",
@@ -6315,18 +6492,20 @@
       "soma": "off_soma_toshitane",
       "nishi_tsugaru": "off_tsugaru_nobuhira",
       "aki": "off_fukushima_masanori",
-      "ise": "off_edo_tokugawa_1587_91",
-      "awaji": "off_wakisaka_yasuharu",
       "mikawa": "off_mizuno_katsunari",
       "mino": "off_jd_040",
       "north_omi": "off_jd_031",
       "yamato": "off_yagyu_munenori",
       "musashi": "off_tokugawa_hidetada",
       "bicchu": "off_pl1637_096",
-      "osumi": "off_hongo_tadamori"
+      "osumi": "off_hongo_tadamori",
+      "koga": "off_hist_1633_doi_toshikatsu",
+      "tsuchiura": "off_pl1590_111",
+      "kai": "off_pl1614_112",
+      "uwajima": "off_jd_042",
+      "oshu": "off_wakisaka_yasuharu"
     },
     "1637": {
-      "iwashiro": "off_edo_aizu_1611_118",
       "aki": "off_asano_mitsuakira",
       "tamba": "off_arima_toyo-uji",
       "sagami": "off_okubo_tadamoto",
@@ -6337,9 +6516,12 @@
       "osaki": "off_hist_1603_date_muneyasu",
       "musashi": "off_matsudaira_nobutsuna",
       "bicchu": "off_edo_tokugawa_1597_88",
-      "koga": "off_hist_1619_okudaira_tadamasa",
-      "kai": "off_pl1614_122",
-      "yamato": "off_yagyu_munenori"
+      "koga": "off_hist_1633_doi_toshikatsu",
+      "yamato": "off_yagyu_munenori",
+      "shimotsuke": "off_honda_masazumi",
+      "tsuchiura": "off_hist_1669_tsuchiya_kazunao",
+      "kai": "off_pl1637_022",
+      "ise": "off_pl1614_061"
     },
     "1651": {
       "buzen": "off_ogasawara_tadamasa_edo",
@@ -6349,7 +6531,10 @@
       "osaki": "off_hist_1639_date_munetoshi",
       "bingo": "off_mizuno_katsunari",
       "nasu": "off_hist_1610_nasu_sukekage",
-      "ise": "off_todo_takatsugu"
+      "ise": "off_todo_takatsugu",
+      "shimotsuke": "off_pl1651_070",
+      "koga": "off_hist_1644_doi_toshitaka",
+      "tsuchiura": "off_hist_1669_tsuchiya_kazunao"
     },
     "1702": {
       "shimotsuke": "off_toda_tadatomo",
@@ -6361,7 +6546,9 @@
       "koga": "off_pl1702_115",
       "settsu": "off_pl1702_145",
       "buzen": "off_ogasawara_tadamoto",
-      "echigo": "off_pl1702_096"
+      "echigo": "off_pl1702_096",
+      "kozuke": "off_pl1702_069",
+      "oshu": "off_pl1702_090"
     },
     "1721": {
       "harima": "off_sakakibara_masakuni",
@@ -6374,7 +6561,8 @@
       "buzen": "off_ogasawara_tadamoto",
       "musashi": "off_ooka_tadasuke",
       "sanuki": "off_matsudaira_yoritoyo",
-      "mikawa": "off_pl1721_071"
+      "mikawa": "off_pl1721_071",
+      "kozuke": "off_pl1702_069"
     },
     "1789": {
       "owari": "off_succ_owari_1733_132",
@@ -6396,7 +6584,8 @@
       "nishi_tsugaru": "off_tsugaru_nobuaki",
       "kasai": "off_hist_1782_tamura_murasuke",
       "koga": "off_hist_1759_matsudaira_yasuyoshi",
-      "buzen": "off_ogasawara_tadafusa"
+      "buzen": "off_ogasawara_tadafusa",
+      "shimotsuke": "off_pl1789_083"
     },
     "1837": {
       "sagami": "off_okubo_tadatomo_line2",
@@ -6409,7 +6598,10 @@
       "oki": "off_jd_381",
       "totomi": "off_edo_tokugawa_1794_17",
       "bicchu": "off_pl1837_055",
-      "suo": "off_pl1853_176"
+      "suo": "off_pl1853_176",
+      "shimousa": "off_edo_tokugawa_1810_19",
+      "kozuke": "off_edo_tokugawa_1810_45",
+      "koga": "off_hist_1822_doi_toshitsura"
     },
     "1853": {
       "sagami": "off_okubo_tadanao",
@@ -6420,7 +6612,9 @@
       "hyuga": "off_pl1853_097",
       "oki": "off_jd_381",
       "bicchu": "off_itakura_katsukiyo",
-      "suo": "off_pl1853_176"
+      "suo": "off_pl1853_176",
+      "shimotsuke": "off_pl1853_130",
+      "kozuke": "off_edo_tokugawa_1810_45"
     },
     "1860": {
       "sagami": "off_okubo_tadanori_bakumatsu",
@@ -6431,7 +6625,9 @@
       "kasai": "off_hist_1857_tamura_tsumichi",
       "hyuga": "off_pl1853_097",
       "oki": "off_jd_381",
-      "suo": "off_pl1853_176"
+      "suo": "off_pl1853_176",
+      "shimotsuke": "off_pl1853_130",
+      "kozuke": "off_edo_tokugawa_1810_45"
     },
     "1866": {
       "harima": "off_sakai_tadateru",
@@ -6445,10 +6641,14 @@
       "hyuga": "off_pl1853_097",
       "settsu": "off_edo_tokugawa_1816_24",
       "bingo": "off_pl1837_089",
-      "kozuke": "off_edo_tokugawa_1805_55",
+      "kozuke": "off_edo_tokugawa_1810_45",
       "iwami": "off_pl1853_119",
       "oki": "off_jd_381",
-      "suo": "off_pl1853_176"
+      "suo": "off_pl1853_176",
+      "shimotsuke": "off_pl1853_130",
+      "musashi": "off_edo_tokugawa_1814_72",
+      "iga": "off_edo_tokugawa_1813_34",
+      "oshu": "off_kato_yasuaki"
     },
     "1868": {
       "sagami": "off_okubo_tadanori_bakumatsu",
@@ -6458,14 +6658,15 @@
       "harima": "off_pl1853_131",
       "bizen": "off_edo_okayama_1823_205",
       "bicchu": "off_jd_296",
-      "suo": "off_pl1853_176"
+      "suo": "off_pl1853_176",
+      "kozuke": "off_edo_tokugawa_1810_45",
+      "musashi": "off_edo_tokugawa_1814_72"
     },
     "1877": {
       "satsuma": "off_saigo_takamori",
       "osumi": "off_kirino_toshiaki",
       "hyuga": "off_murata_shinpachi",
       "bungo": "off_beppu_shinsuke",
-      "higo_kumamoto": "off_tani_tateki",
       "oki": "off_jd_381",
       "ryukyu": "off_sho_tai",
       "settsu": "off_watanabe_noboru",

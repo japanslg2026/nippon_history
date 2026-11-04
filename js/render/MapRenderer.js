@@ -8,6 +8,9 @@
 
 // モジュール間安全参照ヘルパー
 var SCENARIOS = (typeof window !== 'undefined' && (window.SCENARIOS || window.SCENARIOS_DATA)) || [];
+const SHIKOKU_PROVINCE_IDS = new Set(['iyo', 'oshu', 'uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_nakamura']);
+const SHIKOKU_MAP_TRANSFORM = 'rotate(4 280 450)';
+const TERRITORY_COLOR_KAMON_CLANS = new Set(['saionji_iyo', 'kato', 'murakami_noshima', 'akita', 'gamo', 'gamou', 'todo', 'tosa', 'clan_8849', 'kumamoto_hosokawa', 'ako_ronin', 'sakai', 'fukui_matsudaira', 'okayama', 'tottori', 'matsue', 'uwajima_date', 'makino', 'kuwana', 'ando']);
 
 export class MapRenderer {
   constructor(game) {
@@ -16,11 +19,42 @@ export class MapRenderer {
 }
 
 export const MapRendererMethods = {
+  isShikokuProvince(provinceId) {
+    return SHIKOKU_PROVINCE_IDS.has(provinceId);
+  },
+
+  /** 領土色が変わる家紋は、地図用の個別シンボルにして外枠の背景色も追随させる。 */
+  getMapKamonId(province, fillColor) {
+    const baseId = province?.ownerId ? this.getClanKamonId(province.ownerId) : '';
+    if (!baseId || !province || !TERRITORY_COLOR_KAMON_CLANS.has(province.ownerId)) return baseId;
+
+    const source = document.getElementById(baseId);
+    if (!source || !source.parentNode) return baseId;
+
+    const mapKamonId = `${baseId}-map-${province.id}`;
+    let mapSymbol = document.getElementById(mapKamonId);
+    if (!mapSymbol) {
+      mapSymbol = source.cloneNode(true);
+      mapSymbol.id = mapKamonId;
+      source.parentNode.appendChild(mapSymbol);
+    }
+
+    const backdrop = Array.from(mapSymbol.children).find(el =>
+      el.tagName && el.tagName.toLowerCase() === 'circle' && Number(el.getAttribute('r')) >= 14
+    );
+    if (backdrop) backdrop.setAttribute('fill', fillColor);
+    return mapKamonId;
+  },
+
   /** 国境線を細く・滑らか・半透明にするモダン地図スタイル（CSS注入、1回のみ） */
   showHoverOutline(path) {
     const o = this._hoverOutline || document.getElementById('provHoverOutline');
     if (!o || !path) return;
-    if (this.selectedProvId && path.id === `path-${this.selectedProvId}`) {
+    if (this.isSpectatorMode) {
+      o.style.display = 'none';
+      return;
+    }
+    if (this.selectedProvId && !this.hideSelectionOutline && !this.isSpectatorMode && path.id === `path-${this.selectedProvId}`) {
       o.style.display = 'none';
       return;
     }
@@ -185,6 +219,7 @@ export const MapRendererMethods = {
           cp.setAttribute('stroke-width', '0.85');
           cp.setAttribute('stroke-linecap', 'round');
           cp.setAttribute('stroke-linejoin', 'round');
+          if (this.isShikokuProvince(c.p)) cp.setAttribute('transform', SHIKOKU_MAP_TRANSFORM);
           bordersGroup.appendChild(cp);
           this._coastElements.push({ el: cp, p: c.p });
         });
@@ -213,6 +248,7 @@ export const MapRendererMethods = {
           bp.setAttribute('stroke-width', '0.8');
           bp.setAttribute('stroke-linecap', 'round');
           bp.setAttribute('stroke-linejoin', 'round');
+          if (this.isShikokuProvince(b.p1) && this.isShikokuProvince(b.p2)) bp.setAttribute('transform', SHIKOKU_MAP_TRANSFORM);
           bordersGroup.appendChild(bp);
           this._borderElements.push({ el: bp, p1: b.p1, p2: b.p2 });
         });
@@ -358,10 +394,11 @@ export const MapRendererMethods = {
       path.setAttribute('class', `prov-path ${isMine ? 'player-prov' : 'enemy-prov'}`);
       path.setAttribute('d', p.svgPath || p.d);
       path.setAttribute('fill', this.getProvinceColor(p));
+      if (this.isShikokuProvince(p.id)) path.setAttribute('transform', SHIKOKU_MAP_TRANSFORM);
 
       path.addEventListener('click', (e) => {
         e.stopPropagation();
-        this.selectProvince(p.id);
+        this.selectProvince(p.id, { showHighlight: true });
         this.audio.playHyoshigi();
       });
 
@@ -378,6 +415,7 @@ export const MapRendererMethods = {
         const badgeG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
         badgeG.setAttribute('id', `badge-${p.id}`);
         badgeG.setAttribute('class', `prov-badge-group ${isMine ? 'player-badge' : ''}`);
+        if (this.isShikokuProvince(p.id)) badgeG.setAttribute('transform', SHIKOKU_MAP_TRANSFORM);
         if (!showKamon) {
           badgeG.style.display = 'none';
         }
@@ -386,9 +424,9 @@ export const MapRendererMethods = {
         const badgeSize = 16;
         const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
         use.setAttribute('id', `kamon-use-${p.id}`);
-        use.setAttribute('href', showKamon ? `#${this.getClanKamonId(p.ownerId)}` : '');
+        use.setAttribute('href', showKamon ? `#${this.getMapKamonId(p, this.getProvinceColor(p))}` : '');
         const kamonX = p.kamonX !== undefined ? p.kamonX : p.cx;
-        const kamonY = p.kamonY !== undefined ? p.kamonY : p.cy;
+        const kamonY = (p.kamonY !== undefined ? p.kamonY : p.cy) + (Number.isFinite(p.kamonOffsetY) ? p.kamonOffsetY : 0);
         use.setAttribute('x', kamonX - badgeSize / 2);
         use.setAttribute('y', kamonY - badgeSize / 2);
         use.setAttribute('width', badgeSize);
@@ -710,11 +748,15 @@ export const MapRendererMethods = {
     let territoryChanged = false;
 
     // 1. 各タイルの色・クラス・インラインスタイルの差分更新（[93位] 高速化最適化）
+    const visibleSelectedProvId = (!this.isSpectatorMode && !this.hideSelectionOutline)
+      ? this.selectedProvId
+      : null;
+
     this.provinces.forEach(p => {
       const isMine = p.ownerId === this.playerClanId;
-      const isSelected = p.id === this.selectedProvId && !this.hideSelectionOutline;
+      const isSelected = p.id === visibleSelectedProvId;
       const fillCol = this.getProvinceColor(p);
-      const kamonId = p.ownerId ? this.getClanKamonId(p.ownerId) : '';
+      const kamonId = p.ownerId ? this.getMapKamonId(p, fillCol) : '';
       const cached = this._mapTileCache[p.id];
 
       // キャッシュと同一ならDOM書き換えをスキップしてCPU負荷を劇的に低減
@@ -782,20 +824,20 @@ export const MapRendererMethods = {
     });
 
     // 2. DOM並び替え（リフローが発生するため、所有権や選択状態が変化した時のみ実行）
-    const selectionChanged = this._lastDomSelectedProvId !== this.selectedProvId;
-    this._lastDomSelectedProvId = this.selectedProvId;
+    const selectionChanged = this._lastDomSelectedProvId !== visibleSelectedProvId;
+    this._lastDomSelectedProvId = visibleSelectedProvId;
 
     if ((territoryChanged || selectionChanged) && provGroup) {
       this.provinces.forEach(p => {
-        if (p.ownerId === this.playerClanId && p.id !== this.selectedProvId) {
+        if (p.ownerId === this.playerClanId && p.id !== visibleSelectedProvId) {
           const path = document.getElementById(`path-${p.id}`);
           if (path && path.parentNode === provGroup) {
             provGroup.appendChild(path);
           }
         }
       });
-      if (this.selectedProvId) {
-        const selPath = document.getElementById(`path-${this.selectedProvId}`);
+      if (visibleSelectedProvId) {
+        const selPath = document.getElementById(`path-${visibleSelectedProvId}`);
         if (selPath && selPath.parentNode === provGroup) {
           provGroup.appendChild(selPath);
         }
@@ -804,15 +846,15 @@ export const MapRendererMethods = {
 
     if ((territoryChanged || selectionChanged) && markGroup) {
       this.provinces.forEach(p => {
-        if (p.ownerId === this.playerClanId && p.id !== this.selectedProvId) {
+        if (p.ownerId === this.playerClanId && p.id !== visibleSelectedProvId) {
           const badge = document.getElementById(`badge-${p.id}`);
           if (badge && badge.parentNode === markGroup) {
             markGroup.appendChild(badge);
           }
         }
       });
-      if (this.selectedProvId) {
-        const selBadge = document.getElementById(`badge-${this.selectedProvId}`);
+      if (visibleSelectedProvId) {
+        const selBadge = document.getElementById(`badge-${visibleSelectedProvId}`);
         if (selBadge && selBadge.parentNode === markGroup) {
           markGroup.appendChild(selBadge);
         }
@@ -822,12 +864,13 @@ export const MapRendererMethods = {
     // 選択領国の最前面アウトライン更新（境界線・海岸線・領国全体の輪郭よりも最優先で前面表示）
     const selOutline = this._selectedOutline || document.getElementById('provSelectedOutline');
     if (selOutline) {
-      if (this.selectedProvId && !this.hideSelectionOutline) {
-        const selPath = document.getElementById(`path-${this.selectedProvId}`);
-        const selProv = this.provinces.find(p => p.id === this.selectedProvId);
+      if (visibleSelectedProvId) {
+        const selPath = document.getElementById(`path-${visibleSelectedProvId}`);
+        const selProv = this.provinces.find(p => p.id === visibleSelectedProvId);
         const d = (selPath && selPath.getAttribute('d')) || (selProv && (selProv.svgPath || selProv.d)) || '';
         if (d) {
           selOutline.setAttribute('d', d);
+          selOutline.setAttribute('transform', (selPath && selPath.getAttribute('transform')) || '');
           selOutline.style.display = '';
         } else {
           selOutline.style.display = 'none';
@@ -846,9 +889,13 @@ export const MapRendererMethods = {
     const provMap = new Map();
     this.provinces.forEach(p => provMap.set(p.id, p));
 
-    // 選択中の領国の支配大名（選択がなければプレイヤー大名）
-    const selProv = this.selectedProvId ? provMap.get(this.selectedProvId) : null;
-    const hlClanId = selProv ? selProv.ownerId : (this.playerClanId || null);
+    // 領国をクリックした時だけ、その国と支配勢力の境界を強調する。
+    // 観戦中や明示解除後には、前回の選択を地図上へ残さない。
+    const visibleSelectedProvId = (!this.isSpectatorMode && !this.hideSelectionOutline)
+      ? this.selectedProvId
+      : null;
+    const selProv = visibleSelectedProvId ? provMap.get(visibleSelectedProvId) : null;
+    const hlClanId = selProv ? selProv.ownerId : null;
 
     // 1. 各領国間の境界線の更新
     this._borderElements.forEach(({ el, p1, p2 }) => {
@@ -856,7 +903,7 @@ export const MapRendererMethods = {
       const prov2 = provMap.get(p2);
       const o1 = prov1 ? prov1.ownerId : null;
       const o2 = prov2 ? prov2.ownerId : null;
-      const isSelBorder = this.selectedProvId && !this.hideSelectionOutline && (p1 === this.selectedProvId || p2 === this.selectedProvId);
+      const isSelBorder = !!visibleSelectedProvId && (p1 === visibleSelectedProvId || p2 === visibleSelectedProvId);
 
       if (o1 && o2 && o1 === o2) {
         // 同一大名領国内の境界線：非表示にして完全一体化
@@ -877,13 +924,11 @@ export const MapRendererMethods = {
           el.style.strokeWidth = '1.5px';
           el.style.opacity = '1';
           el.style.filter = 'none';
-        } else if (hlClanId) {
-          el.style.stroke = 'rgba(70, 62, 52, 0.55)';
-          el.style.strokeWidth = '0.65px';
-          el.style.opacity = '0.6';
-          el.style.filter = 'none';
         } else {
-          el.style.stroke = 'rgba(20, 14, 8, 0.75)';
+          // 異なる家同士の国境は、領土色を邪魔しない中間グレーで表示する。
+          // 選択・勢力強調時のみ上記の白／金の輪郭を優先する。
+          el.style.display = '';
+          el.style.stroke = 'rgba(118, 124, 130, 0.78)';
           el.style.strokeWidth = '0.8px';
           el.style.opacity = '1';
           el.style.filter = 'none';
@@ -896,7 +941,7 @@ export const MapRendererMethods = {
       this._coastElements.forEach(({ el, p }) => {
         const prov = provMap.get(p);
         const o = prov ? prov.ownerId : null;
-        const isSelectedProv = this.selectedProvId && !this.hideSelectionOutline && p === this.selectedProvId;
+        const isSelectedProv = !!visibleSelectedProvId && p === visibleSelectedProvId;
 
         if (isSelectedProv) {
           // 選んだ国の海岸線：領国全体の輪郭よりも優先表示（純白、繊細な1.1pxで太すぎない）

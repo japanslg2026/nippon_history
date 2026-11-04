@@ -608,13 +608,13 @@ export const UIManagerMethods = {
 
     const info = {
 
-      easy:   { name: '初級・天下泰平', lines: ['初期資金 金800／米1200', '自軍の内政収入 +25%', '敵AIの徴兵速度 0.8倍（穏健）', '包囲網の発生率 極小'] },
+      relaxed:{ name: '楽級・安泰の世', lines: ['初期金・兵糧を大幅に増量', 'はじめてでも遊びやすい難易度'] },
+
+      easy:   { name: '初級・天下泰平', lines: ['初期金・兵糧を増量', '遊びやすい難易度'] },
 
       normal: { name: '中級・群雄割拠', lines: ['初期資金 金500／米800', '標準バランス', '敵AIの徴兵・進攻速度 1.0倍', '12か国制覇で包囲網が発生'] },
 
-      hard:   { name: '上級・風雲再起', lines: ['初期資金 金350／米500', '敵AIの徴兵速度 1.3倍', '敵の好戦度 +20%', '10か国制覇で包囲網が早期結成'] },
-
-      hell:   { name: '超級・戦国地獄', lines: ['初期資金 金250／米300', '敵AIの徴兵速度 1.6倍', '敵軍の攻撃力 +20%', '全大名が敵対し、包囲網が頻発'] }
+      hard:   { name: '上級・風雲再起', lines: ['初期金・兵糧が少なめ', '歯ごたえのある難易度'] }
 
     }[key];
 
@@ -1607,11 +1607,16 @@ export const UIManagerMethods = {
 
     const targetId = typeof offOrId === 'string' ? ((window.OFFICER_ID_ALIASES && window.OFFICER_ID_ALIASES[offOrId]) || offOrId) : null;
 
-    const off = typeof offOrId === 'string'
+    const requestedOff = typeof offOrId === 'string'
 
       ? (this.activeOfficers || []).find(o => o.id === targetId || o.id === offOrId) || (this.officers || []).find(o => o.id === targetId || o.id === offOrId) || (window.OFFICERS_MASTER || []).find(o => o.id === targetId || o.id === offOrId) || { name: offOrId }
 
       : offOrId;
+
+    // 名鑑などがマスター武将を渡してきても、年代別改名済みの現役名簿を優先する。
+    const off = requestedOff && requestedOff.id
+      ? (this.activeOfficers || []).find(o => o.id === requestedOff.id) || requestedOff
+      : requestedOff;
 
 
 
@@ -1639,9 +1644,10 @@ export const UIManagerMethods = {
 
     const isRonin = off.clanId === 'ronin';
 
-    const clanName = isRonin ? '浪人 (未仕官)' : this.getClanFamilyName(off.clanId);
+    const clanName = isRonin ? '浪人' : this.getClanFamilyName(off.clanId);
 
-    const detailClanText = isRonin ? clanName : (off.isDaimyo ? `${clanName} (当主)` : `${clanName} 配下`);
+    // 所属先は家名だけを示す。身分は左側の独立したバッジで確認できる。
+    const detailClanText = clanName;
 
     const age = this.year - (off.birthYear || 1530);
 
@@ -1653,19 +1659,19 @@ export const UIManagerMethods = {
 
     if (off.isDaimyo) {
 
-      roleBadge = '<span style="background:#b7950b; color:#fff; padding:3px 12px; border-radius:4px; font-size:12pt; font-weight:bold;">👑 当主</span>';
+      roleBadge = '<span style="background:#b7950b; color:#fff; padding:3px 12px; border-radius:4px; font-size:12pt; font-weight:bold;">当主</span>';
 
     } else if (assignedProv) {
 
-      roleBadge = `<span style="background:#27ae60; color:#fff; padding:3px 12px; border-radius:4px; font-size:12pt;">🏯 ${assignedProv.name}城主</span>`;
+      roleBadge = '<span style="background:#27ae60; color:#fff; padding:3px 12px; border-radius:4px; font-size:12pt;">城主</span>';
 
     } else if (isRonin) {
 
-      roleBadge = '<span style="background:#7f8c8d; color:#fff; padding:3px 12px; border-radius:4px; font-size:12pt;">流浪の士</span>';
+      roleBadge = '<span style="background:#7f8c8d; color:#fff; padding:3px 12px; border-radius:4px; font-size:12pt;">浪人</span>';
 
     } else {
 
-      roleBadge = '<span style="background:#2980b9; color:#fff; padding:3px 12px; border-radius:4px; font-size:12pt;">待機中</span>';
+      roleBadge = '<span style="background:#2980b9; color:#fff; padding:3px 12px; border-radius:4px; font-size:12pt;">家臣</span>';
 
     }
 
@@ -1765,7 +1771,7 @@ export const UIManagerMethods = {
 
             <div style="background:rgba(231,76,60,0.14); border:1px solid #c0392b; padding:10px 8px; border-radius:6px;">
 
-              <div style="font-size:12pt; color:#ff7675; font-weight:bold;">⚔️ 武勇</div>
+              <div style="font-size:12pt; color:#ff7675; font-weight:bold;">武勇</div>
 
               <div style="font-size:19pt; font-weight:bold; color:#ff7675; margin-top:3px;">${off.military}</div>
 
@@ -1773,7 +1779,7 @@ export const UIManagerMethods = {
 
             <div style="background:rgba(52,152,219,0.14); border:1px solid #2980b9; padding:10px 8px; border-radius:6px;">
 
-              <div style="font-size:12pt; color:#74b9ff; font-weight:bold;">🌾 内政</div>
+              <div style="font-size:12pt; color:#74b9ff; font-weight:bold;">内政</div>
 
               <div style="font-size:19pt; font-weight:bold; color:#74b9ff; margin-top:3px;">${off.politic || off.politics}</div>
 
@@ -1781,7 +1787,7 @@ export const UIManagerMethods = {
 
             <div style="background:rgba(46,204,113,0.14); border:1px solid #27ae60; padding:10px 8px; border-radius:6px;">
 
-              <div style="font-size:12pt; color:#55efc4; font-weight:bold;">📜 知略</div>
+              <div style="font-size:12pt; color:#55efc4; font-weight:bold;">知略</div>
 
               <div style="font-size:19pt; font-weight:bold; color:#55efc4; margin-top:3px;">${off.intel || off.stratagem}</div>
 
@@ -2479,34 +2485,6 @@ export const UIManagerMethods = {
 
 
 
-      // ヘッダークリックソート
-
-      modal.querySelectorAll('.sortable-gov-th').forEach(th => {
-
-        th.addEventListener('click', () => {
-
-          const key = th.dataset.key;
-
-          if (sortKey === key) {
-
-            sortOrder = (sortOrder === 'asc' ? 'desc' : 'asc');
-
-          } else {
-
-            sortKey = key;
-
-            sortOrder = (key === 'name' ? 'asc' : 'desc');
-
-          }
-
-          render();
-
-        });
-
-      });
-
-
-
       // 武将を城主任命する共通処理
 
       const appointOfficer = (offId) => {
@@ -2535,7 +2513,7 @@ export const UIManagerMethods = {
 
       // 行クリックで直接その武将を城主任命（列伝は表示しない）
 
-      modal.querySelectorAll('.officer-table-row').forEach(row => {
+      modal.querySelectorAll('.appoint-table-row').forEach(row => {
 
         row.addEventListener('click', (e) => {
 
@@ -3744,6 +3722,7 @@ export const UIManagerMethods = {
     let searchQuery = '';
 
     const geoIndex = (row) => this.provinceGeoRank(row.p && row.p.id);
+    const kokuLabel = (typeof getEraFlavor === 'function' ? getEraFlavor(this.year)?.kokudakaLabel : null) || '石高';
 
     const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({
 
@@ -3953,9 +3932,9 @@ export const UIManagerMethods = {
 
             <div>
 
-              <h3 class="modal-title-text" style="margin:0; font-size:15pt; color:var(--gold-bright);">❖ 領国録・城主と石高 ❖</h3>
+              <h3 class="modal-title-text" style="margin:0; font-size:15pt; color:var(--gold-bright);">❖ 領国録・城主と${kokuLabel} ❖</h3>
 
-              <span class="modal-subtitle-text" style="font-size:12pt; color:#ccc;">城主と武勇・内政・智謀、兵力や表高を一覧できます。城主・当主の行をクリックすると、その武将の概要と列伝が開きます。城代や空白地の行は、地図でその領国を選びます。</span>
+              <span class="modal-subtitle-text" style="font-size:12pt; color:#ccc;">城主と武勇・内政・智謀、兵力や${kokuLabel}を一覧できます。城主・当主の行をクリックすると、その武将の概要と列伝が開きます。城代や空白地の行は、地図でその領国を選びます。</span>
 
             </div>
 
@@ -4023,7 +4002,7 @@ export const UIManagerMethods = {
 
             <button class="mobile-sort-btn ${sortKey === 'troops' ? 'active' : ''}" data-key="troops">兵力${sortKey === 'troops' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}</button>
 
-            <button class="mobile-sort-btn ${sortKey === 'kokudaka' ? 'active' : ''}" data-key="kokudaka">石高${sortKey === 'kokudaka' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}</button>
+            <button class="mobile-sort-btn ${sortKey === 'kokudaka' ? 'active' : ''}" data-key="kokudaka">${kokuLabel}${sortKey === 'kokudaka' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}</button>
 
           </div>
 
@@ -4059,7 +4038,7 @@ export const UIManagerMethods = {
 
                   ${th('morale', '士気', 'text-align:center;')}
 
-                  ${th('kokudaka', '表高', 'text-align:right;')}
+                  ${th('kokudaka', kokuLabel, 'text-align:right;')}
 
                   ${th('commerce', '商業', 'text-align:right;')}
 
@@ -7099,7 +7078,7 @@ export const UIManagerMethods = {
 
 
 
-  selectProvince(provId) {
+  selectProvince(provId, { showHighlight = false } = {}) {
 
     if (!provId) {
       this.clearProvinceSelection();
@@ -7120,7 +7099,8 @@ export const UIManagerMethods = {
 
     }
 
-    this.hideSelectionOutline = false;
+    // 自動選択は右パネルの表示だけを更新する。地図上の強調は領国を直接クリックした時だけ行う。
+    this.hideSelectionOutline = !showHighlight;
     this.selectedProvId = provId;
 
     const p = this.provinces.find(x => x.id === provId);
@@ -7327,7 +7307,7 @@ export const UIManagerMethods = {
 
           const troopsUnit = era ? era.troopsUnit : '人';
 
-          const kokuLbl = era ? `${era.kokudakaLabel} (万石)` : '石高 (万石)';
+          const kokuLbl = era ? era.kokudakaLabel : '石高';
 
           const kokuValUnit = '万石';
 
@@ -8852,21 +8832,21 @@ export const UIManagerMethods = {
 
     if (!badge) return;
 
-    const diff = this.currentDifficulty || 'normal';
+    const diff = this.currentDifficulty || 'relaxed';
 
     const config = {
+
+      relaxed:{ text: '【楽級】', color: '#8de4a7', border: '#39a85d', bg: 'rgba(57,168,93,0.25)' },
 
       easy:   { text: '【初級】', color: '#2ecc71', border: '#27ae60', bg: 'rgba(46,204,113,0.25)' },
 
       normal: { text: '【中級】', color: '#f39c12', border: '#d68910', bg: 'rgba(243,156,18,0.25)' },
 
-      hard:   { text: '【上級】', color: '#e67e22', border: '#d35400', bg: 'rgba(230,126,34,0.25)' },
-
-      hell:   { text: '【超級】', color: '#ff6666', border: '#aa3333', bg: 'rgba(100,20,20,0.4)' }
+      hard:   { text: '【上級】', color: '#e67e22', border: '#d35400', bg: 'rgba(230,126,34,0.25)' }
 
     };
 
-    const c = config[diff] || config.normal;
+    const c = config[diff] || config.relaxed;
 
     badge.textContent = c.text;
 
@@ -10108,13 +10088,13 @@ export const UIManagerMethods = {
 
     const diffDescriptions = {
 
-      easy: '💡 <strong>【初級・天下泰平】</strong> 自軍金800/米1200 ｜ 自軍内政収入+25% ｜ 敵AI徴兵速度: 0.8倍 (穏健) ｜ 包囲網発生率: 極小',
+      relaxed: '💡 <strong>【楽級・安泰の世】</strong> 初期金・兵糧を大幅に増量した、ゆったり遊べる難易度です。',
+
+      easy: '💡 <strong>【初級・天下泰平】</strong> 初期金・兵糧を増量した、遊びやすい難易度です。',
 
       normal: '💡 <strong>【中級・群雄割拠】</strong> 自軍金500/米800 ｜ 敵AI徴兵・進攻速度: 1.0倍 (標準) ｜ 包囲網: 12国制覇で通常発生',
 
-      hard: '💡 <strong>【上級・風雲再起】</strong> 自軍金350/米500 ｜ 敵AI徴兵速度: 1.3倍 ｜ 敵好戦度+20% ｜ 包囲網: 10国制覇で早期結成',
-
-      hell: '💡 <strong>【超級・戦国地獄】</strong> 自軍金250/米300 ｜ 敵AI徴兵速度: 1.6倍 ｜ 敵軍突撃力+20% ｜ 全大名敵対・包囲網頻発'
+      hard: '💡 <strong>【上級・風雲再起】</strong> 初期金・兵糧が少なめの、歯ごたえのある難易度です。'
 
     };
 

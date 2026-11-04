@@ -808,6 +808,11 @@
       flex-shrink: 0;
     }
 
+    /* 城郭解説の下に余白を残さず、空いた高さを武将一覧へ配分する */
+    #castleDetailContent .lore-paragraph-expanded {
+      min-height: 0;
+    }
+
     .side-section-officers {
       background: rgba(32, 22, 14, 0.92);
       border: 1px solid var(--border-gold);
@@ -933,6 +938,7 @@
 
     .officer-cards-list {
       flex: 1;
+      min-height: 0;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
@@ -1121,7 +1127,7 @@
 
     .bio-bars-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 10px;
       margin-bottom: 16px;
     }
@@ -2009,7 +2015,12 @@
     .clan-card-leader { color: var(--gold-pale); font-size: 10pt; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .clan-card-sub { color: #aa9988; font-size: 9pt; }
     .modal-view-switch { display: flex; gap: 6px; margin-bottom: 6px; }
-    .modal-view-switch .nav-btn { flex: 0 0 auto; min-width: 88px; }
+    .modal-view-switch .nav-btn {
+      flex: 0 0 auto;
+      min-width: 88px;
+      justify-content: center;
+      text-align: center;
+    }
     .prov-card:active, .off-card:active {
       transform: scale(0.985);
       border-color: var(--gold-bright);
@@ -3429,6 +3440,49 @@
   }
 }
 </style>
+<style id="mobile-narrow-screen-guard">
+@media (max-width: 360px) {
+  /* 小型・縦長端末では、ヘッダーを縮め切るより横スクロール可能にして操作対象を欠かさない。 */
+  .top-header { min-width: 0 !important; overflow: hidden !important; }
+  .top-nav {
+    justify-content: flex-start !important;
+    overflow-x: auto !important;
+    overscroll-behavior-x: contain !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+  }
+  .top-nav::-webkit-scrollbar { display: none !important; }
+  .top-nav .nav-btn {
+    flex: 0 0 36px !important;
+    width: 36px !important;
+    min-width: 36px !important;
+  }
+
+  .mk-overlay .mk-head,
+  .mk-overlay.mk-in-detail .mk-head {
+    min-width: 0 !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+    gap: 3px !important;
+  }
+  .mk-overlay .mk-title {
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  .mk-overlay .mk-tabs {
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    margin-left: 0 !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+  }
+  .mk-overlay .mk-tabs::-webkit-scrollbar { display: none !important; }
+  .mk-overlay .mk-tab { flex: 0 0 auto !important; padding: 2px 5px !important; }
+  .mk-overlay .mk-close { flex: 0 0 26px !important; width: 26px !important; }
+}
+</style>
 </head>
 <body>
   <!-- 検索エンジンクローラーおよびJavaScript無効環境向けフォールバック解説 -->
@@ -3620,7 +3674,7 @@
       <div class="modal-body" id="aboutModalBody" style="line-height: 1.75; font-size: 12pt;"></div>
     </div>
   </div>
-  <script src="js/data/map_borders.js?v=20261031_border"></script>
+  <script src="js/data/map_borders.js?v=20261104_shikoku_borders"></script>
 
   <script>
     (function () {
@@ -3991,18 +4045,19 @@
       async function initAllData() {
         var statusEl = document.getElementById('loadingStatusText');
         try {
-          await loadExternalScript(['assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
+          await loadExternalScript(['assets/kamons.js?v=20261104_shikoku_fix', 'assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
           if (typeof window.loadKamonSymbols === 'function') {
             window.loadKamonSymbols();
           }
+          await loadExternalScript(['js/kamonOverrides.js?v=20261104_hioogi_uwajima_sasa']);
 
           statusEl.textContent = '歴史配置ルールとシナリオ・領国・大名・武将データを読み込み中…';
           var rulesPromise = loadAffiliationRulesSafe();
 
           var results = await Promise.all([
             fetchJsonSmart('scenarios.json'),
-            fetchJsonSmart('provinces.json'),
-            fetchJsonSmart('clans.json'),
+            fetchJsonSmart('provinces.json?v=20261104_oshu_kamon_up'),
+            fetchJsonSmart('clans.json?v=20261104_ando_teal'),
             fetchJsonSmart('officers.json'),
             fetchJsonSmart('governors.json').catch(function () { return {}; }),
             fetchJsonSmart('events.json').catch(function () { return {}; }),
@@ -4146,6 +4201,7 @@
         if (!scen) return;
 
         var year = Number(scen.year);
+        var isAncientScenario = [-663, 97, 240].indexOf(year) !== -1;
         var owners = scen.owners || {};
         var scenCastles = scen.castles || {};
         var scenCastleLores = scen.castleLores || {};
@@ -4176,8 +4232,10 @@
 
           var castleLore = scenCastleLores[pid] || baseProv.castleLore || '';
           var koku = Number(baseProv.kokudaka) || 50000;
-          var baseTroops = scenTroops[pid] || (Math.floor(koku * 0.025 / 100) * 100 + 1000);
-          var troops = Math.round(baseTroops * (Number(scen.troopScale) || 1));
+          // 駐留兵力は全シナリオ共通で、石高×2.5%を千人未満切り捨て＋1,000人。
+          // 旧シナリオ個別値・倍率では上書きしない。
+          var baseTroops = Math.floor(koku * 0.025 / 1000) * 1000 + 1000;
+          var troops = baseTroops;
 
           State.computedProvs.set(pid, {
             id: pid,
@@ -4243,7 +4301,9 @@
           var isChildHead = age >= 0 && startHeadIds.has(master.id);
           var isAliveAndAdult = (age >= 15 || isChildHead) && year <= dYear;
 
-          if (!isAliveAndAdult && !(affEntry && affEntry.ignoreLifespan)) continue;
+          // 神話・古代シナリオでは明示配置があっても寿命の特例を許可しない。
+          // 時代の離れた人物が紛れ込むことを防ぐ。
+          if (!isAliveAndAdult && !(affEntry && affEntry.ignoreLifespan && !isAncientScenario)) continue;
 
           var copy = Object.assign({}, master, {
             origName: master.name,
@@ -4475,6 +4535,22 @@
 
       function getClanColor(clanId) {
         if (!clanId || clanId === 'null') return '#3b322a';
+        var distinctTerritoryColors = {
+          gamo: '#2f5f9e',
+          gamou: '#2f5f9e',
+          todo: '#5b6068',
+          tosa: '#365a9c',
+          clan_8849: '#c65d2e',
+          sakai: '#8a6b3f',
+          fukui_matsudaira: '#8a4a36',
+          okayama: '#3f5c9a',
+          tottori: '#7a5a90',
+          matsue: '#2f6f68',
+          kumamoto_hosokawa: '#596146',
+          uwajima_date: '#5a3d86',
+          ando: '#2f7a78'
+        };
+        if (distinctTerritoryColors[clanId]) return distinctTerritoryColors[clanId];
         var playD = (State.currentScenario && State.currentScenario.playables || []).find(function (p) { return p && p.id === clanId; });
         if (playD && playD.color) return playD.color;
         var master = State.clans[clanId];
@@ -4511,6 +4587,13 @@
 
       // ==================== SVG日本地図の構築（マウス＋スマートフォンタッチ操作対応） ====================
       var mapScale = 1.0, mapPanX = 0, mapPanY = 0;
+      // 四国だけを既存の全国地図とは別に時計回りへ4度回転する。
+      var SHIKOKU_PROVINCE_IDS = new Set(['iyo', 'oshu', 'uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_nakamura']);
+      var SHIKOKU_MAP_TRANSFORM = 'rotate(4 280 450)';
+
+      function isShikokuProvince(provinceId) {
+        return SHIKOKU_PROVINCE_IDS.has(provinceId);
+      }
 
       function buildSvgMap() {
         var provGroup = document.getElementById('mapProvincesGroup');
@@ -4546,6 +4629,7 @@
               cp.setAttribute('stroke-width', '0.85');
               cp.setAttribute('stroke-linecap', 'round');
               cp.setAttribute('stroke-linejoin', 'round');
+              if (isShikokuProvince(c.p)) cp.setAttribute('transform', SHIKOKU_MAP_TRANSFORM);
               bordersGroup.appendChild(cp);
               State.coastElements.push({ el: cp, p: c.p });
             });
@@ -4574,6 +4658,7 @@
               bp.setAttribute('stroke-width', '0.8');
               bp.setAttribute('stroke-linecap', 'round');
               bp.setAttribute('stroke-linejoin', 'round');
+              if (isShikokuProvince(b.p1) && isShikokuProvince(b.p2)) bp.setAttribute('transform', SHIKOKU_MAP_TRANSFORM);
               bordersGroup.appendChild(bp);
               State.borderElements.push({ el: bp, p1: b.p1, p2: b.p2 });
             });
@@ -4587,6 +4672,7 @@
           path.setAttribute('class', 'prov-path');
           path.setAttribute('data-prov-id', p.id);
           path.setAttribute('d', p.svgPath || p.d || '');
+          if (isShikokuProvince(p.id)) path.setAttribute('transform', SHIKOKU_MAP_TRANSFORM);
           provGroup.appendChild(path);
 
           if (p.cx !== undefined && p.cy !== undefined) {
@@ -4598,12 +4684,13 @@
             var g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
             g.setAttribute('id', 'kamon-group-' + p.id);
             g.setAttribute('class', 'kamon-badge-group');
+            if (isShikokuProvince(p.id)) g.setAttribute('transform', SHIKOKU_MAP_TRANSFORM);
             g.style.display = 'none';
 
             var use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
             use.setAttribute('id', 'kamon-use-' + p.id);
             use.setAttribute('x', kx - badgeSize / 2);
-            use.setAttribute('y', ky - badgeSize / 2);
+            use.setAttribute('y', ky + (Number.isFinite(p.kamonOffsetY) ? p.kamonOffsetY : 0) - badgeSize / 2);
             use.setAttribute('width', badgeSize);
             use.setAttribute('height', badgeSize);
             g.appendChild(use);
@@ -4614,6 +4701,7 @@
             txt.setAttribute('class', 'prov-label-text');
             txt.setAttribute('x', kx);
             txt.setAttribute('y', ky + badgeSize / 2 + 7);
+            if (isShikokuProvince(p.id)) txt.setAttribute('transform', SHIKOKU_MAP_TRANSFORM);
             txt.textContent = p.name;
             labelGroup.appendChild(txt);
           }
@@ -4820,7 +4908,7 @@
             var use = document.getElementById('kamon-use-' + p.id);
             if (use) {
               use.setAttribute('x', kx - badgeSize / 2);
-              use.setAttribute('y', ky - badgeSize / 2);
+              use.setAttribute('y', ky + (Number.isFinite(p.kamonOffsetY) ? p.kamonOffsetY : 0) - badgeSize / 2);
               use.setAttribute('width', badgeSize);
               use.setAttribute('height', badgeSize);
             }
@@ -4985,15 +5073,11 @@
               item.el.style.strokeWidth = '1.8px';
               item.el.style.opacity = '1';
               item.el.style.filter = 'drop-shadow(0 0 2px rgba(255, 215, 0, 0.6))';
-            } else if (hlClan) {
-              item.el.style.display = '';
-              item.el.style.stroke = 'rgba(70, 62, 52, 0.45)';
-              item.el.style.strokeWidth = '0.5px';
-              item.el.style.opacity = '0.5';
-              item.el.style.filter = 'none';
             } else {
+              // 異なる家同士の国境は中間グレーで表示する。
+              // 選択・勢力強調時だけ白／金の輪郭を優先する。
               item.el.style.display = '';
-              item.el.style.stroke = 'rgba(20, 14, 8, 0.75)';
+              item.el.style.stroke = 'rgba(118, 124, 130, 0.78)';
               item.el.style.strokeWidth = '0.8px';
               item.el.style.opacity = '1';
               item.el.style.filter = 'none';
@@ -5275,7 +5359,10 @@
 
       // ==================== 武将列伝・人物詳細モーダル ====================
       function openOfficerBioModal(officerId) {
-        var o = (typeof officerId === 'object' && officerId) ? officerId : State.officerById.get(officerId);
+        var requestedId = (typeof officerId === 'object' && officerId) ? officerId.id : officerId;
+        // 一覧と同じ、年代別の改名済みコピーを列伝にも渡す。
+        var o = (State.activeOfficers || []).find(function (off) { return off.id === requestedId; })
+          || ((typeof officerId === 'object' && officerId) ? officerId : State.officerById.get(officerId));
         if (!o) return;
         var year = Number(State.currentScenario ? State.currentScenario.year : 1560);
 
@@ -5286,7 +5373,6 @@
         var mil = Number(o.military) || 0;
         var pol = Number(o.politic) || 0;
         var int = Number(o.intel) || 0;
-        var total = mil + pol + int;
 
         var lifeStr = (o.birthYear != null || o.deathYear != null)
           ? fmtYear(o.birthYear) + '年 〜 ' + fmtYear(o.deathYear) + '年' + ((o.birthYear != null && o.deathYear != null) ? '（享年 ' + (Number(o.deathYear) - Number(o.birthYear) + 1) + '）' : '')
@@ -5339,10 +5425,9 @@
           '</div>' +
 
           '<div class="bio-bars-grid">' +
-            '<div class="bio-stat-box"><div style="font-size:12pt; color:#ff8787;">⚔️ 武勇</div><div class="bio-stat-num" style="color:#ff8787;">' + mil + '</div></div>' +
-            '<div class="bio-stat-box"><div style="font-size:12pt; color:#74b9ff;">🌾 内政</div><div class="bio-stat-num" style="color:#74b9ff;">' + pol + '</div></div>' +
-            '<div class="bio-stat-box"><div style="font-size:12pt; color:#55efc4;">📜 知略</div><div class="bio-stat-num" style="color:#55efc4;">' + int + '</div></div>' +
-            '<div class="bio-stat-box"><div style="font-size:12pt; color:var(--gold-bright);">Σ 総合力</div><div class="bio-stat-num" style="color:var(--gold-bright);">' + total + '</div></div>' +
+            '<div class="bio-stat-box"><div style="font-size:12pt; color:#ff8787;">武勇</div><div class="bio-stat-num" style="color:#ff8787;">' + mil + '</div></div>' +
+            '<div class="bio-stat-box"><div style="font-size:12pt; color:#74b9ff;">内政</div><div class="bio-stat-num" style="color:#74b9ff;">' + pol + '</div></div>' +
+            '<div class="bio-stat-box"><div style="font-size:12pt; color:#55efc4;">知略</div><div class="bio-stat-num" style="color:#55efc4;">' + int + '</div></div>' +
           '</div>' +
 
           '<div class="tactic-box">' +

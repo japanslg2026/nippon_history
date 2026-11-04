@@ -9,11 +9,11 @@
  * @typedef {import('./types.js').GameSaveData} GameSaveData
  */
 
-import { GameState, GameStateMethods } from './core/GameState.js?v=20261101_mobfix1';
-import { UIManager, UIManagerMethods } from './ui/UIManager.js?v=20261101_mobfix1';
-import { MapRenderer, MapRendererMethods } from './render/MapRenderer.js?v=20261101_mobfix1';
+import { GameState, GameStateMethods } from './core/GameState.js?v=20261104_ando_teal';
+import { UIManager, UIManagerMethods } from './ui/UIManager.js?v=20261104_shikoku_fix';
+import { MapRenderer, MapRendererMethods } from './render/MapRenderer.js?v=20261104_gray_clan_borders';
 import { ComputerLogic, ComputerLogicMethods } from './ai/ComputerLogic.js?v=20261025_ui49';
-import { DataLoader } from './core/DataLoader.js?v=20261101_perf1';
+import { DataLoader } from './core/DataLoader.js?v=20261104_ando_teal';
 import * as GameRules from './core/GameRules.js?v=20261025_d74';
 
 // 早期初期化: モジュール評価時点で即座に window.getClanAbility を配備
@@ -825,7 +825,7 @@ export class SengokuGame {
 
     // ゲーム進行状態
     this.currentScenarioId = '1560';
-    this.currentDifficulty = 'normal';
+    this.currentDifficulty = 'relaxed';
     this.playerClanId = 'chosokabe';
     this.playerDaimyo = null;
     this.foundingLeaderNames = {};

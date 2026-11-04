@@ -85,12 +85,12 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
   const IS_PHONE = !!window.SENGOKU_IS_PHONE;
   const ERA_ICON = { all: '🗾', ancient: '⛩️', genpei_kamakura: '🏹', muromachi: '🌸', medieval: '🏹', sengoku_early: '🔥', sengoku_climax: '⚔️', unification: '🏯', edo_bakumatsu: '⛵', virtual: '🎲' };
   const ERA_SHORT = { all: 'すべて', ancient: '古代・平安', genpei_kamakura: '源平・鎌倉', muromachi: '室町', medieval: '中世', sengoku_early: '黎明', sengoku_climax: '戦国乱世', unification: '天下統一', edo_bakumatsu: '泰平・幕末', virtual: '仮想' };
-  const DIFF_NAME_MAP = { easy: '初級', normal: '中級', hard: '上級', hell: '超級' };
+  const DIFF_NAME_MAP = { relaxed: '楽級', easy: '初級', normal: '中級', hard: '上級' };
   const DIFF_INFO_MAP = {
+    relaxed: '【楽級】金1000/米1500・自軍内政+35%・敵AIは慎重・包囲網なし',
     easy: '【初級】金800/米1200・自軍内政+25%・敵AI穏健・包囲網極小',
     normal: '【中級】金500/米800・標準バランス・12カ国制覇で包囲網発生',
-    hard: '【上級】金350/米500・敵AI徴兵1.3倍・好戦度+20%・10カ国で包囲網',
-    hell: '【超級】金250/米300・敵攻撃力+20%・全大名敵対・包囲網頻発'
+    hard: '【上級】金350/米500・敵AI徴兵1.3倍・好戦度+20%・10カ国で包囲網'
   };
 
   const FAMOUS_CLANS = new Set([
@@ -408,6 +408,12 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     if (!IS_PHONE) return;
     const popupCard = document.querySelector('#daimyoPopup .daimyo-popup-card');
     if (!popupCard || popupCard.dataset.mobileSetup) return;
+    // Markup already has a scrollable body.  Re-wrapping its children leaves the
+    // original, empty flex item between the header and the ability cards.
+    if ([...popupCard.children].some(child => child.classList?.contains('daimyo-popup-scrollable-body'))) {
+      popupCard.dataset.mobileSetup = 'true';
+      return;
+    }
     popupCard.dataset.mobileSetup = 'true';
 
     const header = popupCard.querySelector('.daimyo-popup-header');
@@ -427,7 +433,7 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     }
   }
 
-  function buildPhone(root) { // スマホ: ステップ切替 + 下部固定バー + 検索・フィルター
+  function buildPhone(root) { // スマホ: ステップ切替 + 下部固定バー
     root.classList.add('sl-m'); root.dataset.step = '1';
     const ttl = document.querySelector('#startModal .start-game-title');
     if (ttl) {
@@ -491,29 +497,50 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     });
     bar.querySelector('.sl-mbar-go').addEventListener('click', () => $('#slStartBtn')?.click());
 
-    // Step 1: 歴史シナリオのタイトル・カウントを非表示にし、選択中シナリオ名＋「詳細」ボタンに差し替え
+    // Step 1: シナリオ名の横には詳細ボタンを置かず、選択後の操作欄に集約する。
     const scenPanel = $('.sl-scen', root);
     const scenHead = scenPanel && $('.sl-head', scenPanel);
     if (scenHead) {
-      scenHead.innerHTML = '<span class="sl-scen-cur-title"></span><button type="button" class="sl-scen-more-btn" aria-expanded="false">詳細</button>';
-      const drop = document.createElement('div');
-      drop.className = 'sl-scen-desc-drop';
-      drop.hidden = true;
-      scenHead.after(drop);
-
-      const moreBtn = scenHead.querySelector('.sl-scen-more-btn');
-      moreBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openScenarioDetailModal();
-      });
+      scenHead.innerHTML = '<span>歴史シナリオ</span>';
     }
 
-    // シナリオボタンクリック時：プレビュー更新
-    $('.sl-scen-body', root).addEventListener('click', (e) => {
+    // シナリオを選んだ後にだけ、解説・次へ・戻るの操作を画面下に表示する。
+    const scenBody = $('.sl-scen-body', root);
+    const scenActions = document.createElement('div');
+    scenActions.className = 'sl-scen-selection-actions';
+    scenActions.hidden = true;
+    scenActions.innerHTML = `
+      <div class="sl-scen-selected-name" aria-live="polite"></div>
+      <button type="button" class="sl-scen-explain-btn">シナリオ解説</button>
+      <div class="sl-scen-choice-actions">
+        <button type="button" class="sl-scen-back-btn">シナリオ選択に戻る</button>
+        <button type="button" class="sl-scen-next-btn">大名選択に進む</button>
+      </div>
+    `;
+    scenBody?.after(scenActions);
+
+    const updateScenarioActions = () => {
+      const s = scen();
+      const name = scenActions.querySelector('.sl-scen-selected-name');
+      if (!s || !name) return;
+      const yearText = s.year < 0 ? `前${Math.abs(s.year)}年` : `${s.year}年`;
+      name.textContent = `${yearText} ${s.title || ''}`.trim();
+    };
+    scenActions.querySelector('.sl-scen-explain-btn')?.addEventListener('click', openScenarioDetailModal);
+    scenActions.querySelector('.sl-scen-next-btn')?.addEventListener('click', () => setStep(2));
+    scenActions.querySelector('.sl-scen-back-btn')?.addEventListener('click', () => {
+      scenActions.hidden = true;
+      scenBody?.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // シナリオを選んでも自動では②へ移動せず、利用者が「大名選択に進む」を押して進む。
+    scenBody?.addEventListener('click', (e) => {
       if (e.target.closest('.scenario-btn')) {
-        setTimeout(() => updateScenarioPreview(), 60);
-        // シナリオを選んだら自動的に「② 大名選択」へ切り替える
-        setTimeout(() => setStep(2), 140);
+        setTimeout(() => {
+          updateScenarioPreview();
+          updateScenarioActions();
+          scenActions.hidden = false;
+        }, 60);
       }
     });
 
@@ -536,56 +563,7 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
       });
     }
 
-    // Step 2: 大名検索バー ＋ 地方フィルターチップ（全て二文字表示）
-    const daimyoPanel = $('.sl-daimyo', root);
-    const daimyoBody = $('.sl-daimyo-body', root);
-    if (daimyoBody) {
-      const toolbar = document.createElement('div');
-      toolbar.className = 'sl-daimyo-toolbar';
-      toolbar.innerHTML = `
-        <div class="sl-daimyo-search-wrap">
-          <input type="search" class="sl-daimyo-search-input" id="slDaimyoSearch" placeholder="🔍 大名名・本拠地・国名で検索..." autocomplete="off">
-          <button type="button" class="sl-daimyo-search-clear" id="slSearchClear" title="検索クリア">✕</button>
-        </div>
-        <div class="sl-region-chips">
-          <button type="button" class="sl-reg-chip active" data-reg="all">全て</button>
-          <button type="button" class="sl-reg-chip" data-reg="major">主要</button>
-          <button type="button" class="sl-reg-chip" data-reg="tohoku">東北</button>
-          <button type="button" class="sl-reg-chip" data-reg="kanto">関東</button>
-          <button type="button" class="sl-reg-chip" data-reg="chubu">中部</button>
-          <button type="button" class="sl-reg-chip" data-reg="kinki">近畿</button>
-          <button type="button" class="sl-reg-chip" data-reg="chugoku">中国</button>
-          <button type="button" class="sl-reg-chip" data-reg="shikoku">四国</button>
-          <button type="button" class="sl-reg-chip" data-reg="kyushu">九州</button>
-        </div>
-      `;
-      daimyoBody.before(toolbar);
-
-      // 検索入力イベント
-      const searchInput = toolbar.querySelector('#slDaimyoSearch');
-      const searchClear = toolbar.querySelector('#slSearchClear');
-      searchInput.addEventListener('input', () => {
-        currentSearchQuery = searchInput.value;
-        filterDaimyos();
-      });
-      searchClear.addEventListener('click', () => {
-        searchInput.value = '';
-        currentSearchQuery = '';
-        filterDaimyos();
-        searchInput.focus();
-      });
-
-      // 地方フィルターイベント
-      toolbar.querySelector('.sl-region-chips').addEventListener('click', (e) => {
-        const chip = e.target.closest('.sl-reg-chip');
-        if (!chip) return;
-        toolbar.querySelectorAll('.sl-reg-chip').forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        currentRegion = chip.dataset.reg || 'all';
-        filterDaimyos();
-        scrollToSelectedDaimyo(true);
-      });
-    }
+    // Step 2: スマホでは大名を一覧で直接選ぶ。検索欄と地方フィルターは表示しない。
 
     // Step 3: シナリオ解説パネルはシナリオ名＋「詳細」ボタンの1行にし、押すと全文を開閉
     const descPanel = $('.sl-desc', root);
@@ -616,7 +594,7 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     });
     syncEraTabsVisibility();
 
-    // 難易度ボタンからピクトグラムを削除し、初級・中級・上級・超級に設定
+    // 難易度ボタンからピクトグラムを削除し、楽級・初級・中級・上級に設定
     document.querySelectorAll('#startModal .diff-option-btn[data-diff]').forEach(b => {
       b.querySelectorAll('.sl-dicon').forEach(el => el.remove());
       const k = b.dataset.diff;

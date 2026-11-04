@@ -408,7 +408,7 @@ export const ERA_CONFIG = {
 
     rulerTitle: '首長',
 
-    kokudakaLabel: '稲実',
+    kokudakaLabel: '収穫高',
 
     kokudakaUnit: '束',
 
@@ -452,7 +452,7 @@ export const ERA_CONFIG = {
 
     rulerTitle: '武門領主',
 
-    kokudakaLabel: '貫高 / 荘園高',
+    kokudakaLabel: '荘園高',
 
     kokudakaUnit: '貫',
 
@@ -540,7 +540,7 @@ export const ERA_CONFIG = {
 
     rulerTitle: '総帥',
 
-    kokudakaLabel: '藩力・産興高',
+    kokudakaLabel: '石高',
 
     kokudakaUnit: '石',
 
@@ -594,9 +594,21 @@ export function getEraKey(year) {
 
 
 
+/** 領地生産力の呼称は、政治時代の区分とは別に歴史用語へ切り替える。 */
+export function getKokudakaLabel(year) {
+  const y = Number(year);
+  // 平安時代は延暦13年（794年）の平安京遷都から扱う。
+  if (!Number.isFinite(y) || y < 794) return '収穫高';
+  // 平安・鎌倉期。建武以後は室町期として石高表記へ統一する。
+  if (y < 1336) return '荘園高';
+  return '石高';
+}
+
 export function getEraFlavor(year) {
 
-  return ERA_CONFIG[getEraKey(year)] || ERA_CONFIG.sengoku;
+  const era = ERA_CONFIG[getEraKey(year)] || ERA_CONFIG.sengoku;
+  const kokudakaLabel = getKokudakaLabel(year);
+  return era.kokudakaLabel === kokudakaLabel ? era : { ...era, kokudakaLabel };
 
 }
 
@@ -605,6 +617,8 @@ if (typeof window !== 'undefined') {
   window.ERA_CONFIG = ERA_CONFIG;
 
   window.getEraKey = getEraKey;
+
+  window.getKokudakaLabel = getKokudakaLabel;
 
   window.getEraFlavor = getEraFlavor;
 
@@ -1092,6 +1106,8 @@ export class GameState {
 
     this.activeOfficers = [];
 
+    this._virtualDeadOfficerIds = new Set();
+
     this.alliances = [];
 
     this.formerDaimyoIds = new Set();
@@ -1168,6 +1184,47 @@ export const GameStateMethods = {
 
   },
 
+  // index.html の年代別表記と同一の改名規則。表示箇所ごとに処理を
+  // 重複させず、ゲーム内の名簿・詳細・城主表示を同じ名称へそろえる。
+  getOfficerEraName(officer, year = this.year) {
+    if (!officer) return '';
+    const y = Number(year);
+    switch (officer.id) {
+      case 'off_toyotomi_hideyoshi': return y >= 1585 ? '豊臣秀吉' : (y >= 1573 ? '羽柴秀吉' : '木下秀吉');
+      case 'off_toyotomi_hidenaga': return y >= 1585 ? '豊臣秀長' : '羽柴秀長';
+      case 'off_toyotomi_hidetsugu': return y >= 1585 ? '豊臣秀次' : '羽柴秀次';
+      case 'off_tokugawa_ieyasu': return y >= 1563 ? '徳川家康' : '松平元康';
+      case 'off_tsugaru_tamenobu': return y >= 1590 ? '津軽為信' : '大浦為信';
+      case 'off_takeda_shingen': return y >= 1559 ? '武田信玄' : '武田晴信';
+      case 'off_uesugi_kenshin': return y >= 1570 ? '上杉謙信' : (y > 1561 ? '上杉輝虎' : (y === 1561 ? '上杉政虎' : '長尾景虎'));
+      case 'off_otomo_sorin': return y >= 1562 ? '大友宗麟' : '大友義鎮';
+      case 'off_shimazu_yoshihisa': return y >= 1592 ? '島津龍伯' : (y >= 1566 ? '島津義久' : '島津忠良');
+      case 'off_saito_dosan': return y >= 1554 ? '斎藤道三' : (y >= 1538 ? '斎藤利政' : '長井規秀');
+      case 'off_tachibana_dosetsu': return y >= 1575 ? '立花道雪' : '戸次鑑連';
+      case 'off_hosokawa_tadaoki': return y >= 1620 ? '細川三斎' : '細川忠興';
+      case 'off_shimazu_yoshihiro': return y >= 1602 ? '島津惟新' : '島津義弘';
+      case 'off_mori_terumoto': return y >= 1625 ? '毛利幻庵' : '毛利輝元';
+      case 'off_kobayakawa_hideaki': return y >= 1601 ? '小早川秀詮' : (y >= 1595 ? '小早川秀秋' : '木下秀俊');
+      case 'off_yamagata_masakage': return y >= 1565 ? '山県昌景' : '飯富昌景';
+      case 'off_miyoshi_nagayoshi': return y >= 1548 ? '三好長慶' : '三好利長';
+      case 'off_hist_1522_ota_sukemasa': return y >= 1565 ? '太田三楽斎' : '太田資正';
+      case 'off_pl1590_027': return y >= 1570 ? '梶原政景' : '太田政景';
+      case 'off_ashina_moriuji': return y >= 1561 ? '蘆名止々斎' : '蘆名盛氏';
+      case 'off_tsukahara_bokuden': return y >= 1540 ? '塚原卜伝' : '塚原高幹';
+      case 'off_miyamoto_musashi': return y >= 1605 ? '宮本武蔵' : '宮本玄信';
+      case 'off_yagyu_muneyoshi': return y >= 1565 ? '柳生石舟斎' : '柳生宗厳';
+      case 'off_pl1570_009': return y >= 1600 ? '織田有楽斎' : '織田長益';
+      default: return officer.name || '';
+    }
+  },
+
+  applyEraOfficerNames() {
+    (this.activeOfficers || []).forEach(off => {
+      const name = this.getOfficerEraName(off, this.year);
+      if (name) off.name = name;
+    });
+  },
+
 
 
   isFormerDaimyo(off) {
@@ -1220,7 +1277,7 @@ export const GameStateMethods = {
 
     const kokudaka = Number(p.kokudaka) || 0;
 
-    // 駐留兵力: 石高×2.5%を100未満切り捨て＋1000
+    // 駐留兵力: 石高×2.5%を千人未満切り捨て＋1000
 
     if (isBad(p.troops)) p.troops = this.getProvinceInitialTroops(kokudaka);
 
@@ -1315,6 +1372,8 @@ export const GameStateMethods = {
   switchScenario(scenarioId) {
 
     this._isSwitchingScenario = true;
+
+    this._virtualDeadOfficerIds = new Set();
 
     this.playerClanId = null;
 
@@ -1500,23 +1559,10 @@ export const GameStateMethods = {
 
       }
 
-      if (scen.provinceTroops && scen.provinceTroops[p.id]) {
-
-        p.troops = scen.provinceTroops[p.id];
-
-        p.rice = Math.max(p.rice, Math.round(p.troops * 0.5));
-
-      }
-
-      if (scen.troopScale) {
-
-        p.troops = Math.round(p.troops * scen.troopScale);
-
-        p.rice = Math.round(p.rice * (1 + (scen.troopScale - 1) * 0.3));
-
-        p.commerce = Math.round(p.commerce * (1 + (scen.troopScale - 1) * 0.3));
-
-      }
+      // 全シナリオで同じ基準式を用いる。旧 provinceTroops / troopScale の
+      // 個別上書きは石高と乖離するため、開始時の駐留兵力には反映しない。
+      p.troops = this.getProvinceInitialTroops(Number(p.kokudaka) || 0);
+      p.rice = Math.max(p.rice, Math.round(p.troops * 0.5));
 
     });
 
@@ -1838,13 +1884,21 @@ export const GameStateMethods = {
 
 
 
+    const histGovMap = (window.SCENARIO_HISTORICAL_GOVERNORS && window.SCENARIO_HISTORICAL_GOVERNORS[String(scenarioId)])
+      ? window.SCENARIO_HISTORICAL_GOVERNORS[String(scenarioId)]
+      : {};
+    const pinnedGovMap = (window.PINNED_SCENARIO_GOVERNORS && window.PINNED_SCENARIO_GOVERNORS[String(scenarioId)])
+      ? window.PINNED_SCENARIO_GOVERNORS[String(scenarioId)]
+      : {};
+
     // 【絶対原則ステップ1: 大名本拠地への大名配置（最優先・傘下武将は絶対に城代にならない）】
 
     // ユーザー要件: 「大名が本拠地としている城では傘下の武将は城代になりません。本拠親政となるのは大名の居城だけです」
 
     this.provinces.forEach(p => {
 
-      if (p.ownerId && this.isCapitalProvince(p.id, p.ownerId)) {
+      // 編集器で明示した本拠地の城主だけは、当主の自動配置を上書きする。
+      if (p.ownerId && this.isCapitalProvince(p.id, p.ownerId) && !pinnedGovMap[p.id]) {
 
         const daimyoOfficer = this.activeOfficers.find(o => o.clanId === p.ownerId && o.isDaimyo && !o.assignedProvId && !o.isDead);
 
@@ -1864,15 +1918,7 @@ export const GameStateMethods = {
 
     // 【ステップ2: 支城（本拠地以外の城）への史実城代・有力家臣の配置】
 
-    const histGovMap = (window.SCENARIO_HISTORICAL_GOVERNORS && window.SCENARIO_HISTORICAL_GOVERNORS[String(scenarioId)]) 
-
-      ? window.SCENARIO_HISTORICAL_GOVERNORS[String(scenarioId)] 
-
-      : null;
-
-
-
-    // 2-A: シナリオ固有の史実城代マッピングの適用（※本拠地以外の城かつ自勢力所属の一般武将のみ）
+    // 2-A: シナリオ固有の史実城代マッピングの適用（本拠地は pinned の明示指定時のみ対象）
 
     if (histGovMap) {
 
@@ -1880,11 +1926,9 @@ export const GameStateMethods = {
 
         
 
-        // 本拠地ではなく、かつまだ城主が未定の支城のみが対象
-
-        if (!p.governorId && p.ownerId && !this.isCapitalProvince(p.id, p.ownerId) && histGovMap[p.id]) {
-
-          const targetIdOrName = histGovMap[p.id];
+        // 通常は支城のみ。本拠地でも pinned 指定なら城主を明示できる。
+        const targetIdOrName = pinnedGovMap[p.id] || histGovMap[p.id];
+        if (!p.governorId && p.ownerId && (!this.isCapitalProvince(p.id, p.ownerId) || !!pinnedGovMap[p.id]) && targetIdOrName) {
 
           
 
@@ -2723,6 +2767,8 @@ export const GameStateMethods = {
 
     const virtualAffiliations = (isVirtual && this.currentScenario?.officerAffiliations) || {};
 
+    const virtualDeadOfficerIds = this._virtualDeadOfficerIds || (this._virtualDeadOfficerIds = new Set());
+
     // 全国オールスター群雄割拠: 登場武将を最大500名の名簿に限定（マスタから決定的に選定）
 
     const allstarRoster = (isVirtual && this.currentScenario?.id === 'allstar_feudal')
@@ -2738,6 +2784,8 @@ export const GameStateMethods = {
       ? new Set(this.currentScenario.excludeOfficers) : null;
 
     for (const master of window.OFFICERS_MASTER) {
+
+      if (isVirtual && virtualDeadOfficerIds.has(master.id)) continue;
 
       const existing = existingMap.get(master.id);
 
@@ -2759,9 +2807,13 @@ export const GameStateMethods = {
 
       // セーブに残った誤生年で、まだ生まれていない人物を登場させない
 
-      officer.birthYear = master.birthYear;
+      if (!isVirtual || isNew || !officer._virtualLifespan) {
 
-      officer.deathYear = master.deathYear;
+        officer.birthYear = master.birthYear;
+
+        officer.deathYear = master.deathYear;
+
+      }
 
 
 
@@ -2801,13 +2853,34 @@ export const GameStateMethods = {
 
         if (isBelongingToActiveClan || effClanId === 'ronin') {
 
-          officer.isDead = false;
+          // 仮想シナリオでも開始時だけ年齢をそろえ、死亡年は年次更新で延長しない。
+          // 以前は毎年 +200 年へ上書きしていたため、武将が死亡しなかった。
+          const invalidOrLegacyLifetime = !officer._virtualLifespan
+            || !Number.isFinite(Number(officer.birthYear))
+            || !Number.isFinite(Number(officer.deathYear))
+            || Number(officer.deathYear) - Number(this.year) > 80;
 
-          officer.birthYear = this.year - 30; // 全盛期の30歳前後に統一
+          if (invalidOrLegacyLifetime) {
 
-          officer.deathYear = this.year + 200; // 仮想乱世のため寿命死を防止
+            officer.birthYear = this.year - 30;
 
-          nextActive.push(officer);
+            officer.deathYear = this.year + 40;
+
+            officer._virtualLifespan = true;
+
+          }
+
+          if (!officer.isDead && this.year <= Number(officer.deathYear)) {
+
+            nextActive.push(officer);
+
+          } else if (existing) {
+
+            officer.isDead = true;
+
+            virtualDeadOfficerIds.add(officer.id);
+
+          }
 
           continue;
 
@@ -2841,7 +2914,11 @@ export const GameStateMethods = {
 
       // シナリオ明記でも生没年は守る（例外は ignoreLifespan:true を付けたエントリのみ）
 
-      if ((isGenpuku && isAlive) || (isExplicitInScenario && scenAffEntry.ignoreLifespan === true)) {
+      // 古代シナリオでは個別所属に ignoreLifespan が残っていても生没年を厳守する。
+      // これにより、別世紀の人物が誤って明示配属されても登場しない。
+      const isAncientScenario = [-663, 97, 240].includes(Number(this.currentScenario?.year));
+      const canIgnoreLifespan = isExplicitInScenario && scenAffEntry.ignoreLifespan === true && !isAncientScenario;
+      if ((isGenpuku && isAlive) || canIgnoreLifespan) {
         officer.isDead = false;
         nextActive.push(officer);
       } else if (existing && this.year > dYear) {
@@ -2891,6 +2968,7 @@ export const GameStateMethods = {
 
 
     this.activeOfficers = nextActive;
+    this.applyEraOfficerNames();
 
     this.officers = this.activeOfficers; // 後方互換性
 
@@ -2948,7 +3026,10 @@ export const GameStateMethods = {
 
 
 
-    const scenGovMap = (window.SCENARIO_HISTORICAL_GOVERNORS && window.SCENARIO_HISTORICAL_GOVERNORS[String(scen.id)]) || {};
+    const historicalGovMap = (window.SCENARIO_HISTORICAL_GOVERNORS && window.SCENARIO_HISTORICAL_GOVERNORS[String(scen.id)]) || {};
+    const pinnedGovMap = (window.PINNED_SCENARIO_GOVERNORS && window.PINNED_SCENARIO_GOVERNORS[String(scen.id)]) || {};
+    // 編集器で固定した城主は、通常の史実城主より優先する。
+    const scenGovMap = { ...historicalGovMap, ...pinnedGovMap };
 
 
 
@@ -3062,7 +3143,8 @@ export const GameStateMethods = {
 
         // 本拠（当主の居城）は城代を置かないので、そこへの指名では他家へ移さない
 
-        if (provOwner && ownersSet.has(provOwner) && !this.isCapitalProvince(myGovProv, provOwner)) {
+        const isPinnedGovernor = pinnedGovMap[myGovProv] === off.id;
+        if (provOwner && ownersSet.has(provOwner) && (!this.isCapitalProvince(myGovProv, provOwner) || isPinnedGovernor)) {
 
           // シナリオ当主は城代名簿で吸収しない（清衡が義家配下になる、など）
 
@@ -5824,6 +5906,9 @@ export const GameStateMethods = {
     // 上杉謙信（長尾景虎）の改名連動（1561年の関東管領就任・上杉改姓）
 
     this.updateKenshinName(announce);
+
+    // 固有の改名イベント処理後に、名簿用の年代別表記を再同期する。
+    this.applyEraOfficerNames();
 
 
 
@@ -8594,7 +8679,7 @@ export const GameStateMethods = {
 
 
 
-  checkDaimyoLifespan() {
+  async checkDaimyoLifespan() {
 
     // 観戦モード時はプレイヤー用の世継ぎ選択ダイアログは非表示（全大名をAIと同等に自動代替わり処理）
 
@@ -8650,7 +8735,9 @@ export const GameStateMethods = {
 
 
 
-        Swal.fire({
+        // 年替わり処理をここで待機させる。後続の歴史イベントが選択画面を上書きし、
+        // 死亡済み当主の家督相続が未確定のままになる競合を防ぐ。
+        const result = await Swal.fire({
 
           title: `<span style="font-size:1.25rem; color:#f5eedc; font-weight:bold; letter-spacing:1px;">❖ 当主逝去と世継ぎ家督相続 ❖</span>`,
 
@@ -8774,13 +8861,13 @@ export const GameStateMethods = {
 
                 const ageText = age ? ` (${age}歳)` : '';
 
-                const skillBadge = off.skill ? `<span style="background:#8c6d3b; color:#fff; padding:2px 8px; border-radius:3px; font-size:9pt; margin-left:6px; border:1px solid #c59b27;">特性: ${off.skill}</span>` : '';
+                const skillBadge = off.skill ? `<div style="margin-top:4px;"><span style="display:inline-flex; background:#8c6d3b; color:#fff; padding:2px 8px; border-radius:3px; font-size:9pt; border:1px solid #c59b27;">特性: ${off.skill}</span></div>` : '';
 
                 
 
                 previewDiv.innerHTML = `
 
-                  <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #5a4638; padding-bottom:4px; margin-bottom:8px;">
+                  <div style="border-bottom:1px solid #5a4638; padding-bottom:4px; margin-bottom:8px;">
 
                     <div>
 
@@ -8788,9 +8875,9 @@ export const GameStateMethods = {
 
                       <span style="color:#ded6c8; font-size:9.5pt; margin-left:4px;">${ageText}</span>
 
-                    </div>
+                      ${skillBadge}
 
-                    <div>${skillBadge}</div>
+                    </div>
 
                   </div>
 
@@ -8846,7 +8933,7 @@ export const GameStateMethods = {
 
           }
 
-        }).then((result) => {
+        });
 
           const chosenId = result.value || candidates[0].id;
 
@@ -8914,8 +9001,6 @@ export const GameStateMethods = {
 
           }
 
-        });
-
       } else {
 
         // ★【大名滅亡防止】自家に後継候補武将がいない場合：浪人から新当主（客将・名跡継承）を推戴！
@@ -8960,7 +9045,7 @@ export const GameStateMethods = {
 
 
 
-          Swal.fire({
+          const result = await Swal.fire({
 
             title: `❖ 断絶危機！名将推戴による御家再興 ❖`,
 
@@ -9006,7 +9091,7 @@ export const GameStateMethods = {
 
             color: '#f5eedc'
 
-          }).then((result) => {
+          });
 
             const chosenId = result.value || roninCandidates[0].id;
 
@@ -9057,8 +9142,6 @@ export const GameStateMethods = {
               this.resumeAutoPlayAfterEvent();
 
             }
-
-          });
 
         } else {
 
@@ -10315,13 +10398,13 @@ export const GameStateMethods = {
 
     let riceBase = this.playerDaimyo?.rice || 800;
 
-    if (this.currentDifficulty === 'easy') { goldBase += 400; riceBase += 500; }
+    if (this.currentDifficulty === 'relaxed') { goldBase += 800; riceBase += 1000; }
+
+    else if (this.currentDifficulty === 'easy') { goldBase += 400; riceBase += 500; }
 
     else if (this.currentDifficulty === 'normal') { goldBase += 150; riceBase += 200; }
 
     else if (this.currentDifficulty === 'hard') { goldBase -= 50; riceBase -= 100; }
-
-    else if (this.currentDifficulty === 'hell') { goldBase -= 100; riceBase -= 200; }
 
 
 
@@ -11597,6 +11680,24 @@ export const GameStateMethods = {
 
     if (lookOv && lookOv.color) return lookOv.color;
 
+    // 隣接しやすい勢力は、地図上で判別しやすい専用色を優先する。
+    const distinctTerritoryColors = {
+      gamo: '#2f5f9e',       // 蒲生家: 深い青
+      gamou: '#2f5f9e',      // 蒲生家の別ID
+      todo: '#5b6068',       // 藤堂家: 渋い青灰
+      tosa: '#365a9c',       // 土佐藩山内家: 藍紫
+      clan_8849: '#c65d2e', // 加藤嘉明・明成系: 朱茶
+      sakai: '#8a6b3f',     // 酒井家: 渋い黄土
+      fukui_matsudaira: '#8a4a36', // 福井藩越前松平家: 渋い銅
+      okayama: '#3f5c9a',   // 岡山藩池田家: 藍
+      tottori: '#7a5a90',   // 鳥取藩池田家: 紫鼠
+      matsue: '#2f6f68',    // 松江藩松平家: 深い青緑
+      kumamoto_hosokawa: '#596146', // 熊本藩細川家: 苔色
+      uwajima_date: '#5a3d86', // 宇和島伊達家: 深い紫
+      ando: '#2f7a78' // 安東家: 深い青緑
+    };
+    if (distinctTerritoryColors[p.ownerId]) return distinctTerritoryColors[p.ownerId];
+
     const scen = SCENARIOS.find(s => String(s.id) === String(this.currentScenarioId));
 
     const playable = scen?.playables?.find(x => x.id === p.ownerId);
@@ -11660,6 +11761,15 @@ export const GameStateMethods = {
     const lookOv = raw ? null : this.clanLookOverrides?.[clanId];
 
     if (lookOv && lookOv.kamon) return lookOv.kamon;
+
+    // 既存のシナリオ定義よりも、個別に調整した家紋背景を優先する。
+    const kamonOverrides = {
+      sakai: 'kamon-sakai-harima',
+      kumamoto_hosokawa: 'kamon-kumamoto-hosokawa',
+      uwajima_date: 'kamon-uwajima-date',
+      ando: 'kamon-ando-northern'
+    };
+    if (kamonOverrides[clanId]) return kamonOverrides[clanId];
 
 
 
@@ -12028,8 +12138,23 @@ export const GameStateMethods = {
       if (!m || !m.family) return;
 
       const stem = String(m.family).replace(/(将軍家|幕府|政府|衆|党|家)$/, '');
+      const stemChars = Array.from(stem);
 
-      if (stem && stem.length >= 2 && stem.length <= 5) set.add(stem);
+      if (stemChars.length >= 2 && stemChars.length <= 5) set.add(stem);
+
+      // 領国名などの接頭辞を除いた実際の姓も、史実当主名と照合して登録する。
+      // 例: 「徳島藩蜂須賀家」→「蜂須賀正勝」から「蜂須賀」を取得する。
+      Object.values(m.leaders || {}).forEach(leaderName => {
+        if (typeof leaderName !== 'string') return;
+        const maxLength = Math.min(5, stemChars.length, Array.from(leaderName).length - 1);
+        for (let length = maxLength; length >= 2; length -= 1) {
+          const candidate = stemChars.slice(-length).join('');
+          if (leaderName.startsWith(candidate)) {
+            set.add(candidate);
+            break;
+          }
+        }
+      });
 
     });
 
@@ -12436,10 +12561,10 @@ export const GameStateMethods = {
 
 
   // ---- 兵力の初期配置と上限 ----
-  // 初期兵力 = 石高×2.5% を100未満切り捨て + 1000
+  // 初期兵力 = 石高×2.5% を千人未満切り捨て + 1000
   getProvinceInitialTroops(kokudaka) {
     const k = Number(kokudaka) || 0;
-    return Math.floor(k * 0.025 / 100) * 100 + 1000;
+    return Math.floor(k * 0.025 / 1000) * 1000 + 1000;
   },
 
   // 兵力の上限 = 初期兵力 + 石高×10%（増加分の上限）。シナリオ指定の初期兵力がそれより大きければそれを基準にする
@@ -12449,11 +12574,7 @@ export const GameStateMethods = {
       : (typeof INITIAL_PROVINCES !== 'undefined' ? INITIAL_PROVINCES : []);
     const init = (list || []).find(x => x.id === p.id);
     const koku = Number(init?.kokudaka) || Number(p.kokudaka) || 0;
-    let base = this.getProvinceInitialTroops(koku);
-    const scen = this.currentScenario
-      || (typeof SCENARIOS !== 'undefined' ? SCENARIOS : []).find(s => String(s.id) === String(this.currentScenarioId));
-    const pt = Number(scen?.provinceTroops?.[p.id]);
-    if (pt > 0) base = Math.max(base, pt);
+    const base = this.getProvinceInitialTroops(koku);
     return base + Math.floor(koku * 0.1);
   },
 
@@ -12476,14 +12597,6 @@ export const GameStateMethods = {
     const mult = Number(window.PROVINCE_RICE_CAP_MULT) || 2;
 
     let cap = Math.round(base * mult);
-
-    const scen = this.currentScenario
-
-      || (typeof SCENARIOS !== 'undefined' ? SCENARIOS : []).find(s => String(s.id) === String(this.currentScenarioId));
-
-    const pt = Number(scen?.provinceTroops?.[p.id]);
-
-    if (pt > 0) cap = Math.max(cap, Math.round(pt * 0.5));
 
     return cap;
 
@@ -16707,7 +16820,7 @@ export const GameStateMethods = {
 
       // 大名の寿命判定と世継ぎ家督相続
 
-      this.checkDaimyoLifespan();
+      await this.checkDaimyoLifespan();
 
     }
 
@@ -17238,6 +17351,12 @@ export const GameStateMethods = {
 
       isDead: !!o.isDead,
 
+      virtualLifespan: !!o._virtualLifespan,
+
+      virtualBirthYear: o._virtualLifespan ? o.birthYear : null,
+
+      virtualDeathYear: o._virtualLifespan ? o.deathYear : null,
+
       loyalty: o.loyalty,
 
       actionDone: !!o.actionDone,
@@ -17287,6 +17406,8 @@ export const GameStateMethods = {
       currentScenarioId: this.currentScenarioId,
 
       currentDifficulty: this.currentDifficulty,
+
+      virtualDeadOfficerIds: [...(this._virtualDeadOfficerIds || [])],
 
       provincesDelta: provincesDelta,
 
@@ -17522,7 +17643,15 @@ export const GameStateMethods = {
 
     this.currentScenarioId = data.currentScenarioId || '1560';
 
-    this.currentDifficulty = data.currentDifficulty || 'normal';
+    this._virtualDeadOfficerIds = new Set(Array.isArray(data.virtualDeadOfficerIds) ? data.virtualDeadOfficerIds : []);
+
+    const savedDifficulty = data.currentDifficulty;
+
+    this.currentDifficulty = ['relaxed', 'easy', 'normal', 'hard'].includes(savedDifficulty)
+
+      ? savedDifficulty
+
+      : (savedDifficulty === 'hell' || savedDifficulty === 'shura' ? 'hard' : 'relaxed');
 
     this.alliances = this.normalizeAlliances(
 
@@ -17677,6 +17806,16 @@ export const GameStateMethods = {
           off.isCastellan = !!d.isCastellan;
 
           off.isDead = !!d.isDead;
+
+          if (d.virtualLifespan) {
+
+            off._virtualLifespan = true;
+
+            off.birthYear = d.virtualBirthYear;
+
+            off.deathYear = d.virtualDeathYear;
+
+          }
 
           if (d.loyalty !== undefined) off.loyalty = d.loyalty;
 
@@ -18906,7 +19045,7 @@ export const GameStateMethods = {
 
     const myProvs = (this.provinces || []).filter(p => p.ownerId === this.playerClanId);
 
-    const diffName = { easy: '初級 (天下泰平)', normal: '中級 (群雄割拠)', hard: '上級 (風雲再起)', hell: '修羅 (戦国地獄)' }[this.currentDifficulty] || '中級';
+    const diffName = { relaxed: '楽級 (安泰の世)', easy: '初級 (天下泰平)', normal: '中級 (群雄割拠)', hard: '上級 (風雲再起)' }[this.currentDifficulty] || '楽級';
 
 
 
@@ -19700,7 +19839,7 @@ export const GameStateMethods = {
 
       castles[p.id] = p.castle || `${p.name || p.id}城`;
 
-      provinceTroops[p.id] = 2500;
+      provinceTroops[p.id] = this.getProvinceInitialTroops(Number(p.kokudaka) || 0);
 
     });
 

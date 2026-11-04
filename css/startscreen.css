@@ -1200,15 +1200,61 @@ html.sl-phone #startModal.sl-active .start-game-title {
   text-overflow: clip !important;
 }
 
-/* ① シナリオ：上部を占有するシナリオ説明カード（と「大名を選ぶ」ボタン）は非表示 */
-html.sl-phone .sl-phone-scen-preview { display: none !important; }
+/* ① シナリオ：選択後の操作は一覧下部へまとめる */
+.sl-scen-selection-actions {
+  flex: 0 0 auto;
+  padding: 8px;
+  border-top: 1px solid rgba(212, 175, 55, 0.38);
+  background: linear-gradient(180deg, rgba(36, 24, 15, 0.96), rgba(18, 12, 8, 0.98));
+}
+.sl-scen-selection-actions[hidden] { display: none !important; }
+.sl-scen-selected-name {
+  margin-bottom: 7px;
+  color: #ffe09a;
+  font-size: 14px !important;
+  font-weight: bold;
+  text-align: center;
+}
+.sl-scen-explain-btn,
+.sl-scen-next-btn,
+.sl-scen-back-btn {
+  min-height: 38px;
+  border-radius: 7px;
+  font-family: inherit;
+  font-size: 14px !important;
+  font-weight: bold;
+  cursor: pointer;
+}
+.sl-scen-explain-btn {
+  width: 100%;
+  margin-bottom: 7px;
+  color: #ffe7a8;
+  border: 1px solid rgba(212, 175, 55, 0.68);
+  background: rgba(212, 175, 55, 0.15);
+}
+.sl-scen-choice-actions { display: grid; grid-template-columns: 1fr 1.25fr; gap: 7px; }
+.sl-scen-back-btn { color: #e7ddc8; border: 1px solid #765b3e; background: #2b1d14; }
+.sl-scen-next-btn { color: #fff; border: 1px solid #efc95c; background: linear-gradient(180deg, #b33028, #791710); }
 
-/* ② 大名選択：難易度説明ボックス・大名家の家数ヘッダー・カードの詳細ボタンは非表示、難易度ボタンは上下を圧縮 */
+/* ② 大名選択：難易度説明ボックス・大名家の家数ヘッダーは省略し、難易度ボタンは上下を圧縮 */
 html.sl-phone .sl-diff-desc-bar { display: none !important; }
 html.sl-phone #startModal.sl-active .sl-daimyo > .sl-head { display: none !important; }
-html.sl-phone .sl-card-detail-btn { display: none !important; }
 html.sl-phone #startModal.sl-active .sl-diff { padding: 3px 8px !important; }
 html.sl-phone #startModal.sl-active .sl-diff .diff-option-btn { min-height: 26px !important; padding: 1px 2px !important; line-height: 1.2 !important; }
+
+/* 大名名の右に詳細ボタンを固定し、本文の能力値を押し下げない */
+html.sl-phone #startModal.sl-active .daimyo-card .sl-card-detail-btn {
+  display: inline-flex !important;
+  position: absolute !important;
+  top: 8px;
+  right: 10px;
+  z-index: 1;
+  min-height: 27px;
+}
+html.sl-phone #startModal.sl-active .daimyo-card .daimyo-name,
+html.sl-phone #startModal.sl-active .daimyo-card .daimyo-clan-row {
+  max-width: calc(100% - 62px) !important;
+}
 
 /* ③ 勢力図：シナリオ解説はシナリオ名のみ1行表示し、右の「詳細」ボタンで全文を開閉 */
 .sl-root.sl-m .sl-desc .sl-head { align-items: center; gap: 8px; padding: 4px 8px !important; border-bottom: 0; }
