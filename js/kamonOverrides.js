@@ -8,6 +8,10 @@
   var SAKAI_SYMBOL_ID = 'kamon-sakai-harima';
   var UWAJIMA_DATE_SYMBOL_ID = 'kamon-uwajima-date';
   var ANDO_SYMBOL_ID = 'kamon-ando-northern';
+  var NIWA_SYMBOL_ID = 'kamon-niwa-sujikai';
+  var GOTO_SYMBOL_ID = 'kamon-goto-maruni-hanabishi';
+  var SUWA_SYMBOL_ID = 'kamon-suwa-kajinoha';
+  var SENGOKU_SYMBOL_ID = 'kamon-sengoku-eiraku-tsuho';
   var SYMBOL_MARKUP = `
     <symbol id="kamon-kato-yoshiaki-sagari-fuji" viewBox="0 0 32 32">
       <title>加藤嘉明家・下り藤</title>
@@ -95,6 +99,52 @@
       <path d="M23.9 9.7 C20.3 9.1 16.6 12.2 13.5 18.7 C17.4 18 21.2 15.2 23.9 9.7 Z" fill="#ffffff" stroke="#2f7a78" stroke-width="0.55"/>
       <path d="M9.2 10.6 L18.2 18.1 M22.8 10.6 L13.8 18.1" stroke="#ffd700" stroke-width="0.65" stroke-linecap="round"/>
     </symbol>`;
+  var NIWA_SYMBOL_MARKUP = `
+    <symbol id="kamon-niwa-sujikai" viewBox="0 0 32 32">
+      <title>丹羽家・丹羽直違紋</title>
+      <circle cx="16" cy="16" r="15" fill="#e67e22" stroke="#ffd700" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="11.8" fill="none" stroke="#ffffff" stroke-width="1.1"/>
+      <path d="M8.5 7.8 L11.7 7.8 L23.5 24.2 L20.3 24.2 Z" fill="#ffffff"/>
+      <path d="M20.3 7.8 L23.5 7.8 L11.7 24.2 L8.5 24.2 Z" fill="#ffffff"/>
+    </symbol>`;
+  var GOTO_SYMBOL_MARKUP = `
+    <symbol id="kamon-goto-maruni-hanabishi" viewBox="0 0 32 32">
+      <title>五島家・丸に花菱</title>
+      <circle cx="16" cy="16" r="15" fill="#2874a6" stroke="#ffd700" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="11.7" fill="none" stroke="#ffffff" stroke-width="1.2"/>
+      <g fill="#ffffff" stroke="#2874a6" stroke-width="0.55" stroke-linejoin="round">
+        <path d="M16 8.1 L20.3 12.7 L16 16.1 L11.7 12.7 Z"/>
+        <path d="M23.9 16 L19.3 20.3 L15.9 16 L19.3 11.7 Z"/>
+        <path d="M16 23.9 L11.7 19.3 L16 15.9 L20.3 19.3 Z"/>
+        <path d="M8.1 16 L12.7 11.7 L16.1 16 L12.7 20.3 Z"/>
+      </g>
+      <path d="M16 12.3 L19.7 16 L16 19.7 L12.3 16 Z" fill="#ffd700"/>
+    </symbol>`;
+  var SUWA_SYMBOL_MARKUP = `
+    <symbol id="kamon-suwa-kajinoha" viewBox="0 0 32 32">
+      <title>諏訪家・梶の葉</title>
+      <circle cx="16" cy="16" r="15" fill="#1e8449" stroke="#ffd700" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="11.8" fill="none" stroke="#ffffff" stroke-width="1.1"/>
+      <g fill="#ffffff" stroke="#1e8449" stroke-width="0.55" stroke-linejoin="round">
+        <path d="M16 15.8 C12.8 13.7 11.2 10.5 12.3 7.2 C15.2 7.4 17.5 9.6 16 15.8 Z"/>
+        <path d="M16 15.8 C18.1 12.6 21.4 11 24.7 12.1 C24.5 15 22.2 17.3 16 15.8 Z"/>
+        <path d="M16 15.8 C19.2 17.9 20.8 21.2 19.7 24.6 C16.8 24.3 14.5 22.1 16 15.8 Z"/>
+        <path d="M16 15.8 C13.9 19 10.6 20.6 7.3 19.5 C7.5 16.6 9.8 14.3 16 15.8 Z"/>
+      </g>
+      <circle cx="16" cy="16" r="2.1" fill="#ffd700"/>
+    </symbol>`;
+  var SENGOKU_SYMBOL_MARKUP = `
+    <symbol id="kamon-sengoku-eiraku-tsuho" viewBox="0 0 32 32">
+      <title>仙石家・永楽通宝</title>
+      <circle cx="16" cy="16" r="15" fill="#8e5a2b" stroke="#ffd700" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="11.8" fill="none" stroke="#ffffff" stroke-width="1.1"/>
+      <circle cx="16" cy="16" r="8.3" fill="none" stroke="#ffffff" stroke-width="1.45"/>
+      <rect x="13.25" y="13.25" width="5.5" height="5.5" fill="#8e5a2b" stroke="#ffffff" stroke-width="1.1"/>
+      <g fill="#ffffff" font-family="serif" font-size="4.2" font-weight="700" text-anchor="middle">
+        <text x="16" y="12">永</text><text x="21.4" y="17.5">楽</text>
+        <text x="16" y="23.1">通</text><text x="10.6" y="17.5">寶</text>
+      </g>
+    </symbol>`;
 
   function addToSource() {
     if (!window.KAMONS_SVG_CONTENT) return;
@@ -112,7 +162,7 @@
       var pattern = new RegExp(`(<symbol id="${symbolId}"[\\s\\S]*?<circle\\b[^>]*\\bfill=")[^"]+`);
       window.KAMONS_SVG_CONTENT = window.KAMONS_SVG_CONTENT.replace(pattern, `$1${color}`);
     });
-    [[SYMBOL_ID, SYMBOL_MARKUP], [KUMAMOTO_HOSOKAWA_SYMBOL_ID, KUMAMOTO_HOSOKAWA_SYMBOL_MARKUP], [AKO_RONIN_SYMBOL_ID, AKO_RONIN_SYMBOL_MARKUP], [SAKAI_SYMBOL_ID, SAKAI_SYMBOL_MARKUP], [UWAJIMA_DATE_SYMBOL_ID, UWAJIMA_DATE_SYMBOL_MARKUP], [ANDO_SYMBOL_ID, ANDO_SYMBOL_MARKUP]].forEach(function ([symbolId, markup]) {
+    [[SYMBOL_ID, SYMBOL_MARKUP], [KUMAMOTO_HOSOKAWA_SYMBOL_ID, KUMAMOTO_HOSOKAWA_SYMBOL_MARKUP], [AKO_RONIN_SYMBOL_ID, AKO_RONIN_SYMBOL_MARKUP], [SAKAI_SYMBOL_ID, SAKAI_SYMBOL_MARKUP], [UWAJIMA_DATE_SYMBOL_ID, UWAJIMA_DATE_SYMBOL_MARKUP], [ANDO_SYMBOL_ID, ANDO_SYMBOL_MARKUP], [NIWA_SYMBOL_ID, NIWA_SYMBOL_MARKUP], [GOTO_SYMBOL_ID, GOTO_SYMBOL_MARKUP], [SUWA_SYMBOL_ID, SUWA_SYMBOL_MARKUP], [SENGOKU_SYMBOL_ID, SENGOKU_SYMBOL_MARKUP]].forEach(function ([symbolId, markup]) {
       if (window.KAMONS_SVG_CONTENT.indexOf(`id="${symbolId}"`) === -1) {
         window.KAMONS_SVG_CONTENT = window.KAMONS_SVG_CONTENT.replace('</defs>', `${markup}\n</defs>`);
       }
@@ -138,7 +188,7 @@
     });
     var defs = document.getElementById('mapSvgDefs') || document.querySelector('#kamonsGlobalContainer defs');
     if (!defs) return;
-    [[SYMBOL_ID, SYMBOL_MARKUP], [KUMAMOTO_HOSOKAWA_SYMBOL_ID, KUMAMOTO_HOSOKAWA_SYMBOL_MARKUP], [AKO_RONIN_SYMBOL_ID, AKO_RONIN_SYMBOL_MARKUP], [SAKAI_SYMBOL_ID, SAKAI_SYMBOL_MARKUP], [UWAJIMA_DATE_SYMBOL_ID, UWAJIMA_DATE_SYMBOL_MARKUP], [ANDO_SYMBOL_ID, ANDO_SYMBOL_MARKUP]].forEach(function ([symbolId, markup]) {
+    [[SYMBOL_ID, SYMBOL_MARKUP], [KUMAMOTO_HOSOKAWA_SYMBOL_ID, KUMAMOTO_HOSOKAWA_SYMBOL_MARKUP], [AKO_RONIN_SYMBOL_ID, AKO_RONIN_SYMBOL_MARKUP], [SAKAI_SYMBOL_ID, SAKAI_SYMBOL_MARKUP], [UWAJIMA_DATE_SYMBOL_ID, UWAJIMA_DATE_SYMBOL_MARKUP], [ANDO_SYMBOL_ID, ANDO_SYMBOL_MARKUP], [NIWA_SYMBOL_ID, NIWA_SYMBOL_MARKUP], [GOTO_SYMBOL_ID, GOTO_SYMBOL_MARKUP], [SUWA_SYMBOL_ID, SUWA_SYMBOL_MARKUP], [SENGOKU_SYMBOL_ID, SENGOKU_SYMBOL_MARKUP]].forEach(function ([symbolId, markup]) {
       if (document.getElementById(symbolId)) return;
       var parsed = new DOMParser().parseFromString(`<svg xmlns="http://www.w3.org/2000/svg"><defs>${markup}</defs></svg>`, 'image/svg+xml');
       var symbol = parsed.querySelector('symbol');

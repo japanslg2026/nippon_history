@@ -608,13 +608,13 @@ export const UIManagerMethods = {
 
     const info = {
 
-      relaxed:{ name: '楽級・安泰の世', lines: ['初期金・兵糧を大幅に増量', 'はじめてでも遊びやすい難易度'] },
+      relaxed:{ name: '楽級・安泰の世', lines: ['大名ごとの基準値に金+1,200／兵糧+1,500', 'はじめてでも余裕を持って遊べる難易度'] },
 
-      easy:   { name: '初級・天下泰平', lines: ['初期金・兵糧を増量', '遊びやすい難易度'] },
+      easy:   { name: '初級・天下泰平', lines: ['大名ごとの基準値に金+650／兵糧+850', '遊びやすさを重視した難易度'] },
 
-      normal: { name: '中級・群雄割拠', lines: ['初期資金 金500／米800', '標準バランス', '敵AIの徴兵・進攻速度 1.0倍', '12か国制覇で包囲網が発生'] },
+      normal: { name: '中級・群雄割拠', lines: ['大名ごとの基準値に金+150／兵糧+200', '標準バランス'] },
 
-      hard:   { name: '上級・風雲再起', lines: ['初期金・兵糧が少なめ', '歯ごたえのある難易度'] }
+      hard:   { name: '上級・風雲再起', lines: ['大名ごとの基準値から金-50／兵糧-100', '歯ごたえのある難易度'] }
 
     }[key];
 
@@ -7099,8 +7099,10 @@ export const UIManagerMethods = {
 
     }
 
-    // 自動選択は右パネルの表示だけを更新する。地図上の強調は領国を直接クリックした時だけ行う。
-    this.hideSelectionOutline = !showHighlight;
+    // 自動選択は右パネルの表示だけを更新する。地図上の強調は通常プレイ中に
+    // 領国を直接クリックした時だけ行い、観戦中のクリック要求は必ず無効化する。
+    const canShowHighlight = !!showHighlight && !this.isSpectatorMode;
+    this.hideSelectionOutline = !canShowHighlight;
     this.selectedProvId = provId;
 
     const p = this.provinces.find(x => x.id === provId);
@@ -10088,13 +10090,13 @@ export const UIManagerMethods = {
 
     const diffDescriptions = {
 
-      relaxed: '💡 <strong>【楽級・安泰の世】</strong> 初期金・兵糧を大幅に増量した、ゆったり遊べる難易度です。',
+      relaxed: '💡 <strong>【楽級・安泰の世】</strong> 大名ごとの基準値に金+1,200／兵糧+1,500。ゆったり遊べる難易度です。',
 
-      easy: '💡 <strong>【初級・天下泰平】</strong> 初期金・兵糧を増量した、遊びやすい難易度です。',
+      easy: '💡 <strong>【初級・天下泰平】</strong> 大名ごとの基準値に金+650／兵糧+850。遊びやすさを重視した難易度です。',
 
-      normal: '💡 <strong>【中級・群雄割拠】</strong> 自軍金500/米800 ｜ 敵AI徴兵・進攻速度: 1.0倍 (標準) ｜ 包囲網: 12国制覇で通常発生',
+      normal: '💡 <strong>【中級・群雄割拠】</strong> 大名ごとの基準値に金+150／兵糧+200。標準バランスです。',
 
-      hard: '💡 <strong>【上級・風雲再起】</strong> 初期金・兵糧が少なめの、歯ごたえのある難易度です。'
+      hard: '💡 <strong>【上級・風雲再起】</strong> 大名ごとの基準値から金-50／兵糧-100。歯ごたえのある難易度です。'
 
     };
 

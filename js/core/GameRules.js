@@ -5465,14 +5465,14 @@ if (typeof window !== "undefined") window.HIDEYOSHI_HEIR_ORDER_IDS = HIDEYOSHI_H
 
 export const PROVINCE_NORTH_TO_SOUTH = [
   'ezo',
-  'nishi_tsugaru', 'higashi_tsugaru', 'mutsu', 'ugo', 'rikuchu', 'uzen', 'rikuzen', 'iwashiro', 'iwaki',
+  'nishi_tsugaru', 'higashi_tsugaru', 'mutsu', 'ugo', 'rikuchu', 'uzen', 'rikuzen', 'nihonmatsu', 'iwashiro', 'iwaki',
   'sado', 'echigo', 'noto', 'etchu', 'kaga', 'echizen', 'wakasa',
   'shimotsuke', 'hitachi', 'kozuke', 'shimousa', 'musashi', 'kazusa', 'sagami', 'awa_boshu',
-  'north_shinano', 'south_shinano', 'hida', 'kai', 'mino', 'owari', 'izu', 'suruga', 'mikawa', 'totomi',
-  'tango', 'north_omi', 'south_omi', 'tamba', 'yamashiro', 'iga', 'ise', 'settsu', 'yamato', 'kawachi', 'shima', 'izumi', 'awaji', 'saika_wakayama', 'kii_kichu', 'kinan_kumano',
+  'north_shinano', 'suwa_komoro', 'south_shinano', 'hida', 'kai', 'mino', 'owari', 'izu', 'suruga', 'mikawa', 'totomi',
+  'tango', 'north_omi', 'kuwana', 'south_omi', 'tamba', 'yamashiro', 'iga', 'ise', 'settsu', 'yamato', 'kawachi', 'shima', 'izumi', 'awaji', 'saika_wakayama', 'kii_kichu', 'kinan_kumano',
   'oki', 'inaba', 'tajima', 'hoki', 'izumo', 'mimasaka', 'iwami', 'harima', 'bicchu', 'aki', 'aki_koriyama', 'bizen', 'bingo', 'nagato', 'suo',
   'sanuki', 'awa_shikoku', 'iyo', 'tosa_kochi', 'tosa_nakamura', 'tosa',
-  'tsushima', 'buzen', 'chikuzen', 'chikugo', 'hizen', 'bungo', 'higo_kumamoto', 'higo_hitoyoshi', 'nobeoka', 'osumi', 'hyuga', 'satsuma', 'ryukyu'
+  'tsushima', 'buzen', 'chikuzen', 'chikugo', 'hizen', 'goto', 'bungo', 'higo_kumamoto', 'higo_hitoyoshi', 'nobeoka', 'osumi', 'hyuga', 'satsuma', 'ryukyu'
 ];
 
 // 各国の中心（国府・主城）のおおよその北緯。勢力選択画面を北から並べる鍵（地図SVGは傾いているので y 座標は使わない）;
@@ -5480,16 +5480,16 @@ if (typeof window !== "undefined") window.PROVINCE_NORTH_TO_SOUTH = PROVINCE_NOR
 
 export const PROVINCE_LATITUDE = {
   ezo: 41.43, nishi_tsugaru: 40.60, higashi_tsugaru: 40.70, mutsu: 40.40, rikuchu: 39.70, ugo: 39.72, rikuzen: 38.27, uzen: 38.25,
-  iwashiro: 37.49, iwaki: 37.05, sado: 38.02, echigo: 37.14, noto: 37.05, etchu: 36.70, kaga: 36.56,
+  nihonmatsu: 37.45, iwashiro: 37.49, iwaki: 37.05, sado: 38.02, echigo: 37.14, noto: 37.05, etchu: 36.70, kaga: 36.56,
   echizen: 36.06, wakasa: 35.50, hitachi: 36.37, shimotsuke: 36.56, kozuke: 36.39, musashi: 35.75,
   shimousa: 35.72, kazusa: 35.40, awa_boshu: 35.00, sagami: 35.25, izu: 34.97, suruga: 34.98, kai: 35.66,
-  north_shinano: 36.64, south_shinano: 36.00, hida: 36.14, mino: 35.43, totomi: 34.71, mikawa: 34.95,
-  owari: 35.18, ise: 34.73, shima: 34.48, iga: 34.77, north_omi: 35.38, south_omi: 35.12, yamashiro: 35.01,
+  north_shinano: 36.64, suwa_komoro: 36.10, south_shinano: 36.00, hida: 36.14, mino: 35.43, totomi: 34.71, mikawa: 34.95,
+  owari: 35.18, kuwana: 35.07, ise: 34.73, shima: 34.48, iga: 34.77, north_omi: 35.38, south_omi: 35.12, yamashiro: 35.01,
   yamato: 34.68, saika_wakayama: 34.23, kii_kichu: 34.05, kinan_kumano: 33.72, kii: 34.23, kawachi: 34.50, izumi: 34.46, settsu: 34.69, tamba: 35.05, tango: 35.53,
   tajima: 35.46, harima: 34.83, inaba: 35.50, hoki: 35.43, izumo: 35.35, iwami: 34.80, mimasaka: 35.06,
   bizen: 34.66, bicchu: 34.75, bingo: 34.49, aki: 34.45, aki_koriyama: 34.65, suo: 34.18, nagato: 34.30, oki: 36.20,
   sanuki: 34.34, awa_shikoku: 34.07, iyo: 33.84, tosa_kochi: 33.56, tosa_nakamura: 32.99, tosa: 33.56, awaji: 34.35, tsushima: 34.20,
-  buzen: 33.75, chikuzen: 33.59, chikugo: 33.30, hizen: 33.25, bungo: 33.24, higo_kumamoto: 32.80, higo_hitoyoshi: 32.22,
+  buzen: 33.75, chikuzen: 33.59, chikugo: 33.30, hizen: 33.25, goto: 32.80, bungo: 33.24, higo_kumamoto: 32.80, higo_hitoyoshi: 32.22,
   hyuga: 32.00, nobeoka: 32.58, satsuma: 31.60, osumi: 31.40, ryukyu: 26.21
 };
 

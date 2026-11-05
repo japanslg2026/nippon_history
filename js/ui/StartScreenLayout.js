@@ -87,10 +87,10 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
   const ERA_SHORT = { all: 'すべて', ancient: '古代・平安', genpei_kamakura: '源平・鎌倉', muromachi: '室町', medieval: '中世', sengoku_early: '黎明', sengoku_climax: '戦国乱世', unification: '天下統一', edo_bakumatsu: '泰平・幕末', virtual: '仮想' };
   const DIFF_NAME_MAP = { relaxed: '楽級', easy: '初級', normal: '中級', hard: '上級' };
   const DIFF_INFO_MAP = {
-    relaxed: '【楽級】金1000/米1500・自軍内政+35%・敵AIは慎重・包囲網なし',
-    easy: '【初級】金800/米1200・自軍内政+25%・敵AI穏健・包囲網極小',
-    normal: '【中級】金500/米800・標準バランス・12カ国制覇で包囲網発生',
-    hard: '【上級】金350/米500・敵AI徴兵1.3倍・好戦度+20%・10カ国で包囲網'
+    relaxed: '【楽級】基準値に金+1,200／兵糧+1,500・ゆったり遊べる難易度',
+    easy: '【初級】基準値に金+650／兵糧+850・遊びやすい難易度',
+    normal: '【中級】基準値に金+150／兵糧+200・標準バランス',
+    hard: '【上級】基準値から金-50／兵糧-100・歯ごたえのある難易度'
   };
 
   const FAMOUS_CLANS = new Set([

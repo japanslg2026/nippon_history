@@ -3674,7 +3674,7 @@
       <div class="modal-body" id="aboutModalBody" style="line-height: 1.75; font-size: 12pt;"></div>
     </div>
   </div>
-  <script src="js/data/map_borders.js?v=20261104_shikoku_borders"></script>
+  <script src="js/data/map_borders.js?v=20261105_ezo_kamon_down20"></script>
 
   <script>
     (function () {
@@ -4049,16 +4049,16 @@
           if (typeof window.loadKamonSymbols === 'function') {
             window.loadKamonSymbols();
           }
-          await loadExternalScript(['js/kamonOverrides.js?v=20261104_hioogi_uwajima_sasa']);
+          await loadExternalScript(['js/kamonOverrides.js?v=20261105_niwa_orange']);
 
           statusEl.textContent = '歴史配置ルールとシナリオ・領国・大名・武将データを読み込み中…';
           var rulesPromise = loadAffiliationRulesSafe();
 
           var results = await Promise.all([
-            fetchJsonSmart('scenarios.json'),
-            fetchJsonSmart('provinces.json?v=20261104_oshu_kamon_up'),
-            fetchJsonSmart('clans.json?v=20261104_ando_teal'),
-            fetchJsonSmart('officers.json'),
+            fetchJsonSmart('scenarios.json?v=20261105_niwa_orange'),
+            fetchJsonSmart('provinces.json?v=20261105_niwa_orange'),
+            fetchJsonSmart('clans.json?v=20261105_niwa_orange'),
+            fetchJsonSmart('officers.json?v=20261105_niwa_orange'),
             fetchJsonSmart('governors.json').catch(function () { return {}; }),
             fetchJsonSmart('events.json').catch(function () { return {}; }),
             rulesPromise
@@ -4574,6 +4574,29 @@
         return document.getElementById('kamon-default') ? 'kamon-default' : '';
       }
 
+      // 家紋の背景も、その時点の領土色と一致させる必要がある大名家。
+      var TERRITORY_COLOR_KAMON_CLANS = new Set(['niwa', 'goto', 'suwa', 'sengoku']);
+
+      function getMapKamonSymbolId(clanId, provinceId, fillColor) {
+        var baseId = getClanKamonSymbolId(clanId);
+        if (!baseId || !provinceId || !TERRITORY_COLOR_KAMON_CLANS.has(clanId)) return baseId;
+
+        var source = document.getElementById(baseId);
+        if (!source || !source.parentNode) return baseId;
+        var mapId = baseId + '-map-' + provinceId;
+        var mapSymbol = document.getElementById(mapId);
+        if (!mapSymbol) {
+          mapSymbol = source.cloneNode(true);
+          mapSymbol.id = mapId;
+          source.parentNode.appendChild(mapSymbol);
+        }
+        var backdrop = Array.from(mapSymbol.children).find(function (el) {
+          return el.tagName && el.tagName.toLowerCase() === 'circle' && Number(el.getAttribute('r')) >= 14;
+        });
+        if (backdrop) backdrop.setAttribute('fill', fillColor);
+        return mapId;
+      }
+
       function renderKamonSvgHtml(clanId, size) {
         var sz = size || 38;
         var symId = getClanKamonSymbolId(clanId);
@@ -4590,9 +4613,43 @@
       // 四国だけを既存の全国地図とは別に時計回りへ4度回転する。
       var SHIKOKU_PROVINCE_IDS = new Set(['iyo', 'oshu', 'uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_nakamura']);
       var SHIKOKU_MAP_TRANSFORM = 'rotate(4 280 450)';
+      // 地図枠と列島全体の傾きは変えず、五島以外だけを右へ寄せる。
+      var NON_GOTO_MAP_TRANSFORM = 'translate(16 0)';
 
       function isShikokuProvince(provinceId) {
         return SHIKOKU_PROVINCE_IDS.has(provinceId);
+      }
+
+      function getProvinceMapOffset(provinceId) {
+        var p = State.provById && State.provById.get(provinceId);
+        if (!p) {
+          p = State.provinces.find(function (item) { return item.id === provinceId; });
+        }
+        var x = Number(p && p.mapOffsetX);
+        var y = Number(p && p.mapOffsetY);
+        return {
+          x: Number.isFinite(x) ? x : 0,
+          y: Number.isFinite(y) ? y : 0
+        };
+      }
+
+      function getProvinceMapTransform(provinceId) {
+        var transforms = [];
+        if (provinceId !== 'goto') transforms.push(NON_GOTO_MAP_TRANSFORM);
+        var offset = getProvinceMapOffset(provinceId);
+        if (offset.x || offset.y) transforms.push('translate(' + offset.x + ' ' + offset.y + ')');
+        if (isShikokuProvince(provinceId)) transforms.push(SHIKOKU_MAP_TRANSFORM);
+        return transforms.join(' ');
+      }
+
+      function getBorderMapTransform(provinceId1, provinceId2) {
+        // 五島には陸上国境がないが、将来追加された場合も島影と同じ補正を受ける。
+        if (provinceId1 === 'goto' || provinceId2 === 'goto') return getProvinceMapTransform('goto');
+        var transforms = [NON_GOTO_MAP_TRANSFORM];
+        if (isShikokuProvince(provinceId1) && isShikokuProvince(provinceId2)) {
+          transforms.push(SHIKOKU_MAP_TRANSFORM);
+        }
+        return transforms.join(' ');
       }
 
       function buildSvgMap() {
@@ -4629,7 +4686,8 @@
               cp.setAttribute('stroke-width', '0.85');
               cp.setAttribute('stroke-linecap', 'round');
               cp.setAttribute('stroke-linejoin', 'round');
-              if (isShikokuProvince(c.p)) cp.setAttribute('transform', SHIKOKU_MAP_TRANSFORM);
+              var coastTransform = getProvinceMapTransform(c.p);
+              if (coastTransform) cp.setAttribute('transform', coastTransform);
               bordersGroup.appendChild(cp);
               State.coastElements.push({ el: cp, p: c.p });
             });
@@ -4658,7 +4716,8 @@
               bp.setAttribute('stroke-width', '0.8');
               bp.setAttribute('stroke-linecap', 'round');
               bp.setAttribute('stroke-linejoin', 'round');
-              if (isShikokuProvince(b.p1) && isShikokuProvince(b.p2)) bp.setAttribute('transform', SHIKOKU_MAP_TRANSFORM);
+              var borderTransform = getBorderMapTransform(b.p1, b.p2);
+              if (borderTransform) bp.setAttribute('transform', borderTransform);
               bordersGroup.appendChild(bp);
               State.borderElements.push({ el: bp, p1: b.p1, p2: b.p2 });
             });
@@ -4672,19 +4731,21 @@
           path.setAttribute('class', 'prov-path');
           path.setAttribute('data-prov-id', p.id);
           path.setAttribute('d', p.svgPath || p.d || '');
-          if (isShikokuProvince(p.id)) path.setAttribute('transform', SHIKOKU_MAP_TRANSFORM);
+          var provinceTransform = getProvinceMapTransform(p.id);
+          if (provinceTransform) path.setAttribute('transform', provinceTransform);
           provGroup.appendChild(path);
 
           if (p.cx !== undefined && p.cy !== undefined) {
             var isMobile = window.innerWidth <= 1100;
             var badgeSize = isMobile ? 20 : 16; /* PC画面では家紋を少しだけ小さく表示 */
-            var kx = p.kamonX !== undefined ? p.kamonX : p.cx;
+            var kamonBaseX = p.kamonX !== undefined ? p.kamonX : p.cx;
+            var kx = kamonBaseX + (Number.isFinite(p.kamonOffsetX) ? p.kamonOffsetX : 0);
             var ky = p.kamonY !== undefined ? p.kamonY : p.cy;
 
             var g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
             g.setAttribute('id', 'kamon-group-' + p.id);
             g.setAttribute('class', 'kamon-badge-group');
-            if (isShikokuProvince(p.id)) g.setAttribute('transform', SHIKOKU_MAP_TRANSFORM);
+            if (provinceTransform) g.setAttribute('transform', provinceTransform);
             g.style.display = 'none';
 
             var use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
@@ -4701,7 +4762,7 @@
             txt.setAttribute('class', 'prov-label-text');
             txt.setAttribute('x', kx);
             txt.setAttribute('y', ky + badgeSize / 2 + 7);
-            if (isShikokuProvince(p.id)) txt.setAttribute('transform', SHIKOKU_MAP_TRANSFORM);
+            if (provinceTransform) txt.setAttribute('transform', provinceTransform);
             txt.textContent = p.name;
             labelGroup.appendChild(txt);
           }
@@ -4903,7 +4964,8 @@
         for (var i = 0; i < State.provinces.length; i++) {
           var p = State.provinces[i];
           if (p.cx !== undefined && p.cy !== undefined) {
-            var kx = p.kamonX !== undefined ? p.kamonX : p.cx;
+            var kamonBaseX = p.kamonX !== undefined ? p.kamonX : p.cx;
+            var kx = kamonBaseX + (Number.isFinite(p.kamonOffsetX) ? p.kamonOffsetX : 0);
             var ky = p.kamonY !== undefined ? p.kamonY : p.cy;
             var use = document.getElementById('kamon-use-' + p.id);
             if (use) {
@@ -5010,7 +5072,7 @@
 
           // 本国のみに家紋を表示
           if (kamonG && kamonUse) {
-            var symId = getClanKamonSymbolId(ownerId);
+            var symId = getMapKamonSymbolId(ownerId, pid, color);
             if (ownerId && symId && isCapital) {
               kamonUse.setAttribute('href', '#' + symId);
               kamonG.style.display = '';

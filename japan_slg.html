@@ -19,7 +19,7 @@
   <!-- 起動高速化: ゲームデータJSONをHTML解析と並行して先読み -->
   <link rel="preload" href="data/scenarios.json?v=20261104_shikoku_fix" as="fetch" crossorigin="anonymous">
   <link rel="preload" href="data/clans.json?v=20261104_ando_teal" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/provinces.json?v=20261104_oshu_kamon_up" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/provinces.json?v=20261105_niwa_orange" as="fetch" crossorigin="anonymous">
   <link rel="preload" href="data/officers.json?v=20261104_shikoku_fix" as="fetch" crossorigin="anonymous">
   <link rel="preload" href="data/governors.json?v=20261104_shikoku_fix" as="fetch" crossorigin="anonymous">
   <link rel="preload" href="data/events.json?v=20261104_shikoku_fix" as="fetch" crossorigin="anonymous">
@@ -206,9 +206,9 @@
     </div>
   </div>
 
-  <!-- メイン画面：精緻な50か国SVGマップ ＋ 指揮卓 (24インチ1画面収容) -->
+  <!-- メイン画面：精緻な全国SVGマップ ＋ 指揮卓 (24インチ1画面収容) -->
   <div class="main-layout">
-    <!-- 50か国精緻SVG日本地図 (国名・兵力テキスト非表示、家紋バッジのみ配置) -->
+    <!-- 全国精緻SVG日本地図 (国名・兵力テキスト非表示、家紋バッジのみ配置) -->
     <div class="map-wrapper" id="mapWrapper">
       <div class="map-controls-group">
         <button class="map-ctrl-btn" id="mapZoomInBtn" title="拡大 (ホイール上)">＋</button>
@@ -896,17 +896,17 @@
     <div class="diff-selector-wrapper" style="background:rgba(0,0,0,0.4); border:1px solid #553e2a; border-radius:4px; padding:4px 12px; margin: 6px 0 6px 0; display:flex; align-items:center; gap:12px;">
       <span class="diff-selector-label" style="font-size: 12pt; font-weight:bold; color:var(--gold-bright); flex-shrink:0;">⚙️ 難易度:</span>
       <div class="diff-selector-group" style="flex:1; display:grid; grid-template-columns:repeat(4, 1fr); gap:6px;">
-        <button class="diff-option-btn selected" data-diff="relaxed" style="padding:2px 8px; font-size:12pt;" title="【楽級】初期金・兵糧を大幅に増量した、ゆったり遊べる難易度です">
-          <span class="diff-btn-name">【楽級】</span><span class="diff-btn-sub">安泰の世 <span style="color:#aaa; font-size:12pt;">(資源増量)</span></span>
+        <button class="diff-option-btn selected" data-diff="relaxed" style="padding:2px 8px; font-size:12pt;" title="【楽級】大名ごとの基準値に金1,200・兵糧1,500を追加した、ゆったり遊べる難易度です">
+          <span class="diff-btn-name">【楽級】</span><span class="diff-btn-sub">安泰の世 <span style="color:#aaa; font-size:12pt;">(金+1200/米+1500)</span></span>
         </button>
-        <button class="diff-option-btn" data-diff="easy" style="padding:2px 8px; font-size:12pt;" title="【初級：天下泰平】初期金・兵糧を増量した、遊びやすい難易度です">
-          <span class="diff-btn-name">【初級】</span><span class="diff-btn-sub">天下泰平 <span style="color:#aaa; font-size:12pt;">(金800/米1200)</span></span>
+        <button class="diff-option-btn" data-diff="easy" style="padding:2px 8px; font-size:12pt;" title="【初級：天下泰平】大名ごとの基準値に金650・兵糧850を追加した、遊びやすい難易度です">
+          <span class="diff-btn-name">【初級】</span><span class="diff-btn-sub">天下泰平 <span style="color:#aaa; font-size:12pt;">(金+650/米+850)</span></span>
         </button>
         <button class="diff-option-btn" data-diff="normal" style="padding:2px 8px; font-size:12pt;" title="【中級：群雄割拠】標準バランスの難易度です">
-          <span class="diff-btn-name">【中級】</span><span class="diff-btn-sub">群雄割拠 <span style="color:#aaa; font-size:12pt;">(金500/米800)</span></span>
+          <span class="diff-btn-name">【中級】</span><span class="diff-btn-sub">群雄割拠 <span style="color:#aaa; font-size:12pt;">(金+150/米+200)</span></span>
         </button>
         <button class="diff-option-btn" data-diff="hard" style="padding:2px 8px; font-size:12pt;" title="【上級：風雲再起】初期金・兵糧が少ない難易度です">
-          <span class="diff-btn-name">【上級】</span><span class="diff-btn-sub">風雲再起 <span style="color:#aaa; font-size:12pt;">(金350/米500)</span></span>
+          <span class="diff-btn-name">【上級】</span><span class="diff-btn-sub">風雲再起 <span style="color:#aaa; font-size:12pt;">(金-50/米-100)</span></span>
         </button>
       </div>
     </div>
@@ -1880,17 +1880,17 @@
 
 
   <!-- モジュール化されたJavaScript群 (順序保証ロード) -->
-  <!-- 1. 全149大名家・全シナリオ・全77領国データベース -->
+  <!-- 1. 全大名家・全シナリオ・全106領国データベース -->
   <script defer src="assets/kamons.js?v=20261104_kato_yoshiaki_fuji"></script>
-  <script defer src="js/kamonOverrides.js?v=20261104_hioogi_uwajima_sasa"></script>
-  <script defer src="js/data/map_borders.js?v=20261104_shikoku_borders"></script>
+  <script defer src="js/kamonOverrides.js?v=20261105_niwa_orange"></script>
+  <script defer src="js/data/map_borders.js?v=20261105_niwa_orange"></script>
   
   <!-- 2. 菅野よう子風 洗練和風交響BGMエンジン (全15曲) -->
   <script defer src="js/bgm.js?v=20261101_mobfix3"></script>
   <script defer src="js/MobileAudioKeepAlive.js?v=20261101_mobfix3"></script>
 
   <!-- 3. 戦国天下統一伝 ゲームエンジン本体 -->
-  <script type="module" src="js/app.js?v=20261104_gray_clan_borders"></script>
+  <script type="module" src="js/app.js?v=20261105_niwa_orange"></script>
   <script type="module" src="js/ui/Encyclopedia.js?v=20261025_d74"></script>
   <script defer src="js/ui/StartScreenLayout.js?v=20261104_mobileflow"></script>
   <script defer src="js/ui/TitleBgm.js?v=20261101_mobfix3"></script>

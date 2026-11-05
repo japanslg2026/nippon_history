@@ -1482,6 +1482,7 @@
         "1333": "小笠原貞宗",
         "1336": "小笠原貞宗",
         "1350": "小笠原政長",
+        "1359": "諏訪頼継",
         "1391": "小笠原長基",
         "1400": "小笠原長秀",
         "1438": "小笠原政康",
@@ -1492,7 +1493,7 @@
         "1531": "小笠原長時",
         "1538": "小笠原長時",
         "1546": "小笠原長時",
-        "1614": "小笠原忠真",
+        "1614": "小笠原秀政",
         "1637": "小笠原忠真",
         "1651": "小笠原忠真",
         "1868": "小笠原忠忱",
@@ -2118,9 +2119,9 @@
     "suwa": {
       "family": "諏訪家",
       "color": "#1e8449",
-      "kamon": "kamon-suwa",
+      "kamon": "kamon-suwa-kajinoha",
       "capital_pref": [
-        "nagano_s"
+        "suwa_komoro"
       ],
       "tactic": "諏訪明神の神託",
       "tacticDesc": "軍神諏訪明神の加護を受け、全兵士の戦闘意志と士気が不滅となる。",
@@ -2129,11 +2130,13 @@
         "1180": "諏訪盛重",
         "1331": "諏訪頼重",
         "1336": "諏訪頼重",
+        "1391": "諏訪直頼",
         "1400": "諏訪頼満",
         "1438": "諏訪持忠",
         "1467": "諏訪信満",
-        "1493": "諏訪頼満",
-        "1495": "諏訪頼満",
+        "1493": "諏訪頼隆",
+        "1495": "諏訪頼隆",
+        "1538": "諏訪頼忠",
         "1542": "諏訪頼重",
         "1637": "諏訪頼水",
         "default": "諏訪頼重"
@@ -2872,7 +2875,7 @@
       "color": "#5d6d7e",
       "kamon": "kamon-kuwana",
       "capital_pref": [
-        "mie"
+        "kuwana"
       ],
       "tactic": "精強桑名隊",
       "tacticDesc": "京都所司代を務めた精強な桑名藩兵が勇猛果敢に奮戦する。",
@@ -5624,6 +5627,124 @@
         "1866": "伊達宗城",
         "default": "伊達秀宗"
       }
+    },
+    "goto": {
+      "family": "五島家",
+      "color": "#2874a6",
+      "kamon": "kamon-goto-maruni-hanabishi",
+      "capital_pref": [
+        "goto"
+      ],
+      "tactic": "西海水軍",
+      "tacticDesc": "島嶼航路を熟知する水軍が海上補給と迎撃で優位に立つ。",
+      "desc": "五島列島を本拠とし、西海の海上交通と島嶼防衛を担った宇久・五島氏。",
+      "leaders": {
+        "1180": "五島盛安",
+        "1531": "五島盛定",
+        "1560": "五島純尭",
+        "1600": "五島純玄",
+        "1789": "五島盛運",
+        "1866": "五島盛成",
+        "default": "五島盛安"
+      }
+    },
+    "sengoku": {
+      "family": "仙石家",
+      "color": "#8e5a2b",
+      "kamon": "kamon-sengoku-eiraku-tsuho",
+      "capital_pref": [
+        "suwa_komoro"
+      ],
+      "tactic": "小諸城下統治",
+      "tacticDesc": "城下町の兵站整備で内政と防衛を強化する。",
+      "desc": "小諸を治めた仙石氏。信濃東部の城下経営を担った大名家。",
+      "leaders": {
+        "1590": "仙石秀久",
+        "1592": "仙石秀久",
+        "1614": "仙石忠政",
+        "1637": "仙石政俊",
+        "1651": "仙石政俊",
+        "1789": "仙石久行",
+        "1866": "仙石政固",
+        "default": "仙石秀久"
+      }
+    },
+    "nihonmatsu_hatakeyama": {
+      "family": "二本松畠山家",
+      "color": "#7d6608",
+      "kamon": "kamon-hatakeyama",
+      "capital_pref": [
+        "nihonmatsu"
+      ],
+      "tactic": "奥州街道防衛",
+      "tacticDesc": "奥州街道の要害を生かし、防衛時の士気と守備を高める。",
+      "desc": "陸奥二本松を本拠とした畠山氏の一流。奥州街道の要衝・二本松城を守り、戦国期には伊達氏らと対峙した。",
+      "leaders": {
+        "1350": "二本松国詮",
+        "1438": "二本松持泰",
+        "1457": "二本松持泰",
+        "1521": "二本松義国",
+        "1555": "二本松義継",
+        "1570": "二本松義国",
+        "1573": "二本松義国",
+        "1576": "二本松義綱",
+        "default": "二本松持泰"
+      }
+    },
+    "niwa": {
+      "family": "丹羽家",
+      "color": "#e67e22",
+      "kamon": "kamon-niwa-sujikai",
+      "capital_pref": [
+        "nihonmatsu"
+      ],
+      "tactic": "奥州街道防衛",
+      "tacticDesc": "奥州街道の要害を生かし、防衛時の士気と守備を高める。",
+      "desc": "丹羽長秀を祖とし、江戸時代に二本松藩十万七百石を治めた大名家。",
+      "leaders": {
+        "1614": "丹羽長重",
+        "1637": "丹羽長重",
+        "1651": "丹羽光重",
+        "1702": "丹羽秀延",
+        "1721": "丹羽秀延",
+        "1789": "丹羽長貴",
+        "1837": "丹羽長富",
+        "1853": "丹羽長国",
+        "1860": "丹羽長国",
+        "1866": "丹羽長国",
+        "1868": "丹羽長国",
+        "default": "丹羽光重"
+      }
+    },
+    "adachi": {
+      "family": "安達家",
+      "color": "#6c757d",
+      "kamon": "kamon-default",
+      "capital_pref": [
+        "nihonmatsu"
+      ],
+      "tactic": "奥州御家人",
+      "tacticDesc": "陸奥の在地支配と鎌倉幕府との結び付きを生かす。",
+      "desc": "陸奥安達郡を領した鎌倉御家人・安達氏。",
+      "leaders": {
+        "1210": "安達義景",
+        "default": "安達義景"
+      }
+    },
+    "hineno": {
+      "family": "日根野家",
+      "color": "#884c21",
+      "kamon": "kamon-default",
+      "capital_pref": [
+        "suwa_komoro"
+      ],
+      "tactic": "高島築城",
+      "tacticDesc": "諏訪湖畔の城郭整備で防衛を固める。",
+      "desc": "豊臣政権下で信濃諏訪を治めた日根野氏。",
+      "leaders": {
+        "1590": "日根野高吉",
+        "default": "日根野高吉"
+      }
     }
   },
   "abilities": {
@@ -7218,7 +7339,7 @@
     "yamanouchi": "kozuke",
     "jinbo": "etchu",
     "kiso": "south_shinano",
-    "suwa": "south_shinano",
+    "suwa": "suwa_komoro",
     "murakami": "north_shinano",
     "ogasawara": "south_shinano",
     "ichijo": "tosa_nakamura",
@@ -7274,7 +7395,7 @@
     "mito": "hitachi",
     "aizu": "iwashiro",
     "matsue": "izumo",
-    "kuwana": "ise",
+    "kuwana": "kuwana",
     "fukui_matsudaira": "echizen",
     "tachibana": "chikugo",
     "nakagawa": "bungo",
@@ -7344,6 +7465,12 @@
     "murakami_noshima": "noshima",
     "saionji_iyo": "uwajima",
     "iyo_utsunomiya": "oshu",
-    "uwajima_date": "uwajima"
+    "uwajima_date": "uwajima",
+    "goto": "goto",
+    "sengoku": "suwa_komoro",
+    "nihonmatsu_hatakeyama": "nihonmatsu",
+    "niwa": "nihonmatsu",
+    "adachi": "nihonmatsu",
+    "hineno": "suwa_komoro"
   }
 }

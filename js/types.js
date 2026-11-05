@@ -66,6 +66,10 @@
  * @property {boolean} [isCapital] - 本拠地（首都）フラグ
  * @property {number} [cx] - SVG地図X座標
  * @property {number} [cy] - SVG地図Y座標
+ * @property {number} [kamonX] - 家紋中心のSVG地図X座標
+ * @property {number} [kamonY] - 家紋中心のSVG地図Y座標
+ * @property {number} [mapOffsetX] - 領国の地図表示をまとめて補正するX座標
+ * @property {number} [mapOffsetY] - 領国の地図表示をまとめて補正するY座標
  * @property {string} [d] - SVGパス定義データ
  */
 

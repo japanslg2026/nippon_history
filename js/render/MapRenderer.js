@@ -10,7 +10,9 @@
 var SCENARIOS = (typeof window !== 'undefined' && (window.SCENARIOS || window.SCENARIOS_DATA)) || [];
 const SHIKOKU_PROVINCE_IDS = new Set(['iyo', 'oshu', 'uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_nakamura']);
 const SHIKOKU_MAP_TRANSFORM = 'rotate(4 280 450)';
-const TERRITORY_COLOR_KAMON_CLANS = new Set(['saionji_iyo', 'kato', 'murakami_noshima', 'akita', 'gamo', 'gamou', 'todo', 'tosa', 'clan_8849', 'kumamoto_hosokawa', 'ako_ronin', 'sakai', 'fukui_matsudaira', 'okayama', 'tottori', 'matsue', 'uwajima_date', 'makino', 'kuwana', 'ando']);
+// 地図枠と列島全体の傾きは変えず、五島以外だけを右へ寄せる。
+const NON_GOTO_MAP_TRANSFORM = 'translate(16 0)';
+const TERRITORY_COLOR_KAMON_CLANS = new Set(['saionji_iyo', 'kato', 'murakami_noshima', 'akita', 'gamo', 'gamou', 'todo', 'tosa', 'clan_8849', 'kumamoto_hosokawa', 'ako_ronin', 'sakai', 'fukui_matsudaira', 'okayama', 'tottori', 'matsue', 'uwajima_date', 'makino', 'kuwana', 'ando', 'niwa', 'goto', 'suwa', 'sengoku']);
 
 export class MapRenderer {
   constructor(game) {
@@ -21,6 +23,35 @@ export class MapRenderer {
 export const MapRendererMethods = {
   isShikokuProvince(provinceId) {
     return SHIKOKU_PROVINCE_IDS.has(provinceId);
+  },
+
+  getProvinceMapOffset(provinceId) {
+    const province = (this.provinces || []).find(p => p.id === provinceId);
+    const x = Number(province?.mapOffsetX);
+    const y = Number(province?.mapOffsetY);
+    return {
+      x: Number.isFinite(x) ? x : 0,
+      y: Number.isFinite(y) ? y : 0
+    };
+  },
+
+  getProvinceMapTransform(provinceId) {
+    const transforms = [];
+    if (provinceId !== 'goto') transforms.push(NON_GOTO_MAP_TRANSFORM);
+    const offset = this.getProvinceMapOffset(provinceId);
+    if (offset.x || offset.y) transforms.push(`translate(${offset.x} ${offset.y})`);
+    if (this.isShikokuProvince(provinceId)) transforms.push(SHIKOKU_MAP_TRANSFORM);
+    return transforms.join(' ');
+  },
+
+  getBorderMapTransform(provinceId1, provinceId2) {
+    // 五島には陸上国境がないが、将来追加された場合も島影と同じ補正を受ける。
+    if (provinceId1 === 'goto' || provinceId2 === 'goto') return this.getProvinceMapTransform('goto');
+    const transforms = [NON_GOTO_MAP_TRANSFORM];
+    if (this.isShikokuProvince(provinceId1) && this.isShikokuProvince(provinceId2)) {
+      transforms.push(SHIKOKU_MAP_TRANSFORM);
+    }
+    return transforms.join(' ');
   },
 
   /** 領土色が変わる家紋は、地図用の個別シンボルにして外枠の背景色も追随させる。 */
@@ -52,6 +83,7 @@ export const MapRendererMethods = {
     if (!o || !path) return;
     if (this.isSpectatorMode) {
       o.style.display = 'none';
+      this._hoverPathId = null;
       return;
     }
     if (this.selectedProvId && !this.hideSelectionOutline && !this.isSpectatorMode && path.id === `path-${this.selectedProvId}`) {
@@ -70,6 +102,36 @@ export const MapRendererMethods = {
     if (path && this._hoverPathId && this._hoverPathId !== path.id) return;
     o.style.display = 'none';
     this._hoverPathId = null;
+  },
+
+  /**
+   * 選択中の領国データは右側の詳細パネルにも使うため残しつつ、
+   * 地図上だけの選択・ホバー演出を確実に解除する。
+   * 観戦中は古い DOM 状態やキャッシュが残っていても呼び出せるフェイルセーフ。
+   */
+  clearMapHighlightVisuals() {
+    this.hideSelectionOutline = true;
+    this._hoverPathId = null;
+
+    if (typeof document === 'undefined') return;
+
+    const hoverOutline = this._hoverOutline || document.getElementById('provHoverOutline');
+    if (hoverOutline) hoverOutline.style.display = 'none';
+
+    const selectedOutline = this._selectedOutline || document.getElementById('provSelectedOutline');
+    if (selectedOutline) selectedOutline.style.display = 'none';
+
+    // 現在の選択パスに残るクラス・インライン装飾を除去する。
+    // それ以外の状態（selectedProvId）は詳細パネル用に保持する。
+    document.querySelectorAll('#sengokuMapSvg .prov-path.selected').forEach(path => {
+      path.classList.remove('selected');
+      path.style.stroke = 'none';
+      path.style.strokeWidth = '';
+      path.style.strokeLinejoin = '';
+      path.style.strokeLinecap = '';
+      path.style.paintOrder = '';
+      path.style.filter = 'none';
+    });
   },
 
   injectModernMapStyle() {
@@ -121,6 +183,18 @@ export const MapRendererMethods = {
         stroke-linecap: round;
         paint-order: stroke fill;
         filter: brightness(1.15) !important;
+      }
+      /* 観戦中は古い選択状態や :hover による見かけ上のハイライトも表示しない。 */
+      #sengokuMapSvg.map-spectator-mode .prov-path:hover,
+      #sengokuMapSvg.map-spectator-mode .prov-path.selected {
+        fill-opacity: 0.88 !important;
+        stroke: none !important;
+        stroke-width: 0 !important;
+        filter: none !important;
+      }
+      #sengokuMapSvg.map-spectator-mode #provSelectedOutline,
+      #sengokuMapSvg.map-spectator-mode #provHoverOutline {
+        display: none !important;
       }
       #mapRoadsGroup path, #mapRoadsGroup line { vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-width: 1px; }
     `;
@@ -219,7 +293,8 @@ export const MapRendererMethods = {
           cp.setAttribute('stroke-width', '0.85');
           cp.setAttribute('stroke-linecap', 'round');
           cp.setAttribute('stroke-linejoin', 'round');
-          if (this.isShikokuProvince(c.p)) cp.setAttribute('transform', SHIKOKU_MAP_TRANSFORM);
+          const coastTransform = this.getProvinceMapTransform(c.p);
+          if (coastTransform) cp.setAttribute('transform', coastTransform);
           bordersGroup.appendChild(cp);
           this._coastElements.push({ el: cp, p: c.p });
         });
@@ -248,7 +323,8 @@ export const MapRendererMethods = {
           bp.setAttribute('stroke-width', '0.8');
           bp.setAttribute('stroke-linecap', 'round');
           bp.setAttribute('stroke-linejoin', 'round');
-          if (this.isShikokuProvince(b.p1) && this.isShikokuProvince(b.p2)) bp.setAttribute('transform', SHIKOKU_MAP_TRANSFORM);
+          const borderTransform = this.getBorderMapTransform(b.p1, b.p2);
+          if (borderTransform) bp.setAttribute('transform', borderTransform);
           bordersGroup.appendChild(bp);
           this._borderElements.push({ el: bp, p1: b.p1, p2: b.p2 });
         });
@@ -303,7 +379,11 @@ export const MapRendererMethods = {
     }
     this._selectedOutline = selectedLayer;
 
-    if (roadsGroup) roadsGroup.innerHTML = '';
+    if (roadsGroup) {
+      roadsGroup.innerHTML = '';
+      // 表示対象の航路に五島発着はないため、列島本体と同じ移動量を適用する。
+      roadsGroup.setAttribute('transform', NON_GOTO_MAP_TRANSFORM);
+    }
     if (this._hoverOutline) this._hoverOutline.style.display = 'none';
     if (this._selectedOutline) this._selectedOutline.style.display = 'none';
     if (provGroup) provGroup.innerHTML = '';
@@ -394,11 +474,13 @@ export const MapRendererMethods = {
       path.setAttribute('class', `prov-path ${isMine ? 'player-prov' : 'enemy-prov'}`);
       path.setAttribute('d', p.svgPath || p.d);
       path.setAttribute('fill', this.getProvinceColor(p));
-      if (this.isShikokuProvince(p.id)) path.setAttribute('transform', SHIKOKU_MAP_TRANSFORM);
+      const provinceTransform = this.getProvinceMapTransform(p.id);
+      if (provinceTransform) path.setAttribute('transform', provinceTransform);
 
       path.addEventListener('click', (e) => {
         e.stopPropagation();
-        this.selectProvince(p.id, { showHighlight: true });
+        // 観戦中は詳細表示の選択だけを更新し、地図上の強調要求は出さない。
+        this.selectProvince(p.id, { showHighlight: !this.isSpectatorMode });
         this.audio.playHyoshigi();
       });
 
@@ -415,7 +497,7 @@ export const MapRendererMethods = {
         const badgeG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
         badgeG.setAttribute('id', `badge-${p.id}`);
         badgeG.setAttribute('class', `prov-badge-group ${isMine ? 'player-badge' : ''}`);
-        if (this.isShikokuProvince(p.id)) badgeG.setAttribute('transform', SHIKOKU_MAP_TRANSFORM);
+        if (provinceTransform) badgeG.setAttribute('transform', provinceTransform);
         if (!showKamon) {
           badgeG.style.display = 'none';
         }
@@ -425,7 +507,8 @@ export const MapRendererMethods = {
         const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
         use.setAttribute('id', `kamon-use-${p.id}`);
         use.setAttribute('href', showKamon ? `#${this.getMapKamonId(p, this.getProvinceColor(p))}` : '');
-        const kamonX = p.kamonX !== undefined ? p.kamonX : p.cx;
+        const kamonBaseX = p.kamonX !== undefined ? p.kamonX : p.cx;
+        const kamonX = kamonBaseX + (Number.isFinite(p.kamonOffsetX) ? p.kamonOffsetX : 0);
         const kamonY = (p.kamonY !== undefined ? p.kamonY : p.cy) + (Number.isFinite(p.kamonOffsetY) ? p.kamonOffsetY : 0);
         use.setAttribute('x', kamonX - badgeSize / 2);
         use.setAttribute('y', kamonY - badgeSize / 2);
@@ -742,6 +825,10 @@ export const MapRendererMethods = {
 
     const provGroup = document.getElementById('mapProvincesGroup');
     const markGroup = document.getElementById('mapMarkersGroup');
+    const svgMap = document.getElementById('sengokuMapSvg');
+    const suppressMapHighlights = !!this.isSpectatorMode;
+    if (svgMap) svgMap.classList.toggle('map-spectator-mode', suppressMapHighlights);
+    if (suppressMapHighlights) this.clearMapHighlightVisuals();
     this._heatRangeCache = null;
 
     this._mapTileCache = this._mapTileCache || {};

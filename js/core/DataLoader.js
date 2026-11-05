@@ -15,7 +15,7 @@ export class DataLoader {
    */
   static async loadAllData() {
     try {
-      const v = '20261104_ando_teal'; // japan_slg.html の preload と同じ値にすること
+      const v = '20261105_niwa_orange'; // japan_slg.html の preload と同じ値にすること
       const [scenarios, officers, provinces, clansData, governorsData, eventsData, mapBordersData] = await Promise.all([
         DataLoader.fetchJson(`data/scenarios.json?v=${v}`),
         DataLoader.fetchJson(`data/officers.json?v=${v}`),

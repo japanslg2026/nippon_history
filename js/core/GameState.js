@@ -2908,17 +2908,9 @@ export const GameStateMethods = {
 
 
 
-      const scenAffEntry = this.currentScenario?.officerAffiliations ? this.currentScenario.officerAffiliations[officer.id] : null;
-
-      const isExplicitInScenario = !!scenAffEntry;
-
-      // シナリオ明記でも生没年は守る（例外は ignoreLifespan:true を付けたエントリのみ）
-
-      // 古代シナリオでは個別所属に ignoreLifespan が残っていても生没年を厳守する。
-      // これにより、別世紀の人物が誤って明示配属されても登場しない。
-      const isAncientScenario = [-663, 97, 240].includes(Number(this.currentScenario?.year));
-      const canIgnoreLifespan = isExplicitInScenario && scenAffEntry.ignoreLifespan === true && !isAncientScenario;
-      if ((isGenpuku && isAlive) || canIgnoreLifespan) {
+      // シナリオに明記された武将も、生年から没年までの範囲外には登場させない。
+      // 過去の ignoreLifespan 指定は、史実シナリオの寿命制約を上書きしない。
+      if (isGenpuku && isAlive) {
         officer.isDead = false;
         nextActive.push(officer);
       } else if (existing && this.year > dYear) {
@@ -4003,6 +3995,11 @@ export const GameStateMethods = {
 
 
   provinceGeoRank(provId) {
+
+    // 地図データの mapNo は北海道から琉球まで北→南に連番で付与した表示ID。
+    // 追加領国を含め、勢力一覧や同率時の並びもこの番号と一致させる。
+    const masterProvince = (window.PROVINCES_DATA || []).find(p => p.id === provId);
+    if (Number.isFinite(Number(masterProvince?.mapNo))) return Number(masterProvince.mapNo) - 1;
 
     if (!SengokuGame._provinceGeoRank) {
 
@@ -8413,21 +8410,15 @@ export const GameStateMethods = {
 
     if (!Array.isArray(this.activeOfficers) || !this.provinces) return;
 
-    if (this.isVirtualScenario && this.isVirtualScenario()) return; // 仮想シナリオは年齢補正仕様のため対象外
-
     const Y = Number(this.year);
 
     if (!Number.isFinite(Y)) return;
-
-    const affs = (scen && scen.officerAffiliations) || {};
 
     const master = new Map((window.OFFICERS_MASTER || []).map(m => [m.id, m]));
 
     const ok = (o) => {
 
       if (!o) return false;
-
-      if (affs[o.id] && affs[o.id].ignoreLifespan === true) return true;
 
       const m = master.get(o.id) || o;
 
@@ -10398,9 +10389,11 @@ export const GameStateMethods = {
 
     let riceBase = this.playerDaimyo?.rice || 800;
 
-    if (this.currentDifficulty === 'relaxed') { goldBase += 800; riceBase += 1000; }
+    // 楽級・初級は初めての勢力でも序盤の内政・徴兵に余裕を持てるよう、
+    // 大名ごとの基準資源に追加の支度金・兵糧を上乗せする。
+    if (this.currentDifficulty === 'relaxed') { goldBase += 1200; riceBase += 1500; }
 
-    else if (this.currentDifficulty === 'easy') { goldBase += 400; riceBase += 500; }
+    else if (this.currentDifficulty === 'easy') { goldBase += 650; riceBase += 850; }
 
     else if (this.currentDifficulty === 'normal') { goldBase += 150; riceBase += 200; }
 
@@ -15904,6 +15897,8 @@ export const GameStateMethods = {
 
 
     this.isSpectatorMode = true;
+    // 観戦中は右側の情報表示用の選択を保持しても、地図上の選択演出は出さない。
+    this.hideSelectionOutline = true;
 
     this.executeStartGameFlow();
 
@@ -16223,6 +16218,8 @@ export const GameStateMethods = {
         if (res.isConfirmed) {
 
           this.isSpectatorMode = true;
+          // 直前に国をクリックしていた場合でも、観戦へ切り替えた時点で地図の選択演出を解除する。
+          this.hideSelectionOutline = true;
 
           // 直近で世継ぎ選択画面等が表示されていた場合は閉じ、大名不在なら自動で代替わりを解決
 
@@ -19891,7 +19888,7 @@ export const GameStateMethods = {
 
       title: '全領国オールスター群雄割拠',
 
-      subtitle: '全国92国・一国一大名',
+      subtitle: '全国106国・群雄割拠',
 
       year: 1582,
 
@@ -19903,13 +19900,13 @@ export const GameStateMethods = {
 
       isVirtual: true,
 
-      desc: '古代・中世・戦国・幕末の日本史を彩る名門・豪族・王朝・志士たち全92家が、全国92国にそれぞれ1国ずつ割拠した究極のオールスターモード！全勢力が初期領国1国・完全同一条件のイーブンスタート。君の選んだ推し大名で、全91勢力を平定し、日ノ本史上最強の覇者となれ！',
+      desc: '古代・中世・戦国・幕末の日本史を彩る名門・豪族・王朝・志士たちが、全国106国に割拠する究極のオールスターモード！君の選んだ推し大名で、全国105国を平定し、日ノ本史上最強の覇者となれ！',
 
-      lore_background: '神武東征軍、邪馬台国、ヤマト王権から平将門、奥州藤原氏、源平両氏、南北朝の英雄、戦国大名、そして長州維新軍や西郷軍まで、全92国に一大名家ずつが鎮座する奇跡の百花繚乱乱世。',
+      lore_background: '神武東征軍、邪馬台国、ヤマト王権から平将門、奥州藤原氏、源平両氏、南北朝の英雄、戦国大名、そして長州維新軍や西郷軍まで、全106国を舞台に群雄が競う百花繚乱乱世。',
 
-      lore_factions: '北は蝦夷・松前、津軽、南部、斯波、葛西、相馬、岩城から南は薩摩・島津、大隅・西郷軍、琉球王家まで、全92国すべてが1国持ちの平等条件で開幕。',
+      lore_factions: '北は蝦夷・松前、津軽、南部、斯波、葛西、相馬、岩城から南は薩摩・島津、大隅・西郷軍、琉球王家まで、全106国を舞台に開幕。',
 
-      lore_focus: '全92勢力すべてがプレイ可能！お気に入りの英傑・大名家を選び、全国92国統一の偉業を達成せよ！',
+      lore_focus: 'お気に入りの英傑・大名家を選び、全国106国統一の偉業を達成せよ！',
 
       recommendedClan: 'oda',
 
@@ -19970,6 +19967,8 @@ export const GameStateMethods = {
 
 
     this.isSpectatorMode = true;
+    // 敗北後に観戦へ移る場合も、直前の自領選択を地図上に残さない。
+    this.hideSelectionOutline = true;
 
 
 
