@@ -3674,7 +3674,7 @@
       <div class="modal-body" id="aboutModalBody" style="line-height: 1.75; font-size: 12pt;"></div>
     </div>
   </div>
-  <script src="js/data/map_borders.js?v=20261105_ezo_kamon_down20"></script>
+  <script src="js/data/map_borders.js?v=20261106_hist_v15"></script>
 
   <script>
     (function () {
@@ -3766,14 +3766,14 @@
         'shirakawa': 37.13,
         'iwaki': 37.04,
         'noto': 37.03,
-        'etchu': 36.69,
+        'etchu': 36.69, 'higashi_etchu': 36.80,
         'nasu': 36.65,
-        'north_shinano': 36.56,
+        'north_shinano': 36.56, 'ueda': 36.40,
         'kaga': 36.56,
-        'shimotsuke': 36.55,
+        'shimotsuke': 36.55, 'sano_oyama': 36.33,
         'hitachi': 36.54,
-        'kozuke': 36.41,
-        'south_shinano': 36.24,
+        'kozuke': 36.41, 'agatsuma': 36.58, 'numata': 36.65, 'maebashi_tatebayashi': 36.36,
+        'south_shinano': 36.24, 'takato_iida': 35.70,
         'koga': 36.19,
         'oki': 36.13,
         'hida': 36.13,
@@ -3788,7 +3788,7 @@
         'tajima': 35.46,
         'north_omi': 35.46,
         'mino': 35.43,
-        'hoki': 35.43,
+        'hoki': 35.43, 'higashi_hoki': 35.43,
         'izumo': 35.36,
         'kazusa': 35.28,
         'sagami': 35.25,
@@ -3802,7 +3802,7 @@
         'suruga': 34.98,
         'mikawa': 34.96,
         'iwami': 34.90,
-        'harima': 34.84,
+        'harima': 34.84, 'higashi_harima': 34.80,
         'iga': 34.77,
         'ise': 34.72,
         'totomi': 34.71,
@@ -3828,7 +3828,7 @@
         'iyo': 33.85,
         'kinan_kumano': 33.72,
         'chikuzen': 33.68,
-        'tosa_kochi': 33.58,
+        'tosa_kochi': 33.58, 'tosa_aki': 33.50, 'tosa_gun': 33.60,
         'hirado': 33.37,
         'chikugo': 33.32,
         'hizen': 33.25,
@@ -3858,18 +3858,18 @@
 
       var PROV_JP_MAP = {
         'iwashiro': '岩代', 'rikuchu': '陸中', 'rikuzen': '陸前', 'iwaki': '磐城', 'mutsu': '陸奥',
-        'ugo': '羽後', 'uzen': '羽前', 'dewa': '出羽', 'echigo': '越後', 'ecchu': '越中', 'etchu': '越中',
+        'ugo': '羽後', 'uzen': '羽前', 'dewa': '出羽', 'echigo': '越後', 'ecchu': '越中', 'etchu': '西越中', 'higashi_etchu': '東越中',
         'noto': '能登', 'kaga': '加賀', 'echizen': '越前', 'sado': '佐渡', 'kai': '甲斐', 'shinano': '信濃',
-        'north_shinano': '北信濃', 'south_shinano': '南信濃', 'hida': '飛騨', 'mino': '美濃', 'owari': '尾張',
+        'north_shinano': '川中島・松代', 'ueda': '上田', 'south_shinano': '筑摩・木曽谷', 'takato_iida': '高遠・飯田', 'hida': '飛騨', 'mino': '美濃', 'owari': '尾張',
         'mikawa': '三河', 'totomi': '遠江', 'suruga': '駿河', 'izu': '伊豆', 'sagami': '相模', 'musashi': '武蔵',
-        'kazusa': '上総', 'shimousa': '下総', 'hitachi': '常陸', 'shimotsuke': '下野', 'kozuke': '上野',
+        'kazusa': '上総', 'shimousa': '下総', 'hitachi': '常陸', 'shimotsuke': '下野', 'sano_oyama': '佐野・小山', 'kozuke': '高崎・箕輪', 'agatsuma': '吾妻郡', 'numata': '沼田', 'maebashi_tatebayashi': '前橋・館林',
         'awa_boshu': '安房', 'north_omi': '北近江', 'south_omi': '南近江', 'yamashiro': '山城', 'yamato': '大和',
         'kawachi': '河内', 'izumi': '和泉', 'settsu': '摂津', 'iga': '伊賀', 'ise': '伊勢', 'shima': '志摩',
         'kii': '紀伊', 'saika_wakayama': '雑賀・和歌山', 'kii_kichu': '紀中', 'kinan_kumano': '紀南・熊野',
-        'tamba': '丹波', 'tango': '丹後', 'tajima': '但馬', 'inaba': '因幡', 'hoki': '伯耆', 'izumo': '出雲',
-        'iwami': '石見', 'oki': '隠岐', 'harima': '播磨', 'mimasaka': '美作', 'bizen': '備前', 'bicchu': '備中',
+        'tamba': '丹波', 'tango': '丹後', 'tajima': '但馬', 'inaba': '因幡', 'hoki': '西伯耆', 'higashi_hoki': '東伯耆', 'izumo': '出雲',
+        'iwami': '石見', 'oki': '隠岐', 'harima': '西播磨', 'higashi_harima': '東播磨', 'mimasaka': '美作', 'bizen': '備前', 'bicchu': '備中',
         'bingo': '備後', 'aki': '安芸', 'aki_koriyama': '安芸郡山', 'suo': '周防', 'nagato': '長門',
-        'awa_shikoku': '阿波', 'sanuki': '讃岐', 'iyo': '伊予', 'tosa_kochi': '土佐高知', 'tosa_nakamura': '土佐中村',
+        'awa_shikoku': '阿波', 'sanuki': '讃岐', 'iyo': '伊予', 'tosa_kochi': '土佐長岡郡', 'tosa_aki': '土佐安芸', 'tosa_gun': '土佐郡', 'tosa_nakamura': '土佐中村',
         'tosa': '土佐', 'chikuzen': '筑前', 'chikugo': '筑後', 'buzen': '豊前', 'bungo': '豊後', 'hizen': '肥前',
         'higo_kumamoto': '肥後熊本', 'higo_hitoyoshi': '肥後人吉', 'nobeoka': '延岡', 'hyuga': '日向',
         'osumi': '大隅', 'satsuma': '薩摩', 'tsushima': '対馬', 'ezo': '蝦夷', 'tsugaru': '津軽',
@@ -4049,18 +4049,18 @@
           if (typeof window.loadKamonSymbols === 'function') {
             window.loadKamonSymbols();
           }
-          await loadExternalScript(['js/kamonOverrides.js?v=20261105_niwa_orange']);
+          await loadExternalScript(['js/kamonOverrides.js?v=20261106_hist_v15']);
 
           statusEl.textContent = '歴史配置ルールとシナリオ・領国・大名・武将データを読み込み中…';
           var rulesPromise = loadAffiliationRulesSafe();
 
           var results = await Promise.all([
-            fetchJsonSmart('scenarios.json?v=20261105_niwa_orange'),
-            fetchJsonSmart('provinces.json?v=20261105_niwa_orange'),
-            fetchJsonSmart('clans.json?v=20261105_niwa_orange'),
-            fetchJsonSmart('officers.json?v=20261105_niwa_orange'),
-            fetchJsonSmart('governors.json').catch(function () { return {}; }),
-            fetchJsonSmart('events.json').catch(function () { return {}; }),
+            fetchJsonSmart('scenarios.json?v=20261106_hist_v15'),
+            fetchJsonSmart('provinces.json?v=20261106_hist_v15'),
+            fetchJsonSmart('clans.json?v=20261106_hist_v15'),
+            fetchJsonSmart('officers.json?v=20261106_hist_v15'),
+            fetchJsonSmart('governors.json?v=20261106_hist_v15').catch(function () { return {}; }),
+            fetchJsonSmart('events.json?v=20261106_hist_v15').catch(function () { return {}; }),
             rulesPromise
           ]);
 
@@ -4548,7 +4548,13 @@
           matsue: '#2f6f68',
           kumamoto_hosokawa: '#596146',
           uwajima_date: '#5a3d86',
-          ando: '#2f7a78'
+          ando: '#2f7a78',
+          chosokabe: '#5dade2',
+          aki_tosa: '#5b3a1e',
+          bessho: '#c69c6d',
+          takato: '#c77dce',
+          oyama: '#d9822b',
+          motoyama: '#7e57c2'
         };
         if (distinctTerritoryColors[clanId]) return distinctTerritoryColors[clanId];
         var playD = (State.currentScenario && State.currentScenario.playables || []).find(function (p) { return p && p.id === clanId; });
@@ -4575,7 +4581,7 @@
       }
 
       // 家紋の背景も、その時点の領土色と一致させる必要がある大名家。
-      var TERRITORY_COLOR_KAMON_CLANS = new Set(['niwa', 'goto', 'suwa', 'sengoku']);
+      var TERRITORY_COLOR_KAMON_CLANS = new Set(['niwa', 'goto', 'suwa', 'sengoku', 'bessho', 'shiina', 'sano', 'nanjo', 'aki_tosa', 'motoyama', 'ichijo', 'chosokabe', 'takato', 'oyama']);
 
       function getMapKamonSymbolId(clanId, provinceId, fillColor) {
         var baseId = getClanKamonSymbolId(clanId);
@@ -4611,7 +4617,7 @@
       // ==================== SVG日本地図の構築（マウス＋スマートフォンタッチ操作対応） ====================
       var mapScale = 1.0, mapPanX = 0, mapPanY = 0;
       // 四国だけを既存の全国地図とは別に時計回りへ4度回転する。
-      var SHIKOKU_PROVINCE_IDS = new Set(['iyo', 'oshu', 'uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_nakamura']);
+      var SHIKOKU_PROVINCE_IDS = new Set(['iyo', 'oshu', 'uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_aki', 'tosa_gun', 'tosa_nakamura']);
       var SHIKOKU_MAP_TRANSFORM = 'rotate(4 280 450)';
       // 地図枠と列島全体の傾きは変えず、五島以外だけを右へ寄せる。
       var NON_GOTO_MAP_TRANSFORM = 'translate(16 0)';
@@ -5357,7 +5363,7 @@
           '</div>' +
 
           '<div class="lore-paragraph-expanded">' +
-            '<strong style="color:var(--gold);">【' + esc(pEntry.castle) + '・' + esc(pEntry.name) + 'の解説】</strong> ' +
+            '<strong style="color:var(--gold);">【' + esc(pEntry.castle) + 'の解説】</strong> ' +
             esc(cleanLoreText(cLore)) +
             (base.battleHistory ? '<br><strong style="color:#ff9f7f;">【合戦史】</strong> ' + esc(base.battleHistory) : '') +
           '</div>';

@@ -314,7 +314,8 @@
       "changes": {
         "territory": {
           "izumo": "yamato_court",
-          "hoki": "yamato_court"
+          "hoki": "yamato_court",
+          "higashi_hoki": "yamato_court"
         },
         "killOfficerIds": [
           "off_izumo_takeru"
@@ -923,10 +924,14 @@
           "kazusa": "heian_court",
           "awa_boshu": "heian_court",
           "kozuke": "heian_court",
+          "agatsuma": "heian_court",
+          "numata": "heian_court",
+          "maebashi_tatebayashi": "heian_court",
           "musashi": "heian_court",
           "sagami": "heian_court",
           "izu": "heian_court",
           "shimotsuke": "fujiwara_hidesato",
+          "sano_oyama": "fujiwara_hidesato",
           "koga": "heian_court",
           "nasu": "fujiwara_hidesato"
         },
@@ -1014,6 +1019,8 @@
           "iyo": "heian_court",
           "awaji": "heian_court",
           "tosa_kochi": "heian_court",
+          "tosa_aki": "heian_court",
+          "tosa_gun": "heian_court",
           "tosa_nakamura": "heian_court",
           "aki_koriyama": "heian_court",
           "chikuzen": "heian_court"
@@ -1434,7 +1441,8 @@
           "yamashiro": "taira",
           "settsu": "taira",
           "kawachi": "taira",
-          "harima": "taira"
+          "harima": "taira",
+          "higashi_harima": "taira"
         },
         "message": "平清盛が畿内要衝を制圧し、平氏の勢力が一気に拡大しました！",
         "killOfficerIds": [
@@ -1557,6 +1565,7 @@
           "yamashiro": "taira",
           "sagami": "taira",
           "shimotsuke": "taira",
+          "sano_oyama": "taira",
           "nasu": "taira",
           "koga": "taira"
         },
@@ -1686,6 +1695,7 @@
       "changes": {
         "territory": {
           "etchu": "kiso",
+          "higashi_etchu": "kiso",
           "kaga": "kiso",
           "echizen": "kiso",
           "yamashiro": "kiso"
@@ -1733,6 +1743,7 @@
         "territory": {
           "settsu": "genji_yoritomo",
           "harima": "genji_yoritomo",
+          "higashi_harima": "genji_yoritomo",
           "tamba": "genji_yoritomo"
         },
         "message": "義経の神速の奇襲により一ノ谷が陥落、摂津・播磨が鎌倉幕府軍の手に渡りました！"
@@ -1861,6 +1872,7 @@
           "settsu": "hojo_kamakura",
           "south_omi": "hojo_kamakura",
           "harima": "hojo_kamakura",
+          "higashi_harima": "hojo_kamakura",
           "tamba": "hojo_kamakura",
           "kawachi": "hojo_kamakura",
           "izumi": "hojo_kamakura"
@@ -2004,8 +2016,13 @@
           "sagami": "nitta",
           "musashi": "nitta",
           "kozuke": "nitta",
+          "agatsuma": "nitta",
+          "numata": "nitta",
+          "maebashi_tatebayashi": "nitta",
           "shimotsuke": "ashikaga",
+          "sano_oyama": "ashikaga",
           "harima": "akamatsu",
+          "higashi_harima": "akamatsu",
           "bizen": "akamatsu",
           "koga": "ashikaga"
         },
@@ -2034,6 +2051,7 @@
           "yamashiro": "ashikaga",
           "tamba": "ashikaga",
           "harima": "akamatsu",
+          "higashi_harima": "akamatsu",
           "bizen": "akamatsu",
           "mimasaka": "akamatsu"
         },
@@ -2181,6 +2199,7 @@
       "changes": {
         "territory": {
           "harima": "yamana",
+          "higashi_harima": "yamana",
           "mimasaka": "yamana",
           "bizen": "yamana"
         },
@@ -2349,7 +2368,8 @@
       "changes": {
         "territory": {
           "musashi": "hojo",
-          "kozuke": "hojo"
+          "kozuke": "hojo",
+          "maebashi_tatebayashi": "hojo"
         },
         "message": "北条氏康が河越夜戦で八万の大軍を破り、武蔵・上野を北条領としました！"
       },
@@ -2418,7 +2438,8 @@
       "desc": "武田晴信（信玄）が信濃の名族・村上義清の葛尾城を陥落。義清は越後春日山城の長尾景虎（上杉謙信）を頼って落ち延びた。「信濃の義戦」を誓った謙信は出兵を決意し、千曲川・犀川合流点の川中島を舞台とする十二年・五度の死闘が始まった。",
       "changes": {
         "territory": {
-          "north_shinano": "takeda"
+          "north_shinano": "takeda",
+          "ueda": "takeda"
         },
         "message": "村上義清が追放され北信濃は武田領へ！上杉謙信が救援のため川中島へ出陣！"
       },
@@ -2886,7 +2907,9 @@
         "territory": {
           "kai": "oda",
           "north_shinano": "oda",
+          "ueda": "oda",
           "south_shinano": "oda",
+          "takato_iida": "oda",
           "suruga": "tokugawa"
         },
         "message": "武田氏が滅亡し、甲斐・信濃が織田領に、駿河が徳川領となりました！",
@@ -2953,6 +2976,7 @@
           "kawachi": "toyotomi",
           "izumi": "toyotomi",
           "harima": "toyotomi",
+          "higashi_harima": "toyotomi",
           "yamato": "toyotomi",
           "tajima": "toyotomi",
           "inaba": "toyotomi",
@@ -2970,11 +2994,16 @@
           "iga": "oda",
           "kai": "tokugawa",
           "south_shinano": "tokugawa",
-          "north_shinano": "sanada",
+          "takato_iida": "tokugawa",
+          "north_shinano": "uesugi",
+          "ueda": "sanada",
           "suruga": "tokugawa",
           "totomi": "tokugawa",
           "mikawa": "tokugawa",
           "kozuke": "hojo",
+          "agatsuma": "sanada",
+          "numata": "sanada",
+          "maebashi_tatebayashi": "hojo",
           "tango": "toyotomi"
         },
         "message": "織田信長公落命！天下は羽柴秀吉、柴田勝家、徳川家康ら後継勢力の割拠へ突入しました！"
@@ -3007,6 +3036,7 @@
             "tango": "akechi",
             "south_omi": "akechi",
             "harima": "toyotomi",
+            "higashi_harima": "toyotomi",
             "settsu": "toyotomi",
             "kawachi": "toyotomi",
             "izumi": "toyotomi",
@@ -3027,8 +3057,13 @@
             "iga": "oda",
             "kai": "tokugawa",
             "south_shinano": "tokugawa",
-            "north_shinano": "sanada",
-            "kozuke": "hojo"
+            "takato_iida": "tokugawa",
+            "north_shinano": "uesugi",
+            "ueda": "sanada",
+            "kozuke": "hojo",
+            "agatsuma": "sanada",
+            "numata": "sanada",
+            "maebashi_tatebayashi": "hojo"
           },
           "successors": [
             {
@@ -3299,7 +3334,11 @@
           "sagami": "tokugawa",
           "musashi": "tokugawa",
           "kozuke": "tokugawa",
+          "agatsuma": "sanada",
+          "numata": "sanada",
+          "maebashi_tatebayashi": "tokugawa",
           "shimotsuke": "tokugawa",
+          "sano_oyama": "tokugawa",
           "kazusa": "tokugawa",
           "shimousa": "tokugawa",
           "suruga": "toyotomi",
@@ -3307,6 +3346,7 @@
           "mikawa": "toyotomi",
           "kai": "toyotomi",
           "south_shinano": "toyotomi",
+          "takato_iida": "toyotomi",
           "koga": "tokugawa"
         },
         "message": "後北条氏が滅亡して豊臣秀吉が天下統一を達成！徳川家康は関東へ国替えとなりました！",
@@ -4517,6 +4557,9 @@
           "harima": {
             "defenseDelta": 15
           },
+          "higashi_harima": {
+            "defenseDelta": 15
+          },
           "tamba": {
             "defenseDelta": 15
           },
@@ -4952,6 +4995,18 @@
             "orderDelta": -15,
             "moraleDelta": -10
           },
+          "tosa_aki": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
+          "tosa_gun": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
           "tosa_nakamura": {
             "troopsRate": 0.85,
             "defenseDelta": -25,
@@ -5094,6 +5149,18 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
+          "tosa_aki": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "tosa_gun": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
           "yamato": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
@@ -5107,6 +5174,12 @@
             "moraleDelta": -5
           },
           "south_shinano": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "takato_iida": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -5189,6 +5262,18 @@
       "changes": {
         "provinceEffects": {
           "tosa_kochi": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "tosa_aki": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "tosa_gun": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
@@ -5388,6 +5473,18 @@
             "orderDelta": -15,
             "moraleDelta": -10
           },
+          "tosa_aki": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
+          "tosa_gun": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
           "settsu": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
@@ -5560,6 +5657,12 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
+          "higashi_etchu": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
           "ise": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
@@ -5673,6 +5776,18 @@
       "changes": {
         "provinceEffects": {
           "tosa_kochi": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "tosa_aki": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "tosa_gun": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
@@ -5864,6 +5979,18 @@
             "orderDelta": -15,
             "moraleDelta": -10
           },
+          "tosa_aki": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
+          "tosa_gun": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
           "tosa_nakamura": {
             "troopsRate": 0.85,
             "defenseDelta": -25,
@@ -6004,6 +6131,12 @@
             "orderDelta": -15,
             "moraleDelta": -10
           },
+          "ueda": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
           "echigo": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
@@ -6011,6 +6144,12 @@
             "moraleDelta": -5
           },
           "south_shinano": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "takato_iida": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -6099,6 +6238,18 @@
       "changes": {
         "provinceEffects": {
           "tosa_kochi": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
+          "tosa_aki": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
+          "tosa_gun": {
             "troopsRate": 0.85,
             "defenseDelta": -25,
             "orderDelta": -15,
@@ -6542,15 +6693,11 @@
     "shimotsuke": [
       [
         1180,
-        "唐沢山館・下野国府"
-      ],
-      [
-        1590,
-        "宇都宮城"
+        "下野国府・河内郡衙"
       ],
       [
         9999,
-        "壬生城"
+        "宇都宮城"
       ]
     ],
     "kozuke": [
@@ -6559,11 +6706,11 @@
         "上野国府館"
       ],
       [
-        1338,
-        "新田庄・生品館"
+        1552,
+        "平井城"
       ],
       [
-        1590,
+        1597,
         "箕輪城"
       ],
       [
@@ -6599,12 +6746,8 @@
         "葛尾城"
       ],
       [
-        1582,
-        "海津城"
-      ],
-      [
         1615,
-        "上田城"
+        "海津城"
       ],
       [
         9999,
@@ -6617,8 +6760,8 @@
         "木曽谷徳音寺館"
       ],
       [
-        1504,
-        "諏訪館"
+        1550,
+        "林城"
       ],
       [
         1582,
@@ -6815,8 +6958,12 @@
         "富山城"
       ],
       [
-        9999,
+        1615,
         "高岡城"
+      ],
+      [
+        9999,
+        "富山城"
       ]
     ],
     "noto": [
@@ -6855,12 +7002,12 @@
         "播磨国府館"
       ],
       [
-        1336,
-        "三木城"
+        1441,
+        "白旗城"
       ],
       [
         1580,
-        "白旗城・置塩城"
+        "置塩城"
       ],
       [
         9999,
@@ -6914,11 +7061,11 @@
     "hoki": [
       [
         1333,
-        "伯耆国府館・船上山城"
+        "会見郡衙・名和館"
       ],
       [
-        1580,
-        "八橋城"
+        1591,
+        "尾高城"
       ],
       [
         9999,
@@ -7367,12 +7514,20 @@
     ],
     "tosa_kochi": [
       [
-        1585,
+        1180,
+        "土佐国府館"
+      ],
+      [
+        1440,
+        "土佐守護所（田村）"
+      ],
+      [
+        1588,
         "岡豊城"
       ],
       [
         9999,
-        "高知城"
+        "本山土居"
       ]
     ],
     "tosa_nakamura": [
@@ -7477,6 +7632,212 @@
       [
         9999,
         "弘前城"
+      ]
+    ],
+    "higashi_hoki": [
+      [
+        1333,
+        "伯耆国府館・船上山城"
+      ],
+      [
+        1350,
+        "伯耆国府館"
+      ],
+      [
+        1560,
+        "打吹城"
+      ],
+      [
+        1600,
+        "羽衣石城"
+      ],
+      [
+        1632,
+        "打吹城"
+      ],
+      [
+        9999,
+        "倉吉陣屋"
+      ]
+    ],
+    "higashi_harima": [
+      [
+        1180,
+        "明石駅家"
+      ],
+      [
+        1491,
+        "加古川城"
+      ],
+      [
+        1619,
+        "三木城"
+      ],
+      [
+        9999,
+        "明石城"
+      ]
+    ],
+    "higashi_etchu": [
+      [
+        1335,
+        "宮崎城"
+      ],
+      [
+        1572,
+        "松倉城"
+      ],
+      [
+        1615,
+        "魚津城"
+      ],
+      [
+        9999,
+        "魚津町奉行所"
+      ]
+    ],
+    "takato_iida": [
+      [
+        1332,
+        "伊那郡の館"
+      ],
+      [
+        1545,
+        "松尾城"
+      ],
+      [
+        1581,
+        "高遠城"
+      ],
+      [
+        1630,
+        "飯田城"
+      ],
+      [
+        9999,
+        "高遠城"
+      ]
+    ],
+    "ueda": [
+      [
+        1185,
+        "依田城"
+      ],
+      [
+        1550,
+        "塩田城"
+      ],
+      [
+        1583,
+        "砥石城"
+      ],
+      [
+        9999,
+        "上田城"
+      ]
+    ],
+    "agatsuma": [
+      [
+        1500,
+        "岩下城"
+      ],
+      [
+        1615,
+        "岩櫃城"
+      ],
+      [
+        9999,
+        "吾妻代官陣屋"
+      ]
+    ],
+    "numata": [
+      [
+        1529,
+        "沼田館"
+      ],
+      [
+        9999,
+        "沼田城"
+      ]
+    ],
+    "maebashi_tatebayashi": [
+      [
+        1338,
+        "新田庄・生品館"
+      ],
+      [
+        1559,
+        "金山城"
+      ],
+      [
+        1648,
+        "厩橋城"
+      ],
+      [
+        9999,
+        "前橋城"
+      ]
+    ],
+    "tosa_gun": [
+      [
+        1540,
+        "土佐郡の館"
+      ],
+      [
+        1563,
+        "朝倉城"
+      ],
+      [
+        1590,
+        "朝倉城"
+      ],
+      [
+        1600,
+        "浦戸城"
+      ],
+      [
+        9999,
+        "高知城"
+      ]
+    ],
+    "tosa_aki": [
+      [
+        1568,
+        "安芸城"
+      ],
+      [
+        1600,
+        "安芸城"
+      ],
+      [
+        9999,
+        "安芸土居"
+      ]
+    ],
+    "sano_oyama": [
+      [
+        1180,
+        "唐沢山館・下野国府"
+      ],
+      [
+        1350,
+        "足利荘館"
+      ],
+      [
+        1554,
+        "祇園城"
+      ],
+      [
+        1602,
+        "唐沢山城"
+      ],
+      [
+        1614,
+        "佐野城"
+      ],
+      [
+        9999,
+        "壬生城"
       ]
     ]
   },

@@ -17,12 +17,12 @@
 
   <!-- Google Fonts: 武士の魂が宿る力強い和風・毛筆フォント -->
   <!-- 起動高速化: ゲームデータJSONをHTML解析と並行して先読み -->
-  <link rel="preload" href="data/scenarios.json?v=20261104_shikoku_fix" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/clans.json?v=20261104_ando_teal" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/provinces.json?v=20261105_niwa_orange" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/officers.json?v=20261104_shikoku_fix" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/governors.json?v=20261104_shikoku_fix" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/events.json?v=20261104_shikoku_fix" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/scenarios.json?v=20261106_hist_v15" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/clans.json?v=20261106_hist_v15" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/provinces.json?v=20261106_hist_v15" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/officers.json?v=20261106_hist_v15" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/governors.json?v=20261106_hist_v15" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/events.json?v=20261106_hist_v15" as="fetch" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&amp;family=Sawarabi+Mincho&amp;family=Yuji+Boku&amp;display=swap" rel="stylesheet">
@@ -1882,15 +1882,15 @@
   <!-- モジュール化されたJavaScript群 (順序保証ロード) -->
   <!-- 1. 全大名家・全シナリオ・全106領国データベース -->
   <script defer src="assets/kamons.js?v=20261104_kato_yoshiaki_fuji"></script>
-  <script defer src="js/kamonOverrides.js?v=20261105_niwa_orange"></script>
-  <script defer src="js/data/map_borders.js?v=20261105_niwa_orange"></script>
+  <script defer src="js/kamonOverrides.js?v=20261106_hist_v15"></script>
+  <script defer src="js/data/map_borders.js?v=20261106_hist_v15"></script>
   
   <!-- 2. 菅野よう子風 洗練和風交響BGMエンジン (全15曲) -->
   <script defer src="js/bgm.js?v=20261101_mobfix3"></script>
   <script defer src="js/MobileAudioKeepAlive.js?v=20261101_mobfix3"></script>
 
   <!-- 3. 戦国天下統一伝 ゲームエンジン本体 -->
-  <script type="module" src="js/app.js?v=20261105_niwa_orange"></script>
+  <script type="module" src="js/app.js?v=20261106_hist_v15"></script>
   <script type="module" src="js/ui/Encyclopedia.js?v=20261025_d74"></script>
   <script defer src="js/ui/StartScreenLayout.js?v=20261104_mobileflow"></script>
   <script defer src="js/ui/TitleBgm.js?v=20261101_mobfix3"></script>

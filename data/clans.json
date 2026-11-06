@@ -511,8 +511,8 @@
     },
     "chosokabe": {
       "family": "長宗我部家",
-      "color": "#9f7439",
-      "kamon": "kamon-chosokabe",
+      "color": "#5dade2",
+      "kamon": "kamon-chosokabe-nanatsu-katabami",
       "capital_pref": [
         "kochi",
         "tokushima",
@@ -3098,7 +3098,7 @@
       "color": "#145a32",
       "kamon": "kamon-fujiwara",
       "capital_pref": [
-        "shimotsuke"
+        "sano_oyama"
       ],
       "tactic": "俵藤太の剛弓",
       "tacticDesc": "大百足退治の伝説を持つ無双の弓勢で敵総大将を狙い撃つ。",
@@ -3926,7 +3926,7 @@
     "ichijo": {
       "family": "土佐一条家",
       "color": "#78281f",
-      "kamon": "kamon-ichijo",
+      "kamon": "kamon-ichijo-fuji",
       "capital_pref": [
         "kochi"
       ],
@@ -5640,6 +5640,8 @@
       "desc": "五島列島を本拠とし、西海の海上交通と島嶼防衛を担った宇久・五島氏。",
       "leaders": {
         "1180": "五島盛安",
+        "1457": "宇久儀",
+        "1467": "宇久定",
         "1531": "五島盛定",
         "1560": "五島純尭",
         "1600": "五島純玄",
@@ -5664,7 +5666,12 @@
         "1614": "仙石忠政",
         "1637": "仙石政俊",
         "1651": "仙石政俊",
+        "1702": "仙石政明",
+        "1721": "仙石政房",
         "1789": "仙石久行",
+        "1837": "仙石久利",
+        "1853": "仙石久利",
+        "1860": "仙石久利",
         "1866": "仙石政固",
         "default": "仙石秀久"
       }
@@ -5683,7 +5690,11 @@
         "1350": "二本松国詮",
         "1438": "二本松持泰",
         "1457": "二本松持泰",
+        "1467": "二本松政国",
+        "1493": "二本松政国",
+        "1495": "二本松村国",
         "1521": "二本松義国",
+        "1531": "二本松村国",
         "1555": "二本松義継",
         "1570": "二本松義国",
         "1573": "二本松義国",
@@ -5744,6 +5755,186 @@
       "leaders": {
         "1590": "日根野高吉",
         "default": "日根野高吉"
+      }
+    },
+    "bessho": {
+      "family": "別所家",
+      "color": "#c69c6d",
+      "kamon": "kamon-bessho-hidari-mitsudomoe",
+      "capital_pref": [
+        "higashi_harima"
+      ],
+      "tactic": "三木籠城",
+      "tacticDesc": "三木城の堅固な守りと兵站で長期籠城に耐え、攻城側の兵糧と士気を削る。",
+      "desc": "赤松氏の庶流で東播磨の守護代を務めた一族。別所就治の代に三木城を拠点に自立し、別所長治は羽柴秀吉の兵糧攻めに約二年耐えた。",
+      "leaders": {
+        "1546": "別所就治",
+        "1555": "別所安治",
+        "1560": "別所安治",
+        "1570": "別所長治",
+        "1573": "別所長治",
+        "1576": "別所長治",
+        "1577": "別所長治",
+        "allstar_feudal": "別所長治",
+        "default": "別所長治"
+      }
+    },
+    "shiina": {
+      "family": "椎名家",
+      "color": "#117a65",
+      "kamon": "kamon-shiina-tsuta",
+      "capital_pref": [
+        "higashi_etchu"
+      ],
+      "tactic": "松倉金山の兵站",
+      "tacticDesc": "松倉金山の財力で兵糧と軍資金を補い、籠城と反撃を支える。",
+      "desc": "越中新川郡の守護代として松倉城に拠った一族。西越中の神保氏と争い、越後長尾（上杉）氏と結んで越中東部に勢力を張った。",
+      "leaders": {
+        "1438": "椎名順胤",
+        "1457": "椎名順胤",
+        "1467": "椎名順胤",
+        "1493": "椎名慶胤",
+        "1495": "椎名慶胤",
+        "1531": "椎名長常",
+        "1538": "椎名長常",
+        "1546": "椎名康胤",
+        "1555": "椎名康胤",
+        "1560": "椎名康胤",
+        "1570": "椎名康胤",
+        "allstar_feudal": "椎名康胤",
+        "default": "椎名康胤"
+      }
+    },
+    "sano": {
+      "family": "佐野家",
+      "color": "#6c3483",
+      "kamon": "kamon-sano",
+      "capital_pref": [
+        "sano_oyama"
+      ],
+      "tactic": "唐沢山の堅守",
+      "tacticDesc": "関東屈指の山城・唐沢山城に拠り、大軍の包囲を幾度も凌ぐ。",
+      "desc": "藤原秀郷の流れを汲む下野の名族。唐沢山城を本拠とし、佐野昌綱は上杉謙信の度重なる攻撃を凌いで北関東に独立を保った。",
+      "leaders": {
+        "1555": "佐野昌綱",
+        "1560": "佐野昌綱",
+        "1570": "佐野昌綱",
+        "1573": "佐野昌綱",
+        "1576": "佐野宗綱",
+        "1577": "佐野宗綱",
+        "1582": "佐野宗綱",
+        "1584": "佐野宗綱",
+        "allstar_feudal": "佐野昌綱",
+        "default": "佐野昌綱"
+      }
+    },
+    "aki_tosa": {
+      "family": "安芸家",
+      "color": "#5b3a1e",
+      "kamon": "kamon-aki-tosa",
+      "capital_pref": [
+        "tosa_aki"
+      ],
+      "tactic": "土佐東部の地侍",
+      "tacticDesc": "安芸郡の地侍衆を率い、地の利を生かした防戦で敵を退ける。",
+      "desc": "土佐七雄の一に数えられた安芸郡の豪族。安芸城を本拠に土佐東部を治めたが、永禄十二年に安芸国虎が長宗我部元親に敗れて滅んだ。",
+      "leaders": {
+        "1493": "安芸元盛",
+        "1495": "安芸元盛",
+        "1531": "安芸国泰",
+        "1538": "安芸国泰",
+        "1546": "安芸国泰",
+        "1555": "安芸国虎",
+        "1560": "安芸国虎",
+        "allstar_feudal": "安芸国虎",
+        "default": "安芸国虎"
+      }
+    },
+    "motoyama": {
+      "family": "本山家",
+      "color": "#7e57c2",
+      "kamon": "kamon-motoyama",
+      "capital_pref": [
+        "tosa_gun"
+      ],
+      "tactic": "土佐山間の兵",
+      "tacticDesc": "土佐の山間部の兵を率い、山岳戦と奇襲で平野部の敵を圧倒する。",
+      "desc": "土佐七雄の一で、長岡郡本山を発祥とする豪族。本山茂宗の代に土佐郡の朝倉城へ進出して土佐中部に覇を唱えたが、長宗我部元親に敗れて降った。",
+      "leaders": {
+        "1493": "本山養意",
+        "1495": "本山養意",
+        "1531": "本山茂宗",
+        "1538": "本山茂宗",
+        "1546": "本山茂宗",
+        "1555": "本山茂辰",
+        "1560": "本山茂辰",
+        "default": "本山茂宗"
+      }
+    },
+    "takato": {
+      "family": "高遠家",
+      "color": "#c77dce",
+      "kamon": "kamon-takato-kajinoha",
+      "capital_pref": [
+        "takato_iida"
+      ],
+      "tactic": "諏訪神党の結束",
+      "tacticDesc": "諏訪明神を奉じる一族の結束で、伊那谷の険要を拠点に粘り強く戦う。",
+      "desc": "諏訪氏の庶流で、伊那郡高遠を本拠とした一族。高遠頼継は諏訪惣領の座を狙って武田晴信と結び、のち武田氏に敗れて高遠城を失った。",
+      "leaders": {
+        "1391": "高遠貞信",
+        "1400": "高遠頼員",
+        "1438": "高遠賀信",
+        "1457": "高遠頼宗",
+        "1467": "高遠頼宗",
+        "1493": "高遠継宗",
+        "1495": "高遠継宗",
+        "1531": "高遠頼継",
+        "1538": "高遠頼継",
+        "default": "高遠頼継"
+      }
+    },
+    "oyama": {
+      "family": "小山家",
+      "color": "#d9822b",
+      "kamon": "kamon-oyama-tomoe",
+      "capital_pref": [
+        "sano_oyama"
+      ],
+      "tactic": "下野の名門武士団",
+      "tacticDesc": "藤原秀郷以来の名族の威光で、祇園城を拠点に下野南部の武士を糾合する。",
+      "desc": "藤原秀郷の流れを汲む下野の名族。祇園城を本拠に下野守護を務め、小山義政・若犬丸の乱で鎌倉公方と争った後も、古河公方を支える有力国人として続いた。",
+      "leaders": {
+        "1333": "小山秀朝",
+        "1336": "小山朝氏",
+        "1350": "小山氏政",
+        "1359": "小山義政",
+        "1391": "小山若犬丸",
+        "1400": "小山泰朝",
+        "1438": "小山持政",
+        "1457": "小山持政",
+        "1467": "小山持政",
+        "1493": "小山成長",
+        "1495": "小山成長",
+        "1531": "小山高朝",
+        "1538": "小山高朝",
+        "1546": "小山高朝",
+        "default": "小山持政"
+      }
+    },
+    "nanjo": {
+      "family": "南条家",
+      "color": "#b9770e",
+      "kamon": "kamon-nanjo",
+      "capital_pref": [
+        "higashi_hoki"
+      ],
+      "tactic": "羽衣石の山城戦",
+      "tacticDesc": "峻険な羽衣石山に拠って守りを固め、大軍の攻勢に耐える。",
+      "desc": "東伯耆の羽衣石城を本拠とした一族。南条元続は毛利氏から織田・豊臣方に転じ、秀吉の国分けで東伯耆を安堵された。",
+      "leaders": {
+        "allstar_feudal": "南条元続",
+        "default": "南条元続"
       }
     }
   },
@@ -7276,6 +7467,70 @@
       "personality": "balanced",
       "title": "戦国大名",
       "note": ""
+    },
+    "bessho": {
+      "military": 70,
+      "politics": 60,
+      "stratagem": 58,
+      "personality": "defensive",
+      "title": "三木の籠城",
+      "note": "東播磨八郡の雄・三木の干殺しに耐えた"
+    },
+    "shiina": {
+      "military": 64,
+      "politics": 55,
+      "stratagem": 60,
+      "personality": "balanced",
+      "title": "新川郡守護代",
+      "note": "松倉城主・神保氏の宿敵"
+    },
+    "sano": {
+      "military": 72,
+      "politics": 50,
+      "stratagem": 60,
+      "personality": "defensive",
+      "title": "唐沢山の不落",
+      "note": "上杉謙信の猛攻を凌いだ下野の名族"
+    },
+    "aki_tosa": {
+      "military": 60,
+      "politics": 50,
+      "stratagem": 48,
+      "personality": "defensive",
+      "title": "土佐七雄",
+      "note": "安芸城主・長宗我部元親の宿敵"
+    },
+    "motoyama": {
+      "military": 68,
+      "politics": 55,
+      "stratagem": 58,
+      "personality": "aggressive",
+      "title": "土佐七雄の筆頭",
+      "note": "朝倉城主・長宗我部氏の宿敵"
+    },
+    "takato": {
+      "military": 58,
+      "politics": 48,
+      "stratagem": 55,
+      "personality": "aggressive",
+      "title": "高遠城主",
+      "note": "諏訪惣領家の座を争った伊那の雄"
+    },
+    "oyama": {
+      "military": 64,
+      "politics": 60,
+      "stratagem": 55,
+      "personality": "balanced",
+      "title": "下野の名族",
+      "note": "藤原秀郷流・祇園城主"
+    },
+    "nanjo": {
+      "military": 58,
+      "politics": 52,
+      "stratagem": 56,
+      "personality": "balanced",
+      "title": "羽衣石城主",
+      "note": "毛利と織田の狭間を生き抜いた東伯耆の雄"
     }
   },
   "capitals": {
@@ -7365,7 +7620,7 @@
     "taira_masakado": "shimousa",
     "fujiwara_sumitomo": "iyo",
     "taira_sadamori": "hitachi",
-    "fujiwara_hidesato": "shimotsuke",
+    "fujiwara_hidesato": "sano_oyama",
     "minamoto_tsunemoto": "kai",
     "heian_court": "yamashiro",
     "taira": "yamashiro",
@@ -7378,7 +7633,7 @@
     "gotoba_in": "yamashiro",
     "godaiho": "yamashiro",
     "kusunoki": "kawachi",
-    "nitta": "kozuke",
+    "nitta": "maebashi_tatebayashi",
     "shimazu_proto": "satsuma",
     "meiji": "yamashiro",
     "amakusa": "hizen",
@@ -7471,6 +7726,14 @@
     "nihonmatsu_hatakeyama": "nihonmatsu",
     "niwa": "nihonmatsu",
     "adachi": "nihonmatsu",
-    "hineno": "suwa_komoro"
+    "hineno": "suwa_komoro",
+    "bessho": "higashi_harima",
+    "shiina": "higashi_etchu",
+    "sano": "sano_oyama",
+    "aki_tosa": "tosa_aki",
+    "motoyama": "tosa_gun",
+    "takato": "takato_iida",
+    "oyama": "sano_oyama",
+    "nanjo": "higashi_hoki"
   }
 }

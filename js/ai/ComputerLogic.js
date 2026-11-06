@@ -1730,7 +1730,7 @@ export const ComputerLogicMethods = {
     const capitalRegion = capitalProv?.region || null;
 
     // 上洛・畿内志向（天下を睨む大名）
-    const KINAI_PROV_IDS = new Set(['yamashiro', 'south_omi', 'north_omi', 'settsu', 'kawachi', 'yamato', 'tamba', 'izumi', 'harima', 'iga', 'ise']);
+    const KINAI_PROV_IDS = new Set(['yamashiro', 'south_omi', 'north_omi', 'settsu', 'kawachi', 'yamato', 'tamba', 'izumi', 'harima', 'higashi_harima', 'iga', 'ise']);
     const isKyotoAmbitionClan = [
       'oda', 'takeda', 'uesugi', 'mori', 'hojo', 'tokugawa', 'imagawa',
       'miyoshi', 'ashikaga', 'hosokawa', 'asai', 'asakura', 'rokukaku'

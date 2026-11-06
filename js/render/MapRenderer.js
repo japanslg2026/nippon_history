@@ -8,11 +8,11 @@
 
 // モジュール間安全参照ヘルパー
 var SCENARIOS = (typeof window !== 'undefined' && (window.SCENARIOS || window.SCENARIOS_DATA)) || [];
-const SHIKOKU_PROVINCE_IDS = new Set(['iyo', 'oshu', 'uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_nakamura']);
+const SHIKOKU_PROVINCE_IDS = new Set(['iyo', 'oshu', 'uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_aki', 'tosa_gun', 'tosa_nakamura']);
 const SHIKOKU_MAP_TRANSFORM = 'rotate(4 280 450)';
 // 地図枠と列島全体の傾きは変えず、五島以外だけを右へ寄せる。
 const NON_GOTO_MAP_TRANSFORM = 'translate(16 0)';
-const TERRITORY_COLOR_KAMON_CLANS = new Set(['saionji_iyo', 'kato', 'murakami_noshima', 'akita', 'gamo', 'gamou', 'todo', 'tosa', 'clan_8849', 'kumamoto_hosokawa', 'ako_ronin', 'sakai', 'fukui_matsudaira', 'okayama', 'tottori', 'matsue', 'uwajima_date', 'makino', 'kuwana', 'ando', 'niwa', 'goto', 'suwa', 'sengoku']);
+const TERRITORY_COLOR_KAMON_CLANS = new Set(['saionji_iyo', 'kato', 'murakami_noshima', 'akita', 'gamo', 'gamou', 'todo', 'tosa', 'clan_8849', 'kumamoto_hosokawa', 'ako_ronin', 'sakai', 'fukui_matsudaira', 'okayama', 'tottori', 'matsue', 'uwajima_date', 'makino', 'kuwana', 'ando', 'niwa', 'goto', 'suwa', 'sengoku', 'bessho', 'shiina', 'sano', 'nanjo', 'aki_tosa', 'motoyama', 'ichijo', 'chosokabe', 'takato', 'oyama']);
 
 export class MapRenderer {
   constructor(game) {
