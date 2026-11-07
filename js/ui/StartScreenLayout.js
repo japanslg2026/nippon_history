@@ -486,7 +486,18 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
       }
     };
 
-    steps.addEventListener('click', (e) => { const b = e.target.closest('.sl-step'); if (b) setStep(b.dataset.step); });
+    steps.addEventListener('click', (e) => {
+      const b = e.target.closest('.sl-step');
+      if (b) {
+        if (String(b.dataset.step) === '1') {
+          const sp = $('.sl-scen', root);
+          sp?.classList.remove('is-scen-detail-open');
+          const fv = sp?.querySelector('.sl-scen-fullscreen-view');
+          if (fv) fv.hidden = true;
+        }
+        setStep(b.dataset.step);
+      }
+    });
     bar.querySelector('.sl-mbar-sel').addEventListener('click', () => setStep(2));
     bar.querySelector('.sl-mbar-detail-btn').addEventListener('click', () => {
       const c = document.querySelector('#daimyoGrid .daimyo-card.selected') || document.querySelector('#daimyoGrid .daimyo-card');
@@ -495,51 +506,93 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
         try { c.click(); } finally { passClick = false; }
       }
     });
-    bar.querySelector('.sl-mbar-go').addEventListener('click', () => $('#slStartBtn')?.click());
+    bar.querySelector('.sl-mbar-go').addEventListener('click', () => {
+      const curSelected = selected || $('#daimyoGrid .daimyo-card.selected')?.dataset?.id;
+      if (!curSelected) {
+        setStep(2);
+        return;
+      }
+      $('#slStartBtn')?.click();
+    });
 
-    // Step 1: シナリオ名の横には詳細ボタンを置かず、選択後の操作欄に集約する。
+    // Step 1: シナリオボタンを押したら、シナリオ解説を全面表示し、説明の下に「このシナリオ選択に戻る」「大名選択に進む」を表示する。
     const scenPanel = $('.sl-scen', root);
     const scenHead = scenPanel && $('.sl-head', scenPanel);
     if (scenHead) {
       scenHead.innerHTML = '<span>歴史シナリオ</span>';
     }
 
-    // シナリオを選んだ後にだけ、解説・次へ・戻るの操作を画面下に表示する。
     const scenBody = $('.sl-scen-body', root);
     const scenActions = document.createElement('div');
-    scenActions.className = 'sl-scen-selection-actions';
+    scenActions.className = 'sl-scen-fullscreen-view';
     scenActions.hidden = true;
     scenActions.innerHTML = `
-      <div class="sl-scen-selected-name" aria-live="polite"></div>
-      <button type="button" class="sl-scen-explain-btn">シナリオ解説</button>
-      <div class="sl-scen-choice-actions">
-        <button type="button" class="sl-scen-back-btn">シナリオ選択に戻る</button>
-        <button type="button" class="sl-scen-next-btn">大名選択に進む</button>
+      <div class="sl-scen-fs-card">
+        <div class="sl-scen-fs-badges">
+          <span class="sl-scen-fs-year"></span>
+          <span class="sl-scen-fs-gengo"></span>
+        </div>
+        <h3 class="sl-scen-fs-title"></h3>
+        <div class="sl-scen-fs-sub"></div>
+        <div class="sl-scen-fs-divider"></div>
+        <div class="sl-scen-fs-sec-label">📖 シナリオ解説・天下情勢</div>
+        <div class="sl-scen-fs-lore"></div>
+        <div class="sl-scen-choice-actions">
+          <button type="button" class="sl-scen-back-btn">このシナリオ選択に戻る</button>
+          <button type="button" class="sl-scen-next-btn">大名選択に進む</button>
+        </div>
       </div>
     `;
     scenBody?.after(scenActions);
 
-    const updateScenarioActions = () => {
+    const openScenarioFullscreen = () => {
       const s = scen();
-      const name = scenActions.querySelector('.sl-scen-selected-name');
-      if (!s || !name) return;
+      if (!s) return;
       const yearText = s.year < 0 ? `前${Math.abs(s.year)}年` : `${s.year}年`;
-      name.textContent = `${yearText} ${s.title || ''}`.trim();
+      const yrEl = scenActions.querySelector('.sl-scen-fs-year');
+      const ggEl = scenActions.querySelector('.sl-scen-fs-gengo');
+      const ttEl = scenActions.querySelector('.sl-scen-fs-title');
+      const sbEl = scenActions.querySelector('.sl-scen-fs-sub');
+      const lrEl = scenActions.querySelector('.sl-scen-fs-lore');
+      if (yrEl) yrEl.textContent = yearText;
+      if (ggEl) {
+        ggEl.textContent = s.gengo ? `年号：${s.gengo}` : '';
+        ggEl.hidden = !s.gengo;
+      }
+      if (ttEl) ttEl.textContent = s.title || '';
+      if (sbEl) {
+        sbEl.textContent = s.subtitle ? `〜${s.subtitle}〜` : '';
+        sbEl.hidden = !s.subtitle;
+      }
+      if (lrEl) {
+        const mainLore = s.lore_background || s.desc || '';
+        const extraFocus = s.lore_focus ? `\n\n【見どころ】\n${s.lore_focus}` : '';
+        lrEl.textContent = `${mainLore}${extraFocus}`.trim();
+      }
+      scenPanel?.classList.add('is-scen-detail-open');
+      scenActions.hidden = false;
+      scenActions.scrollTop = 0;
     };
-    scenActions.querySelector('.sl-scen-explain-btn')?.addEventListener('click', openScenarioDetailModal);
-    scenActions.querySelector('.sl-scen-next-btn')?.addEventListener('click', () => setStep(2));
-    scenActions.querySelector('.sl-scen-back-btn')?.addEventListener('click', () => {
+
+    const closeScenarioFullscreen = () => {
+      scenPanel?.classList.remove('is-scen-detail-open');
       scenActions.hidden = true;
-      scenBody?.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // 「大名選択に進む」を押すと ③ 勢力図 に遷移する
+    scenActions.querySelector('.sl-scen-next-btn')?.addEventListener('click', () => {
+      closeScenarioFullscreen();
+      setStep(3);
+    });
+    scenActions.querySelector('.sl-scen-back-btn')?.addEventListener('click', () => {
+      closeScenarioFullscreen();
     });
 
-    // シナリオを選んでも自動では②へ移動せず、利用者が「大名選択に進む」を押して進む。
     scenBody?.addEventListener('click', (e) => {
       if (e.target.closest('.scenario-btn')) {
         setTimeout(() => {
           updateScenarioPreview();
-          updateScenarioActions();
-          scenActions.hidden = false;
+          openScenarioFullscreen();
         }, 60);
       }
     });
@@ -725,19 +778,48 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     svg = document.createElementNS(NS, 'svg'); svg.setAttribute('class', 'sl-svgmap');
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
     const provs = window.PROVINCES_DATA || [];
+    const SHIKOKU_IDS = new Set(['iyo', 'oshu', 'uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_aki', 'tosa_gun', 'tosa_nakamura']);
+    const provById = new Map(provs.map(p => [p.id, p]));
+    const getProvTransform = (pid) => {
+      const tr = [];
+      if (pid === 'ryukyu') tr.push('rotate(3 500 340)');
+      if (pid !== 'goto') tr.push('translate(16 0)');
+      const pr = provById.get(pid);
+      const ox = Number(pr?.mapOffsetX), oy = Number(pr?.mapOffsetY);
+      if ((Number.isFinite(ox) && ox) || (Number.isFinite(oy) && oy)) {
+        tr.push(`translate(${Number.isFinite(ox) ? ox : 0} ${Number.isFinite(oy) ? oy : 0})`);
+      }
+      if (SHIKOKU_IDS.has(pid)) tr.push('rotate(4 280 450)');
+      return tr.join(' ');
+    };
+    const getBorderTransform = (p1, p2) => {
+      if (p1 === 'goto' || p2 === 'goto') return getProvTransform('goto');
+      const tr = ['translate(16 0)'];
+      if (SHIKOKU_IDS.has(p1) && SHIKOKU_IDS.has(p2)) tr.push('rotate(4 280 450)');
+      return tr.join(' ');
+    };
     const bData = window.MAP_BORDERS_DATA || null;
     let bordersHtml = '';
     if (bData) {
       if (Array.isArray(bData.coastlines)) {
-        bordersHtml += bData.coastlines.map(c => `<path class="sl-coast-line sl-coastline" data-p="${esc(c.p)}" d="${esc(c.d)}" fill="none" stroke="rgba(20, 14, 8, 0.78)" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>`).join('');
+        bordersHtml += bData.coastlines.map(c => {
+          const ct = getProvTransform(c.p);
+          return `<path class="sl-coast-line sl-coastline" data-p="${esc(c.p)}" d="${esc(c.d)}"${ct ? ` transform="${ct}"` : ''} fill="none" stroke="rgba(20, 14, 8, 0.78)" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>`;
+        }).join('');
       } else if (bData.coastline) {
         bordersHtml += `<path class="sl-coastline" d="${esc(bData.coastline)}" fill="none" stroke="rgba(20, 14, 8, 0.78)" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>`;
       }
       if (Array.isArray(bData.borders)) {
-        bordersHtml += bData.borders.map(b => `<path class="sl-border-line" data-p1="${esc(b.p1)}" data-p2="${esc(b.p2)}" d="${esc(b.d)}" fill="none" stroke="rgba(20, 14, 8, 0.72)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>`).join('');
+        bordersHtml += bData.borders.map(b => {
+          const bt = getBorderTransform(b.p1, b.p2);
+          return `<path class="sl-border-line" data-p1="${esc(b.p1)}" data-p2="${esc(b.p2)}" d="${esc(b.d)}"${bt ? ` transform="${bt}"` : ''} fill="none" stroke="rgba(20, 14, 8, 0.72)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>`;
+        }).join('');
       }
     }
-    svg.innerHTML = `<g class="sl-provs">${provs.map(p => `<path class="sl-prov" data-p="${esc(p.id)}" d="${esc(p.svgPath || p.d || '')}"><title>${esc(p.name)}</title></path>`).join('')}</g>${bordersHtml ? `<g class="sl-borders" style="pointer-events:none;">${bordersHtml}</g>` : ''}`;
+    svg.innerHTML = `<g class="sl-archipelago-wrap"><g class="sl-archipelago" transform="rotate(-3, 500, 340)"><g class="sl-provs">${provs.map(p => {
+      const pt = getProvTransform(p.id);
+      return `<path class="sl-prov" data-p="${esc(p.id)}" d="${esc(p.svgPath || p.d || '')}"${pt ? ` transform="${pt}"` : ''}><title>${esc(p.name)}</title></path>`;
+    }).join('')}</g>${bordersHtml ? `<g class="sl-borders" style="pointer-events:none;">${bordersHtml}</g>` : ''}</g></g>`;
     el.appendChild(svg);
     paths = Object.fromEntries([...svg.querySelectorAll('.sl-prov')].map(p => [p.dataset.p, p]));
     slBorderEls = [...svg.querySelectorAll('.sl-border-line')].map(el => ({ el, p1: el.dataset.p1, p2: el.dataset.p2 }));

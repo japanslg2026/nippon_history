@@ -12,7 +12,7 @@ const SHIKOKU_PROVINCE_IDS = new Set(['iyo', 'oshu', 'uwajima', 'noshima', 'sanu
 const SHIKOKU_MAP_TRANSFORM = 'rotate(4 280 450)';
 // 地図枠と列島全体の傾きは変えず、五島以外だけを右へ寄せる。
 const NON_GOTO_MAP_TRANSFORM = 'translate(16 0)';
-const TERRITORY_COLOR_KAMON_CLANS = new Set(['saionji_iyo', 'kato', 'murakami_noshima', 'akita', 'gamo', 'gamou', 'todo', 'tosa', 'clan_8849', 'kumamoto_hosokawa', 'ako_ronin', 'sakai', 'fukui_matsudaira', 'okayama', 'tottori', 'matsue', 'uwajima_date', 'makino', 'kuwana', 'ando', 'niwa', 'goto', 'suwa', 'sengoku', 'bessho', 'shiina', 'sano', 'nanjo', 'aki_tosa', 'motoyama', 'ichijo', 'chosokabe', 'takato', 'oyama']);
+const TERRITORY_COLOR_KAMON_CLANS = new Set(['saito', 'takigawa', 'saionji_iyo', 'kato', 'murakami_noshima', 'akita', 'gamo', 'gamou', 'todo', 'tosa', 'clan_8849', 'kumamoto_hosokawa', 'ako_ronin', 'sakai', 'fukui_matsudaira', 'okayama', 'tottori', 'matsue', 'uwajima_date', 'makino', 'kuwana', 'ando', 'niwa', 'goto', 'suwa', 'sengoku', 'bessho', 'shiina', 'sano', 'nanjo', 'aki_tosa', 'motoyama', 'ichijo', 'chosokabe', 'takato', 'oyama']);
 
 export class MapRenderer {
   constructor(game) {
@@ -37,6 +37,7 @@ export const MapRendererMethods = {
 
   getProvinceMapTransform(provinceId) {
     const transforms = [];
+    if (provinceId === 'ryukyu') transforms.push('rotate(3 500 340)');
     if (provinceId !== 'goto') transforms.push(NON_GOTO_MAP_TRANSFORM);
     const offset = this.getProvinceMapOffset(provinceId);
     if (offset.x || offset.y) transforms.push(`translate(${offset.x} ${offset.y})`);
@@ -54,27 +55,86 @@ export const MapRendererMethods = {
     return transforms.join(' ');
   },
 
-  /** 領土色が変わる家紋は、地図用の個別シンボルにして外枠の背景色も追随させる。 */
+  /**
+   * 地図上の家紋シンボルを生成・更新する：
+   * - 全ての地図家紋で外周の金色縁取り（stroke）を省略してすっきり見せる
+   * - 斎藤道三（saito）や領土色連動大名は背景円を領土色（fillColor）に追随させる
+   */
   getMapKamonId(province, fillColor) {
     const baseId = province?.ownerId ? this.getClanKamonId(province.ownerId) : '';
-    if (!baseId || !province || !TERRITORY_COLOR_KAMON_CLANS.has(province.ownerId)) return baseId;
+    if (!baseId || !province) return baseId;
 
     const source = document.getElementById(baseId);
     if (!source || !source.parentNode) return baseId;
 
+    const srcVer = source.getAttribute('data-v') || '1';
     const mapKamonId = `${baseId}-map-${province.id}`;
     let mapSymbol = document.getElementById(mapKamonId);
-    if (!mapSymbol) {
+    if (!mapSymbol || mapSymbol.getAttribute('data-src-id') !== `${baseId}:${srcVer}`) {
+      if (mapSymbol && mapSymbol.parentNode) mapSymbol.parentNode.removeChild(mapSymbol);
       mapSymbol = source.cloneNode(true);
       mapSymbol.id = mapKamonId;
+      mapSymbol.setAttribute('data-src-id', `${baseId}:${srcVer}`);
       source.parentNode.appendChild(mapSymbol);
     }
 
-    const backdrop = Array.from(mapSymbol.children).find(el =>
-      el.tagName && el.tagName.toLowerCase() === 'circle' && Number(el.getAttribute('r')) >= 14
-    );
-    if (backdrop) backdrop.setAttribute('fill', fillColor);
+    const syncTerritoryFill = TERRITORY_COLOR_KAMON_CLANS.has(province.ownerId);
+    Array.from(mapSymbol.children).forEach(el => {
+      if (!el.tagName || el.tagName.toLowerCase() !== 'circle') return;
+      const r = Number(el.getAttribute('r'));
+      if (r >= 13.5) {
+        // 地図上の家紋の周りの金色の縁取りを省略
+        el.setAttribute('stroke', 'none');
+        el.setAttribute('stroke-width', '0');
+        if (fillColor) { // 家紋の背景色は全大名家とも領土の色に合わせる（2026-11-07）
+          el.setAttribute('fill', fillColor);
+        }
+      }
+    });
     return mapKamonId;
+  },
+
+  /** 和紙テクスチャと勢力外周インナーグロー用のSVG定義を初期化する（家紋symbolは保持） */
+  ensureMapTextureDefs() {
+    if (typeof document === 'undefined') return null;
+    const svg = document.getElementById('sengokuMapSvg');
+    if (!svg) return null;
+    let defs = document.getElementById('mapSvgDefs');
+    if (!defs) {
+      defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      defs.setAttribute('id', 'mapSvgDefs');
+      svg.insertBefore(defs, svg.firstChild);
+    }
+
+    if (!document.getElementById('mapReliefSheen')) { // 和紙風の模様は削除（2026-11-07）
+      const tmp = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      tmp.innerHTML = `
+        <linearGradient id="mapReliefSheen" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#fff9ea" stop-opacity="0.11"/>
+          <stop offset="48%" stop-color="#fff6e0" stop-opacity="0.02"/>
+          <stop offset="100%" stop-color="#120904" stop-opacity="0.14"/>
+        </linearGradient>
+      `;
+      while (tmp.firstElementChild) {
+        defs.appendChild(tmp.firstElementChild);
+      }
+    }
+
+    let landClip = document.getElementById('mapLandClip');
+    if (!landClip) {
+      landClip = document.createElementNS('http://www.w3.org/2000/svg', 'clipPath');
+      landClip.setAttribute('id', 'mapLandClip');
+      defs.appendChild(landClip);
+    }
+
+    let innerGlowDefs = document.getElementById('mapInnerGlowPaths');
+    if (!innerGlowDefs) {
+      innerGlowDefs = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      innerGlowDefs.setAttribute('id', 'mapInnerGlowPaths');
+      defs.appendChild(innerGlowDefs);
+    }
+
+    return { defs, landClip, innerGlowDefs };
   },
 
   /** 国境線を細く・滑らか・半透明にするモダン地図スタイル（CSS注入、1回のみ） */
@@ -147,11 +207,12 @@ export const MapRendererMethods = {
         stroke-linecap: round;
         stroke-miterlimit: 2;
         vector-effect: non-scaling-stroke;
-        fill-opacity: 0.88;
+        fill-opacity: 1; /* 2026-11-07: 列島の下に背景の雲海が透けないよう不透明に */
         paint-order: fill stroke;
         transition: fill-opacity .15s ease, filter .15s ease;
         cursor: pointer;
       }
+      #mapTextureAndGlowGroup { pointer-events: none; }
       #mapBordersGroup { pointer-events: none; }
       #mapBordersGroup .map-border-line, #mapBordersGroup .map-coastline, #mapBordersGroup .map-coast-line {
         vector-effect: non-scaling-stroke;
@@ -253,19 +314,37 @@ export const MapRendererMethods = {
       bordersGroup.style.pointerEvents = 'none';
     }
 
+    const texDefs = this.ensureMapTextureDefs();
+    const landClip = texDefs ? texDefs.landClip : null;
+    const innerGlowDefs = texDefs ? texDefs.innerGlowDefs : null;
+    if (landClip) landClip.innerHTML = '';
+    if (innerGlowDefs) innerGlowDefs.innerHTML = '';
+
+    let texGlowGroup = document.getElementById('mapTextureAndGlowGroup');
+    if (!texGlowGroup) {
+      texGlowGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      texGlowGroup.setAttribute('id', 'mapTextureAndGlowGroup');
+      texGlowGroup.setAttribute('clip-path', 'url(#mapLandClip)');
+      texGlowGroup.style.pointerEvents = 'none';
+    }
+    texGlowGroup.innerHTML = `
+      <rect x="-200" y="-100" width="1500" height="900" fill="url(#mapReliefSheen)"></rect>
+    `;
+
     let archGroup = document.getElementById('mapArchipelagoGroup');
     const panLayer = document.getElementById('mapPanZoomLayer');
     if (!archGroup && panLayer) {
       archGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
       archGroup.setAttribute('id', 'mapArchipelagoGroup');
-      archGroup.setAttribute('transform', 'rotate(1, 500, 340)');
+      archGroup.setAttribute('transform', 'rotate(-3, 500, 340)');
       if (roadsGroup) archGroup.appendChild(roadsGroup);
       archGroup.appendChild(provGroup);
+      archGroup.appendChild(texGlowGroup);
       archGroup.appendChild(bordersGroup);
       if (markGroup) archGroup.appendChild(markGroup);
       panLayer.appendChild(archGroup);
     } else if (archGroup) {
-      archGroup.setAttribute('transform', 'rotate(1, 500, 340)');
+      archGroup.setAttribute('transform', 'rotate(-3, 500, 340)');
       if (bordersGroup.parentNode !== archGroup) {
         if (markGroup && markGroup.parentNode === archGroup) {
           archGroup.insertBefore(bordersGroup, markGroup);
@@ -273,9 +352,12 @@ export const MapRendererMethods = {
           archGroup.appendChild(bordersGroup);
         }
       }
+      if (texGlowGroup.parentNode !== archGroup) {
+        archGroup.insertBefore(texGlowGroup, bordersGroup);
+      }
     }
 
-    // 境界線要素の初期化（海岸線＋各令制国間の境界セグメント）
+    // 境界線要素の初期化（海岸線＋各令制国間の境界セグメント＋勢力外周インナーグロー）
     bordersGroup.innerHTML = '';
     const borderData = (typeof window !== 'undefined' && window.MAP_BORDERS_DATA) || null;
     this._borderElements = [];
@@ -289,14 +371,23 @@ export const MapRendererMethods = {
           cp.setAttribute('data-p', c.p);
           cp.setAttribute('d', c.d);
           cp.setAttribute('fill', 'none');
-          cp.setAttribute('stroke', 'rgba(20, 14, 8, 0.78)');
-          cp.setAttribute('stroke-width', '0.85');
+          cp.setAttribute('stroke', 'transparent'); // 海岸線は透明（2026-11-07）
+          cp.setAttribute('stroke-width', '0.5');
           cp.setAttribute('stroke-linecap', 'round');
           cp.setAttribute('stroke-linejoin', 'round');
           const coastTransform = this.getProvinceMapTransform(c.p);
           if (coastTransform) cp.setAttribute('transform', coastTransform);
           bordersGroup.appendChild(cp);
           this._coastElements.push({ el: cp, p: c.p });
+
+          if (innerGlowDefs) {
+            const gp = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            gp.setAttribute('d', c.d);
+            gp.setAttribute('fill', 'none');
+            gp.setAttribute('vector-effect', 'non-scaling-stroke');
+            if (coastTransform) gp.setAttribute('transform', coastTransform);
+            innerGlowDefs.appendChild(gp);
+          }
         });
       } else if (borderData.coastline) {
         const coastPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -304,11 +395,19 @@ export const MapRendererMethods = {
         coastPath.setAttribute('class', 'map-coastline');
         coastPath.setAttribute('d', borderData.coastline);
         coastPath.setAttribute('fill', 'none');
-        coastPath.setAttribute('stroke', 'rgba(20, 14, 8, 0.78)');
-        coastPath.setAttribute('stroke-width', '0.85');
+        coastPath.setAttribute('stroke', 'transparent'); // 海岸線は透明（2026-11-07）
+        coastPath.setAttribute('stroke-width', '0.5');
         coastPath.setAttribute('stroke-linecap', 'round');
         coastPath.setAttribute('stroke-linejoin', 'round');
         bordersGroup.appendChild(coastPath);
+
+        if (innerGlowDefs) {
+          const gp = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          gp.setAttribute('d', borderData.coastline);
+          gp.setAttribute('fill', 'none');
+          gp.setAttribute('vector-effect', 'non-scaling-stroke');
+          innerGlowDefs.appendChild(gp);
+        }
       }
       if (Array.isArray(borderData.borders)) {
         borderData.borders.forEach(b => {
@@ -319,14 +418,24 @@ export const MapRendererMethods = {
           bp.setAttribute('data-p2', b.p2);
           bp.setAttribute('d', b.d);
           bp.setAttribute('fill', 'none');
-          bp.setAttribute('stroke', 'rgba(20, 14, 8, 0.75)');
-          bp.setAttribute('stroke-width', '0.8');
+          bp.setAttribute('stroke', 'rgba(150, 156, 162, 0.8)');
+          bp.setAttribute('stroke-width', '0.5');
           bp.setAttribute('stroke-linecap', 'round');
           bp.setAttribute('stroke-linejoin', 'round');
           const borderTransform = this.getBorderMapTransform(b.p1, b.p2);
           if (borderTransform) bp.setAttribute('transform', borderTransform);
           bordersGroup.appendChild(bp);
-          this._borderElements.push({ el: bp, p1: b.p1, p2: b.p2 });
+
+          let glowEl = null;
+          if (innerGlowDefs) {
+            glowEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            glowEl.setAttribute('d', b.d);
+            glowEl.setAttribute('fill', 'none');
+            glowEl.setAttribute('vector-effect', 'non-scaling-stroke');
+            if (borderTransform) glowEl.setAttribute('transform', borderTransform);
+            innerGlowDefs.appendChild(glowEl);
+          }
+          this._borderElements.push({ el: bp, glowEl, p1: b.p1, p2: b.p2 });
         });
       }
     }
@@ -418,11 +527,16 @@ export const MapRendererMethods = {
           const target = this.provinces.find(x => x.id === nId);
           if (target && p.cx !== undefined && target.cx !== undefined) {
             if ((p.id === 'ryukyu' && nId === 'satsuma') || (p.id === 'satsuma' && nId === 'ryukyu')) {
-              // 琉球 - 薩摩間の航路は九州南西海域を優美に周回する曲線航路
+              // 琉球 - 薩摩間の航路は九州南西海域を優美に周回する曲線航路（大隅半島を通らないよう、半島の南西沖を回って少し下に曲げる。2026-11-07）
               const satsumaP = p.id === 'satsuma' ? p : target;
               const ryukyuP = p.id === 'ryukyu' ? p : target;
+              const ryuRad = (3 * Math.PI) / 180;
+              const ryuDx = (ryukyuP.cx + 16) - 500;
+              const ryuDy = ryukyuP.cy - 340;
+              const ryuRoadX = (500 + ryuDx * Math.cos(ryuRad) - ryuDy * Math.sin(ryuRad) - 16).toFixed(1);
+              const ryuRoadY = (340 + ryuDx * Math.sin(ryuRad) + ryuDy * Math.cos(ryuRad)).toFixed(1);
               const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-              path.setAttribute('d', `M ${satsumaP.cx} ${satsumaP.cy} C 25 540, 60 595, ${ryukyuP.cx} ${ryukyuP.cy}`);
+              path.setAttribute('d', `M ${satsumaP.cx} ${satsumaP.cy} C 34 516, 22 546, 58 566 S 134 570, ${ryuRoadX} ${ryuRoadY}`);
               path.setAttribute('stroke', 'rgba(180, 140, 70, 0.45)');
               path.setAttribute('stroke-width', '1.5');
               path.setAttribute('stroke-dasharray', '3,3');
@@ -489,6 +603,13 @@ export const MapRendererMethods = {
 
       provGroup.appendChild(path);
 
+      if (landClip) {
+        const clipPathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        clipPathEl.setAttribute('d', p.svgPath || p.d);
+        if (provinceTransform) clipPathEl.setAttribute('transform', provinceTransform);
+        landClip.appendChild(clipPathEl);
+      }
+
       // 家紋バッジ（各大名の本拠地のみに家紋を表示）
       if (p.cx !== undefined && p.cy !== undefined) {
         const isCapital = p.ownerId ? (typeof this.isCapitalProvince === 'function' ? this.isCapitalProvince(p.id, p.ownerId) : true) : false;
@@ -502,8 +623,8 @@ export const MapRendererMethods = {
           badgeG.style.display = 'none';
         }
 
-        // 家紋バッジ (16pxでさらに小型化・過密解消)
-        const badgeSize = 16;
+        // 家紋バッジ (金色の外縁を省略し、ごくわずかに小型化: 14px)
+        const badgeSize = 14;
         const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
         use.setAttribute('id', `kamon-use-${p.id}`);
         use.setAttribute('href', showKamon ? `#${this.getMapKamonId(p, this.getProvinceColor(p))}` : '');
@@ -547,7 +668,7 @@ export const MapRendererMethods = {
 
       // スマホ：地図上のドラッグは上下左右とも地図を動かす。2本指で拡大縮小
       const touchDistance = (a, b) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
-      const mapZoomLimit = () => (window.matchMedia('(max-width: 768px)').matches ? 5 : 3.5);
+      const mapZoomLimit = () => (window.matchMedia('(max-width: 768px)').matches ? 10 : 6.5);
 
       wrapper.addEventListener('touchstart', (e) => {
         if (e.target.closest('.map-ctrl-btn')) return;
@@ -669,7 +790,83 @@ export const MapRendererMethods = {
         this.mapPanY = 0;
         this.applyPanZoom();
       });
+      document.getElementById('mapHomeZoomBtn')?.addEventListener('click', () => {
+        this.zoomToHomeProvince();
+      });
     }
+  },
+
+  /**
+   * 🏠ボタン：自国本拠の周辺領土を、画面の上下幅に合わせて日本列島の約1/3が収まる倍率で拡大表示する
+   */
+  zoomToHomeProvince() {
+    const wrapper = document.getElementById('mapWrapper');
+    if (!wrapper) return;
+
+    let homeProv = (typeof this.getPlayerHomeProvince === 'function') ? this.getPlayerHomeProvince() : null;
+    if (!homeProv && this.selectedProvId) {
+      homeProv = (this.provinces || []).find(p => p.id === this.selectedProvId) || null;
+    }
+    if (!homeProv) {
+      homeProv = (this.provinces || []).find(p => p.ownerId && p.ownerId === this.playerClanId)
+        || (this.provinces || [])[0] || null;
+    }
+    if (!homeProv) return;
+
+    // 1. 本拠国の中心座標（家紋基準点または重心）をSVG変換チェーン通りに算出
+    let hx = (homeProv.kamonX !== undefined ? homeProv.kamonX : homeProv.cx)
+      + (Number.isFinite(homeProv.kamonOffsetX) ? homeProv.kamonOffsetX : 0);
+    let hy = (homeProv.kamonY !== undefined ? homeProv.kamonY : homeProv.cy)
+      + (Number.isFinite(homeProv.kamonOffsetY) ? homeProv.kamonOffsetY : 0);
+
+    // 四国回転: rotate(4, 280, 450)
+    if (this.isShikokuProvince(homeProv.id)) {
+      const rad4 = (4 * Math.PI) / 180;
+      const dx4 = hx - 280;
+      const dy4 = hy - 450;
+      hx = 280 + dx4 * Math.cos(rad4) - dy4 * Math.sin(rad4);
+      hy = 450 + dx4 * Math.sin(rad4) + dy4 * Math.cos(rad4);
+    }
+
+    // 個別オフセット + NON_GOTO_MAP_TRANSFORM (translate(16, 0))
+    const offset = this.getProvinceMapOffset(homeProv.id);
+    hx += offset.x + (homeProv.id !== 'goto' ? 16 : 0);
+    hy += offset.y;
+
+    // 列島全体回転: rotate(-3, 500, 340)（蝦夷〜九州を左へ3度傾ける。琉球は水平位置を維持）
+    const rad1 = ((homeProv.id === 'ryukyu' ? 0 : -3) * Math.PI) / 180;
+    const dx1 = hx - 500;
+    const dy1 = hy - 340;
+    hx = 500 + dx1 * Math.cos(rad1) - dy1 * Math.sin(rad1);
+    hy = 340 + dx1 * Math.sin(rad1) + dy1 * Math.cos(rad1);
+
+    // 2. viewBox="17 90 966 500" (中心: 500, 340) と画面高さから「日本列島の約1/3（約165 SVG単位）」が画面上下幅に合う倍率を算出
+    const rect = wrapper.getBoundingClientRect();
+    const w = Math.max(240, rect.width || 800);
+    const h = Math.max(200, rect.height || 500);
+    const svgUnitPx = Math.min(w / 966, h / 500);
+    const archipelagoThirdSvg = 165;
+    const maxLim = window.matchMedia('(max-width: 768px)').matches ? 10 : 6.5;
+    // 🏠ボタンの拡大倍率は2倍に固定（2026-11-07）
+    const targetScale = 2;
+
+    // PCで右ドロワーが開いている場合は可視領域の中央へ合わせる
+    let centerSvgX = 500;
+    let centerSvgY = 340;
+    const isDesktop = !window.matchMedia('(max-width: 768px)').matches;
+    const sidePanel = document.querySelector('.side-panel.is-open');
+    if (isDesktop && sidePanel && svgUnitPx > 0) {
+      const spWidth = sidePanel.getBoundingClientRect().width || 0;
+      if (spWidth > 0 && spWidth < w * 0.7) {
+        centerSvgX -= (spWidth * 0.5) / svgUnitPx;
+      }
+    }
+
+    this.mapScale = targetScale;
+    this.mapPanX = centerSvgX - hx * targetScale;
+    this.mapPanY = centerSvgY - hy * targetScale;
+    this.applyPanZoom();
+    try { this.audio?.playHyoshigi?.(); } catch (_) {}
   },
 
   applyPanZoom() {
@@ -984,8 +1181,8 @@ export const MapRendererMethods = {
     const selProv = visibleSelectedProvId ? provMap.get(visibleSelectedProvId) : null;
     const hlClanId = selProv ? selProv.ownerId : null;
 
-    // 1. 各領国間の境界線の更新
-    this._borderElements.forEach(({ el, p1, p2 }) => {
+    // 1. 各領国間の境界線の更新（勢力外周インナーグローも同一勢力内では非表示にし、勢力外周のみに陰影を与える）
+    this._borderElements.forEach(({ el, glowEl, p1, p2 }) => {
       const prov1 = provMap.get(p1);
       const prov2 = provMap.get(p2);
       const o1 = prov1 ? prov1.ownerId : null;
@@ -996,8 +1193,10 @@ export const MapRendererMethods = {
         // 同一大名領国内の境界線：非表示にして完全一体化
         // （選択領国の外周は provSelectedOutline で最前面に優先描画される）
         el.style.display = 'none';
+        if (glowEl) glowEl.style.display = 'none';
       } else {
         el.style.display = '';
+        if (glowEl) glowEl.style.display = '';
         const isHlBorder = !!hlClanId && (o1 === hlClanId || o2 === hlClanId);
         if (isSelBorder) {
           // 選んだ国と他家との境界線：領国全体の輪郭よりも優先表示（純白、1.6px）
@@ -1015,8 +1214,8 @@ export const MapRendererMethods = {
           // 異なる家同士の国境は、領土色を邪魔しない中間グレーで表示する。
           // 選択・勢力強調時のみ上記の白／金の輪郭を優先する。
           el.style.display = '';
-          el.style.stroke = 'rgba(118, 124, 130, 0.78)';
-          el.style.strokeWidth = '0.8px';
+          el.style.stroke = 'rgba(150, 156, 162, 0.8)';
+          el.style.strokeWidth = '0.5px';
           el.style.opacity = '1';
           el.style.filter = 'none';
         }
@@ -1043,13 +1242,13 @@ export const MapRendererMethods = {
           el.style.opacity = '1';
           el.style.filter = 'none';
         } else if (hlClanId) {
-          el.style.stroke = 'rgba(70, 62, 52, 0.55)';
-          el.style.strokeWidth = '0.65px';
+          el.style.stroke = 'transparent';
+          el.style.strokeWidth = '0.5px';
           el.style.opacity = '0.6';
           el.style.filter = 'none';
         } else {
-          el.style.stroke = 'rgba(20, 14, 8, 0.78)';
-          el.style.strokeWidth = '0.85px';
+          el.style.stroke = 'transparent';
+          el.style.strokeWidth = '0.5px';
           el.style.opacity = '1';
           el.style.filter = 'none';
         }
@@ -1089,7 +1288,8 @@ export const MapRendererMethods = {
       }
       ctx.clearRect(0, 0, w, h);
 
-      const s = this.seasonIdx; // 0:春, 1:夏, 2:秋, 3:冬
+      const s = window.seasonVisualIdx ? window.seasonVisualIdx(this.seasonIdx) : this.seasonIdx; // 描画用 0:春, 1:夏, 2:秋, 3:冬
+      const isEarlySummer = this.seasonIdx === 1; // 初夏：蛍火
       const isRain = this.currentWeather === '恵みの雨' || this.currentWeather === '豪雨';
       const isBlizzard = this.currentWeather === '吹雪' || this.currentWeather === '大雪';
 
@@ -1137,8 +1337,9 @@ export const MapRendererMethods = {
           ctx.save();
           ctx.beginPath();
           const radGrad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 2);
-          radGrad.addColorStop(0, `rgba(255, 235, 140, ${p.opacity * 0.7})`);
-          radGrad.addColorStop(1, 'rgba(255, 235, 140, 0)');
+          const glow = isEarlySummer ? '190, 255, 150' : '255, 235, 140'; // 初夏は蛍の淡い緑、盛夏は陽光
+          radGrad.addColorStop(0, `rgba(${glow}, ${p.opacity * 0.7})`);
+          radGrad.addColorStop(1, `rgba(${glow}, 0)`);
           ctx.fillStyle = radGrad;
           ctx.arc(p.x, p.y, p.size * 2, 0, Math.PI * 2);
           ctx.fill();

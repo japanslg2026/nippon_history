@@ -101,8 +101,8 @@
  * @typedef {Object} Scenario
  * @property {string} id - シナリオID (例: '1560', '1582')
  * @property {number} year - 開始年 (西暦)
- * @property {'春'|'夏'|'秋'|'冬'|string} season - 開始季節
- * @property {number} seasonIdx - 季節インデックス (0: 春, 1: 夏, 2: 秋, 3: 冬)
+ * @property {'春'|'夏'|'秋'|'冬'|string} season - 開始季節（旧4季表記。「夏」は初夏として扱う）
+ * @property {number} seasonIdx - 季節インデックス（旧4季: 0春 1夏 2秋 3冬。seasonScheme:5 なら 0春 1初夏 2盛夏 3秋 4冬）
  * @property {string} title - シナリオ本題 (例: '桶狭間の戦い')
  * @property {string} [subtitle] - シナリオ副題
  * @property {string} [gengo] - 元号年号 (例: '永禄3年')
@@ -152,7 +152,8 @@
  * @property {number} version - セーブデータ構造バージョン
  * @property {string} currentScenarioId - シナリオID
  * @property {number} year - 現在年
- * @property {number} seasonIdx - 現在季節 (0-3)
+ * @property {number} seasonIdx - 現在季節 (0:春 1:初夏 2:盛夏 3:秋 4:冬)
+ * @property {number} [seasonScheme] - 5 なら5ターン制のセーブ（無ければ旧4季制として換算）
  * @property {string} playerClanId - プレイヤー大名勢力ID
  * @property {string} [currentWeather] - 現在の天候
  * @property {Province[]} provinces - 領国状態配列 (差分保存最適化対象)

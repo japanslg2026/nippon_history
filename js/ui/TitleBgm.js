@@ -37,6 +37,15 @@
     try { e.playTrack('op', false); } catch (_) {}
   }
   function unlock() {
+    if (!horaCtx || horaCtx.state === 'closed') {
+      try {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) horaCtx = new AC();
+      } catch (_) {}
+    }
+    if (horaCtx && horaCtx.state === 'suspended') {
+      try { horaCtx.resume().catch(() => {}); } catch (_) {}
+    }
     if (unlocked) return; unlocked = true;
     const e = m(); if (!e) return;
     try { e.init(); if (e.ctx && e.ctx.state === 'suspended') e.ctx.resume().catch(() => {}); } catch (_) {}
@@ -49,40 +58,61 @@
   // 独立した AudioContext で鳴らすので、ゲーム開始処理や BGM 切替に影響されず、開始もブロックしない。
   let horaCtx = null, horaAt = 0, horaEndAt = 0;
   const horagaiRemainingMs = () => Math.max(0, horaEndAt - Date.now());
+  const isHoragaiMuted = () => {
+    if (window.SengokuSoundSync && window.SengokuSoundSync.isMuted) return true;
+    const g = window.game;
+    if (g && g.audio && g.audio.isMuted) return true;
+    return false;
+  };
+  function scheduleHoragaiNodes(c) {
+    const t = c.currentTime + 0.04, D = 2.6;
+    const out = c.createGain(); out.gain.value = 0.62;
+    const comp = c.createDynamicsCompressor(); out.connect(comp); comp.connect(c.destination);
+    // 本体: 鋸波の倍音列を共鳴フィルタで角笛らしく。音程は低く始まり持ち上がって最後に少し落ちる
+    const f0 = 146.8; // D3
+    const freq = (p) => { p.setValueAtTime(f0 * 0.86, t); p.exponentialRampToValueAtTime(f0, t + 0.35); p.setValueAtTime(f0, t + 1.9); p.exponentialRampToValueAtTime(f0 * 0.9, t + D); };
+    const env = c.createGain(); env.gain.setValueAtTime(0.0001, t);
+    env.gain.exponentialRampToValueAtTime(0.35, t + 0.25); env.gain.linearRampToValueAtTime(0.75, t + 1.3);
+    env.gain.linearRampToValueAtTime(0.6, t + 2.0); env.gain.exponentialRampToValueAtTime(0.0001, t + D);
+    const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 4;
+    lp.frequency.setValueAtTime(500, t); lp.frequency.linearRampToValueAtTime(1400, t + 1.3); lp.frequency.linearRampToValueAtTime(700, t + D);
+    const fm = c.createBiquadFilter(); fm.type = 'peaking'; fm.frequency.value = 620; fm.Q.value = 2; fm.gain.value = 8;
+    env.connect(lp); lp.connect(fm); fm.connect(out);
+    const vib = c.createOscillator(); vib.frequency.value = 5.2; const vg = c.createGain(); vg.gain.setValueAtTime(0, t); vg.gain.linearRampToValueAtTime(2.2, t + 1.5); vib.connect(vg);
+    [['sawtooth', 1, 0.5], ['sawtooth', 1.004, 0.35], ['triangle', 0.5, 0.5]].forEach(([ty, r, g]) => {
+      const o = c.createOscillator(); o.type = ty; freq(o.frequency); if (r !== 1) o.detune.value = 1200 * Math.log2(r);
+      vg.connect(o.frequency); const og = c.createGain(); og.gain.value = g; o.connect(og); og.connect(env); o.start(t); o.stop(t + D + 0.1);
+    });
+    vib.start(t); vib.stop(t + D + 0.1);
+    // 息の音: 帯域ノイズ
+    const len = Math.floor(c.sampleRate * (D + 0.1)); const buf = c.createBuffer(1, len, c.sampleRate); const d = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+    const ns = c.createBufferSource(); ns.buffer = buf; const bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 900; bp.Q.value = 1.2;
+    const ng = c.createGain(); ng.gain.setValueAtTime(0.0001, t); ng.gain.exponentialRampToValueAtTime(0.22, t + 0.12); ng.gain.linearRampToValueAtTime(0.08, t + 1.0); ng.gain.exponentialRampToValueAtTime(0.0001, t + D);
+    ns.connect(bp); bp.connect(ng); ng.connect(out); ns.start(t); ns.stop(t + D + 0.1);
+  }
   function horagai() {
-    if (muted()) return;
+    if (isHoragaiMuted()) return;
     const now0 = Date.now(); if (now0 - horaAt < 1500) return; horaAt = now0;
     try {
       const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
-      const c = horaCtx || (horaCtx = new AC()); if (c.state === 'suspended') c.resume().catch(() => {});
-      const t = c.currentTime + 0.03, D = 2.6;
-      const out = c.createGain(); out.gain.value = 0.55;
-      const comp = c.createDynamicsCompressor(); out.connect(comp); comp.connect(c.destination);
-      // 本体: 鋸波の倍音列を共鳴フィルタで角笛らしく。音程は低く始まり持ち上がって最後に少し落ちる
-      const f0 = 146.8; // D3
-      const freq = (p) => { p.setValueAtTime(f0 * 0.86, t); p.exponentialRampToValueAtTime(f0, t + 0.35); p.setValueAtTime(f0, t + 1.9); p.exponentialRampToValueAtTime(f0 * 0.9, t + D); };
-      const env = c.createGain(); env.gain.setValueAtTime(0.0001, t);
-      env.gain.exponentialRampToValueAtTime(0.35, t + 0.25); env.gain.linearRampToValueAtTime(0.75, t + 1.3);
-      env.gain.linearRampToValueAtTime(0.6, t + 2.0); env.gain.exponentialRampToValueAtTime(0.0001, t + D);
-      const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 4;
-      lp.frequency.setValueAtTime(500, t); lp.frequency.linearRampToValueAtTime(1400, t + 1.3); lp.frequency.linearRampToValueAtTime(700, t + D);
-      const fm = c.createBiquadFilter(); fm.type = 'peaking'; fm.frequency.value = 620; fm.Q.value = 2; fm.gain.value = 8;
-      env.connect(lp); lp.connect(fm); fm.connect(out);
-      const vib = c.createOscillator(); vib.frequency.value = 5.2; const vg = c.createGain(); vg.gain.setValueAtTime(0, t); vg.gain.linearRampToValueAtTime(2.2, t + 1.5); vib.connect(vg);
-      [['sawtooth', 1, 0.5], ['sawtooth', 1.004, 0.35], ['triangle', 0.5, 0.5]].forEach(([ty, r, g]) => {
-        const o = c.createOscillator(); o.type = ty; freq(o.frequency); if (r !== 1) o.detune.value = 1200 * Math.log2(r);
-        vg.connect(o.frequency); const og = c.createGain(); og.gain.value = g; o.connect(og); og.connect(env); o.start(t); o.stop(t + D + 0.1);
-      });
-      vib.start(t); vib.stop(t + D + 0.1);
-      // 息の音: 帯域ノイズ
-      const len = Math.floor(c.sampleRate * (D + 0.1)); const buf = c.createBuffer(1, len, c.sampleRate); const d = buf.getChannelData(0);
-      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
-      const ns = c.createBufferSource(); ns.buffer = buf; const bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 900; bp.Q.value = 1.2;
-      const ng = c.createGain(); ng.gain.setValueAtTime(0.0001, t); ng.gain.exponentialRampToValueAtTime(0.22, t + 0.12); ng.gain.linearRampToValueAtTime(0.08, t + 1.0); ng.gain.exponentialRampToValueAtTime(0.0001, t + D);
-      ns.connect(bp); bp.connect(ng); ng.connect(out); ns.start(t); ns.stop(t + D + 0.1);
-      horaEndAt = Date.now() + Math.ceil((D + 0.15) * 1000);
+      if (!horaCtx || horaCtx.state === 'closed') horaCtx = new AC();
+      const c = horaCtx;
+      const D = 2.6;
+      horaEndAt = Date.now() + Math.ceil((D + 0.2) * 1000);
       window.__horagaiPlayed = (window.__horagaiPlayed || 0) + 1;
-    } catch (_) {}
+      if (c.state === 'suspended') {
+        c.resume().then(() => {
+          try { scheduleHoragaiNodes(c); } catch (_) {}
+        }).catch(() => {
+          try { scheduleHoragaiNodes(c); } catch (_) {}
+        });
+      } else {
+        scheduleHoragaiNodes(c);
+      }
+    } catch (_) {
+      horaAt = 0;
+    }
   }
 
   const ICON_ON = '🔊', ICON_OFF = '🔇';
@@ -139,11 +169,15 @@
     });
     new MutationObserver(ms => ms.forEach(r => r.addedNodes.forEach(n => { if (n.nodeType === 1 && n.classList.contains('mk-overlay')) addMeikanBtn(n); })))
       .observe(document.body, { childList: true });
-    document.addEventListener('click', (e) => { if (e.target.closest && e.target.closest('#daimyoPopupStartBtn')) {
-      startClicked = true; done = true;
-      const e2 = m(); if (e2 && e2.currentTrack === 'op' && e2.timerId) { try { e2.stop(); } catch (_) {} } // タイトル曲は法螺貝と重ねずに止める
-      horagai();
-    } }, true);
+    document.addEventListener('click', (e) => {
+      const startBtn = e.target.closest && e.target.closest('#daimyoPopupStartBtn, #slStartBtn, #slMobileGo, #startGameBtn');
+      if (startBtn) {
+        if (startBtn.id === 'slMobileGo' && startBtn.textContent && startBtn.textContent.indexOf('出陣') === -1) return;
+        startClicked = true; done = true;
+        const e2 = m(); if (e2 && e2.currentTrack === 'op' && e2.timerId) { try { e2.stop(); } catch (_) {} } // タイトル曲は法螺貝と重ねずに止める
+        horagai();
+      }
+    }, true);
     setInterval(() => {
       if (!done && startClicked) { // ゲーム開始：別の曲が始まらなければ止める
         const e = m(); done = true;

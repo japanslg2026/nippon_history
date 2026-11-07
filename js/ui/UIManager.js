@@ -302,7 +302,7 @@ export const UIManagerMethods = {
 
         const daimyoLabel = this.savedDaimyoLabel(latestData, this.savedDaimyoName(latestData));
 
-        const seasonName = ['春', '夏', '秋', '冬'][latestData.seasonIdx || 0];
+        const seasonName = (window.SEASON_NAMES || ['春', '初夏', '盛夏', '秋', '冬'])[latestData.seasonScheme === 5 ? (latestData.seasonIdx || 0) : (window.legacySeasonIdxToNew ? window.legacySeasonIdxToNew(latestData.seasonIdx) : (latestData.seasonIdx || 0))];
 
         const totalCount = provs.length || ((window.PROVINCES_DATA && window.PROVINCES_DATA.length) || 77);
 
@@ -608,7 +608,7 @@ export const UIManagerMethods = {
 
     const info = {
 
-      relaxed:{ name: '楽級・安泰の世', lines: ['大名ごとの基準値に金+1,200／兵糧+1,500', 'はじめてでも余裕を持って遊べる難易度'] },
+      relaxed:{ name: '楽級・安泰の世', lines: ['大名ごとの基準値に金+1,200／兵糧+1,500', '覇道包囲網は起きず、諸大名はバランス型・内政型で動く', 'はじめてでも余裕を持って遊べる難易度'] },
 
       easy:   { name: '初級・天下泰平', lines: ['大名ごとの基準値に金+650／兵糧+850', '遊びやすさを重視した難易度'] },
 
@@ -883,7 +883,7 @@ export const UIManagerMethods = {
 
       const strVal = stats.stratagem ?? stats.intel ?? stats.intellect ?? ability.stratagem ?? 55;
 
-      const personalityKey = d.personality || ability.personality || 'balanced';
+      const personalityKey = (typeof this.resolveAmbitionPersonality === 'function' ? this.resolveAmbitionPersonality(d.id, d.personality || ability.personality) : null) || d.personality || ability.personality || 'balanced'; // 志向・難易度を反映（2026-11-07）
 
       const personLabel = personalityKey === 'aggressive' ? '攻勢型 ⚔️'
 
@@ -1075,7 +1075,7 @@ export const UIManagerMethods = {
 
     const strVal = stats.stratagem ?? stats.intel ?? stats.intellect ?? ability.stratagem ?? 55;
 
-    const personalityKey = d.personality || ability.personality || 'balanced';
+    const personalityKey = (typeof this.resolveAmbitionPersonality === 'function' ? this.resolveAmbitionPersonality(d.id, d.personality || ability.personality) : null) || d.personality || ability.personality || 'balanced'; // 志向・難易度を反映（2026-11-07）
 
     const personLabel = personalityKey === 'aggressive' ? '攻勢型 ⚔️'
 
@@ -5388,7 +5388,7 @@ export const UIManagerMethods = {
 
                 const remainHtml = a.left >= 0
 
-                  ? `<span style="color:#2ecc71; font-weight:bold; font-size:11.5pt;">残 ${a.left} 季</span><span style="font-size:9.5pt; color:#888; margin-left:4px;">(約${Math.ceil(a.left / 4)}年)</span>`
+                  ? `<span style="color:#2ecc71; font-weight:bold; font-size:11.5pt;">残 ${a.left} 季</span><span style="font-size:9.5pt; color:#888; margin-left:4px;">(約${Math.ceil(a.left / (window.SEASONS_PER_YEAR || 5))}年)</span>`
 
                   : `<span style="color:#2ecc71; font-weight:bold; font-size:11pt;">永続</span>`;
 
@@ -7050,35 +7050,41 @@ export const UIManagerMethods = {
 
 
   clearProvinceSelection() {
-    // 輪郭ハイライトは消すが、右側の領国軍情と軍令は自大名（観戦時は最後に操作した大名）の本拠地に連動させる
-    const home = (typeof this.getPlayerHomeProvince === 'function') ? this.getPlayerHomeProvince() : null;
-    if (home && home.id) {
-      this.selectProvince(home.id);
-      this.hideSelectionOutline = true;
-      this.updateMapDisplay();
-      return;
-    }
-    this.hideSelectionOutline = false;
+    // 未選択時はドロワー（右端スライドパネル／スマホ下部ボトムシート）を閉じ、地図を広く見せる
+    this.hideSelectionOutline = true;
     this.selectedProvId = null;
-    this.updateMapDisplay();
+
+    const sidePanel = document.querySelector('.side-panel');
+    if (sidePanel) sidePanel.classList.remove('is-open');
+    const mainLayout = document.querySelector('.main-layout');
+    if (mainLayout) mainLayout.classList.remove('drawer-open');
+
     const badge = document.getElementById('selectedProvBadge');
-    if (badge) {
-      badge.textContent = '';
-    }
+    if (badge) badge.textContent = '';
+
     const loreBtn = document.getElementById('btnMobileCastleLore');
     if (loreBtn) loreBtn.classList.add('is-hidden');
+
+    const mobileGovWrap = document.getElementById('mobileGovernPolicyWrap');
+    if (mobileGovWrap) {
+      mobileGovWrap.classList.add('is-hidden');
+      mobileGovWrap.style.display = 'none';
+    }
+
     const detailBox = document.getElementById('provDetailBox');
     if (detailBox) {
-      detailBox.classList.add('hidden');
       detailBox.innerHTML = '';
     }
+
+    if (typeof this.updateCommandButtons === 'function') {
+      this.updateCommandButtons();
+    }
+    this.updateMapDisplay();
   },
 
-  // 領国の選択と詳細表示,
+  // 領国の選択と詳細ドロワー（領国・城郭解説 / 所在武将リスト / 出陣・内政コマンド）表示,
 
-
-
-  selectProvince(provId, { showHighlight = false } = {}) {
+  selectProvince(provId, opts = {}) {
 
     if (!provId) {
       this.clearProvinceSelection();
@@ -7086,24 +7092,24 @@ export const UIManagerMethods = {
     }
 
     // diplomacy perspective: 他勢力領をクリックしたら視点を切替
-
     if (this.mapHeatMode === 'diplomacy') {
-
       const clicked = (this.provinces || []).find(x => x.id === provId);
-
       if (clicked && clicked.ownerId) {
-
         this.mapPerspectiveClanId = clicked.ownerId;
-
       }
-
     }
 
-    // 自動選択は右パネルの表示だけを更新する。地図上の強調は通常プレイ中に
-    // 領国を直接クリックした時だけ行い、観戦中のクリック要求は必ず無効化する。
-    const canShowHighlight = !!showHighlight && !this.isSpectatorMode;
+    const reqHighlight = (opts && typeof opts.showHighlight === 'boolean')
+      ? opts.showHighlight
+      : !this.isSpectatorMode;
+    const canShowHighlight = !!reqHighlight && !this.isSpectatorMode;
     this.hideSelectionOutline = !canShowHighlight;
     this.selectedProvId = provId;
+
+    const sidePanel = document.querySelector('.side-panel');
+    if (sidePanel) sidePanel.classList.add('is-open');
+    const mainLayout = document.querySelector('.main-layout');
+    if (mainLayout) mainLayout.classList.add('drawer-open');
 
     const p = this.provinces.find(x => x.id === provId);
 
@@ -7405,7 +7411,34 @@ export const UIManagerMethods = {
 
         ` : ''}
 
-        ${p.castleLore ? `<div class="castle-lore-box" style="margin-top:2px; font-size: 12pt; color:#c8b9ab; line-height:1.3; border-top:1px dashed #553e2a; padding-top:2px;">🏯 ${p.castleLore}</div>` : ''}
+        ${(() => {
+          const loreTxt = p.castleLore || (window.HISTORICAL_CASTLE_LORES && window.HISTORICAL_CASTLE_LORES[curCastle]) || '';
+          const gimmick = (window.CASTLE_GIMMICKS && window.CASTLE_GIMMICKS[p.id]) || null;
+          let html = '';
+          if (loreTxt || gimmick) {
+            html += `<div class="castle-lore-box drawer-castle-lore">`;
+            if (loreTxt) {
+              html += `<div class="drawer-castle-lore-text">🏯 <strong>${curCastle}</strong>：${loreTxt}</div>`;
+            }
+            if (gimmick) {
+              html += `<div class="drawer-castle-gimmick">${gimmick.icon || '🏯'} <strong>${gimmick.name}</strong>：${gimmick.desc}</div>`;
+            }
+            html += `</div>`;
+          }
+          const sortedOfficers = [...provOfficers].sort((a, b) => {
+            const roleScore = (off) => {
+              if (off.isDaimyo) return 3;
+              if (off.id === p.governorId || off.assignedProvId === p.id) return 2;
+              if (off.clanId === 'ronin') return 0;
+              return 1;
+            };
+            const d = roleScore(b) - roleScore(a);
+            if (d !== 0) return d;
+            return ((b.military || 0) + (b.politic || 0) + (b.intel || 0)) - ((a.military || 0) + (a.politic || 0) + (a.intel || 0));
+          });
+          // 右パネルの所在武将の表示は省略（在国武将一覧は領主欄の「武将」ボタンから。2026-11-07）
+          return html;
+        })()}
 
       `;
 
@@ -7485,9 +7518,21 @@ export const UIManagerMethods = {
 
 
       document.getElementById('btnViewProvOfficers')?.addEventListener('click', () => {
-
         this.openProvinceOfficersModal(p.id);
-
+      });
+      document.getElementById('btnOpenFullProvOfficers')?.addEventListener('click', () => {
+        this.openProvinceOfficersModal(p.id);
+      });
+      detailBox.querySelectorAll('.drawer-officer-item').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const oid = btn.getAttribute('data-off-id');
+          const off = provOfficers.find(x => x.id === oid) || (this.activeOfficers || this.officers || []).find(x => x.id === oid);
+          if (off && typeof this.showOfficerDetailModal === 'function') {
+            this.showOfficerDetailModal(off);
+          } else {
+            this.openProvinceOfficersModal(p.id);
+          }
+        });
       });
 
     }
@@ -9902,6 +9947,27 @@ export const UIManagerMethods = {
 
     });
 
+    document.getElementById('btnCloseProvDrawer')?.addEventListener('click', () => {
+      this.clearProvinceSelection();
+    });
+
+    // スマホ用ボトムシートの上部ハンドルタップ／下スワイプで閉じる
+    const sheetGrabber = document.querySelector('.drawer-sheet-grabber');
+    if (sheetGrabber) {
+      sheetGrabber.addEventListener('click', () => this.clearProvinceSelection());
+      let sy = null;
+      sheetGrabber.addEventListener('touchstart', (ev) => {
+        if (ev.touches.length === 1) sy = ev.touches[0].clientY;
+      }, { passive: true });
+      sheetGrabber.addEventListener('touchend', (ev) => {
+        if (sy !== null && ev.changedTouches.length === 1) {
+          const dy = ev.changedTouches[0].clientY - sy;
+          if (dy > 32) this.clearProvinceSelection();
+        }
+        sy = null;
+      }, { passive: true });
+    }
+
     document.addEventListener('keydown', (e) => {
 
       if (e.key === 'Escape') {
@@ -9911,7 +9977,13 @@ export const UIManagerMethods = {
         if (loreModal && !loreModal.classList.contains('hidden')) {
 
           this.closeCastleLoreModal();
+          return;
 
+        }
+
+        const anyOpenModal = document.querySelector('.modal-overlay:not(.hidden), .custom-modal[style*="flex"], .daimyo-popup-overlay:not(.hidden)');
+        if (!anyOpenModal && this.selectedProvId) {
+          this.clearProvinceSelection();
         }
 
       }
@@ -10090,7 +10162,7 @@ export const UIManagerMethods = {
 
     const diffDescriptions = {
 
-      relaxed: '💡 <strong>【楽級・安泰の世】</strong> 大名ごとの基準値に金+1,200／兵糧+1,500。ゆったり遊べる難易度です。',
+      relaxed: '💡 <strong>【楽級・安泰の世】</strong> 大名ごとの基準値に金+1,200／兵糧+1,500。覇道包囲網は起きず、諸大名はバランス型・内政型で動きます。ゆったり遊べる難易度です。',
 
       easy: '💡 <strong>【初級・天下泰平】</strong> 大名ごとの基準値に金+650／兵糧+850。遊びやすさを重視した難易度です。',
 
@@ -10284,7 +10356,7 @@ export const UIManagerMethods = {
 
 
 
-    // 菅野よう子風 戦国管弦楽 響宴録 UI初期化
+    // 戦国管弦楽 響宴録 UI初期化
 
     this.initMusicJukeboxUI();
 

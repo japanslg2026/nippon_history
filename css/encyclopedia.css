@@ -13,7 +13,7 @@
 .mk-card::before { content: ''; position: absolute; inset: 6px; border: 1px solid rgba(212,175,55,.22); border-radius: 10px; pointer-events: none; }
 .mk-head { display: flex; align-items: center; gap: 16px; padding: 14px 22px; border-bottom: 1px solid #4a3a28;
   background: linear-gradient(90deg, rgba(139,0,0,.35), rgba(0,0,0,0) 60%); }
-.mk-title { display: flex; align-items: baseline; gap: 10px; font-family: 'Yuji Boku','Sawarabi Mincho',serif; font-size: 22pt; color: #ffd700;
+.mk-title { display: flex; align-items: baseline; gap: 10px; font-family: 'Shippori Mincho','Yuji Boku','Sawarabi Mincho',serif; font-size: 22pt; color: #ffd700;
   text-shadow: 0 0 12px rgba(212,175,55,.5); letter-spacing: .12em; }
 .mk-title small { font-size: 16px; color: #c8b9ab; letter-spacing: .08em; font-family: 'Sawarabi Mincho',serif; text-shadow: none; }
 .mk-tabs { display: flex; gap: 6px; margin-left: auto; }
@@ -70,7 +70,7 @@
 .mk-dhead { display: flex; gap: 18px; align-items: center; padding: 14px 18px; border-radius: 12px;
   background: linear-gradient(110deg, color-mix(in srgb, var(--clan) 55%, #000) 0%, rgba(20,14,10,.9) 70%); border: 1px solid #c29e49; }
 .mk-dkamon { filter: drop-shadow(0 0 10px rgba(255,215,0,.45)); }
-.mk-dname { font-family: 'Yuji Boku','Sawarabi Mincho',serif; font-size: 26pt; color: #fff; letter-spacing: .06em; text-shadow: 0 2px 6px #000; }
+.mk-dname { font-family: 'Shippori Mincho','Yuji Boku','Sawarabi Mincho',serif; font-size: 26pt; color: #fff; letter-spacing: .08em; text-shadow: 0 2px 6px #000; }
 .mk-dname rt { font-family: 'Sawarabi Mincho',serif; font-size: 16px; color: #e8d9b0; letter-spacing: .1em; }
 .mk-dmeta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; font-family: 'Sawarabi Mincho',serif; }
 .mk-pill { font-size: 16px; padding: 2px 10px; border-radius: 12px; color: #fff; border: 1px solid rgba(255,215,0,.5); text-shadow: 0 1px 2px #000; letter-spacing: 0; }
@@ -240,3 +240,12 @@
 .mk-head .mk-bgm .opening-btn-icon { font-size: 20px !important; line-height: 1; }
 .mk-head .mk-bgm .opening-btn-text { display: none; }
 .mk-head .mk-bgm.is-muted { opacity: .7; }
+
+/* 書体統一：見出し・年号はShippori Mincho、数値データはゴシック等幅数字 */
+.mk-overlay { font-family: 'Shippori Mincho', 'Yu Mincho', 'Sawarabi Mincho', serif; }
+.mk-tl-year, .mk-panel h4 { font-family: 'Shippori Mincho', 'Yu Mincho', serif !important; letter-spacing: .08em; }
+.mk-count b, .mk-row-total, .mk-total b, .mk-stat b, .mk-ap-y, .mk-tl-count b {
+  font-family: 'BIZ UDPGothic', 'Hiragino Kaku Gothic ProN', 'Yu Gothic UI', 'Meiryo', sans-serif !important;
+  font-variant-numeric: tabular-nums !important;
+  font-feature-settings: "tnum" 1 !important;
+}

@@ -28,7 +28,7 @@ let DB = null;
 async function loadDB() {
   if (DB) return DB;
   const w = window;
-  const get = async (f) => (await fetch(`data/${f}?v=meikan_20261106_hist_v15`)).json();
+  const get = async (f) => (await fetch(`data/${f}?v=meikan_20261107_hist_v16`)).json();
   let officers = w.OFFICERS_MASTER, scenarios = w.SCENARIOS_DATA, provinces = w.PROVINCES_DATA, clansRaw = null;
   const clans = w.CLAN_MASTER_DATA || w.CLAN_MASTER;
   const [o, s, p, c] = await Promise.all([
@@ -41,7 +41,7 @@ async function loadDB() {
   const provName = Object.fromEntries(provinces.map(x => [x.id, x.name]));
   // 城主判定（GameState.newGame の初期城主任命と同じ順序：①本拠に当主 ②governors.json の史実城代 ③ゆかりの国(defaultProv)の一般武将）
   let govAll = w.SCENARIO_HISTORICAL_GOVERNORS;
-  if (!govAll) { try { govAll = (await (await fetch('data/governors.json?v=meikan_20261106_hist_v15')).json()).governors || {}; } catch (_) { govAll = {}; } }
+  if (!govAll) { try { govAll = (await (await fetch('data/governors.json?v=meikan_20261107_hist_v16')).json()).governors || {}; } catch (_) { govAll = {}; } }
   const capBase = w.CLAN_CAPITAL_PROVINCES_BASE || w.CLAN_CAPITAL_PROVINCES || {};
   const provCastle = Object.fromEntries(provinces.map(x => [x.id, x.castle]));
   const lordOf = new Map(); // `${scId}|${oid}` -> provId

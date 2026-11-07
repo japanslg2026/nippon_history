@@ -22,6 +22,30 @@
   var TAKATO_SYMBOL_ID = 'kamon-takato-kajinoha';
   var OYAMA_SYMBOL_ID = 'kamon-oyama-tomoe';
   var NANJO_SYMBOL_ID = 'kamon-nanjo';
+  var SAITO_SYMBOL_ID = 'kamon-saito';
+  var TAKIGAWA_SYMBOL_ID = 'kamon-takigawa';
+  var TODO_SYMBOL_ID = 'kamon-todo-tsuta';
+  var TODO_SYMBOL_MARKUP = `
+    <symbol id="kamon-todo-tsuta" viewBox="0 0 32 32">
+      <title>藤堂家・藤堂蔦</title>
+      <circle cx="16" cy="16" r="15" fill="#d5d8dc" stroke="#4b5563" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="12" fill="none" stroke="#4b5563" stroke-width="1.1"/>
+      <g fill="#374151" stroke="#d5d8dc" stroke-width="0.55" stroke-linejoin="round">
+        <g transform="translate(16 16.6)">
+          <path d="M0 1.4 C-2.8 0.7 -4.2 -1.8 -3.3 -4.2 C-2.5 -6.2 -1.1 -7.8 0 -10.1 C1.1 -7.8 2.5 -6.2 3.3 -4.2 C4.2 -1.8 2.8 0.7 0 1.4 Z"/>
+          <path d="M0 0.2 V-8.2 M0-4.1 L-1.9-5.7 M0-4.1 L1.9-5.7 M0-1.9 L-2.35-3.1 M0-1.9 L2.35-3.1" fill="none" stroke="#d5d8dc" stroke-width="0.72" stroke-linecap="round"/>
+        </g>
+        <g transform="translate(16 16.6) rotate(120)">
+          <path d="M0 1.4 C-2.8 0.7 -4.2 -1.8 -3.3 -4.2 C-2.5 -6.2 -1.1 -7.8 0 -10.1 C1.1 -7.8 2.5 -6.2 3.3 -4.2 C4.2 -1.8 2.8 0.7 0 1.4 Z"/>
+          <path d="M0 0.2 V-8.2 M0-4.1 L-1.9-5.7 M0-4.1 L1.9-5.7 M0-1.9 L-2.35-3.1 M0-1.9 L2.35-3.1" fill="none" stroke="#d5d8dc" stroke-width="0.72" stroke-linecap="round"/>
+        </g>
+        <g transform="translate(16 16.6) rotate(240)">
+          <path d="M0 1.4 C-2.8 0.7 -4.2 -1.8 -3.3 -4.2 C-2.5 -6.2 -1.1 -7.8 0 -10.1 C1.1 -7.8 2.5 -6.2 3.3 -4.2 C4.2 -1.8 2.8 0.7 0 1.4 Z"/>
+          <path d="M0 0.2 V-8.2 M0-4.1 L-1.9-5.7 M0-4.1 L1.9-5.7 M0-1.9 L-2.35-3.1 M0-1.9 L2.35-3.1" fill="none" stroke="#d5d8dc" stroke-width="0.72" stroke-linecap="round"/>
+        </g>
+      </g>
+      <circle cx="16" cy="16.6" r="1.2" fill="#4b5563"/>
+    </symbol>`;
   var SYMBOL_MARKUP = `
     <symbol id="kamon-kato-yoshiaki-sagari-fuji" viewBox="0 0 32 32">
       <title>加藤嘉明家・下り藤</title>
@@ -267,24 +291,53 @@
     </symbol>`;
   var NANJO_SYMBOL_MARKUP = `
     <symbol id="kamon-nanjo" viewBox="0 0 32 32"><title>南条家（文字紋）</title><circle cx="16" cy="16" r="15" fill="#b9770e" stroke="#ffd700" stroke-width="1.5"/><circle cx="16" cy="16" r="11.8" fill="none" stroke="#ffffff" stroke-width="1.1"/><text x="16" y="21.2" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff" font-family="serif">南</text></symbol>`;
+  var SAITO_SYMBOL_MARKUP = `
+    <symbol id="kamon-saito" data-v="2" viewBox="0 0 32 32">
+      <title>斎藤家・二頭立浪</title>
+      <circle cx="16" cy="16" r="15" fill="#73787c" stroke="#ffd700" stroke-width="1.5"/>
+      <g fill="#ffffff">
+        <path d="M 6.0,18.4 C 4.8,13.2 7.6,7.4 13.4,5.8 C 16.8,4.9 20.2,6.0 21.8,8.1 C 20.1,7.8 18.7,8.3 18.0,9.4 C 19.4,9.3 20.5,9.9 21.0,11.0 C 19.3,10.8 17.8,11.3 16.8,12.3 C 15.6,10.8 13.5,10.3 11.6,11.4 C 9.6,12.6 9.1,15.5 10.5,18.0 C 12.1,20.8 15.8,22.0 19.4,21.0 C 22.2,20.2 24.4,18.0 25.6,15.2 C 26.2,18.8 24.1,22.8 20.4,24.8 C 15.2,27.5 8.2,24.6 6.0,18.4 Z"/>
+        <path d="M 25.7,16.8 C 26.6,12.8 24.8,9.2 22.0,7.8 C 23.0,9.6 23.0,11.8 21.8,13.4 C 20.5,15.1 18.2,15.6 16.2,14.8 C 17.0,13.8 16.8,12.7 15.8,12.1 C 14.5,12.5 13.2,13.5 12.6,14.9 C 13.8,14.8 14.8,15.3 15.2,16.2 C 13.8,16.3 12.7,17.0 12.2,18.1 C 14.2,19.6 17.4,20.1 20.2,19.2 C 22.8,18.4 24.7,17.8 25.7,16.8 Z"/>
+        <circle cx="22.4" cy="6.9" r="0.95"/>
+        <circle cx="11.8" cy="13.8" r="0.85"/>
+      </g>
+      <g fill="none" stroke="#73787c" stroke-width="0.9" stroke-linecap="round">
+        <path d="M 7.7,17.6 C 6.9,13.2 9.4,8.6 14.2,7.4 C 16.4,6.8 18.4,7.3 19.8,8.4"/>
+        <path d="M 8.9,19.8 C 10.6,23.6 15.6,25.2 19.8,23.2 C 22.2,22.0 23.9,19.9 24.6,17.5"/>
+        <path d="M 24.2,11.2 C 24.0,13.8 22.1,16.2 19.2,17.0 C 17.2,17.5 15.3,17.2 13.9,16.4"/>
+      </g>
+    </symbol>`;
+  var TAKIGAWA_SYMBOL_MARKUP = `
+    <symbol id="kamon-takigawa" viewBox="0 0 32 32">
+      <title>滝川家・丸に竪木瓜</title>
+      <circle cx="16" cy="16" r="15" fill="#2c5e8a" stroke="#ffd700" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="11.8" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+      <g fill="none" stroke="#ffffff" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M 13.2,9.2 C 13.8,6.8 18.2,6.8 18.8,9.2 C 21.2,9.8 21.8,14.2 19.8,16.0 C 21.8,17.8 21.2,22.2 18.8,22.8 C 18.2,25.2 13.8,25.2 13.2,22.8 C 10.8,22.2 10.2,17.8 12.2,16.0 C 10.2,14.2 10.8,9.8 13.2,9.2 Z"/>
+      </g>
+      <ellipse cx="16" cy="16" rx="2.6" ry="4.4" fill="none" stroke="#ffffff" stroke-width="1.1"/>
+      <circle cx="16" cy="13.8" r="0.9" fill="#ffffff"/>
+      <circle cx="16" cy="18.2" r="0.9" fill="#ffffff"/>
+    </symbol>`;
   function addToSource() {
     if (!window.KAMONS_SVG_CONTENT) return;
     [
       ['kamon-gamo', '#2f5f9e'],
-      ['kamon-todo', '#5b6068'],
+      ['kamon-todo', '#d5d8dc'],
       ['kamon-yamanouchi', '#365a9c'],
       ['kamon-fukui', '#8a4a36'],
       ['kamon-okayama', '#3f5c9a'],
       ['kamon-tottori', '#7a5a90'],
       ['kamon-matsue', '#2f6f68'],
       ['kamon-nagaoka', '#643e21'],
-      ['kamon-kuwana', '#5d6d7e']
+      ['kamon-kuwana', '#5d6d7e'],
+      ['kamon-saito', '#73787c']
     ].forEach(function ([symbolId, color]) {
       var pattern = new RegExp(`(<symbol id="${symbolId}"[\\s\\S]*?<circle\\b[^>]*\\bfill=")[^"]+`);
       window.KAMONS_SVG_CONTENT = window.KAMONS_SVG_CONTENT.replace(pattern, `$1${color}`);
     });
-    [[SYMBOL_ID, SYMBOL_MARKUP], [KUMAMOTO_HOSOKAWA_SYMBOL_ID, KUMAMOTO_HOSOKAWA_SYMBOL_MARKUP], [AKO_RONIN_SYMBOL_ID, AKO_RONIN_SYMBOL_MARKUP], [SAKAI_SYMBOL_ID, SAKAI_SYMBOL_MARKUP], [UWAJIMA_DATE_SYMBOL_ID, UWAJIMA_DATE_SYMBOL_MARKUP], [ANDO_SYMBOL_ID, ANDO_SYMBOL_MARKUP], [NIWA_SYMBOL_ID, NIWA_SYMBOL_MARKUP], [GOTO_SYMBOL_ID, GOTO_SYMBOL_MARKUP], [SUWA_SYMBOL_ID, SUWA_SYMBOL_MARKUP], [SENGOKU_SYMBOL_ID, SENGOKU_SYMBOL_MARKUP], [ICHIJO_SYMBOL_ID, ICHIJO_SYMBOL_MARKUP], [CHOSOKABE_SYMBOL_ID, CHOSOKABE_SYMBOL_MARKUP], [BESSHO_SYMBOL_ID, BESSHO_SYMBOL_MARKUP], [SHIINA_SYMBOL_ID, SHIINA_SYMBOL_MARKUP], [SANO_SYMBOL_ID, SANO_SYMBOL_MARKUP], [AKI_TOSA_SYMBOL_ID, AKI_TOSA_SYMBOL_MARKUP], [MOTOYAMA_SYMBOL_ID, MOTOYAMA_SYMBOL_MARKUP], [TAKATO_SYMBOL_ID, TAKATO_SYMBOL_MARKUP], [OYAMA_SYMBOL_ID, OYAMA_SYMBOL_MARKUP], [NANJO_SYMBOL_ID, NANJO_SYMBOL_MARKUP]].forEach(function ([symbolId, markup]) {
-      if (symbolId === SENGOKU_SYMBOL_ID) window.KAMONS_SVG_CONTENT = window.KAMONS_SVG_CONTENT.replace(new RegExp(`<symbol id="${symbolId}"[\\s\\S]*?</symbol>`), '');
+    [[SYMBOL_ID, SYMBOL_MARKUP], [KUMAMOTO_HOSOKAWA_SYMBOL_ID, KUMAMOTO_HOSOKAWA_SYMBOL_MARKUP], [AKO_RONIN_SYMBOL_ID, AKO_RONIN_SYMBOL_MARKUP], [SAKAI_SYMBOL_ID, SAKAI_SYMBOL_MARKUP], [UWAJIMA_DATE_SYMBOL_ID, UWAJIMA_DATE_SYMBOL_MARKUP], [ANDO_SYMBOL_ID, ANDO_SYMBOL_MARKUP], [NIWA_SYMBOL_ID, NIWA_SYMBOL_MARKUP], [GOTO_SYMBOL_ID, GOTO_SYMBOL_MARKUP], [SUWA_SYMBOL_ID, SUWA_SYMBOL_MARKUP], [SENGOKU_SYMBOL_ID, SENGOKU_SYMBOL_MARKUP], [ICHIJO_SYMBOL_ID, ICHIJO_SYMBOL_MARKUP], [CHOSOKABE_SYMBOL_ID, CHOSOKABE_SYMBOL_MARKUP], [BESSHO_SYMBOL_ID, BESSHO_SYMBOL_MARKUP], [SHIINA_SYMBOL_ID, SHIINA_SYMBOL_MARKUP], [SANO_SYMBOL_ID, SANO_SYMBOL_MARKUP], [AKI_TOSA_SYMBOL_ID, AKI_TOSA_SYMBOL_MARKUP], [MOTOYAMA_SYMBOL_ID, MOTOYAMA_SYMBOL_MARKUP], [TAKATO_SYMBOL_ID, TAKATO_SYMBOL_MARKUP], [OYAMA_SYMBOL_ID, OYAMA_SYMBOL_MARKUP], [NANJO_SYMBOL_ID, NANJO_SYMBOL_MARKUP], [SAITO_SYMBOL_ID, SAITO_SYMBOL_MARKUP], [TAKIGAWA_SYMBOL_ID, TAKIGAWA_SYMBOL_MARKUP], [TODO_SYMBOL_ID, TODO_SYMBOL_MARKUP]].forEach(function ([symbolId, markup]) {
+      if (symbolId === SENGOKU_SYMBOL_ID || symbolId === SAITO_SYMBOL_ID) window.KAMONS_SVG_CONTENT = window.KAMONS_SVG_CONTENT.replace(new RegExp(`<symbol id="${symbolId}"[\\s\\S]*?</symbol>`), '');
       if (window.KAMONS_SVG_CONTENT.indexOf(`id="${symbolId}"`) === -1) {
         window.KAMONS_SVG_CONTENT = window.KAMONS_SVG_CONTENT.replace('</defs>', `${markup}\n</defs>`);
       }
@@ -295,14 +348,15 @@
     if (typeof document === 'undefined') return;
     [
       ['kamon-gamo', '#2f5f9e'],
-      ['kamon-todo', '#5b6068'],
+      ['kamon-todo', '#d5d8dc'],
       ['kamon-yamanouchi', '#365a9c'],
       ['kamon-fukui', '#8a4a36'],
       ['kamon-okayama', '#3f5c9a'],
       ['kamon-tottori', '#7a5a90'],
       ['kamon-matsue', '#2f6f68'],
       ['kamon-nagaoka', '#643e21'],
-      ['kamon-kuwana', '#5d6d7e']
+      ['kamon-kuwana', '#5d6d7e'],
+      ['kamon-saito', '#73787c']
     ].forEach(function ([symbolId, color]) {
       var symbol = document.getElementById(symbolId);
       var outerCircle = symbol && (symbol.querySelector('circle[r="15"]') || symbol.querySelector('circle'));
@@ -310,9 +364,9 @@
     });
     var defs = document.getElementById('mapSvgDefs') || document.querySelector('#kamonsGlobalContainer defs');
     if (!defs) return;
-    [[SYMBOL_ID, SYMBOL_MARKUP], [KUMAMOTO_HOSOKAWA_SYMBOL_ID, KUMAMOTO_HOSOKAWA_SYMBOL_MARKUP], [AKO_RONIN_SYMBOL_ID, AKO_RONIN_SYMBOL_MARKUP], [SAKAI_SYMBOL_ID, SAKAI_SYMBOL_MARKUP], [UWAJIMA_DATE_SYMBOL_ID, UWAJIMA_DATE_SYMBOL_MARKUP], [ANDO_SYMBOL_ID, ANDO_SYMBOL_MARKUP], [NIWA_SYMBOL_ID, NIWA_SYMBOL_MARKUP], [GOTO_SYMBOL_ID, GOTO_SYMBOL_MARKUP], [SUWA_SYMBOL_ID, SUWA_SYMBOL_MARKUP], [SENGOKU_SYMBOL_ID, SENGOKU_SYMBOL_MARKUP], [ICHIJO_SYMBOL_ID, ICHIJO_SYMBOL_MARKUP], [CHOSOKABE_SYMBOL_ID, CHOSOKABE_SYMBOL_MARKUP], [BESSHO_SYMBOL_ID, BESSHO_SYMBOL_MARKUP], [SHIINA_SYMBOL_ID, SHIINA_SYMBOL_MARKUP], [SANO_SYMBOL_ID, SANO_SYMBOL_MARKUP], [AKI_TOSA_SYMBOL_ID, AKI_TOSA_SYMBOL_MARKUP], [MOTOYAMA_SYMBOL_ID, MOTOYAMA_SYMBOL_MARKUP], [TAKATO_SYMBOL_ID, TAKATO_SYMBOL_MARKUP], [OYAMA_SYMBOL_ID, OYAMA_SYMBOL_MARKUP], [NANJO_SYMBOL_ID, NANJO_SYMBOL_MARKUP]].forEach(function ([symbolId, markup]) {
+    [[SYMBOL_ID, SYMBOL_MARKUP], [KUMAMOTO_HOSOKAWA_SYMBOL_ID, KUMAMOTO_HOSOKAWA_SYMBOL_MARKUP], [AKO_RONIN_SYMBOL_ID, AKO_RONIN_SYMBOL_MARKUP], [SAKAI_SYMBOL_ID, SAKAI_SYMBOL_MARKUP], [UWAJIMA_DATE_SYMBOL_ID, UWAJIMA_DATE_SYMBOL_MARKUP], [ANDO_SYMBOL_ID, ANDO_SYMBOL_MARKUP], [NIWA_SYMBOL_ID, NIWA_SYMBOL_MARKUP], [GOTO_SYMBOL_ID, GOTO_SYMBOL_MARKUP], [SUWA_SYMBOL_ID, SUWA_SYMBOL_MARKUP], [SENGOKU_SYMBOL_ID, SENGOKU_SYMBOL_MARKUP], [ICHIJO_SYMBOL_ID, ICHIJO_SYMBOL_MARKUP], [CHOSOKABE_SYMBOL_ID, CHOSOKABE_SYMBOL_MARKUP], [BESSHO_SYMBOL_ID, BESSHO_SYMBOL_MARKUP], [SHIINA_SYMBOL_ID, SHIINA_SYMBOL_MARKUP], [SANO_SYMBOL_ID, SANO_SYMBOL_MARKUP], [AKI_TOSA_SYMBOL_ID, AKI_TOSA_SYMBOL_MARKUP], [MOTOYAMA_SYMBOL_ID, MOTOYAMA_SYMBOL_MARKUP], [TAKATO_SYMBOL_ID, TAKATO_SYMBOL_MARKUP], [OYAMA_SYMBOL_ID, OYAMA_SYMBOL_MARKUP], [NANJO_SYMBOL_ID, NANJO_SYMBOL_MARKUP], [SAITO_SYMBOL_ID, SAITO_SYMBOL_MARKUP], [TAKIGAWA_SYMBOL_ID, TAKIGAWA_SYMBOL_MARKUP], [TODO_SYMBOL_ID, TODO_SYMBOL_MARKUP]].forEach(function ([symbolId, markup]) {
       var old = document.getElementById(symbolId);
-      if (old && symbolId === SENGOKU_SYMBOL_ID && old.getAttribute('data-v') !== '2') old.parentNode.removeChild(old);
+      if (old && (symbolId === SENGOKU_SYMBOL_ID || symbolId === SAITO_SYMBOL_ID) && old.getAttribute('data-v') !== '2') old.parentNode.removeChild(old);
       else if (old) return;
       var parsed = new DOMParser().parseFromString(`<svg xmlns="http://www.w3.org/2000/svg"><defs>${markup}</defs></svg>`, 'image/svg+xml');
       var symbol = parsed.querySelector('symbol');

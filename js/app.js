@@ -9,12 +9,12 @@
  * @typedef {import('./types.js').GameSaveData} GameSaveData
  */
 
-import { GameState, GameStateMethods } from './core/GameState.js?v=20261106_hist_v15';
-import { UIManager, UIManagerMethods } from './ui/UIManager.js?v=20261104_shikoku_fix';
-import { MapRenderer, MapRendererMethods } from './render/MapRenderer.js?v=20261106_hist_v15';
-import { ComputerLogic, ComputerLogicMethods } from './ai/ComputerLogic.js?v=20261106_hist_v15';
-import { DataLoader } from './core/DataLoader.js?v=20261106_hist_v15';
-import * as GameRules from './core/GameRules.js?v=20261106_hist_v15';
+import { GameState, GameStateMethods } from './core/GameState.js?v=20261107_gov_boost30';
+import { UIManager, UIManagerMethods } from './ui/UIManager.js?v=20261107_offnone';
+import { MapRenderer, MapRendererMethods } from './render/MapRenderer.js?v=20261107_tilt_left3';
+import { ComputerLogic, ComputerLogicMethods } from './ai/ComputerLogic.js?v=20261107_hist_v16';
+import { DataLoader } from './core/DataLoader.js?v=20261107_takeda_hongan';
+import * as GameRules from './core/GameRules.js?v=20261107_hist_v16';
 
 // 早期初期化: モジュール評価時点で即座に window.getClanAbility を配備
 if (typeof window !== 'undefined') {
@@ -451,9 +451,17 @@ function getClanAbility(clanId) {
 
 
 
-  const base = abilities[clanId] || abilities['default'] || { politics: 60, military: 60, stratagem: 55, personality: 'balanced' };
-  // 凡庸・無名の世継ぎが継いだ CPU 家は内政型・ほぼ攻めない（ui_fixed12）
+  const raw = abilities[clanId] || abilities['default'] || { politics: 60, military: 60, stratagem: 55, personality: 'balanced' };
   const g = window.game;
+  // 大名の志向（天下・地方・小勢力）と難易度（楽級）による思考アルゴリズム（2026-11-07）
+  let base = raw;
+  if (g && typeof g.resolveAmbitionPersonality === 'function') {
+    try {
+      const p = g.resolveAmbitionPersonality(clanId, raw.personality);
+      if (p && p !== raw.personality) base = { ...raw, personality: p };
+    } catch (e) {}
+  }
+  // 凡庸・無名の世継ぎが継いだ CPU 家は内政型・ほぼ攻めない（ui_fixed12）
   const ov = (g && typeof g.getHeirTemperamentOverride === 'function') ? g.getHeirTemperamentOverride(clanId) : null;
   return ov ? { ...base, ...ov } : base;
 }
@@ -833,9 +841,9 @@ export class SengokuGame {
     this.officers = [];
 
     this.year = 1560;
-    this.seasonIdx = 1; // 0:春, 1:夏, 2:秋, 3:冬
-    this.seasonNames = ['春', '夏', '秋', '冬'];
-    this.seasonBgmTracks = ['spring', 'summer', 'autumn', 'winter'];
+    this.seasonIdx = 1; // 0:春, 1:初夏, 2:盛夏, 3:秋, 4:冬（1年5ターン）
+    this.seasonNames = ['春', '初夏', '盛夏', '秋', '冬'];
+    this.seasonBgmTracks = ['spring', 'summer', 'summer', 'autumn', 'winter'];
     this.currentWeather = '晴天';
 
     this.gold = 400;

@@ -20,6 +20,121 @@ var AI_PERSONALITY_TUNING = (typeof window !== 'undefined' && window.AI_PERSONAL
   scheming:   { attackProb: 0.50, requiredRatio: 1.05, forceRatio: 0.72, minSourceTroops: 1200, coalitionBoost: 0.22, coalitionCap: 0.85, ignoreRice: true,  allianceBonus: -0.05, frontShiftMax: 900 }
 };
 
+
+// ── 大名の志向（2026-11-07）────────────────────────────────────────────
+// 史実に基づき、CPU大名の思考を「天下志向」「地方志向」「小勢力」に分ける。
+//  ・天下志向：天下統一を目指して積極的に攻める（攻勢型）
+//  ・地方志向：本拠の地方（＋史実の進出先）の統一をひたすら目指し（攻勢型・地方外へは原則攻めない）、
+//              地方統一を果たした後はバランス型になる
+//  ・小勢力：内政型で守りを固めるか、バランス型（元の性格が内政寄りなら内政型、それ以外はバランス型）
+//  ・楽級：覇道包囲網は起きず、全大名がバランス型か内政型で動く
+// window.CLAN_AMBITION_OVERRIDES で上書き可能（{ clanId: 'tenka' | 'minor' | { regional: ['関東'] } }）
+var CLAN_AMBITION_TENKA = new Set([
+  'oda', 'toyotomi', 'tokugawa', 'takeda', 'imagawa', 'miyoshi', 'akechi', 'shibata', 'ishida',
+  'taira', 'genji_yoritomo', 'kiso', 'minamoto_yoshitomo', 'godaiho', 'ashikaga', 'nitta',
+  'hojo_kamakura', 'gotoba_in', 'jimmu', 'yamato_court', 'naka_no_oe', 'oama', 'meiji', 'saigo_gun', 'yuan'
+]);
+// 地方志向：値は本拠の地方に加えて統一を目指す地方（空なら本拠の地方のみ）
+var CLAN_AMBITION_REGIONAL = {
+  hojo: [], uesugi: ['関東'], yamanouchi: [], ogigayatsu: [], kamakura_fu: [], ashikaga_koga: [], taira_masakado: [],
+  mori: [], amago: [], ouchi: [], ukita: [], yamana: [],
+  shimazu: [], otomo: [], ryuzoji: [], kikuchi: [], kuroda: [], kumaso: [], kuna: [],
+  chosokabe: [],
+  date: [], mogami: [], nanbu: [], ashina: [], fujiwara_hiraizumi: [], abe: [], kiyohara: [],
+  nagao: [], hosokawa: []
+};
+// 個別の固定（志向より優先）
+var CLAN_PERSONALITY_FIXED = { suzuki: 'domestic' }; // 鈴木家は内政型
+var DOMESTIC_LIKE_PERSONALITIES = new Set(['domestic', 'defensive', 'cautious', 'diplomatic']);
+
+var AmbitionMethods = {
+  /** 'tenka' | 'regional' | 'minor' */
+  getClanAmbition(clanId) {
+    const ov = (typeof window !== 'undefined' && window.CLAN_AMBITION_OVERRIDES) ? window.CLAN_AMBITION_OVERRIDES[clanId] : undefined;
+    if (ov === 'tenka' || ov === 'minor') return ov;
+    if (ov && typeof ov === 'object' && Array.isArray(ov.regional)) return 'regional';
+    if (CLAN_AMBITION_TENKA.has(clanId)) return 'tenka';
+    if (Object.prototype.hasOwnProperty.call(CLAN_AMBITION_REGIONAL, clanId)) return 'regional';
+    return 'minor';
+  },
+
+  ensureAmbitionState() {
+    if (!this.ambitionState || typeof this.ambitionState !== 'object') this.ambitionState = {};
+    if (!this.ambitionState.home) this.ambitionState.home = {};
+    if (!this.ambitionState.unified) this.ambitionState.unified = {};
+    return this.ambitionState;
+  },
+
+  /** 地方統一の対象地方（本拠の地方＋史実の進出先） */
+  getAmbitionTargetRegions(clanId) {
+    const st = this.ensureAmbitionState();
+    let home = st.home[clanId];
+    const provs = this.provinces || [];
+    if (!home) {
+      const capId = (typeof window !== 'undefined' && window.CLAN_CAPITAL_PROVINCES) ? window.CLAN_CAPITAL_PROVINCES[clanId] : null;
+      const owned = provs.filter(p => p.ownerId === clanId);
+      const cap = provs.find(p => p.id === capId && p.ownerId === clanId) || null;
+      if (cap && cap.region) home = cap.region;
+      else if (owned.length) {
+        const cnt = {};
+        owned.forEach(p => { if (p.region) cnt[p.region] = (cnt[p.region] || 0) + 1; });
+        home = Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a])[0] || null;
+      }
+      if (home) st.home[clanId] = home; // 一度決めた本拠の地方は固定
+    }
+    const ov = (typeof window !== 'undefined' && window.CLAN_AMBITION_OVERRIDES) ? window.CLAN_AMBITION_OVERRIDES[clanId] : null;
+    const extra = (ov && Array.isArray(ov.regional)) ? ov.regional : (CLAN_AMBITION_REGIONAL[clanId] || []);
+    return [...new Set([home, ...extra].filter(Boolean))];
+  },
+
+  /** 地方統一を果たしたか（一度果たせば以後バランス型）。攻め取れる他家・空白地が対象地方に残っていなければ達成 */
+  isRegionalUnified(clanId) {
+    const st = this.ensureAmbitionState();
+    return !!st.unified[clanId];
+  },
+
+  /** 毎季（AI思考の前）に地方統一の達成を判定する */
+  updateAmbitionProgress() {
+    const st = this.ensureAmbitionState();
+    const provs = this.provinces || [];
+    const clanIds = [...new Set(provs.map(p => p.ownerId).filter(id => id && id !== 'null' && id !== 'undefined'))];
+    clanIds.forEach(clanId => {
+      if (st.unified[clanId] || this.getClanAmbition(clanId) !== 'regional') return;
+      const regions = this.getAmbitionTargetRegions(clanId);
+      if (!regions.length || !this.ensureAmbitionState().home[clanId]) return; // 本拠の地方が定まってから判定
+      const inRegion = provs.filter(p => regions.includes(p.region));
+      if (!inRegion.length) return;
+      const remaining = inRegion.filter(p => p.ownerId !== clanId && !(p.ownerId && this.isAllied && this.isAllied(clanId, p.ownerId)));
+      if (remaining.length === 0) {
+        st.unified[clanId] = { year: this.year, seasonIdx: this.seasonIdx };
+        if (clanId !== this.playerClanId || this.isSpectatorMode) {
+          const name = this.getClanFamilyName ? this.getClanFamilyName(clanId) : clanId;
+          this.log(`🏯【地方統一】${name}は${regions.join('・')}地方の統一を果たしました。以後は攻守の均衡を重んじる方針に転じます。`, 'important');
+        }
+      }
+    });
+  },
+
+  /** 志向・難易度から CPU の性格（思考アルゴリズム）を決める */
+  resolveAmbitionPersonality(clanId, basePersonality) {
+    const base = basePersonality || 'balanced';
+    const relaxed = this.currentDifficulty === 'relaxed';
+    const fixed = CLAN_PERSONALITY_FIXED[clanId];
+    if (fixed) return (relaxed && !['balanced', 'domestic'].includes(fixed)) ? 'balanced' : fixed;
+    const minorType = DOMESTIC_LIKE_PERSONALITIES.has(base) ? 'domestic' : 'balanced';
+    const amb = this.getClanAmbition(clanId);
+    if (relaxed) return amb === 'minor' ? minorType : 'balanced'; // 楽級：全大名がバランス型または内政型
+    if (amb === 'tenka') return 'aggressive';
+    if (amb === 'regional') return this.isRegionalUnified(clanId) ? 'balanced' : 'aggressive';
+    return minorType;
+  },
+
+  /** 地方統一を目指している最中か（楽級は地方への固執なし） */
+  isPursuingRegionalUnification(clanId) {
+    return this.currentDifficulty !== 'relaxed' && this.getClanAmbition(clanId) === 'regional' && !this.isRegionalUnified(clanId);
+  }
+};
+
 export class ComputerLogic {
   constructor(game) {
     this.game = game;
@@ -27,6 +142,8 @@ export class ComputerLogic {
 }
 
 export const ComputerLogicMethods = {
+  ...AmbitionMethods,
+
   processBlankProvinceUprisings() {
     if (!this.provinces || !this.activeOfficers) return 0;
 
@@ -616,7 +733,7 @@ export const ComputerLogicMethods = {
 
     let formed = 0;
     const maxForm = 3;
-    const now = this.year * 4 + this.seasonIdx;
+    const now = this.year * (window.SEASONS_PER_YEAR || 5) + this.seasonIdx;
     for (const bond of bonds) {
       if (formed >= maxForm) break;
       if (this.isAllied(bond.a, bond.b)) continue;
@@ -1279,8 +1396,8 @@ export const ComputerLogicMethods = {
       battleCapBase: 2, battleCapPerClans: 12, battleCapMin: 3, battleCapMax: 6, // 1季の合戦上限 = 基数 + 勢力数/割数
       plotCapBase: 2, plotCapPerClans: 10, plotCapMax: 5, plotMinPower: 55,      // 1季の謀略上限
       defenseMaxMovesPerClan: 4, defenseMoveMax: 1000, // 後詰め：1勢力1季の移動回数・1回の上限
-      counterAllianceChance: 0.15, counterAllianceChanceVsPlayer: 0.25, counterAllianceSeasons: 8, maxCounterAlliances: 3, // 対抗同盟：1季1件・同時に最大3件
-      truceChance: 0.15, truceSeasons: 4, vassalChance: 0.20, vassalSeasons: 16, maxPeacePacts: 3, // 和睦・臣従：同時に最大3件
+      counterAllianceChance: 0.15, counterAllianceChanceVsPlayer: 0.25, counterAllianceSeasons: 10, maxCounterAlliances: 3, // 対抗同盟：1季1件・同時に最大3件
+      truceChance: 0.15, truceSeasons: 5, vassalChance: 0.20, vassalSeasons: 20, maxPeacePacts: 3, // 和睦・臣従：同時に最大3件
       breakChance: 0.06, breakChanceAggressive: 0.10,
       autoBorderThreatRatio: 1.5, autoInteriorKeep: 800, autoInteriorKeepRatio: 0.2, autoBorderMoveShare: 0.9, // オート統治：境の目標兵力＝隣の敵の最大兵力×割合、内地の残し方（2026-10-11 cj）
       coalitionThresholdProvs: 15, coalitionGraceSeasons: 0, coalitionGrowthProvs: 0, // 反覇道包囲網：15国以上で結成。猶予は取り消し（0/0 で ck 以前と同じ。2026-10-11 cm）
@@ -1363,8 +1480,8 @@ export const ComputerLogicMethods = {
       this.provinces.forEach(p => {
         if (p.ownerId !== clanId) return;
         if (Number.isFinite(Number(p.order)) && Number(p.order) <= ikki) return;
-        if (this.seasonIdx === 2) e.rice += Math.round((Number(p.rice) || 0) * 1.2);
-        if (this.seasonIdx === 1 || this.seasonIdx === 3) e.gold += this.provinceCommerceIncome ? this.provinceCommerceIncome(p) : Math.round((Number(p.commerce) || 0) * 0.8); // 開発分の上乗せ（2026-10-11 ce）
+        if (this.seasonIdx === 3) e.rice += Math.round((Number(p.rice) || 0) * 1.2); // 秋の収穫（5ターン制：3=秋）
+        if (this.seasonIdx === 2 || this.seasonIdx === 4) e.gold += /* 盛夏・冬の運上 */ this.provinceCommerceIncome ? this.provinceCommerceIncome(p) : Math.round((Number(p.commerce) || 0) * 0.8); // 開発分の上乗せ（2026-10-11 ce）
       });
     });
     // 兵の維持費（毎季。払えない分は払わない。2026-10-11 ci）
@@ -1481,7 +1598,7 @@ export const ComputerLogicMethods = {
 
   /** 安定した比較用の揺らぎ（同じ季・同じキーなら同じ値） */
   aiJitter(key, span = 10) {
-    let h = 2166136261 ^ (this.year * 4 + (this.seasonIdx || 0));
+    let h = 2166136261 ^ (this.year * (window.SEASONS_PER_YEAR || 5) + (this.seasonIdx || 0));
     const s = String(key);
     for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
     return ((h >>> 0) % 10000) / 10000 * span - span / 2;
@@ -1587,7 +1704,8 @@ export const ComputerLogicMethods = {
   aiCooledDown(a, b) {
     const key = [a, b].sort().join('|');
     const at = this.allianceCooldown ? this.allianceCooldown[key] : null;
-    return at != null && (this.year * 4 + this.seasonIdx) - at < 4;
+    const spy = window.SEASONS_PER_YEAR || 5;
+    return at != null && (this.year * spy + this.seasonIdx) - at < spy;
   },
 
   aiNotifyPlayer(title, message, color = '#e67e22') {
@@ -1731,10 +1849,17 @@ export const ComputerLogicMethods = {
 
     // 上洛・畿内志向（天下を睨む大名）
     const KINAI_PROV_IDS = new Set(['yamashiro', 'south_omi', 'north_omi', 'settsu', 'kawachi', 'yamato', 'tamba', 'izumi', 'harima', 'higashi_harima', 'iga', 'ise']);
-    const isKyotoAmbitionClan = [
-      'oda', 'takeda', 'uesugi', 'mori', 'hojo', 'tokugawa', 'imagawa',
-      'miyoshi', 'ashikaga', 'hosokawa', 'asai', 'asakura', 'rokukaku'
-    ].includes(clanId) || personality === 'aggressive' || this.coalitionFormed;
+    // 天下志向の家は上洛を目指す。地方統一を目指す家は上洛せず地方に専念（2026-11-07）
+    const pursuingRegion = this.isPursuingRegionalUnification ? this.isPursuingRegionalUnification(clanId) : false;
+    const regionTargets = pursuingRegion ? this.getAmbitionTargetRegions(clanId) : [];
+    const isKyotoAmbitionClan = !pursuingRegion && (
+      (this.getClanAmbition && this.getClanAmbition(clanId) === 'tenka') ||
+      (personality === 'aggressive' && this.currentDifficulty !== 'relaxed') || this.coalitionFormed);
+    // 地方統一を目指す家：地方内に攻め先が一つでもあれば、地方外へは攻めない（地方内に手が届かない時だけ外へ）
+    const regionReachable = pursuingRegion && regionTargets.length > 0 && candidateFrontiers.some(p => (p.neighbors || []).some(nId => {
+      const n = this.provinces.find(x => x.id === nId);
+      return n && n.ownerId !== clanId && !this.isAllied(clanId, n.ownerId) && regionTargets.includes(n.region);
+    }));
 
     const candidates = [];
     // 同盟国（攻略先の評価で使う）
@@ -1747,7 +1872,8 @@ export const ComputerLogicMethods = {
       const mainForce = Math.round(srcProv.troops * tune.forceRatio);
       const neighborTargets = (srcProv.neighbors || [])
         .map(nId => this.provinces.find(x => x.id === nId))
-        .filter(n => n && n.ownerId !== clanId && !this.isAllied(clanId, n.ownerId) && !this.isTruceBlocked?.(clanId, n.ownerId));
+        .filter(n => n && n.ownerId !== clanId && !this.isAllied(clanId, n.ownerId) && !this.isTruceBlocked?.(clanId, n.ownerId))
+        .filter(n => !regionReachable || regionTargets.includes(n.region));
 
       for (const target of neighborTargets) {
         // 兵の集中：攻め先に接する他の自領からも加勢（2026-10-11 cn）
@@ -2027,6 +2153,8 @@ export const ComputerLogicMethods = {
   },
 
   async executeAiTurn() {
+    // 大名の志向：地方統一の達成判定（達成した地方志向の家はバランス型へ。2026-11-07）
+    try { this.updateAmbitionProgress(); } catch (e) {}
     // AI 勢力の収入（プレイヤーと同じ規則）
     this.aiCollectIncome();
     const B = this.aiBalance();
@@ -2178,7 +2306,7 @@ export const ComputerLogicMethods = {
 
       // 包囲網結成時やプレイヤー勢力拡大時は包囲網参加大名が好戦的に（内政型は控えめに）
       const myProvsCount = this.provinces.filter(p => p.ownerId === this.playerClanId).length;
-      if (this.coalitionFormed || myProvsCount >= 12) {
+      if (this.currentDifficulty !== 'relaxed' && (this.coalitionFormed || myProvsCount >= 12)) { // 楽級は包囲網の気運なし
         attackProb = Math.min(tune.coalitionCap, attackProb + tune.coalitionBoost);
       }
       // 内政型は多正面作戦をほぼ起こさない：既に他所で戦が起きている季は更に自重
@@ -2188,11 +2316,11 @@ export const ComputerLogicMethods = {
       if (!tune.ignoreRice) {
         const supply = this.aiClanSupplyRatio(clanId);
         if (supply < 0.75) attackProb *= personality === 'domestic' ? 0.2 : 0.5;
-        if (this.seasonIdx === 3) attackProb *= personality === 'domestic' ? 0.4 : 0.75;
+        if (this.seasonIdx === 4) attackProb *= personality === 'domestic' ? 0.4 : 0.75; // 冬
       }
 
       // 時機：秋（収穫後）は出陣しやすい。隣の敵が他所と交戦中なら出陣しやすい（2026-10-11 cn）
-      if (this.seasonIdx === 2) attackProb *= Number(B.aiAutumnAttackMult) || 1;
+      if (this.seasonIdx === 3) attackProb *= Number(B.aiAutumnAttackMult) || 1; // 秋
       if (this._aiEngaged.size && clanProvs.some(p => (p.neighbors || []).some(id => { const n = this.aiProvById(id); return n && n.ownerId && n.ownerId !== clanId && this._aiEngaged.has(n.ownerId) && !this.isAllied(clanId, n.ownerId); }))) {
         attackProb *= Number(B.aiEngagedAttackMult) || 1;
       }

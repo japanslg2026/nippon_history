@@ -60,6 +60,45 @@ function officerProvAtYear(o, year) {
 
 if (typeof window !== 'undefined') { window.officerFiefAt = officerFiefAt; window.officerProvAtYear = officerProvAtYear; }
 
+// ── 季節（ターン）制度：1年＝春・初夏・盛夏・秋・冬の5ターン（2026-11-07） ──
+// 旧制度（春・夏・秋・冬の4季）のシナリオ・イベント・セーブは読み込み時に新制度へ換算する
+var SEASONS_PER_YEAR = 5;
+var SEASON_NAMES = ['春', '初夏', '盛夏', '秋', '冬'];
+var SEASON = { SPRING: 0, EARLY_SUMMER: 1, MIDSUMMER: 2, AUTUMN: 3, WINTER: 4 };
+var LEGACY_SEASON_TO_NEW = [0, 1, 3, 4]; // 旧 0春 1夏 2秋 3冬 → 新
+/** 季節名 → 新インデックス。旧データの「夏」は初夏として扱う */
+function seasonIdxFromName(name) {
+  const m = { '春': 0, '初夏': 1, '夏': 1, '盛夏': 2, '秋': 3, '冬': 4 };
+  return m[String(name || '').trim()];
+}
+/** 季節名を正規化（「夏」→「初夏」） */
+function normalizeSeasonName(name) {
+  if (name === undefined || name === null) return name;
+  const i = seasonIdxFromName(name);
+  return i === undefined ? name : SEASON_NAMES[i];
+}
+/** 旧4季インデックス → 新5季インデックス */
+function legacySeasonIdxToNew(i) {
+  const n = Math.round(Number(i) || 0);
+  return LEGACY_SEASON_TO_NEW[((n % 4) + 4) % 4];
+}
+/** 旧4季単位の通し番号（年*4+季）→ 新5季単位の通し番号 */
+function legacyTurnIndexToNew(v) {
+  const n = Math.round(Number(v) || 0);
+  const y = Math.floor(n / 4);
+  return y * SEASONS_PER_YEAR + legacySeasonIdxToNew(n - y * 4);
+}
+/** 旧4季単位の期間（季数）→ 新5季単位（年数換算を保つ） */
+function legacySeasonCountToNew(n) {
+  const v = Number(n);
+  return Number.isFinite(v) && v > 0 ? Math.max(1, Math.round(v * SEASONS_PER_YEAR / 4)) : v;
+}
+/** 新インデックス → 描画・天候用の旧4季（0春 1夏 2秋 3冬） */
+function seasonVisualIdx(i) { return [0, 1, 1, 2, 3][Number(i) || 0] ?? 0; }
+if (typeof window !== 'undefined') {
+  Object.assign(window, { SEASONS_PER_YEAR, SEASON_NAMES, SEASON, seasonIdxFromName, normalizeSeasonName, legacySeasonIdxToNew, legacyTurnIndexToNew, legacySeasonCountToNew, seasonVisualIdx });
+}
+
 
 
 // モジュール間安全参照ヘルパー
@@ -132,9 +171,9 @@ var INITIAL_PROVINCES = _createArrayProxy(() => (typeof window !== 'undefined' &
 
 var CLAN_MASTER = _createObjectProxy(() => (typeof window !== 'undefined' && (window.CLAN_MASTER_DATA || window.CLAN_MASTER || {})) || {});
 
-var INITIAL_ALLIANCE_DURATION_SEASONS = (typeof window !== 'undefined' && window.INITIAL_ALLIANCE_DURATION_SEASONS) || 20;
+var INITIAL_ALLIANCE_DURATION_SEASONS = (typeof window !== 'undefined' && window.INITIAL_ALLIANCE_DURATION_SEASONS) || 25; // 5年（5ターン制）
 
-var ALLIANCE_DURATION_SEASONS = (typeof window !== 'undefined' && window.ALLIANCE_DURATION_SEASONS) || 8;
+var ALLIANCE_DURATION_SEASONS = (typeof window !== 'undefined' && window.ALLIANCE_DURATION_SEASONS) || 10; // 2年（5ターン制）
 
 var DAIMYOS = (typeof window !== 'undefined' && window.DAIMYOS) || [];
 
@@ -672,9 +711,9 @@ export function getSaveSlotMeta(slotKey, rawData = null) {
 
     const totalTroops = myProvs.reduce((sum, p) => sum + (Number(p.troops) || 0), 0);
 
-    const seasonNames = ['春', '夏', '秋', '冬'];
+    const metaSeasonIdx = data.seasonScheme === SEASONS_PER_YEAR ? data.seasonIdx : legacySeasonIdxToNew(data.seasonIdx);
 
-    const seasonName = seasonNames[data.seasonIdx] || '春';
+    const seasonName = SEASON_NAMES[metaSeasonIdx] || '春';
 
     const yearStr = formatHistoricalYear(data.year);
 
@@ -740,7 +779,7 @@ export function getSaveSlotMeta(slotKey, rawData = null) {
 
       yearStr,
 
-      seasonIdx: data.seasonIdx,
+      seasonIdx: metaSeasonIdx,
 
       seasonName,
 
@@ -1441,11 +1480,14 @@ export const GameStateMethods = {
 
     this._jimmuAnnounced = false;
 
-    const seasonMap = {'春': 0, '夏': 1, '秋': 2, '冬': 3};
+    this.ambitionState = null; // 大名の志向（地方統一の達成状況）は新しい戦の開始ごとにリセット
 
-    this.seasonIdx = scen.seasonIdx !== undefined ? scen.seasonIdx : (seasonMap[scen.season] ?? 0);
+    // シナリオの季節は旧4季表記（season: 春/夏/秋/冬, seasonIdx: 0-3）。seasonScheme:5 なら新表記
+    this.seasonIdx = scen.seasonIdx !== undefined
+      ? (scen.seasonScheme === SEASONS_PER_YEAR ? Number(scen.seasonIdx) : legacySeasonIdxToNew(scen.seasonIdx))
+      : (seasonIdxFromName(scen.season) ?? 0);
 
-    this.alliances = this.normalizeAlliances(scen.alliances || [], this.year, this.seasonIdx, INITIAL_ALLIANCE_DURATION_SEASONS);
+    this.alliances = this.normalizeAlliances(scen.alliances || [], this.year, this.seasonIdx, INITIAL_ALLIANCE_DURATION_SEASONS, scen.seasonScheme !== SEASONS_PER_YEAR);
 
     this.allianceCooldown = {};
 
@@ -4936,7 +4978,7 @@ export const GameStateMethods = {
 
 
 
-  normalizeAlliances(raw, year, seasonIdx, defaultDuration) {
+  normalizeAlliances(raw, year, seasonIdx, defaultDuration, legacyUnits = false) {
 
     if (!Array.isArray(raw)) return [];
 
@@ -4958,7 +5000,7 @@ export const GameStateMethods = {
 
         for (const x of group) {
 
-          if (typeof x === 'number' && Number.isFinite(x) && x > 0) durationSeasons = x;
+          if (typeof x === 'number' && Number.isFinite(x) && x > 0) durationSeasons = legacyUnits ? legacySeasonCountToNew(x) : x;
 
           else if (typeof x === 'string' && x) ids.push(x);
 
@@ -4972,9 +5014,9 @@ export const GameStateMethods = {
 
         if (Number.isFinite(group.formedYear)) formedYear = group.formedYear;
 
-        if (Number.isFinite(group.formedSeason)) formedSeason = group.formedSeason;
+        if (Number.isFinite(group.formedSeason)) formedSeason = legacyUnits ? legacySeasonIdxToNew(group.formedSeason) : group.formedSeason;
 
-        if (Number.isFinite(group.durationSeasons)) durationSeasons = group.durationSeasons;
+        if (Number.isFinite(group.durationSeasons)) durationSeasons = legacyUnits ? legacySeasonCountToNew(group.durationSeasons) : group.durationSeasons;
 
       }
 
@@ -5108,7 +5150,7 @@ export const GameStateMethods = {
 
     const formedSeason = Array.isArray(group) ? this.seasonIdx : (group.formedSeason ?? this.seasonIdx);
 
-    return (this.year - formedYear) * 4 + (this.seasonIdx - formedSeason);
+    return (this.year - formedYear) * SEASONS_PER_YEAR + (this.seasonIdx - formedSeason);
 
   },
 
@@ -5140,7 +5182,7 @@ export const GameStateMethods = {
 
     if (!this.allianceCooldown) this.allianceCooldown = {};
 
-    const now = this.year * 4 + this.seasonIdx;
+    const now = this.year * SEASONS_PER_YEAR + this.seasonIdx;
 
     for (let i = 0; i < members.length; i++) {
 
@@ -5160,7 +5202,7 @@ export const GameStateMethods = {
 
   logAllianceExpired(members, seasons) {
 
-    const years = Math.max(1, Math.round((Number(seasons) || ALLIANCE_DURATION_SEASONS) / 4));
+    const years = Math.max(1, Math.round((Number(seasons) || ALLIANCE_DURATION_SEASONS) / SEASONS_PER_YEAR));
 
     const span = years === 2 ? '二年' : years === 5 ? '五年' : `${years}年`;
 
@@ -5364,7 +5406,7 @@ export const GameStateMethods = {
 
   // ---- 家中分裂の停戦（2026-10-11 cf）：本家は独立した家を breakawayTruceSeasons 季攻められない ----
 
-  truceTurnIndex() { return (Number(this.year) || 0) * 4 + (Number(this.seasonIdx) || 0); },
+  truceTurnIndex() { return (Number(this.year) || 0) * SEASONS_PER_YEAR + (Number(this.seasonIdx) || 0); },
 
   addBreakawayTruce(parentId, childId) {
 
@@ -5530,7 +5572,7 @@ export const GameStateMethods = {
 
       if (!this.alliances) {
 
-        this.alliances = this.normalizeAlliances(this.currentScenario?.alliances || [], this.year, this.seasonIdx);
+        this.alliances = this.normalizeAlliances(this.currentScenario?.alliances || [], this.year, this.seasonIdx, undefined, this.currentScenario?.seasonScheme !== SEASONS_PER_YEAR);
 
       }
 
@@ -7543,7 +7585,7 @@ export const GameStateMethods = {
 
     }
 
-    if (this.seasonIdx === 3) add('winter', '冬の陣', W.winter);
+    if (this.seasonIdx === SEASON.WINTER) add('winter', '冬の陣', W.winter);
 
     if (dst && !isBlank) {
 
@@ -7619,66 +7661,50 @@ export const GameStateMethods = {
 
 
 
+  // 項目26（2026-11-07改定）配下補佐：
+  // 城主の能力は、その国の武将の能力の最大値とその城主の能力の間の差の30%分が、その城主の能力に足されるものとする。(城主の能力が最大値であれば関係なし)
   getEffectiveLordStats(provId) {
-
     const base = this.getBaseLordStats(provId);
-
     if (!base || base.isJodai || base.isDirectRule || !(base.governor || base.isDaimyo)) return base;
-
     const p = (this.provinces || []).find(x => x.id === provId);
-
     if (!p || !p.ownerId) return base;
-
     const aides = this.getLordAideIndex().get(provId);
-
     if (!aides || aides.length === 0) return base;
-
     const lordId = base.governor ? base.governor.id : null;
-
     const out = Object.assign({}, base, {
-
       own: { military: base.military, politics: base.politics, stratagem: base.stratagem },
-
       aides: {},
-
       boosted: false
-
     });
-
     const statOf = {
-
       military: o => Number(o.military) || 0,
-
       politics: o => Number(o.politic ?? o.politics) || 0,
-
       stratagem: o => Number(o.intel ?? o.intelligence ?? o.stratagem) || 0
-
     };
-
-    for (const o of aides) {
-
-      if (!o || o.isDead || o.id === lordId || o.clanId !== p.ownerId) continue;
-
-      for (const k of ['military', 'politics', 'stratagem']) {
-
+    for (const k of ['military', 'politics', 'stratagem']) {
+      const ownVal = Number(base[k]) || 0;
+      let maxVal = ownVal;
+      let bestOfficer = null;
+      for (const o of aides) {
+        if (!o || o.isDead || o.id === lordId || o.clanId !== p.ownerId) continue;
         const v = statOf[k](o);
-
-        if (v > (Number(out[k]) || 0)) {
-
-          out[k] = v;
-
-          out.aides[k] = { id: o.id, name: o.name, value: v };
-
-          out.boosted = true;
-
+        if (v > maxVal) {
+          maxVal = v;
+          bestOfficer = o;
         }
-
       }
-
+      if (maxVal > ownVal && bestOfficer) {
+        // 城主の能力は、その国の武将の能力の最大値とその城主の能力の間の差の30%分が、その城主の能力に足される
+        const diff = maxVal - ownVal;
+        const bonus = Math.round(diff * 0.3);
+        if (bonus > 0) {
+          out[k] = ownVal + bonus;
+          out.aides[k] = { id: bestOfficer.id, name: bestOfficer.name, value: maxVal, diff: diff, bonus: bonus };
+          out.boosted = true;
+        }
+      }
     }
-
     return out.boosted ? out : base;
-
   },
 
 
@@ -7808,15 +7834,14 @@ export const GameStateMethods = {
   // 実効能力に配下補佐があれば「配下補佐: 武勇 ○○(85)・知略 △△(90)」を返す（無ければ空文字）
 
   describeLordAides(eff) {
-
     if (!eff || !eff.boosted || !eff.aides) return '';
-
     const label = { military: '武勇', politics: '内政', stratagem: '知略' };
-
-    const parts = ['military', 'politics', 'stratagem'].filter(k => eff.aides[k]).map(k => `${label[k]} ${eff.aides[k].name}(${eff.aides[k].value})`);
-
+    const parts = ['military', 'politics', 'stratagem'].filter(k => eff.aides[k]).map(k => {
+      const a = eff.aides[k];
+      const bonusStr = a.bonus !== undefined ? `(+${a.bonus})` : `(${a.value})`;
+      return `${label[k]} ${a.name}${bonusStr}`;
+    });
     return parts.length ? '配下補佐: ' + parts.join('・') : '';
-
   },
 
 
@@ -7824,19 +7849,13 @@ export const GameStateMethods = {
   // 能力表示用の小さな印（上がった能力の数字の後に付ける ▲。ツールチップに補佐した武将）
 
   lordAideMark(eff, key) {
-
     if (!eff || !eff.aides || !eff.aides[key]) return '';
-
     const label = { military: '武勇', politics: '内政', stratagem: '知略' }[key];
-
     const a = eff.aides[key];
-
     const own = eff.own ? eff.own[key] : '';
-
-    const tip = `配下補佐: ${label} ${a.name}(${a.value})／城主本人 ${own}`.replace(/"/g, '&quot;');
-
+    const bonus = a.bonus !== undefined ? a.bonus : (eff[key] - own);
+    const tip = `配下補佐: ${label} 最高${a.name}(${a.value})との差の30%(+${bonus})加算／本人 ${own}→${eff[key]}`.replace(/"/g, '&quot;');
     return `<sup title="${tip}" style="color:#f7dc6f; font-size:8.5pt; cursor:help;">▲</sup>`;
-
   },
 
 
@@ -10691,30 +10710,12 @@ export const GameStateMethods = {
 
 
 
-    // 一番北の国ではなく、プレイする大名の本拠地を確実に選択
-
-    const homeProv = this.getPlayerHomeProvince();
-
-    if (homeProv) {
-
-      this.selectProvince(homeProv.id);
-
+    // 初期状態は未選択（詳細・コマンドドロワーを隠す）にして全国地図をすっきり表示する
+    if (typeof this.clearProvinceSelection === 'function') {
+      this.clearProvinceSelection();
     } else {
-
-      const myProvs = this.provinces.filter(p => p.ownerId === this.playerClanId);
-
-      if (myProvs.length > 0) {
-
-        this.selectProvince(myProvs[0].id);
-
-      } else {
-
-        const anyProv = this.provinces.find(p => p.ownerId && p.ownerId !== 'independent' && p.ownerId !== 'court');
-
-        if (anyProv) this.selectProvince(anyProv.id);
-
-      }
-
+      this.selectedProvId = null;
+      this.updateMapDisplay();
     }
 
     this.updateSeasonVisuals();
@@ -10723,7 +10724,13 @@ export const GameStateMethods = {
 
 
 
-    // 大名出陣ボタンで法螺貝が鳴っている間は、他の効果音（ファンファーレ）を鳴らさず、季節BGMは法螺貝が鳴り終わってから開始する（deploy49）
+    // 出陣ボタン押下によるゲーム開始時は必ず法螺貝を鳴らす（TitleBgm側の1500msデバウンスで二重再生防止）
+    try {
+      if (this.music && this.music.currentTrack === 'op' && this.music.timerId) {
+        this.music.stop();
+      }
+      window.SengokuTitleBgm?.horagai?.();
+    } catch (e) {}
     const horaLeftMs = (() => { try { return window.SengokuTitleBgm?.horagaiRemainingMs?.() || 0; } catch (e) { return 0; } })();
     if (horaLeftMs > 0) {
       clearTimeout(this._postHoragaiBgmTimer);
@@ -11694,6 +11701,9 @@ export const GameStateMethods = {
       takato: '#c77dce',
       oyama: '#d9822b',
       motoyama: '#7e57c2',
+      saito: '#73787c',
+      takigawa: '#2c5e8a',
+      oda_nobutaka: '#b03a2e',
     };
     if (distinctTerritoryColors[p.ownerId]) return distinctTerritoryColors[p.ownerId];
 
@@ -16773,6 +16783,8 @@ export const GameStateMethods = {
 
   coalitionShouldForm(provCount) {
 
+    if (this.currentDifficulty === 'relaxed') return false; // 楽級：覇道包囲網は起きない
+
     const B = this.aiBalance ? this.aiBalance() : {};
 
     const th = Number(B.coalitionThresholdProvs) || 15;
@@ -16803,7 +16815,7 @@ export const GameStateMethods = {
 
     this.clampAllProvinceRice?.();
 
-    this.seasonIdx = (this.seasonIdx + 1) % 4;
+    this.seasonIdx = (this.seasonIdx + 1) % SEASONS_PER_YEAR;
 
     if (this.seasonIdx === 0) {
 
@@ -16838,7 +16850,11 @@ export const GameStateMethods = {
 
     const weathers = ['晴天', '晴天', '曇天', '恵みの雨', '豪雨', '晴天'];
 
-    if (this.seasonIdx === 3) weathers.push('大雪', '吹雪');
+    if (this.seasonIdx === SEASON.WINTER) weathers.push('大雪', '吹雪');
+
+    if (this.seasonIdx === SEASON.EARLY_SUMMER) weathers.push('恵みの雨', '恵みの雨'); // 初夏は梅雨
+
+    if (this.seasonIdx === SEASON.MIDSUMMER) weathers.push('晴天', '豪雨'); // 盛夏は炎天と夕立
 
     this.currentWeather = weathers[Math.floor(Math.random() * weathers.length)];
 
@@ -16902,7 +16918,7 @@ export const GameStateMethods = {
 
 
 
-      if (this.seasonIdx === 2) {
+      if (this.seasonIdx === SEASON.AUTUMN) {
 
         const riceMult = this.getAutumnRiceMultiplier(p);
 
@@ -16928,7 +16944,7 @@ export const GameStateMethods = {
 
       }
 
-      if (this.seasonIdx === 1 || this.seasonIdx === 3) {
+      if (this.seasonIdx === SEASON.MIDSUMMER || this.seasonIdx === SEASON.WINTER) {
 
         totalCommerceIncome += Math.round(this.provinceCommerceIncome(p) * mult); // 開発分の上乗せ（2026-10-11 ce）
 
@@ -17014,7 +17030,7 @@ export const GameStateMethods = {
 
 
 
-    if (this.seasonIdx === 2 && totalRiceHarvest > 0) {
+    if (this.seasonIdx === SEASON.AUTUMN && totalRiceHarvest > 0) {
 
       const extras = [];
 
@@ -17030,7 +17046,7 @@ export const GameStateMethods = {
 
     }
 
-    if ((this.seasonIdx === 1 || this.seasonIdx === 3) && totalCommerceIncome > 0) {
+    if ((this.seasonIdx === SEASON.MIDSUMMER || this.seasonIdx === SEASON.WINTER) && totalCommerceIncome > 0) {
 
       const directNote = directRuleCount > 0 ? `（※直轄領${directRuleCount}カ国は能力半減で金収入50%）` : '（全城配備により満額収納）';
 
@@ -17382,6 +17398,10 @@ export const GameStateMethods = {
 
       seasonIdx: this.seasonIdx,
 
+      seasonScheme: SEASONS_PER_YEAR, // 5ターン制（春・初夏・盛夏・秋・冬）のセーブ
+
+      ambitionState: this.ambitionState || null, // 大名の志向（地方統一の達成状況）
+
       playerClanId: this.playerClanId,
 
       gold: this.gold,
@@ -17616,9 +17636,37 @@ export const GameStateMethods = {
 
 
 
+  /** 旧4季制のセーブデータを5ターン制へ換算（季節・同盟期間・停戦期限など） */
+  migrateLegacySeasonSave(data) {
+    if (!data || typeof data !== 'object' || data.seasonScheme === SEASONS_PER_YEAR) return data;
+    const d = { ...data, seasonScheme: SEASONS_PER_YEAR };
+    d.seasonIdx = legacySeasonIdxToNew(data.seasonIdx);
+    if (Array.isArray(data.alliances)) {
+      d.alliances = data.alliances.map(g => {
+        if (!g || Array.isArray(g) || typeof g !== 'object') return g;
+        const n = { ...g };
+        if (Number.isFinite(g.formedSeason)) n.formedSeason = legacySeasonIdxToNew(g.formedSeason);
+        if (Number.isFinite(g.durationSeasons)) n.durationSeasons = legacySeasonCountToNew(g.durationSeasons);
+        return n;
+      });
+    }
+    if (data.allianceCooldown && typeof data.allianceCooldown === 'object') {
+      d.allianceCooldown = {};
+      Object.entries(data.allianceCooldown).forEach(([k, v]) => { d.allianceCooldown[k] = Number.isFinite(v) ? legacyTurnIndexToNew(v) : v; });
+    }
+    if (Array.isArray(data.breakawayTruces)) {
+      d.breakawayTruces = data.breakawayTruces.map(t => (t && Number.isFinite(t.until)) ? { ...t, until: legacyTurnIndexToNew(t.until) } : t);
+    }
+    return d;
+  },
+
   loadGameData(data) {
 
     this.resetHistoricalEventRuntime();
+
+    data = this.migrateLegacySeasonSave(data);
+
+    this.ambitionState = (data.ambitionState && typeof data.ambitionState === 'object') ? data.ambitionState : null;
 
     this.year = data.year;
 
@@ -17632,7 +17680,7 @@ export const GameStateMethods = {
 
     this.ap = data.ap;
 
-    this.coalitionFormed = !!data.coalitionFormed;
+    this.coalitionFormed = !!data.coalitionFormed && data.currentDifficulty !== 'relaxed'; // 楽級は包囲網なし
 
     this.syncCoalitionUI(); // ロード時に包囲網バッジ／バナーを復元（2026-10-25 d54）
 
@@ -17658,13 +17706,19 @@ export const GameStateMethods = {
 
       : (savedDifficulty === 'hell' || savedDifficulty === 'shura' ? 'hard' : 'relaxed');
 
+    if (this.currentDifficulty === 'relaxed') { this.coalitionFormed = false; this.syncCoalitionUI?.(); } // 楽級は覇道包囲網なし
+
     this.alliances = this.normalizeAlliances(
 
       data.alliances || this.currentScenario?.alliances || [],
 
       this.year,
 
-      this.seasonIdx
+      this.seasonIdx,
+
+      undefined,
+
+      !data.alliances && this.currentScenario?.seasonScheme !== SEASONS_PER_YEAR
 
     );
 
@@ -20170,7 +20224,7 @@ export const GameStateMethods = {
 
 
 
-    const s = this.seasonIdx; // 0:春, 1:夏, 2:秋, 3:冬
+    const s = seasonVisualIdx(this.seasonIdx); // 描画用 0:春, 1:夏（初夏・盛夏）, 2:秋, 3:冬
 
     const isBlizzard = this.currentWeather === '大雪' || this.currentWeather === '吹雪';
 
@@ -20224,7 +20278,7 @@ export const GameStateMethods = {
 
     if (!banner) return;
 
-    const icons = ['🌸', '☀️', '🍁', '❄️'];
+    const icons = ['🌸', '🌿', '☀️', '🍁', '❄️'];
 
     const seasonIcon = icons[this.seasonIdx] || '📜';
 
@@ -20455,7 +20509,7 @@ export const GameStateMethods = {
       const choiceId = typeof lc === 'string' ? lc : lc.choiceId;
       if (!choiceId) return;
       const year = (lc.year !== undefined && lc.year !== null) ? lc.year : ev.year;
-      const season = lc.season || ev.season;
+      const season = normalizeSeasonName(lc.season || ev.season); // 旧「夏」は初夏
       const same = links.find(l => l.choiceId === choiceId && l.year === year && l.season === season);
       if (same) same.dataIds.push(ev.id);
       else links.push({ choiceId, dataIds: [ev.id], year, season });
@@ -20855,7 +20909,7 @@ export const GameStateMethods = {
 
         if (ev.year !== undefined && ev.year !== this.year) continue;
 
-        if (ev.season !== undefined && ev.season !== currentSeasonName) continue;
+        if (ev.season !== undefined && normalizeSeasonName(ev.season) !== currentSeasonName) continue; // 旧「夏」のイベントは初夏に発生
 
 
 
@@ -21067,7 +21121,7 @@ export const GameStateMethods = {
 
     (window.HISTORICAL_EVENTS_DATA || []).forEach(ev => {
 
-      if (ev.year === this.year && ev.season === seasonName) {
+      if (ev.year === this.year && normalizeSeasonName(ev.season) === seasonName) {
 
         this.triggeredHistoricalEvents.add(ev.id);
 
@@ -21316,7 +21370,7 @@ export const GameStateMethods = {
 
         formedSeason: this.seasonIdx,
 
-        durationSeasons: Number(pact.durationSeasons) > 0 ? Number(pact.durationSeasons) : ALLIANCE_DURATION_SEASONS
+        durationSeasons: Number(pact.durationSeasons) > 0 ? legacySeasonCountToNew(Number(pact.durationSeasons)) : ALLIANCE_DURATION_SEASONS
 
       });
 
@@ -21556,7 +21610,67 @@ export const GameStateMethods = {
 
 
 
-  describeEventExtras(changes) {
+  /**
+   * 地震などの被害イベントで、表示上も実際に数値が下がる国だけを判定する。
+   * イベント適用時の下限（兵力100、防御・治安・士気0）と同じ条件で確認する。
+   */
+  hasEffectiveProvinceDamage(pId, fx) {
+
+    if (!fx || typeof fx !== 'object') return false;
+
+    const prov = (this.provinces || []).find(item => item && item.id === pId);
+
+    if (!prov) return false;
+
+    const initialTroops = Number(prov.troops) || 0;
+    let troops = initialTroops;
+    const troopsRate = Number(fx.troopsRate);
+
+    if (troopsRate > 0 && troopsRate < 1) {
+
+      const rate = Math.max(0.2, Math.min(1.3, troopsRate));
+
+      troops = Math.max(100, Math.round(troops * rate));
+
+    }
+
+    if (fx.troops !== undefined && Number.isFinite(Number(fx.troops)) && Number(fx.troops) !== 0) {
+
+      const add = Math.max(-5000, Math.min(EVENT_TROOP_ADD_CAP, Math.round(Number(fx.troops))));
+
+      troops = Math.max(100, troops + add);
+
+    }
+
+    const initialDefense = Number(prov.defense) || 0;
+    let defense = initialDefense;
+
+    if (fx.defense !== undefined && Number.isFinite(Number(fx.defense))
+    ) defense = Math.max(0, Math.min(100, Math.round(Number(fx.defense))));
+
+    if (Number(fx.defenseDelta)) defense = Math.max(0, Math.min(100, defense + Number(fx.defenseDelta)));
+
+    const initialOrder = Number(prov.order) || 0;
+    const order = Number(fx.orderDelta)
+      ? Math.max(0, Math.min(100, initialOrder + Number(fx.orderDelta)))
+      : initialOrder;
+
+    const initialMorale = Number(prov.morale) || 0;
+    let morale = initialMorale;
+
+    if (Number(fx.attackDelta)) morale = Math.max(0, Math.min(100, morale + Number(fx.attackDelta)));
+    if (Number(fx.moraleDelta)) morale = Math.max(0, Math.min(100, morale + Number(fx.moraleDelta)));
+
+    return troops < initialTroops
+      || defense < initialDefense
+      || order < initialOrder
+      || morale < initialMorale;
+
+  },
+
+
+
+  describeEventExtras(changes, options = {}) {
 
     if (!changes) return [];
 
@@ -21662,13 +21776,27 @@ export const GameStateMethods = {
 
     });
 
+    const provinceNames = [];
+
     Object.entries(changes.provinceEffects || {}).forEach(([pId, fx]) => {
+
+      if (options.effectiveProvinceDamageOnly && !this.hasEffectiveProvinceDamage(pId, fx)) return;
+
+      if (options.provinceNamesOnly) {
+
+        provinceNames.push(this.getProvinceJapaneseName(pId));
+
+        return;
+
+      }
 
       const t = fx ? fxText(fx) : '';
 
       if (t) lines.push(`${this.getProvinceJapaneseName(pId)}：${t}`);
 
     });
+
+    if (provinceNames.length) lines.push(provinceNames.join('、'));
 
     return lines;
 
@@ -22007,7 +22135,13 @@ applyEventTerritory(changes) {
 
       if (branch === 'accept') lines.push(...this.describeAppointLines(changes.appoint));
 
-      lines.push(...this.describeEventExtras(changes));
+      const isEarthquake = /(?:^|_)quake(?:_|$)/.test(String(ev?.id || ''))
+        || String(ev?.title || '').includes('地震');
+
+      lines.push(...this.describeEventExtras(changes, {
+        effectiveProvinceDamageOnly: isEarthquake,
+        provinceNamesOnly: isEarthquake
+      }));
 
       if (changes.famine) lines.push(...this.describeFamineLines(changes.famine));
 

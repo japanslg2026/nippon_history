@@ -63,8 +63,11 @@
   }
   </script>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&amp;family=Shippori+Mincho:wght@500;700;800&amp;display=swap" rel="stylesheet">
   <!-- 既存の encyclopedia.css が存在する場合の読み込み（単一HTMLでも下の内蔵CSSで完全動作） -->
-  <link rel="stylesheet" href="css/encyclopedia.css">
+  <link rel="stylesheet" href="css/encyclopedia.css?v=20261107_hist_v16">
 
   <style>
     :root {
@@ -266,7 +269,7 @@
       flex-direction: column;
       min-width: 0;
       min-height: 0;
-      background: radial-gradient(ellipse at center, #18232c 0%, #0d1318 70%, #070a0d 100%);
+      background: #070a0d url('assets/images/map_ocean_bg.jpg') center center / cover no-repeat;
       position: relative;
     }
 
@@ -2164,9 +2167,9 @@
       .map-left-overlay-stack {
         touch-action: pan-y;
       }
-      /* 日本列島を地図ボックス（SVG）の上下中央に配置 */
+      /* 日本列島を地図ボックス（SVG）の上下中央に配置（蝦夷〜九州を左へ1度傾ける） */
       #mapArchipelagoGroup {
-        transform: translate(0px, -11px) rotate(1deg);
+        transform: translate(0px, -11px) rotate(-3deg);
         transform-origin: 500px 340px;
       }
       html, body {
@@ -2605,7 +2608,7 @@
         max-height: 52vh !important;
         aspect-ratio: 980 / 535 !important;
         overflow: hidden !important;
-        background: radial-gradient(ellipse at center, #18232c 0%, #0d1318 70%, #070a0d 100%) !important;
+        background: #070a0d url('assets/images/map_ocean_bg.jpg') center center / cover no-repeat !important;
         pointer-events: auto !important;
         display: flex !important;
         align-items: center !important;
@@ -3482,6 +3485,245 @@
   .mk-overlay .mk-tab { flex: 0 0 auto !important; padding: 2px 5px !important; }
   .mk-overlay .mk-close { flex: 0 0 26px !important; width: 26px !important; }
 }
+
+/* ============================================================================
+   2026-11-07 UI刷新：
+   1. 書体統一（Shippori Mincho＋字間拡大 / BIZ UDPGothic＋tabular-nums）
+   2. 未選択時は大名概要と詳細パネルを隠し、国クリックで右端ドロワー（スマホはボトムシート）をスライドイン
+   ============================================================================ */
+:root {
+  --font-mincho: 'Shippori Mincho', 'Yu Mincho', 'Hiragino Mincho ProN', serif;
+  --font-data: 'BIZ UDPGothic', 'Hiragino Kaku Gothic ProN', 'Yu Gothic UI', 'Meiryo', sans-serif;
+}
+
+.brand-title,
+.header-scenario-indicator,
+#hdrYear,
+#hdrGengo,
+#hdrTitle,
+.overlay-box-title,
+.section-title,
+.castle-prov-name,
+.castle-name-sub,
+.officer-name,
+.bio-name,
+.modal-head-title,
+.daimyo-identity-group strong,
+.atlas-drawer-title {
+  font-family: var(--font-mincho) !important;
+  letter-spacing: 0.06em;
+}
+
+.brand-title-main,
+#hdrTitle,
+.bio-name {
+  letter-spacing: 0.09em;
+  font-weight: 800;
+}
+
+.metric-chip b,
+.stat-pill-val,
+#provOfficerCountBadge,
+.bio-stat-num,
+.scale-tick-label,
+.modal-data-table td:nth-child(6),
+.modal-data-table td:nth-child(7),
+.modal-data-table td:nth-child(8),
+.modal-data-table td:nth-child(9),
+.modal-data-table td:nth-child(10) {
+  font-family: var(--font-data) !important;
+  font-variant-numeric: tabular-nums !important;
+  font-feature-settings: "tnum" 1 !important;
+}
+
+/* ワークスペース：地図は常時全面を使い、右サイドバーは選択時のみドロワーとして重ねる */
+.workspace {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  overflow: hidden !important;
+}
+
+.atlas-drawer-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  background: linear-gradient(90deg, rgba(62, 38, 20, 0.95), rgba(28, 18, 11, 0.96));
+  border-bottom: 1px solid var(--border-gold);
+  flex-shrink: 0;
+}
+
+.atlas-drawer-title {
+  font-size: 12pt;
+  font-weight: 700;
+  color: var(--gold-bright);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.atlas-drawer-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.atlas-drawer-btn {
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 14px;
+  border: 1px solid var(--border-gold);
+  background: rgba(20, 13, 8, 0.85);
+  color: var(--text-main);
+  font-size: 10pt;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+}
+
+.atlas-drawer-btn:hover {
+  background: #922b21;
+  border-color: var(--gold-bright);
+  color: #fff;
+}
+
+.atlas-drawer-grabber {
+  display: none;
+}
+
+.right-sidebar #mapDaimyoBox {
+  margin: 0 !important;
+  border-radius: 6px !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  background: rgba(26, 18, 11, 0.92) !important;
+  border: 1px solid var(--border-subtle) !important;
+  padding: 8px 10px !important;
+  flex-shrink: 0;
+}
+
+.right-sidebar #mapDaimyoBox.sp-unselected {
+  display: none !important;
+}
+
+@media (min-width: 1101px) {
+  .right-sidebar {
+    position: absolute !important;
+    top: 8px !important;
+    right: 8px !important;
+    bottom: 8px !important;
+    width: min(440px, 38vw) !important;
+    max-width: 460px !important;
+    z-index: 45 !important;
+    background: linear-gradient(180deg, rgba(26, 18, 11, 0.975) 0%, rgba(15, 10, 6, 0.985) 100%) !important;
+    border: 1px solid var(--border-gold) !important;
+    border-radius: 10px !important;
+    box-shadow: -10px 0 32px rgba(0, 0, 0, 0.8) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 0 10px 10px !important;
+    overflow-y: auto !important;
+    transform: translateX(calc(100% + 24px)) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease, visibility 0.26s !important;
+  }
+
+  .right-sidebar > .atlas-drawer-topbar {
+    margin: 0 -10px 2px -10px;
+    border-radius: 9px 9px 0 0;
+  }
+
+  .right-sidebar.is-open {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+
+  .atlas-drawer-peek-btn {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1100px) {
+  .right-sidebar {
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: calc(88px + env(safe-area-inset-bottom)) !important;
+    top: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: min(56dvh, calc(100dvh - 178px)) !important;
+    z-index: 900 !important;
+    background: linear-gradient(180deg, rgba(26, 18, 12, 0.985) 0%, rgba(14, 9, 6, 0.992) 100%) !important;
+    border-top: 2px solid var(--gold) !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+    border-radius: 14px 14px 0 0 !important;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.86) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 0 10px 12px !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    transform: translateY(calc(100% + 120px)) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease, visibility 0.26s !important;
+  }
+
+  .right-sidebar.is-open {
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+
+  .right-sidebar.is-open.is-peek {
+    max-height: 44px !important;
+    overflow: hidden !important;
+    padding-bottom: 0 !important;
+  }
+
+  .right-sidebar > .atlas-drawer-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    margin: 0 -10px 2px -10px;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .atlas-drawer-grabber {
+    display: flex;
+    justify-content: center;
+    padding: 4px 0 0;
+    cursor: pointer;
+  }
+
+  .atlas-drawer-grabber > span {
+    width: 36px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(212, 175, 55, 0.55);
+  }
+
+  .timeline-dock {
+    position: relative;
+    z-index: 920;
+  }
+}
 </style>
 </head>
 <body>
@@ -3564,14 +3806,7 @@
               </div>
             </div>
 
-            <!-- 2段目：支配大名の概要 -->
-            <div class="overlay-box-auto sp-unselected" id="mapDaimyoBox">
-              <div id="daimyoDetailContent">
-                <div style="color:var(--text-sub); font-size:12pt;"><span class="hint-pc">地図上の国をクリックすると、その国を支配する大名家の概要が表示されます。</span><span class="hint-sp">国をクリックすると大名の概要を表示</span></div>
-              </div>
-            </div>
-
-            <!-- 3段目（PC用・大名概要ボックス直下・左端）：「ハイライト解除」文字のみのボックス -->
+            <!-- PC用：選択中のみ表示されるハイライト解除ボタン -->
             <button type="button" class="clear-highlight-under-btn is-cleared pc-clear-highlight-btn" id="btnClearHighlight">ハイライト解除</button>
           </div>
 
@@ -3582,8 +3817,17 @@
 
             <!-- SVG日本地図本体（背景ボックスいっぱいに初期表示：viewBox="15 70 965 520"） -->
             <svg id="atlasMapSvg" class="hide-labels" viewBox="10 75 980 535" preserveAspectRatio="xMidYMid meet" aria-label="日本史勢力図">
+              <defs id="atlasMapDefs">
+                <linearGradient id="atlasReliefSheen" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#fff9ea" stop-opacity="0.11"></stop>
+                  <stop offset="48%" stop-color="#fff6e0" stop-opacity="0.02"></stop>
+                  <stop offset="100%" stop-color="#120904" stop-opacity="0.14"></stop>
+                </linearGradient>
+                <clipPath id="atlasLandClip"></clipPath>
+                <g id="atlasInnerGlowPaths"></g>
+              </defs>
               <g id="mapPanZoomLayer">
-                <g id="mapArchipelagoGroup" transform="rotate(1, 500, 340)">
+                <g id="mapArchipelagoGroup" transform="rotate(-3, 500, 340)">
                   <g id="mapRoadsGroup"></g>
                   <g id="mapProvincesGroup"></g>
                   <g id="mapMarkersGroup"></g>
@@ -3604,7 +3848,8 @@
               <button type="button" class="era-chip-btn" data-era="gempei">源平</button>
               <button type="button" class="era-chip-btn" data-era="kamakura">鎌倉</button>
               <button type="button" class="era-chip-btn" data-era="muromachi">室町</button>
-              <button type="button" class="era-chip-btn" data-era="sengoku"><span class="era-txt-pc">戦国・安土桃山</span><span class="era-txt-sp">戦国</span></button>
+              <button type="button" class="era-chip-btn" data-era="sengoku"><span class="era-txt-pc">戦国</span><span class="era-txt-sp">戦国</span></button>
+              <button type="button" class="era-chip-btn" data-era="azuchi"><span class="era-txt-pc">安土桃山</span><span class="era-txt-sp">安土</span></button>
               <button type="button" class="era-chip-btn" data-era="edo">江戸</button>
               <button type="button" class="era-chip-btn" data-era="bakumatsu"><span class="era-txt-pc">幕末・明治</span><span class="era-txt-sp">近代</span></button>
             </div>
@@ -3623,8 +3868,22 @@
         </div>
       </section>
 
-      <!-- 右側サイドバー：領国と城郭の解説 ＋ この国の武将一覧 -->
-      <aside class="right-sidebar" id="rightSidebar" aria-label="領国・城郭解説および所在武将一覧">
+      <!-- 右端スライドインドロワー（スマホはボトムシート）：支配大名概要 ＋ 領国と城郭の解説 ＋ 所在武将一覧 -->
+      <aside class="right-sidebar" id="rightSidebar" aria-label="支配大名・領国城郭解説および所在武将一覧">
+        <div class="atlas-drawer-grabber" id="atlasDrawerGrabber" aria-hidden="true"><span></span></div>
+        <div class="atlas-drawer-topbar">
+          <span class="atlas-drawer-title" id="atlasDrawerTitle">🏯 領国・勢力詳細</span>
+          <div class="atlas-drawer-actions">
+            <button type="button" class="atlas-drawer-btn atlas-drawer-peek-btn" id="btnPeekAtlasDrawer" title="シートを折り畳む／展開" aria-label="シートを折り畳む／展開">▼<span class="adb-lbl"> 畳む</span></button>
+            <button type="button" class="atlas-drawer-btn" id="btnCloseAtlasDrawer" title="選択とハイライトを解除して閉じる" aria-label="閉じる">✕<span class="adb-lbl"> 閉じる</span></button>
+          </div>
+        </div>
+
+        <!-- ⓪ 支配大名の概要（国選択時のみドロワー最上段に統合表示） -->
+        <div class="overlay-box-auto sp-unselected" id="mapDaimyoBox">
+          <div id="daimyoDetailContent"></div>
+        </div>
+
         <!-- ① 領国と城郭の解説 -->
         <div class="side-section-castle" id="castleSection">
           <div class="section-header">
@@ -3641,8 +3900,9 @@
           <div class="section-header">
             <h2 class="section-title">⚔️ この国の武将一覧</h2>
             <span class="section-badge" id="provOfficerCountBadge">0 名</span>
+            <button type="button" class="sp-prov-officers-btn" id="btnSpProvOfficers" title="この国の武将一覧を表示">一覧 ▸</button>
           </div>
-          <div style="font-size:12pt; color:var(--text-sub); margin-bottom:6px;">
+          <div class="prov-officers-hint" style="font-size:12pt; color:var(--text-sub); margin-bottom:6px;">
             ※ 武将をクリックすると人物列伝と登場シナリオ履歴が開きます。
           </div>
           <div class="officer-cards-list" id="provOfficersList">
@@ -3665,6 +3925,19 @@
   </div>
 
   <!-- ==================== モーダル 2: サイトの概要 ==================== -->
+  <!-- スマホ：下から出るシートの「一覧」ボタンで開く、この国の武将一覧（2026-11-07） -->
+  <div class="modal-backdrop hidden" id="provOfficersModal" style="z-index:2400;">
+    <div class="modal-window narrow" role="dialog" aria-modal="true" aria-labelledby="provOfficersModalTitle">
+      <div class="modal-head">
+        <div class="modal-head-title" id="provOfficersModalTitle">⚔️ この国の武将一覧</div>
+        <button type="button" class="modal-close-btn" id="provOfficersModalClose" title="閉じる">×</button>
+      </div>
+      <div class="modal-body" id="provOfficersModalBody">
+        <div style="font-size:11.5pt; color:var(--text-sub); margin-bottom:6px;">※ 武将をタップすると人物列伝と登場シナリオ履歴が開きます。</div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal-backdrop hidden" id="aboutModal">
     <div class="modal-window narrow" role="dialog" aria-modal="true" aria-labelledby="aboutModalHeadTitle">
       <div class="modal-head">
@@ -3709,7 +3982,8 @@
         { key: 'gempei',    label: '源平',           fullLabel: '源平',           from: 1180,  to: 1191 },
         { key: 'kamakura',  label: '鎌倉',           fullLabel: '鎌倉',           from: 1192,  to: 1332 },
         { key: 'muromachi', label: '室町',           fullLabel: '室町',           from: 1333,  to: 1456 },
-        { key: 'sengoku',   label: '戦国・安土桃山', fullLabel: '戦国・安土桃山', from: 1457,  to: 1602 },
+        { key: 'sengoku',   label: '戦国',           fullLabel: '戦国',           from: 1457,  to: 1572 },
+        { key: 'azuchi',    label: '安土桃山',       fullLabel: '安土桃山',       from: 1573,  to: 1602 }, // 戦国・安土桃山を分割（2026-11-07）
         { key: 'edo',       label: '江戸',           fullLabel: '江戸',           from: 1603,  to: 1852 },
         { key: 'bakumatsu', label: '幕末・明治',     fullLabel: '幕末・明治',     from: 1853,  to: 9999 },
         { key: 'gendai',    label: '現代',           fullLabel: '現代',           from: 99999, to: 99999, officerOnly: true }
@@ -4045,22 +4319,22 @@
       async function initAllData() {
         var statusEl = document.getElementById('loadingStatusText');
         try {
-          await loadExternalScript(['assets/kamons.js?v=20261104_shikoku_fix', 'assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
+          await loadExternalScript(['assets/kamons.js?v=20261107_takeda_hongan', 'assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
           if (typeof window.loadKamonSymbols === 'function') {
             window.loadKamonSymbols();
           }
-          await loadExternalScript(['js/kamonOverrides.js?v=20261106_hist_v15']);
+          await loadExternalScript(['js/kamonOverrides.js?v=20261107_hist_v17']);
 
           statusEl.textContent = '歴史配置ルールとシナリオ・領国・大名・武将データを読み込み中…';
           var rulesPromise = loadAffiliationRulesSafe();
 
           var results = await Promise.all([
-            fetchJsonSmart('scenarios.json?v=20261106_hist_v15'),
-            fetchJsonSmart('provinces.json?v=20261106_hist_v15'),
-            fetchJsonSmart('clans.json?v=20261106_hist_v15'),
-            fetchJsonSmart('officers.json?v=20261106_hist_v15'),
-            fetchJsonSmart('governors.json?v=20261106_hist_v15').catch(function () { return {}; }),
-            fetchJsonSmart('events.json?v=20261106_hist_v15').catch(function () { return {}; }),
+            fetchJsonSmart('scenarios.json?v=20261107_takeda_hongan'),
+            fetchJsonSmart('provinces.json?v=20261107_hist_v16'),
+            fetchJsonSmart('clans.json?v=20261107_takeda_hongan'),
+            fetchJsonSmart('officers.json?v=20261107_hist_v16'),
+            fetchJsonSmart('governors.json?v=20261107_hist_v16').catch(function () { return {}; }),
+            fetchJsonSmart('events.json?v=20261107_hist_v16').catch(function () { return {}; }),
             rulesPromise
           ]);
 
@@ -4538,7 +4812,7 @@
         var distinctTerritoryColors = {
           gamo: '#2f5f9e',
           gamou: '#2f5f9e',
-          todo: '#5b6068',
+          todo: '#d5d8dc',
           tosa: '#365a9c',
           clan_8849: '#c65d2e',
           sakai: '#8a6b3f',
@@ -4554,7 +4828,10 @@
           bessho: '#c69c6d',
           takato: '#c77dce',
           oyama: '#d9822b',
-          motoyama: '#7e57c2'
+          motoyama: '#7e57c2',
+          saito: '#73787c',
+          takigawa: '#2c5e8a',
+          oda_nobutaka: '#b03a2e'
         };
         if (distinctTerritoryColors[clanId]) return distinctTerritoryColors[clanId];
         var playD = (State.currentScenario && State.currentScenario.playables || []).find(function (p) { return p && p.id === clanId; });
@@ -4580,26 +4857,38 @@
         return document.getElementById('kamon-default') ? 'kamon-default' : '';
       }
 
-      // 家紋の背景も、その時点の領土色と一致させる必要がある大名家。
-      var TERRITORY_COLOR_KAMON_CLANS = new Set(['niwa', 'goto', 'suwa', 'sengoku', 'bessho', 'shiina', 'sano', 'nanjo', 'aki_tosa', 'motoyama', 'ichijo', 'chosokabe', 'takato', 'oyama']);
+      // 家紋の背景も、その時点の領土色と一致させる必要がある大名家（斎藤道三・滝川一益を含む）。
+      var TERRITORY_COLOR_KAMON_CLANS = new Set(['saito', 'takigawa', 'niwa', 'goto', 'suwa', 'sengoku', 'bessho', 'shiina', 'sano', 'nanjo', 'aki_tosa', 'motoyama', 'ichijo', 'chosokabe', 'takato', 'oyama']);
 
       function getMapKamonSymbolId(clanId, provinceId, fillColor) {
         var baseId = getClanKamonSymbolId(clanId);
-        if (!baseId || !provinceId || !TERRITORY_COLOR_KAMON_CLANS.has(clanId)) return baseId;
+        if (!baseId || !provinceId) return baseId;
 
         var source = document.getElementById(baseId);
         if (!source || !source.parentNode) return baseId;
+        var srcVer = source.getAttribute('data-v') || '1';
         var mapId = baseId + '-map-' + provinceId;
         var mapSymbol = document.getElementById(mapId);
-        if (!mapSymbol) {
+        if (!mapSymbol || mapSymbol.getAttribute('data-src-id') !== (baseId + ':' + srcVer)) {
+          if (mapSymbol && mapSymbol.parentNode) mapSymbol.parentNode.removeChild(mapSymbol);
           mapSymbol = source.cloneNode(true);
           mapSymbol.id = mapId;
+          mapSymbol.setAttribute('data-src-id', baseId + ':' + srcVer);
           source.parentNode.appendChild(mapSymbol);
         }
-        var backdrop = Array.from(mapSymbol.children).find(function (el) {
-          return el.tagName && el.tagName.toLowerCase() === 'circle' && Number(el.getAttribute('r')) >= 14;
+        var syncFill = TERRITORY_COLOR_KAMON_CLANS.has(clanId);
+        Array.from(mapSymbol.children).forEach(function (el) {
+          if (!el.tagName || el.tagName.toLowerCase() !== 'circle') return;
+          var r = Number(el.getAttribute('r'));
+          if (r >= 13.5) {
+            // 地図上の家紋外周の金色縁取りを省略
+            el.setAttribute('stroke', 'none');
+            el.setAttribute('stroke-width', '0');
+            if (fillColor) { // 家紋の背景色は全大名家とも領土の色に合わせる（2026-11-07）
+              el.setAttribute('fill', fillColor);
+            }
+          }
         });
-        if (backdrop) backdrop.setAttribute('fill', fillColor);
         return mapId;
       }
 
@@ -4616,6 +4905,128 @@
 
       // ==================== SVG日本地図の構築（マウス＋スマートフォンタッチ操作対応） ====================
       var mapScale = 1.0, mapPanX = 0, mapPanY = 0;
+      // ---- PC：右パネル（ドロワー）が列島の東端を隠す場合、列島を左へ押し出して全体を表示（2026-11-07） ----
+      var drawerShiftSaved = null, drawerShiftApplied = null, drawerShiftAnim = 0;
+      function setMapPanZoom(s, x, y) {
+        mapScale = s; mapPanX = x; mapPanY = y;
+        var layer = document.getElementById('mapPanZoomLayer');
+        if (layer) layer.setAttribute('transform', 'translate(' + x.toFixed(1) + ', ' + y.toFixed(1) + ') scale(' + s.toFixed(3) + ')');
+      }
+      function animateMapPanZoom(s, x, y) {
+        var s0 = mapScale, x0 = mapPanX, y0 = mapPanY, t0 = performance.now(), id = ++drawerShiftAnim;
+        function step(now) {
+          if (id !== drawerShiftAnim) return;
+          var t = Math.min(1, (now - t0) / 280), e = 1 - Math.pow(1 - t, 3);
+          setMapPanZoom(s0 + (s - s0) * e, x0 + (x - x0) * e, y0 + (y - y0) * e);
+          if (t < 1) requestAnimationFrame(step);
+          else if (typeof updateKamonBadgeSizes === 'function') { try { updateKamonBadgeSizes(); } catch (err) {} }
+        }
+        requestAnimationFrame(step);
+      }
+      // スマホ：下から出るシートで選んだ国が隠れないよう、地図の見えている部分の中央へ国を寄せる（2026-11-07）
+      var spShiftSaved = null, spShiftApplied = null;
+      function keepSelectedVisibleOnMobile(open) {
+        var drawer = document.getElementById('rightSidebar');
+        var wrap = document.getElementById('mapViewportWrap');
+        var svg = document.getElementById('atlasMapSvg');
+        if (!drawer || !wrap || !svg) return;
+        if (!open) {
+          // シートを戻したら（閉じる・畳む）、シートが出る前の地図の状態へ必ず戻す
+          if (spShiftSaved) {
+            animateMapPanZoom(spShiftSaved.s, spShiftSaved.x, spShiftSaved.y);
+          }
+          spShiftSaved = spShiftApplied = null;
+          return;
+        }
+        var pid = State.selectedProvId;
+        var path = pid ? document.getElementById('prov-path-' + pid) : null;
+        var ctm = svg.getScreenCTM();
+        if (!path || !ctm) return;
+        var cs = getComputedStyle(drawer);
+        var drawerTop = window.innerHeight - (parseFloat(cs.bottom) || 0) - drawer.offsetHeight; // スライド中の transform を除いた最終位置
+        var wr = wrap.getBoundingClientRect();
+        var top = wr.top + 8, bottom = Math.min(wr.bottom, drawerTop) - 8;
+        if (bottom - top < 50) return;
+        var pr = path.getBoundingClientRect();
+        var pcx = pr.left + pr.width / 2, pcy = pr.top + pr.height / 2;
+        var inView = pr.top >= top && pr.bottom <= bottom && pr.left >= wr.left && pr.right <= wr.right;
+        if (inView) return;
+        var dx = (wr.left + wr.width / 2) - pcx, dy = (top + bottom) / 2 - pcy;
+        if (!spShiftSaved) spShiftSaved = { s: mapScale, x: mapPanX, y: mapPanY };
+        var nx = mapPanX + dx / (ctm.a || 1), ny = mapPanY + dy / (ctm.d || 1);
+        spShiftApplied = { s: mapScale, x: nx, y: ny };
+        animateMapPanZoom(mapScale, nx, ny);
+      }
+      function fitArchipelagoBesideDrawer(open) {
+        if (window.matchMedia('(max-width: 1100px)').matches) { keepSelectedVisibleOnMobile(open); return; }
+        if (!window.matchMedia('(min-width: 1101px)').matches) return;
+        var svg = document.getElementById('atlasMapSvg');
+        var stage = document.getElementById('mapStage');
+        var drawer = document.getElementById('rightSidebar');
+        if (!svg || !stage || !drawer) return;
+        if (!open) {
+          // 閉じたら、右パネルが出る前の地図の配置（位置・倍率）へ必ず戻す
+          if (drawerShiftSaved) {
+            animateMapPanZoom(drawerShiftSaved.s, drawerShiftSaved.x, drawerShiftSaved.y);
+          }
+          drawerShiftSaved = drawerShiftApplied = null;
+          // パネルを閉じて地図の高さ・幅が戻ったら、地図枠への収まりも取り直す
+          setTimeout(function () { try { fitArchipelagoToStage(); updateKamonBadgeSizes(); } catch (e) {} }, 320);
+          return;
+        }
+        // 開いた時点の配置を覚えておく（拡大状態でも閉じたらこの配置へ戻す）
+        if (!drawerShiftSaved) drawerShiftSaved = { s: mapScale, x: mapPanX, y: mapPanY };
+        var ctm = svg.getScreenCTM();
+        if (!ctm) return;
+        var st = stage.getBoundingClientRect();
+        var parentRect = drawer.offsetParent ? drawer.offsetParent.getBoundingClientRect() : { left: 0 };
+        var drawerLeft = parentRect.left + drawer.offsetLeft; // スライドイン中の transform を除いた最終位置
+        var margin = 14;
+        var rightLimit = Math.min(drawerLeft, st.right) - margin;
+        var leftLimit = st.left + margin;
+        var topLimit = st.top + margin;
+        var bottomLimit = st.bottom - margin;
+        var availW = rightLimit - leftLimit;
+        var availH = bottomLimit - topLimit;
+        if (availW <= 40 || availH <= 40) return;
+
+        // 日本列島全体（蝦夷〜九州・琉球）のSVG座標系バウンディングボックス
+        var bbox = { x: 5, y: 88, width: 975, height: 502 };
+        var W0 = (ctm.a || 1) * bbox.width;
+        var H0 = (ctm.d || 1) * bbox.height;
+        // 右パネルが出た可視領域に日本列島全体が見切れないスケール
+        var targetScale = Math.min(availW / W0, availH / H0, 1.0);
+        var bcx = bbox.x + bbox.width / 2;
+        var bcy = bbox.y + bbox.height / 2;
+        var targetCenterX = leftLimit + availW / 2;
+        var targetCenterY = topLimit + availH / 2;
+
+        var targetPanX = (targetCenterX - ctm.e) / (ctm.a || 1) - bcx * targetScale;
+        var targetPanY = (targetCenterY - ctm.f) / (ctm.d || 1) - bcy * targetScale;
+
+        drawerShiftApplied = { s: targetScale, x: targetPanX, y: targetPanY };
+        animateMapPanZoom(targetScale, targetPanX, targetPanY);
+      }
+      (function watchAtlasDrawer() {
+        function bind() {
+          var drawer = document.getElementById('rightSidebar');
+          if (!drawer || !window.MutationObserver) return;
+          // スマホでは「畳む」で下に引っ込めた状態も、シートを戻した扱いにする
+          function sheetOpen() {
+            return drawer.classList.contains('is-open') && !(window.matchMedia('(max-width: 1100px)').matches && drawer.classList.contains('is-peek'));
+          }
+          var wasOpen = sheetOpen();
+          document.body.classList.toggle('atlas-drawer-open', wasOpen);
+          new MutationObserver(function () {
+            var isOpen = sheetOpen();
+            if (isOpen === wasOpen) return;
+            wasOpen = isOpen;
+            document.body.classList.toggle('atlas-drawer-open', isOpen); // 下の年代目盛の幅も連動
+            fitArchipelagoBesideDrawer(isOpen);
+          }).observe(drawer, { attributes: true, attributeFilter: ['class'] });
+        }
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bind); else bind();
+      })();
       // 四国だけを既存の全国地図とは別に時計回りへ4度回転する。
       var SHIKOKU_PROVINCE_IDS = new Set(['iyo', 'oshu', 'uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_aki', 'tosa_gun', 'tosa_nakamura']);
       var SHIKOKU_MAP_TRANSFORM = 'rotate(4 280 450)';
@@ -4641,6 +5052,7 @@
 
       function getProvinceMapTransform(provinceId) {
         var transforms = [];
+        if (provinceId === 'ryukyu') transforms.push('rotate(3 500 340)');
         if (provinceId !== 'goto') transforms.push(NON_GOTO_MAP_TRANSFORM);
         var offset = getProvinceMapOffset(provinceId);
         if (offset.x || offset.y) transforms.push('translate(' + offset.x + ' ' + offset.y + ')');
@@ -4671,6 +5083,25 @@
           provGroup.parentNode.insertBefore(bordersGroup, markGroup || labelGroup || null);
         }
 
+        var landClip = document.getElementById('atlasLandClip');
+        var innerGlowDefs = document.getElementById('atlasInnerGlowPaths');
+        if (landClip) landClip.innerHTML = '';
+        if (innerGlowDefs) innerGlowDefs.innerHTML = '';
+
+        var texGlowGroup = document.getElementById('atlasTextureAndGlowGroup');
+        if (!texGlowGroup && provGroup && provGroup.parentNode) {
+          texGlowGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+          texGlowGroup.setAttribute('id', 'atlasTextureAndGlowGroup');
+          texGlowGroup.setAttribute('clip-path', 'url(#atlasLandClip)');
+          texGlowGroup.style.pointerEvents = 'none';
+          provGroup.parentNode.insertBefore(texGlowGroup, bordersGroup || markGroup || labelGroup || null);
+        }
+        if (texGlowGroup) {
+          texGlowGroup.innerHTML =
+            /* 和紙風の模様は削除（2026-11-07） */
+            '<rect x="-200" y="-100" width="1500" height="900" fill="url(#atlasReliefSheen)"></rect>'; // 勢力外周の黒いシャドウは削除（2026-11-07）
+        }
+
         provGroup.innerHTML = '';
         markGroup.innerHTML = '';
         labelGroup.innerHTML = '';
@@ -4688,14 +5119,23 @@
               cp.setAttribute('data-p', c.p);
               cp.setAttribute('d', c.d);
               cp.setAttribute('fill', 'none');
-              cp.setAttribute('stroke', 'rgba(20, 14, 8, 0.78)');
-              cp.setAttribute('stroke-width', '0.85');
+              cp.setAttribute('stroke', 'transparent'); // 海岸線は透明（2026-11-07）
+              cp.setAttribute('stroke-width', '0.5');
               cp.setAttribute('stroke-linecap', 'round');
               cp.setAttribute('stroke-linejoin', 'round');
               var coastTransform = getProvinceMapTransform(c.p);
               if (coastTransform) cp.setAttribute('transform', coastTransform);
               bordersGroup.appendChild(cp);
               State.coastElements.push({ el: cp, p: c.p });
+
+              if (innerGlowDefs) {
+                var gp = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                gp.setAttribute('d', c.d);
+                gp.setAttribute('fill', 'none');
+                gp.setAttribute('vector-effect', 'non-scaling-stroke');
+                if (coastTransform) gp.setAttribute('transform', coastTransform);
+                innerGlowDefs.appendChild(gp);
+              }
             });
           } else if (borderData.coastline) {
             var coastPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -4703,11 +5143,19 @@
             coastPath.setAttribute('class', 'map-coastline');
             coastPath.setAttribute('d', borderData.coastline);
             coastPath.setAttribute('fill', 'none');
-            coastPath.setAttribute('stroke', 'rgba(20, 14, 8, 0.78)');
-            coastPath.setAttribute('stroke-width', '0.85');
+            coastPath.setAttribute('stroke', 'transparent'); // 海岸線は透明（2026-11-07）
+            coastPath.setAttribute('stroke-width', '0.5');
             coastPath.setAttribute('stroke-linecap', 'round');
             coastPath.setAttribute('stroke-linejoin', 'round');
             bordersGroup.appendChild(coastPath);
+
+            if (innerGlowDefs) {
+              var gp2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+              gp2.setAttribute('d', borderData.coastline);
+              gp2.setAttribute('fill', 'none');
+              gp2.setAttribute('vector-effect', 'non-scaling-stroke');
+              innerGlowDefs.appendChild(gp2);
+            }
           }
           if (Array.isArray(borderData.borders)) {
             borderData.borders.forEach(function (b) {
@@ -4718,14 +5166,24 @@
               bp.setAttribute('data-p2', b.p2);
               bp.setAttribute('d', b.d);
               bp.setAttribute('fill', 'none');
-              bp.setAttribute('stroke', 'rgba(20, 14, 8, 0.75)');
-              bp.setAttribute('stroke-width', '0.8');
+              bp.setAttribute('stroke', 'rgba(150, 156, 162, 0.8)');
+              bp.setAttribute('stroke-width', '0.5');
               bp.setAttribute('stroke-linecap', 'round');
               bp.setAttribute('stroke-linejoin', 'round');
               var borderTransform = getBorderMapTransform(b.p1, b.p2);
               if (borderTransform) bp.setAttribute('transform', borderTransform);
               bordersGroup.appendChild(bp);
-              State.borderElements.push({ el: bp, p1: b.p1, p2: b.p2 });
+
+              var glowEl = null;
+              if (innerGlowDefs) {
+                glowEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                glowEl.setAttribute('d', b.d);
+                glowEl.setAttribute('fill', 'none');
+                glowEl.setAttribute('vector-effect', 'non-scaling-stroke');
+                if (borderTransform) glowEl.setAttribute('transform', borderTransform);
+                innerGlowDefs.appendChild(glowEl);
+              }
+              State.borderElements.push({ el: bp, glowEl: glowEl, p1: b.p1, p2: b.p2 });
             });
           }
         }
@@ -4741,9 +5199,16 @@
           if (provinceTransform) path.setAttribute('transform', provinceTransform);
           provGroup.appendChild(path);
 
+          if (landClip) {
+            var clipP = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            clipP.setAttribute('d', p.svgPath || p.d || '');
+            if (provinceTransform) clipP.setAttribute('transform', provinceTransform);
+            landClip.appendChild(clipP);
+          }
+
           if (p.cx !== undefined && p.cy !== undefined) {
             var isMobile = window.innerWidth <= 1100;
-            var badgeSize = isMobile ? 20 : 16; /* PC画面では家紋を少しだけ小さく表示 */
+            var badgeSize = isMobile ? 17.5 : 14; /* 金色縁取りを省き、家紋をごくわずかに小さく表示 */
             var kamonBaseX = p.kamonX !== undefined ? p.kamonX : p.cx;
             var kx = kamonBaseX + (Number.isFinite(p.kamonOffsetX) ? p.kamonOffsetX : 0);
             var ky = p.kamonY !== undefined ? p.kamonY : p.cy;
@@ -4943,6 +5408,12 @@
           applyTransform();
           fitArchipelagoToStage();
           updateKamonBadgeSizes();
+          // 右パネル（スマホはシート）が出ている時は、初期化した状態からパネルに隠れない位置へ寄せ直す（2026-11-07）
+          var dr = document.getElementById('rightSidebar');
+          if (dr && dr.classList.contains('is-open') && !(window.matchMedia('(max-width: 1100px)').matches && dr.classList.contains('is-peek'))) {
+            drawerShiftAnim++; drawerShiftSaved = null; drawerShiftApplied = null; spShiftSaved = null; spShiftApplied = null; // 初期化した配置を「パネルが出る前」の配置として扱う
+            fitArchipelagoBesideDrawer(true);
+          }
         };
         document.getElementById('btnToggleLabels').onclick = function (e) {
           State.showLabels = !State.showLabels;
@@ -4965,7 +5436,7 @@
 
       function updateKamonBadgeSizes() {
         var isMobile = window.innerWidth <= 1100;
-        var badgeSize = isMobile ? 20 : 16;
+        var badgeSize = isMobile ? 17.5 : 14;
         if (!State.provinces) return;
         for (var i = 0; i < State.provinces.length; i++) {
           var p = State.provinces[i];
@@ -4995,7 +5466,7 @@
         if (!svg) return;
         var isMobile = window.innerWidth <= 1100;
         if (archi) {
-          archi.setAttribute('transform', 'rotate(1, 500, 340)');
+          archi.setAttribute('transform', 'rotate(-3, 500, 340)');
         }
         if (isMobile) {
           svg.setAttribute('viewBox', '10 75 980 535');
@@ -5124,6 +5595,10 @@
             var isHlBorder = !!hlClan && (o1 === hlClan || o2 === hlClan);
             var isInternalClan = o1 && o2 && o1 === o2;
 
+            if (item.glowEl) {
+              item.glowEl.style.display = isInternalClan ? 'none' : '';
+            }
+
             if (isSelBorder) {
               // 【最優先】選んだ国の境界線：同勢力内であろうと他家との境であろうと必ず表示し、白の太枠でくっきりと強調
               item.el.style.display = '';
@@ -5145,8 +5620,8 @@
               // 異なる家同士の国境は中間グレーで表示する。
               // 選択・勢力強調時だけ白／金の輪郭を優先する。
               item.el.style.display = '';
-              item.el.style.stroke = 'rgba(118, 124, 130, 0.78)';
-              item.el.style.strokeWidth = '0.8px';
+              item.el.style.stroke = 'rgba(150, 156, 162, 0.8)';
+              item.el.style.strokeWidth = '0.5px';
               item.el.style.opacity = '1';
               item.el.style.filter = 'none';
             }
@@ -5178,14 +5653,14 @@
               cItem.el.style.filter = 'drop-shadow(0 0 2px rgba(255, 215, 0, 0.6))';
             } else if (hlClan) {
               cItem.el.style.display = '';
-              cItem.el.style.stroke = 'rgba(70, 62, 52, 0.45)';
-              cItem.el.style.strokeWidth = '0.55px';
+              cItem.el.style.stroke = 'transparent';
+              cItem.el.style.strokeWidth = '0.5px';
               cItem.el.style.opacity = '0.5';
               cItem.el.style.filter = 'none';
             } else {
               cItem.el.style.display = '';
-              cItem.el.style.stroke = 'rgba(20, 14, 8, 0.78)';
-              cItem.el.style.strokeWidth = '0.85px';
+              cItem.el.style.stroke = 'transparent';
+              cItem.el.style.strokeWidth = '0.5px';
               cItem.el.style.opacity = '1';
               cItem.el.style.filter = 'none';
             }
@@ -5246,29 +5721,47 @@
       }
 
       // ==================== 国選択＆左上大名ボックス・右側パネル描画 ====================
-      function selectProvinceOnMap(provId) {
+      function selectProvinceOnMap(provId, selOpts) {
         if (!State.computedProvs.has(provId)) return;
+        var keepPeek = !!(selOpts && selOpts.keepSheetState) && !!document.querySelector('#rightSidebar.is-open.is-peek');
         State.selectedProvId = provId;
         var pEntry = State.computedProvs.get(provId);
 
         State.selectedClanId = pEntry.ownerId || null;
         State.highlightedClanId = pEntry.ownerId || null;
 
+        var drawer = document.getElementById('rightSidebar');
+        if (drawer) {
+          drawer.classList.add('is-open');
+          if (!keepPeek) drawer.classList.remove('is-peek');
+        }
+        var peekBtn = document.getElementById('btnPeekAtlasDrawer');
+        if (peekBtn) peekBtn.innerHTML = keepPeek ? '▲<span class="adb-lbl"> 展開</span>' : '▼<span class="adb-lbl"> 畳む</span>';
+        var dTitle = document.getElementById('atlasDrawerTitle');
+        if (dTitle) {
+          var yr = State.currentScenario ? State.currentScenario.year : 1560;
+          var fName = pEntry.ownerId ? getClanFamilyName(pEntry.ownerId, yr) : '空白地';
+          dTitle.textContent = '🏯 ' + pEntry.name + '（' + pEntry.castle + '）— ' + fName;
+        }
+
         refreshMapVisuals();
         renderPanels(pEntry);
+        if (!keepPeek) setTimeout(function () { if (window.matchMedia('(max-width: 1100px)').matches && !document.querySelector('#rightSidebar.is-peek')) fitArchipelagoBesideDrawer(true); }, 300);
       }
 
       function renderUnselectedPanels() {
+        var drawer = document.getElementById('rightSidebar');
+        if (drawer) {
+          drawer.classList.remove('is-open');
+          drawer.classList.remove('is-peek');
+        }
         var dBox = document.getElementById('mapDaimyoBox');
         if (dBox) dBox.classList.add('sp-unselected');
-        document.getElementById('daimyoDetailContent').innerHTML =
-          '<div style="color:var(--text-sub); font-size:12pt;"><span class="hint-pc">地図上の国をクリックすると、その国を支配する大名家の概要が表示されます。</span><span class="hint-sp">国をクリックすると大名の概要を表示</span></div>';
-        document.getElementById('castleRegionBadge').textContent = '未選択';
-        document.getElementById('castleDetailContent').innerHTML =
-          '<div style="color:var(--text-sub); font-size:12pt;">地図上の国をクリックすると、その国の城郭と歴史解説が表示されます。</div>';
+        document.getElementById('daimyoDetailContent').innerHTML = '';
+        document.getElementById('castleRegionBadge').textContent = '';
+        document.getElementById('castleDetailContent').innerHTML = '';
         document.getElementById('provOfficerCountBadge').textContent = '0 名';
-        document.getElementById('provOfficersList').innerHTML =
-          '<div style="color:var(--text-sub); font-size:12pt;">地図上の国をクリックすると、その国に所在する武将一覧が表示されます。</div>';
+        document.getElementById('provOfficersList').innerHTML = '';
       }
 
       function renderPanels(pEntry) {
@@ -5342,13 +5835,15 @@
               '<span class="castle-name-sub">🏯 ' + esc(pEntry.castle) + '</span>' +
               (isCapProv ? ' <span class="role-badge role-daimyo" style="margin-left:4px;">👑本国</span>' : '') +
             '</div>' +
-            '<span style="font-size:12pt; color:var(--gold-pale);">城主：<b>' + esc(govName) + '</b></span>' +
+            '<span style="font-size:12pt; color:var(--gold-pale);">' +
+              (ownerId ? '<span class="castle-owner-fam" style="color:#fff; font-weight:bold; margin-right:6px;">' + esc(getClanFamilyName(ownerId, year)) + '</span>' : '') +
+              '城主：<b>' + esc(govName) + '</b></span>' +
           '</div>' +
 
           '<div class="stat-pills-grid-2">' +
             '<div class="stat-pill">' +
-              '<span class="stat-pill-label"><span class="prov-stat-pc">表高（石高）</span><span class="prov-stat-sp">石高</span></span>' +
-              '<span class="stat-pill-val"><span class="prov-stat-pc">' + (pEntry.kokudaka / 10000).toFixed(1) + ' 万石</span><span class="prov-stat-sp">' + (pEntry.kokudaka / 10000).toFixed(1).replace(/\.0$/, '') + '万石</span></span>' +
+              '<span class="stat-pill-label"><span class="prov-stat-sp">石高</span></span>' + /* PCは「表高（石高）」の表示を省略し〇万石のみ（2026-11-07） */
+              '<span class="stat-pill-val"><span class="prov-stat-pc" style="white-space:nowrap;">' + (pEntry.kokudaka / 10000).toFixed(1) + '万石</span><span class="prov-stat-sp">' + (pEntry.kokudaka / 10000).toFixed(1).replace(/\.0$/, '') + '万石</span></span>' +
             '</div>' +
             '<div class="stat-pill">' +
               '<span class="stat-pill-label">駐留兵力</span>' +
@@ -5363,7 +5858,7 @@
           '</div>' +
 
           '<div class="lore-paragraph-expanded">' +
-            '<strong style="color:var(--gold);">【' + esc(pEntry.castle) + 'の解説】</strong> ' +
+            '<strong class="lore-castle-heading" style="color:var(--gold);">【' + esc(pEntry.castle) + 'の解説】</strong> ' +
             esc(cleanLoreText(cLore)) +
             (base.battleHistory ? '<br><strong style="color:#ff9f7f;">【合戦史】</strong> ' + esc(base.battleHistory) : '') +
           '</div>';
@@ -5797,13 +6292,10 @@
           return;
         }
 
-        var activeClan = State.highlightedClanId && State.selectedClanId ? State.selectedClanId : null;
-        if (activeClan && State.computedClans.has(activeClan)) {
-          var keptClan = State.computedClans.get(activeClan);
-          var nextProvId = (State.selectedProvId && keptClan.provIds.indexOf(State.selectedProvId) !== -1)
-            ? State.selectedProvId
-            : (keptClan.capitalProvId || keptClan.provIds[0]);
-          selectProvinceOnMap(nextProvId);
+        // 領国を選択して時代を進めた際、支配勢力が別の大名家に切り替わった後も
+        // その選択領国と、その時点で統治している大名家の領土全体を継続してハイライト表示する
+        if (State.selectedProvId && State.computedProvs.has(State.selectedProvId)) {
+          selectProvinceOnMap(State.selectedProvId, { keepSheetState: true }); // 前・再生・次では、畳んだシートを押し上げない
         } else {
           resetAllSelectionAndHighlight();
         }
@@ -6574,8 +7066,8 @@
       // ==================== ゲーム本編の「武将名鑑・大名名鑑 (Encyclopedia.js)」完全同一実装 ====================
       var GENDAI_BIRTH = 1890;
       var ERA_ALIAS = {
-        nanbokucho: 'muromachi', nanboku: 'muromachi', azuchi: 'sengoku', azuchimomoyama: 'sengoku',
-        azuchi_momoyama: 'sengoku', edo_early: 'edo', edo_mid: 'edo',
+        nanbokucho: 'muromachi', nanboku: 'muromachi', azuchimomoyama: 'azuchi',
+        azuchi_momoyama: 'azuchi', edo_early: 'edo', edo_mid: 'edo',
         edo_late: 'edo', meiji: 'bakumatsu'
       };
       var SORT_IC = { year: '⏳', total: 'Σ', military: '⚔', politic: '🌾', intel: '📜', max: '🗾', offs: '👥', count: '🎬', name: 'あ' };
@@ -6945,7 +7437,7 @@
             '<button type="button" class="mk-reset">条件解除</button>' +
           '</div>' +
           '<div class="mk-eras">' + [''].concat(ERAS.map(function (e) { return e.key; })).map(function (k) {
-            return '<button type="button" class="mk-chip ' + (k === '' ? 'on' : '') + '" data-era="' + k + '">' + (k ? '<span class="era-txt-pc">' + getEraLabel(k) + '</span><span class="era-txt-sp">' + ({sengoku:'戦国',bakumatsu:'近代'}[k] || getEraLabel(k)) + '</span>' : '<span class="era-txt-pc">全時代</span><span class="era-txt-sp">全て</span>') + '</button>';
+            return '<button type="button" class="mk-chip ' + (k === '' ? 'on' : '') + '" data-era="' + k + '">' + (k ? '<span class="era-txt-pc">' + getEraLabel(k) + '</span><span class="era-txt-sp">' + ({sengoku:'戦国',azuchi:'安土',bakumatsu:'近代'}[k] || getEraLabel(k)) + '</span>' : '<span class="era-txt-pc">全時代</span><span class="era-txt-sp">全て</span>') + '</button>';
           }).join('') + '</div>' +
           '<div class="mk-main">' +
             '<div class="mk-listwrap"><div class="mk-count"></div><div class="mk-list"></div></div>' +
@@ -7356,6 +7848,26 @@
             btn.setAttribute('aria-expanded', on ? 'true' : 'false');
           });
         }
+
+        var closeDrawerBtn = document.getElementById('btnCloseAtlasDrawer');
+        if (closeDrawerBtn) {
+          closeDrawerBtn.onclick = function () { resetAllSelectionAndHighlight(); };
+        }
+        var peekDrawerBtn = document.getElementById('btnPeekAtlasDrawer');
+        var drawerEl = document.getElementById('rightSidebar');
+        if (peekDrawerBtn && drawerEl) {
+          peekDrawerBtn.onclick = function () {
+            var peeked = drawerEl.classList.toggle('is-peek');
+            peekDrawerBtn.innerHTML = peeked ? '▲<span class="adb-lbl"> 展開</span>' : '▼<span class="adb-lbl"> 畳む</span>';
+          };
+        }
+        var grabberEl = document.getElementById('atlasDrawerGrabber');
+        if (grabberEl && drawerEl) {
+          grabberEl.onclick = function () {
+            var peeked = drawerEl.classList.toggle('is-peek');
+            if (peekDrawerBtn) peekDrawerBtn.innerHTML = peeked ? '▲<span class="adb-lbl"> 展開</span>' : '▼<span class="adb-lbl"> 畳む</span>';
+          };
+        }
         document.getElementById('provinceListModalBtn').onclick = openProvinceListModal;
         document.getElementById('officerListModalBtn').onclick = openOfficerListModal;
         window.openProvinceListModal = openProvinceListModal;
@@ -7414,5 +7926,256 @@
     })();
   </script>
 
+
+<style id="pcDaimyoBoxPlacement">
+/* PC：大名概要はシナリオ説明の直下に同じ幅で配置し、その下にハイライト解除（2026-11-07） */
+@media (min-width: 1101px) {
+  .map-left-overlay-stack > #mapDaimyoBox {
+    pointer-events: auto;
+    align-self: flex-start;
+    margin: 0 !important;
+    height: auto !important;        /* 説明の下に余白ができないよう、内容に合わせて上下幅を自動で縮める */
+    min-height: 0 !important;
+    max-height: 40vh;
+    flex: 0 0 auto;
+    box-sizing: border-box;
+  }
+  .map-left-overlay-stack > #mapDaimyoBox.sp-unselected { display: none !important; }
+  .map-left-overlay-stack > #mapDaimyoBox #daimyoDetailContent > :last-child,
+  .map-left-overlay-stack > #mapDaimyoBox .overlay-box-body:last-child { margin-bottom: 0 !important; padding-bottom: 0 !important; }
+}
+</style>
+<script>
+/* PC幅では大名概要を左上オーバーレイ（シナリオ説明の下・ハイライト解除の上）へ移し、
+   シナリオ説明と同じ幅にそろえる。スマホ・タブレット幅では従来どおり右ドロワー内に戻す。 */
+(function () {
+  var mq = window.matchMedia('(min-width: 1101px)');
+  function place() {
+    var box = document.getElementById('mapDaimyoBox');
+    var stack = document.querySelector('.map-left-overlay-stack');
+    var row = stack && stack.querySelector('.map-scen-row');
+    var scen = document.getElementById('mapScenBox');
+    var side = document.getElementById('rightSidebar');
+    if (!box || !stack || !row || !side) return;
+    if (mq.matches) {
+      if (box.parentNode !== stack || box.previousElementSibling !== row) stack.insertBefore(box, row.nextSibling);
+      if (scen) {
+        var w = scen.getBoundingClientRect().width;
+        if (w > 0) { box.style.width = w + 'px'; box.style.maxWidth = w + 'px'; }
+      }
+    } else {
+      box.style.width = ''; box.style.maxWidth = '';
+      if (box.parentNode !== side) {
+        var topbar = side.querySelector('.atlas-drawer-topbar');
+        side.insertBefore(box, topbar ? topbar.nextSibling : side.firstChild);
+      }
+    }
+  }
+  function init() {
+    place();
+    var scen = document.getElementById('mapScenBox');
+    if (scen && window.ResizeObserver) new ResizeObserver(place).observe(scen);
+    if (mq.addEventListener) mq.addEventListener('change', place); else if (mq.addListener) mq.addListener(place);
+    window.addEventListener('resize', place);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+<style id="pcDrawerTimelineShrink">
+/* PC：右パネル表示中は、下の年代目盛（タイムライン）の右端をパネルの手前まで縮める（2026-11-07） */
+@media (min-width: 1101px) {
+  .timeline-dock { transition: margin-right 0.26s cubic-bezier(0.22, 1, 0.36, 1); }
+  body.atlas-drawer-open .timeline-dock { margin-right: calc(min(440px, 38vw) + 16px); }
+  /* 右パネル表示中は、シナリオ説明・大名概要・地図操作ボタン（＋−⟲国）もパネルの手前に収める */
+  .map-left-overlay-stack { transition: right 0.26s cubic-bezier(0.22, 1, 0.36, 1); }
+  body.atlas-drawer-open .map-left-overlay-stack { right: calc(min(440px, 38vw) + 24px); max-width: none; }
+}
+</style>
+<style id="spUiImprove">
+/* ==== スマホ画面のUI改善（2026-11-07） ==== */
+@media (max-width: 1100px) {
+  /* 下から出るシート：中身が潰れて重ならないようにし、大名概要をいちばん上に */
+  .right-sidebar > * { flex-shrink: 0 !important; }
+  .right-sidebar > #mapDaimyoBox { order: 0 !important; }
+  /* シートは年代目盛の真上に出し、目盛を隠さない。高さは地図が見える程度に抑える */
+  .right-sidebar {
+    bottom: var(--sp-timeline-h, calc(88px + env(safe-area-inset-bottom))) !important;
+    max-height: min(46dvh, calc(100dvh - var(--sp-timeline-h, 88px) - 150px)) !important;
+  }
+  .atlas-drawer-btn { min-height: 34px !important; padding: 0 12px !important; }
+  /* スクロールしても見出し帯の下の文字が透けないよう不透明に */
+  .right-sidebar > .atlas-drawer-topbar { background: linear-gradient(90deg, #3e2614, #1c120b) !important; z-index: 5 !important; }
+}
+@media (max-width: 768px) {
+  /* 地図を残りの高さいっぱいに広げ、地図の下の空白をなくす */
+  .center-column { min-height: 0 !important; }
+  .map-stage {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+  }
+  .map-left-overlay-stack { flex: 0 0 auto !important; }
+  .map-viewport-wrap {
+    flex: 1 1 auto !important;
+    aspect-ratio: auto !important;
+    max-height: none !important;
+    min-height: 200px !important;
+    height: auto !important;
+  }
+  /* 押しやすいボタンの大きさ（指で押せる36px前後） */
+  .map-ctrl-btn { width: 38px !important; height: 38px !important; min-width: 38px !important; font-size: 13pt !important; }
+  .clear-highlight-under-btn { min-height: 38px !important; padding: 0 14px !important; }
+  .sp-more-btn { width: 36px !important; height: 36px !important; min-width: 36px !important; }
+  .era-chip-btn { min-height: 34px !important; padding-top: 0 !important; padding-bottom: 0 !important; }
+  .tl-btn { min-height: 38px !important; }
+  /* 時代タブは横スクロールで最後まで届くよう端に余白、スクロールバーは隠す */
+  #eraFilterBar { scrollbar-width: none; padding-right: 10px; }
+  #eraFilterBar::-webkit-scrollbar { display: none; }
+}
+</style>
+<script>
+/* スマホ：年代目盛の高さを測ってシートの下端をその真上に合わせる */
+(function () {
+  function setTl() {
+    var tl = document.querySelector('.timeline-dock');
+    if (!tl) return;
+    var h = Math.max(0, window.innerHeight - tl.getBoundingClientRect().top);
+    document.documentElement.style.setProperty('--sp-timeline-h', h + 'px');
+  }
+  function init() {
+    setTl();
+    window.addEventListener('resize', setTl);
+    var tl = document.querySelector('.timeline-dock');
+    if (tl && window.ResizeObserver) new ResizeObserver(setTl).observe(tl);
+    setTimeout(setTl, 800);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+<style id="spProvOfficersButton">
+.sp-prov-officers-btn { display: none; }
+@media (max-width: 1100px) {
+  /* 下から出るシートでは武将リストを出さず、「この国の武将〇名」の右の「一覧」ボタンで開く */
+  #officersSection > .section-header { display: flex; align-items: center; gap: 8px; }
+  #officersSection > .section-header .section-title { flex: 1 1 auto; }
+  .sp-prov-officers-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 34px; padding: 0 12px; flex-shrink: 0;
+    background: linear-gradient(180deg, #3d2c1d, #22160d); color: var(--gold-bright);
+    border: 1px solid #8e6d3a; border-radius: 5px; font-size: 12pt; font-weight: bold; cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+  #officersSection > #provOfficersList,
+  #officersSection > .prov-officers-hint { display: none !important; }
+  #officersSection > .section-header { margin-bottom: 0 !important; border-bottom: none !important; padding-bottom: 0 !important; }
+  #provOfficersModal .modal-window { max-height: 82dvh; display: flex; flex-direction: column; }
+  #provOfficersModal .modal-body { overflow-y: auto; }
+  #provOfficersModalBody #provOfficersList { display: flex !important; flex-direction: column; max-height: none !important; height: auto !important; overflow: visible !important; }
+}
+</style>
+<script>
+(function () {
+  function init() {
+    var btn = document.getElementById('btnSpProvOfficers');
+    var modal = document.getElementById('provOfficersModal');
+    var body = document.getElementById('provOfficersModalBody');
+    var title = document.getElementById('provOfficersModalTitle');
+    var closeBtn = document.getElementById('provOfficersModalClose');
+    var section = document.getElementById('officersSection');
+    if (!btn || !modal || !body || !section) return;
+    function list() { return document.getElementById('provOfficersList'); }
+    function putBack() {
+      var l = list();
+      if (l && l.parentNode !== section) section.appendChild(l);
+    }
+    btn.addEventListener('click', function () {
+      var l = list(); if (!l) return;
+      var dt = document.getElementById('atlasDrawerTitle');
+      var badge = document.getElementById('provOfficerCountBadge');
+      var head = dt ? dt.textContent.replace(/^\S*\s*/, '').split('（')[0].split('(')[0].trim() : '';
+      title.textContent = '⚔️ ' + (head ? '【' + head + '】' : 'この国の') + '武将一覧' + (badge ? '（' + badge.textContent.replace(/\s/g, '') + '）' : '');
+      body.appendChild(l); // 同じ要素を移すので、武将をタップした時の列伝表示もそのまま使える
+      modal.classList.remove('hidden');
+    });
+    if (closeBtn) closeBtn.addEventListener('click', function () { modal.classList.add('hidden'); });
+    new MutationObserver(function () { if (modal.classList.contains('hidden')) putBack(); })
+      .observe(modal, { attributes: true, attributeFilter: ['class'] });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+<style id="spCastleHeadingHide">
+/* パソコンの右パネル・スマホの下から出るシートとも：「🗾 領国と城郭の解説／○○地方」と「【○○城の解説】」の見出しは省略（2026-11-07） */
+#castleSection > .section-header { display: none !important; }
+#castleSection .lore-castle-heading { display: none !important; }
+#officersSection > .prov-officers-hint { display: none !important; } /* 「※ 武将をクリックすると…」の注意書きも省略 */
+@media (max-width: 1100px) { .castle-owner-fam { display: none !important; } } /* 城主の手前の○○家はパソコン画面のみ */
+#atlasDrawerTitle { display: none !important; } /* 右パネル上端の「🏯 国名（○○城）— ○○家」も省略 */
+.atlas-drawer-topbar { justify-content: flex-end !important; }
+</style>
+<style id="spDrawerTopbarCompact">
+/* スマホの下から出るシート：上端の見出し帯は省略し、▼・✕ を一回り小さくして大名概要（○○家 当主：○○）の右端に溶け込ませる（2026-11-07） */
+@media (max-width: 1100px) {
+  .right-sidebar > .atlas-drawer-topbar { display: none !important; }
+  .right-sidebar.is-open.is-peek { max-height: 64px !important; } /* 畳んだ時も ▲・✕ と大名名の行が見えるように */
+  #mapDaimyoBox { position: relative !important; }
+  #mapDaimyoBox > .atlas-drawer-actions {
+    position: absolute; top: 5px; right: 6px; z-index: 3;
+    display: flex; gap: 4px;
+  }
+  #mapDaimyoBox .daimyo-top-row,
+  #mapDaimyoBox .overlay-box-header { padding-right: 70px !important; }
+  #mapDaimyoBox .atlas-drawer-btn .adb-lbl { display: none !important; }
+  #mapDaimyoBox .atlas-drawer-btn {
+    width: 30px !important; min-width: 30px !important; height: 28px !important; min-height: 28px !important;
+    padding: 0 !important; display: inline-flex !important; align-items: center !important; justify-content: center !important;
+    font-size: 11pt !important; line-height: 1 !important;
+    background: rgba(255, 255, 255, 0.04) !important; border: 1px solid rgba(212, 175, 55, 0.45) !important;
+    color: var(--gold-bright) !important; border-radius: 5px !important; box-shadow: none !important;
+  }
+}
+</style>
+<script>
+(function () {
+  var mq = window.matchMedia('(max-width: 1100px)');
+  function place() {
+    var actions = document.querySelector('.atlas-drawer-actions');
+    var box = document.getElementById('mapDaimyoBox');
+    var topbar = document.querySelector('.atlas-drawer-topbar');
+    if (!actions || !box || !topbar) return;
+    var castle = document.getElementById('castleSection');
+    if (mq.matches) { if (actions.parentNode !== box) box.insertBefore(actions, box.firstChild); }
+    else if (castle) { if (actions.parentNode !== castle) castle.insertBefore(actions, castle.firstChild); } // パソコン：国名・城の説明の箱の右上へ
+    else if (actions.parentNode !== topbar) topbar.appendChild(actions);
+  }
+  function init() { place(); if (mq.addEventListener) mq.addEventListener('change', place); else if (mq.addListener) mq.addListener(place); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+<style id="pcDrawerCloseInCastleBox">
+/* パソコンの右パネル：上端の帯は省略し、✕ のみを国名・城の説明の箱の右上に溶け込ませる（2026-11-07） */
+@media (min-width: 1101px) {
+  .right-sidebar > .atlas-drawer-topbar { display: none !important; }
+  .right-sidebar { padding-top: 10px !important; }
+  #castleSection { position: relative !important; }
+  #castleSection > .atlas-drawer-actions { position: absolute; top: 6px; right: 6px; z-index: 3; display: flex; gap: 4px; }
+  #castleSection .castle-header-box { padding-right: 34px !important; }
+  #castleSection .atlas-drawer-btn .adb-lbl { display: none !important; }
+  #castleSection .atlas-drawer-btn {
+    width: 28px !important; min-width: 28px !important; height: 26px !important; min-height: 26px !important;
+    padding: 0 !important; display: inline-flex !important; align-items: center !important; justify-content: center !important;
+    font-size: 11pt !important; line-height: 1 !important;
+    background: rgba(255, 255, 255, 0.04) !important; border: 1px solid rgba(212, 175, 55, 0.45) !important;
+    color: var(--gold-bright) !important; border-radius: 5px !important; box-shadow: none !important;
+  }
+  #castleSection .atlas-drawer-peek-btn { display: none !important; } /* パソコンは ✕ のみ */
+  #castleSection .atlas-drawer-btn:hover { background: #78231b !important; border-color: #ff8787 !important; color: #fff !important; }
+}
+</style>
+<style id="pcClearHighlightAutoHide">
+/* パソコン：ハイライト解除するものがない時は「ハイライト解除」ボタンを出さない（2026-11-07） */
+@media (min-width: 1101px) { #btnClearHighlight.is-cleared { display: none !important; } }
+</style>
 </body>
 </html>

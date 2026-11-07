@@ -91,7 +91,7 @@ body.sl-start-open { overflow: hidden !important; }
 
 /* 地図 */
 .sl-map-body { position: relative; overflow: hidden !important; display: flex; }
-.sl-svgmap { width: 100%; height: 100%; display: block; background: radial-gradient(ellipse at 50% 40%, #1a2430 0%, #10161d 100%); }
+.sl-svgmap { width: 100%; height: 100%; display: block; background: #070a0d url('../assets/images/map_ocean_bg.jpg') center center / cover no-repeat; }
 .sl-prov { stroke: none; stroke-linejoin: round; vector-effect: non-scaling-stroke; cursor: pointer; fill-opacity: .92; paint-order: fill stroke; transition: fill-opacity .2s, filter .2s; }
 .sl-prov:hover { fill-opacity: 1; filter: brightness(1.22); }
 .sl-svgmap.has-sel .sl-prov { fill-opacity: .38; }
@@ -1200,41 +1200,119 @@ html.sl-phone #startModal.sl-active .start-game-title {
   text-overflow: clip !important;
 }
 
-/* ① シナリオ：選択後の操作は一覧下部へまとめる */
-.sl-scen-selection-actions {
-  flex: 0 0 auto;
-  padding: 8px;
-  border-top: 1px solid rgba(212, 175, 55, 0.38);
-  background: linear-gradient(180deg, rgba(36, 24, 15, 0.96), rgba(18, 12, 8, 0.98));
+/* ① シナリオ：シナリオボタン押下時にシナリオ解説を全面表示し、説明の下に「このシナリオ選択に戻る」「大名選択に進む」を配置 */
+html.sl-phone #startModal.sl-active .sl-scen.is-scen-detail-open > .sl-head,
+html.sl-phone #startModal.sl-active .sl-scen.is-scen-detail-open > #scenarioEraTabs,
+html.sl-phone #startModal.sl-active .sl-scen.is-scen-detail-open > .sl-scen-body {
+  display: none !important;
 }
-.sl-scen-selection-actions[hidden] { display: none !important; }
-.sl-scen-selected-name {
-  margin-bottom: 7px;
-  color: #ffe09a;
-  font-size: 14px !important;
-  font-weight: bold;
-  text-align: center;
+.sl-scen-fullscreen-view {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 12px 12px 20px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(70, 44, 22, 0.45) 0%, rgba(16, 11, 7, 0.98) 75%);
+  display: flex;
+  flex-direction: column;
 }
-.sl-scen-explain-btn,
+.sl-scen-fullscreen-view[hidden] { display: none !important; }
+.sl-scen-fs-card {
+  background: linear-gradient(180deg, rgba(36, 25, 16, 0.96) 0%, rgba(20, 13, 9, 0.98) 100%);
+  border: 1.5px solid rgba(212, 175, 55, 0.65);
+  border-radius: 10px;
+  padding: 16px 14px;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 232, 170, 0.18);
+  display: flex;
+  flex-direction: column;
+}
+.sl-scen-fs-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.sl-scen-fs-year {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ffd700 0%, #c8961e 100%);
+  color: #1c1006;
+  font-weight: 800;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.sl-scen-fs-gengo {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 5px;
+  background: rgba(212, 175, 55, 0.16);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  color: #f6dca0;
+  font-size: 12.5px;
+  letter-spacing: 0.05em;
+}
+.sl-scen-fs-title {
+  margin: 2px 0 4px;
+  font-family: 'Shippori Mincho', 'Yu Mincho', 'Hiragino Mincho ProN', serif;
+  font-size: 20px !important;
+  font-weight: 800;
+  color: #fff6dc;
+  letter-spacing: 0.06em;
+  line-height: 1.35;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+.sl-scen-fs-sub {
+  font-family: 'Shippori Mincho', 'Yu Mincho', 'Hiragino Mincho ProN', serif;
+  font-size: 13.5px;
+  color: #e9c97a;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+.sl-scen-fs-divider {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.6), rgba(212, 175, 55, 0.1));
+  margin: 10px 0;
+}
+.sl-scen-fs-sec-label {
+  font-family: 'Shippori Mincho', 'Yu Mincho', 'Hiragino Mincho ProN', serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #ffd700;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+.sl-scen-fs-lore {
+  font-size: 14.5px;
+  line-height: 1.78;
+  color: #f4ecdc;
+  white-space: pre-line;
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 7px;
+  padding: 12px 13px;
+  margin-bottom: 16px;
+}
 .sl-scen-next-btn,
 .sl-scen-back-btn {
-  min-height: 38px;
-  border-radius: 7px;
-  font-family: inherit;
+  min-height: 44px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-family: 'Shippori Mincho', 'Yu Mincho', 'Hiragino Mincho ProN', serif;
   font-size: 14px !important;
-  font-weight: bold;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   cursor: pointer;
+  transition: transform 0.12s ease, filter 0.15s ease;
 }
-.sl-scen-explain-btn {
-  width: 100%;
-  margin-bottom: 7px;
-  color: #ffe7a8;
-  border: 1px solid rgba(212, 175, 55, 0.68);
-  background: rgba(212, 175, 55, 0.15);
+.sl-scen-next-btn:active,
+.sl-scen-back-btn:active {
+  transform: scale(0.98);
 }
-.sl-scen-choice-actions { display: grid; grid-template-columns: 1fr 1.25fr; gap: 7px; }
-.sl-scen-back-btn { color: #e7ddc8; border: 1px solid #765b3e; background: #2b1d14; }
-.sl-scen-next-btn { color: #fff; border: 1px solid #efc95c; background: linear-gradient(180deg, #b33028, #791710); }
+.sl-scen-choice-actions { display: grid; grid-template-columns: 1fr 1.15fr; gap: 8px; }
+.sl-scen-back-btn { color: #efe5d0; border: 1px solid #8a6c49; background: linear-gradient(180deg, #38261a, #21150e); }
+.sl-scen-next-btn { color: #fff8e6; border: 1.5px solid #ffd700; background: linear-gradient(180deg, #c2362b, #7d1811); box-shadow: 0 3px 12px rgba(194, 54, 43, 0.45); }
 
 /* ② 大名選択：難易度説明ボックス・大名家の家数ヘッダーは省略し、難易度ボタンは上下を圧縮 */
 html.sl-phone .sl-diff-desc-bar { display: none !important; }

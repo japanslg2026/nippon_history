@@ -17,20 +17,20 @@
 
   <!-- Google Fonts: 武士の魂が宿る力強い和風・毛筆フォント -->
   <!-- 起動高速化: ゲームデータJSONをHTML解析と並行して先読み -->
-  <link rel="preload" href="data/scenarios.json?v=20261106_hist_v15" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/clans.json?v=20261106_hist_v15" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/provinces.json?v=20261106_hist_v15" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/officers.json?v=20261106_hist_v15" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/governors.json?v=20261106_hist_v15" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/events.json?v=20261106_hist_v15" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/scenarios.json?v=20261107_takeda_hongan" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/clans.json?v=20261107_takeda_hongan" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/provinces.json?v=20261107_takeda_hongan" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/officers.json?v=20261107_takeda_hongan" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/governors.json?v=20261107_takeda_hongan" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/events.json?v=20261107_takeda_hongan" as="fetch" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&amp;family=Sawarabi+Mincho&amp;family=Yuji+Boku&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&amp;family=Dela+Gothic+One&amp;family=Sawarabi+Mincho&amp;family=Shippori+Mincho:wght@600;700;800&amp;family=Yuji+Boku&amp;display=swap" rel="stylesheet">
 
   <!-- モジュール化されたCSSスタイルシート (1080p最適化・和風デザイン) -->
-  <link rel="stylesheet" href="css/style.css?v=20261104_mobileflow">
-  <link rel="stylesheet" href="css/encyclopedia.css?v=20261025_bgm">
-  <link rel="stylesheet" href="css/startscreen.css?v=20261104_mobileflow">
+  <link rel="stylesheet" href="css/style.css?v=20261107_bg_cloud">
+  <link rel="stylesheet" href="css/encyclopedia.css?v=20261107_hist_v16">
+  <link rel="stylesheet" href="css/startscreen.css?v=20261107_bg_cloud">
   <script>
     // スマホ判定: 画面幅768px以下、タッチ主体、または ?mobile=1 / ?phone=1 パラメータ → スマホ用レスポンシブ新レイアウト
     (function(){var mm=function(q){return window.matchMedia&&matchMedia(q).matches;};
@@ -73,7 +73,7 @@
     </div>
 
     <div class="header-controls" id="headerControls">
-      <button class="header-btn" id="openJukeboxBtn" title="菅野よう子風 戦国管弦楽 響宴録 (全24曲BGM・効果音鑑賞)" style="border-color:var(--gold-bright); color:var(--gold-bright); font-weight:bold;">
+      <button class="header-btn" id="openJukeboxBtn" title="戦国管弦楽 響宴録 (全24曲BGM・効果音鑑賞)" style="border-color:var(--gold-bright); color:var(--gold-bright); font-weight:bold;">
         <i data-lucide="music" style="width:15px; height:15px;"></i>
         <span class="btn-label-full">管弦楽</span>
         <span class="btn-label-short">音楽</span>
@@ -192,7 +192,7 @@
     <div class="stat-card">
       <span class="label"><i data-lucide="coins" style="width:13px; height:13px;"></i> <span class="lbl-pc">備蓄金</span><span class="lbl-sp">金</span><span class="stat-label-sub"> (貫)</span></span>
       <span class="value" id="statGold" style="color:#ffd700;">400</span>
-      <span class="sub-value">夏・冬に商業運上</span>
+      <span class="sub-value">盛夏・冬に商業運上</span>
     </div>
     <div class="stat-card">
       <span class="label"><i data-lucide="wheat" style="width:13px; height:13px;"></i> <span class="lbl-pc">兵糧米</span><span class="lbl-sp">米</span><span class="stat-label-sub"> (石)</span></span>
@@ -214,6 +214,7 @@
         <button class="map-ctrl-btn" id="mapZoomInBtn" title="拡大 (ホイール上)">＋</button>
         <button class="map-ctrl-btn" id="mapZoomOutBtn" title="縮小 (ホイール下)">−</button>
         <button class="map-ctrl-btn" id="mapResetBtn" title="全体表示リセット">⟲</button>
+        <button class="map-ctrl-btn map-home-btn" id="mapHomeZoomBtn" title="自国本拠周辺を拡大" aria-label="自国本拠周辺を拡大">🏠</button>
       </div>
       <svg id="sengokuMapSvg" viewBox="17 90 966 500" class="sengoku-svg-map">
         <defs id="mapSvgDefs"></defs>
@@ -250,13 +251,14 @@
       </div>
     </div>
 
-    <!-- 右側：領地軍情 & 指令コマンド -->
-    <div class="side-panel">
+    <!-- 右側：領地軍情 & 指令コマンド（ドロワーパネル） -->
+    <div class="side-panel" id="provCommandDrawer">
+      <div class="drawer-sheet-grabber" title="タップまたは下スワイプで閉じる"><span class="drawer-sheet-handle"></span></div>
       <!-- 領地詳細情報 ＆ 統治方針設定 -->
       <div class="panel-box prov-panel">
         <div class="panel-title prov-panel-title">
           <div class="prov-panel-title-left">
-            <span>領国軍情</span>
+            <span>領国・城郭軍情</span>
             <div id="mobileGovernPolicyWrap" class="mobile-govern-policy-wrap">
               <span id="mobileProvGovernIcon" class="mobile-govern-icon" aria-hidden="true">👑</span>
               <select id="mobileProvGovernSelect" class="mobile-govern-select" aria-label="統治方針">
@@ -271,6 +273,7 @@
           <div class="prov-panel-title-right">
             <span id="selectedProvBadge" style="font-size: 12pt; color:var(--gold);">選択なし</span>
             <button id="btnMobileCastleLore" class="btn-castle-lore is-hidden" title="城の解説を見る" aria-label="城の解説">🏯</button>
+            <button type="button" id="btnCloseProvDrawer" class="btn-close-prov-drawer" title="パネルを閉じる (Esc)" aria-label="パネルを閉じる">✕</button>
           </div>
         </div>
         <div class="province-detail" id="provDetailBox">
@@ -354,38 +357,35 @@
             </div>
           </button>
         </div>
+      </div>
+    </div>
 
-        <!-- 季節進行＆オート進行コントロール（PCでは縦並び、スマホでは洗練された下部フローティングドックに統合） -->
-        <div class="bottom-action-dock" id="bottomActionDock">
-          <button class="turn-btn" id="nextTurnBtn">
-            <span class="turn-btn-icon">⚔️</span>
-            <span class="turn-btn-text">季節を進める</span>
-            <span class="turn-btn-sub">(軍令権回復・次期へ)</span>
-          </button>
+    <!-- 季節進行＆オート進行コントロール（未選択時も常に操作可能な下部ドック） -->
+    <div class="bottom-action-dock" id="bottomActionDock">
+      <button class="turn-btn" id="nextTurnBtn">
+        <span class="turn-btn-icon">⚔️</span>
+        <span class="turn-btn-text">季節を進める</span>
+      </button>
 
-          <!-- オートプレーモード設定パネル -->
-          <div class="autoplay-panel" id="autoPlayPanel" title="仕官の申し出は自動承諾。歴史イベントは発生時に一時停止し、選択後に再開します">
-            <div class="autoplay-header">
-              <div class="autoplay-title">
-                <span class="autoplay-indicator" id="autoPlayIndicator"></span>
-                <span class="autoplay-label" id="autoPlayLabel">⏩ 季節オート進行</span>
-                <span class="autoplay-info-icon" style="font-size:9pt; color:#c8b896; cursor:help;" title="仕官の申し出は自動承諾。歴史イベントは発生時に一時停止し、選択後に再開します">ℹ️</span>
-              </div>
-              <button type="button" class="autoplay-toggle-btn" id="autoPlayToggleBtn">
-                <span id="autoPlayBtnIcon">▶</span>
-                <span id="autoPlayBtnText">開始</span>
-              </button>
-            </div>
-            <div class="autoplay-speed-row">
-              <span class="autoplay-speed-title">進行速度:</span>
-              <input type="range" class="autoplay-slider" id="autoPlaySpeedSlider" min="0.1" max="3.0" step="0.1" value="0.5">
-              <span class="autoplay-speed-val" id="autoPlaySpeedVal">0.5秒</span>
-            </div>
+      <!-- オートプレーモード設定パネル -->
+      <div class="autoplay-panel" id="autoPlayPanel" title="仕官の申し出は自動承諾。歴史イベントは発生時に一時停止し、選択後に再開します">
+        <div class="autoplay-header">
+          <div class="autoplay-title">
+            <span class="autoplay-indicator" id="autoPlayIndicator"></span>
+            <span class="autoplay-label" id="autoPlayLabel">⏩ 季節オート進行</span>
+            <span class="autoplay-info-icon" style="font-size:9pt; color:#c8b896; cursor:help;" title="仕官の申し出は自動承諾。歴史イベントは発生時に一時停止し、選択後に再開します">ℹ️</span>
           </div>
+          <button type="button" class="autoplay-toggle-btn" id="autoPlayToggleBtn">
+            <span id="autoPlayBtnIcon">▶</span>
+            <span id="autoPlayBtnText">開始</span>
+          </button>
+        </div>
+        <div class="autoplay-speed-row">
+          <span class="autoplay-speed-title">進行速度:</span>
+          <input type="range" class="autoplay-slider" id="autoPlaySpeedSlider" min="0.1" max="3.0" step="0.1" value="0.5">
+          <span class="autoplay-speed-val" id="autoPlaySpeedVal">0.5秒</span>
         </div>
       </div>
-
-
     </div>
   </div>
 </div>
@@ -738,6 +738,11 @@
           <strong class="scen-title">北条早雲の野望</strong>
           <span class="scen-sub">北条早雲</span>
         </button>
+        <button class="scenario-btn" data-scen-id="1517" data-era="sengoku_climax">
+          <span class="scen-badge">1517年</span>
+          <strong class="scen-title">有田中井手の戦い</strong>
+          <span class="scen-sub">西国の桶狭間</span>
+        </button>
         <button class="scenario-btn" data-scen-id="1531" data-era="sengoku_climax">
           <span class="scen-badge">1531年</span>
           <strong class="scen-title">大物崩れの戦い</strong>
@@ -747,6 +752,11 @@
           <span class="scen-badge">1538年</span>
           <strong class="scen-title">国府台合戦</strong>
           <span class="scen-sub">小弓公方vs北条</span>
+        </button>
+        <button class="scenario-btn" data-scen-id="1542" data-era="sengoku_climax">
+          <span class="scen-badge">1542年</span>
+          <strong class="scen-title">斎藤道三国盗り</strong>
+          <span class="scen-sub">美濃の蝮台頭</span>
         </button>
         <button class="scenario-btn" data-scen-id="1546" data-era="sengoku_climax">
           <span class="scen-badge">1546年</span>
@@ -762,6 +772,16 @@
           <span class="scen-badge">1560年</span>
           <strong class="scen-title">桶狭間の戦い</strong>
           <span class="scen-sub">風雲児信長</span>
+        </button>
+        <button class="scenario-btn" data-scen-id="1561" data-era="sengoku_climax">
+          <span class="scen-badge">1561年</span>
+          <strong class="scen-title">小田原城の戦い</strong>
+          <span class="scen-sub">謙信十万包囲</span>
+        </button>
+        <button class="scenario-btn" data-scen-id="1567" data-era="sengoku_climax">
+          <span class="scen-badge">1567年</span>
+          <strong class="scen-title">稲葉山城の戦い</strong>
+          <span class="scen-sub">岐阜・天下布武</span>
         </button>
         <button class="scenario-btn" data-scen-id="1570" data-era="sengoku_climax">
           <span class="scen-badge">1570年</span>
@@ -783,10 +803,20 @@
           <strong class="scen-title">手取川の戦い</strong>
           <span class="scen-sub">謙信vs織田勝家</span>
         </button>
+        <button class="scenario-btn" data-scen-id="1580" data-era="unification">
+          <span class="scen-badge">1580年</span>
+          <strong class="scen-title">石山合戦終結</strong>
+          <span class="scen-sub">本願寺退去・信長覇権</span>
+        </button>
         <button class="scenario-btn" data-scen-id="1582" data-era="unification">
           <span class="scen-badge">1582年</span>
           <strong class="scen-title">本能寺の変前夜</strong>
           <span class="scen-sub">覇王の最期</span>
+        </button>
+        <button class="scenario-btn" data-scen-id="1583" data-era="unification">
+          <span class="scen-badge">1583年</span>
+          <strong class="scen-title">賤ヶ岳の戦い</strong>
+          <span class="scen-sub">大坂城築城開始</span>
         </button>
         <button class="scenario-btn" data-scen-id="1584" data-era="unification">
           <span class="scen-badge">1584年</span>
@@ -896,7 +926,7 @@
     <div class="diff-selector-wrapper" style="background:rgba(0,0,0,0.4); border:1px solid #553e2a; border-radius:4px; padding:4px 12px; margin: 6px 0 6px 0; display:flex; align-items:center; gap:12px;">
       <span class="diff-selector-label" style="font-size: 12pt; font-weight:bold; color:var(--gold-bright); flex-shrink:0;">⚙️ 難易度:</span>
       <div class="diff-selector-group" style="flex:1; display:grid; grid-template-columns:repeat(4, 1fr); gap:6px;">
-        <button class="diff-option-btn selected" data-diff="relaxed" style="padding:2px 8px; font-size:12pt;" title="【楽級】大名ごとの基準値に金1,200・兵糧1,500を追加した、ゆったり遊べる難易度です">
+        <button class="diff-option-btn selected" data-diff="relaxed" style="padding:2px 8px; font-size:12pt;" title="【楽級】大名ごとの基準値に金1,200・兵糧1,500を追加し、覇道包囲網は起きず、諸大名はバランス型・内政型で動く、ゆったり遊べる難易度です">
           <span class="diff-btn-name">【楽級】</span><span class="diff-btn-sub">安泰の世 <span style="color:#aaa; font-size:12pt;">(金+1200/米+1500)</span></span>
         </button>
         <button class="diff-option-btn" data-diff="easy" style="padding:2px 8px; font-size:12pt;" title="【初級：天下泰平】大名ごとの基準値に金650・兵糧850を追加した、遊びやすい難易度です">
@@ -1431,7 +1461,7 @@
 <div class="modal-overlay hidden" id="historicalEventModal">
   <div class="modal-card">
     <div class="event-banner-title" id="eventModalTitle">❖ 歴史イベント ❖</div>
-    <div class="event-year-season" id="eventModalSubtitle">1560年 夏</div>
+    <div class="event-year-season" id="eventModalSubtitle">1560年 初夏</div>
     <div class="event-desc-text" id="eventModalDesc">
       イベント説明テキスト
     </div>
@@ -1454,7 +1484,7 @@
 <div class="modal-overlay hidden" id="historyEventModal">
   <div class="modal-card">
     <div class="event-banner-title" id="eventTitle">❖ 歴史分岐 ❖</div>
-    <div class="event-year-season" id="eventSeasonBadge">1560年 夏</div>
+    <div class="event-year-season" id="eventSeasonBadge">1560年 初夏</div>
     <div class="event-sub-title" id="eventSubTitle"></div>
     <div class="event-desc-text" id="eventNarrative"></div>
     <div class="event-auto-pause-note hidden">⏸ オート進行を一時停止しています。決断すると再開します。</div>
@@ -1637,7 +1667,7 @@
       <span style="display:flex; align-items:center; gap:10px;">
         <span style="font-size:18pt;">🎻</span>
         <span class="jb-modal-title-text" style="font-size:14pt; font-weight:bold; color:var(--gold-bright); letter-spacing:1px;">
-          <span class="jb-title-pc">戦国管弦楽 響宴録 〜菅野よう子風 交響詩鑑賞＆音響調律〜</span>
+          <span class="jb-title-pc">戦国管弦楽 響宴録 〜交響詩鑑賞＆音響調律〜</span>
           <span class="jb-title-sp">戦国管弦楽 響宴録</span>
         </span>
       </span>
@@ -1672,7 +1702,7 @@
         </div>
 
         <div id="jbTrackDesc" style="font-size: 11pt; color: #ded6c8; line-height: 1.6; background: rgba(255,255,255,0.04); padding: 8px 12px; border-radius: 5px; border-left: 3px solid var(--gold);">
-          菅野よう子サウンドの真骨頂。勇壮な金管ファンファーレと流麗な和琴、ティンパニが轟く乱世開幕の大序曲。
+          勇壮な金管ファンファーレと流麗な和琴、ティンパニが轟く乱世開幕の大序曲。
         </div>
 
         <!-- 音量・設定コントロールバー -->
@@ -1881,19 +1911,19 @@
 
   <!-- モジュール化されたJavaScript群 (順序保証ロード) -->
   <!-- 1. 全大名家・全シナリオ・全106領国データベース -->
-  <script defer src="assets/kamons.js?v=20261104_kato_yoshiaki_fuji"></script>
-  <script defer src="js/kamonOverrides.js?v=20261106_hist_v15"></script>
-  <script defer src="js/data/map_borders.js?v=20261106_hist_v15"></script>
+  <script defer src="assets/kamons.js?v=20261107_takeda_hongan"></script>
+  <script defer src="js/kamonOverrides.js?v=20261107_hist_v17"></script>
+  <script defer src="js/data/map_borders.js?v=20261107_hist_v16"></script>
   
-  <!-- 2. 菅野よう子風 洗練和風交響BGMエンジン (全15曲) -->
+  <!-- 2. 和洋折衷フルオーケストラBGMエンジン (全15曲) -->
   <script defer src="js/bgm.js?v=20261101_mobfix3"></script>
   <script defer src="js/MobileAudioKeepAlive.js?v=20261101_mobfix3"></script>
 
   <!-- 3. 戦国天下統一伝 ゲームエンジン本体 -->
-  <script type="module" src="js/app.js?v=20261106_hist_v15"></script>
-  <script type="module" src="js/ui/Encyclopedia.js?v=20261025_d74"></script>
-  <script defer src="js/ui/StartScreenLayout.js?v=20261104_mobileflow"></script>
-  <script defer src="js/ui/TitleBgm.js?v=20261101_mobfix3"></script>
+  <script type="module" src="js/app.js?v=20261107_gov_boost30"></script>
+  <script type="module" src="js/ui/Encyclopedia.js?v=20261107_hist_v16"></script>
+  <script defer src="js/ui/StartScreenLayout.js?v=20261107_tilt_left3"></script>
+  <script defer src="js/ui/TitleBgm.js?v=20261107_hist_v16"></script>
 
 
 
@@ -1908,4 +1938,143 @@
       if('requestIdleCallback' in window) requestIdleCallback(go,{timeout:6000}); else setTimeout(go,2500);
     });
   </script>
+<style id="pcGameDrawerDock">
+/* ==== ゲームのパソコン画面（2026-11-07） ==== */
+@media (min-width: 769px) {
+  /* 地図左上：＋ − ⟲ 🏠 と 領国・外交・兵力・石高 を1つの箱に水平に並べる */
+  .map-controls-group.unified-map-toolbar {
+    position: absolute; top: 10px; left: 10px; z-index: 16;
+    display: flex !important; flex-direction: row !important; align-items: center; gap: 4px;
+    background: rgba(18, 12, 8, 0.9); border: 1px solid var(--border-gold); border-radius: 6px;
+    padding: 3px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  }
+  .unified-map-toolbar .map-ctrl-btn,
+  .unified-map-toolbar .map-heat-btn { width: 34px !important; height: 34px !important; min-height: 34px !important; margin: 0 !important; }
+  .unified-map-toolbar .map-heat-filter {
+    display: flex; gap: 4px; margin-left: 3px; padding: 0 0 0 6px !important;
+    background: none !important; border: none !important; border-left: 1px solid rgba(212, 175, 55, 0.4) !important;
+    border-radius: 0 !important; box-shadow: none !important;
+  }
+  /* 季節進行ドック：右パネルが出ている間はパネルの最下部に固定して溶け込ませる */
+  .main-layout.drawer-open > .bottom-action-dock {
+    right: 0 !important; bottom: 0 !important;
+    width: 416px !important; max-width: 44vw !important; box-sizing: border-box;
+    background: rgba(16, 11, 8, 0.98) !important;
+    border: none !important; border-top: 1px solid var(--border-gold) !important; border-left: 2px solid var(--border-gold) !important;
+    border-radius: 0 !important; box-shadow: 0 -6px 14px rgba(0, 0, 0, 0.55) !important;
+    padding: 8px 10px 10px !important;
+  }
+  .main-layout.drawer-open > .side-panel { padding-bottom: calc(var(--game-dock-h, 140px) + 6px) !important; }
+}
+</style>
+<script>
+(function () {
+  var mqPC = window.matchMedia('(min-width: 769px)');
+  // 地図左上の操作ボタンと表示切替ボタンを1つの箱にまとめる（スマホでは元の配置）
+  function arrangeToolbar() {
+    var grp = document.querySelector('.map-controls-group');
+    var filt = document.getElementById('mapHeatFilter');
+    var panel = document.getElementById('mapHeatPanel');
+    var legend = document.getElementById('mapHeatLegend');
+    if (!grp || !filt || !panel) return;
+    if (mqPC.matches) {
+      if (filt.parentNode !== grp) grp.appendChild(filt);
+      grp.classList.add('unified-map-toolbar');
+      panel.style.left = (grp.offsetLeft + grp.offsetWidth + 8) + 'px';
+      panel.style.top = (grp.offsetTop + Math.max(0, (grp.offsetHeight - panel.offsetHeight) / 2)) + 'px';
+    } else {
+      if (filt.parentNode !== panel) panel.insertBefore(filt, legend || null);
+      grp.classList.remove('unified-map-toolbar');
+      panel.style.left = ''; panel.style.top = '';
+    }
+  }
+  // 季節進行ドックの高さを右パネルの下余白に反映
+  function syncDockHeight() {
+    var dock = document.getElementById('bottomActionDock');
+    var ml = document.querySelector('.main-layout');
+    if (dock && ml) ml.style.setProperty('--game-dock-h', dock.offsetHeight + 'px');
+  }
+  // 右パネルが日本列島の東端を隠す場合、列島を左へ押し出す（閉じたら元に戻す）
+  var saved = null, anim = 0;
+  function setPZ(g, s, x, y) { g.mapScale = s; g.mapPanX = x; g.mapPanY = y; g.applyPanZoom(); }
+  function animatePZ(g, s, x, y) {
+    var s0 = g.mapScale, x0 = g.mapPanX, y0 = g.mapPanY, t0 = performance.now(), id = ++anim;
+    (function step(now) {
+      if (id !== anim) return;
+      var t = Math.min(1, (now - t0) / 280), e = 1 - Math.pow(1 - t, 3);
+      setPZ(g, s0 + (s - s0) * e, x0 + (x - x0) * e, y0 + (y - y0) * e);
+      if (t < 1) requestAnimationFrame(step);
+    })(t0);
+  }
+  function fitBesideDrawer(open) {
+    var g = window.game;
+    if (!g || typeof g.applyPanZoom !== 'function' || !mqPC.matches) return;
+    if (!open) {
+      if (saved) animatePZ(g, saved.s, saved.x, saved.y);
+      saved = null;
+      return;
+    }
+    var svg = document.getElementById('sengokuMapSvg');
+    var wrap = document.getElementById('mapWrapper');
+    var side = document.querySelector('.main-layout > .side-panel');
+    if (!svg || !wrap || !side) return;
+    // 開いた時点の配置を覚えておき、閉じたら必ずこの配置へ戻す（押し出しが不要な場合も）
+    if (!saved) saved = { s: Number(g.mapScale) || 1, x: Number(g.mapPanX) || 0, y: Number(g.mapPanY) || 0 };
+    var ctm = svg.getScreenCTM(); if (!ctm) return;
+    var wr = wrap.getBoundingClientRect();
+    var pr = side.offsetParent ? side.offsetParent.getBoundingClientRect() : { left: 0 };
+    var sideLeft = pr.left + side.offsetLeft; // スライドイン中の transform を除いた最終位置
+    var margin = 14;
+    var rightLimit = Math.min(sideLeft, wr.right) - margin, leftLimit = wr.left + margin;
+    var topLimit = wr.top + margin, bottomLimit = wr.bottom - margin;
+    var availW = rightLimit - leftLimit; if (availW <= 40) return;
+    var availH = bottomLimit - topLimit; if (availH <= 40) return;
+
+    // 日本列島全体（蝦夷〜九州・琉球）のSVG座標系バウンディングボックス
+    var bbox = { x: 5, y: 88, width: 975, height: 502 };
+    var W0 = (ctm.a || 1) * bbox.width;
+    var H0 = (ctm.d || 1) * bbox.height;
+    // 右パネルが出た可視領域に日本列島全体が見切れないスケール
+    var targetScale = Math.min(availW / W0, availH / H0, 1.0);
+    var bcx = bbox.x + bbox.width / 2;
+    var bcy = bbox.y + bbox.height / 2;
+    var targetCenterX = leftLimit + availW / 2;
+    var targetCenterY = topLimit + availH / 2;
+
+    var targetPanX = (targetCenterX - ctm.e) / (ctm.a || 1) - bcx * targetScale;
+    var targetPanY = (targetCenterY - ctm.f) / (ctm.d || 1) - bcy * targetScale;
+
+    animatePZ(g, targetScale, targetPanX, targetPanY);
+  }
+  function init() {
+    arrangeToolbar(); syncDockHeight();
+    var ml = document.querySelector('.main-layout');
+    var dock = document.getElementById('bottomActionDock');
+    if (dock && window.ResizeObserver) new ResizeObserver(syncDockHeight).observe(dock);
+    // 右パネルが出ている時に地図リセット（⟲）を押したら、リセット後の配置から列島をパネルの手前へ収め直す
+    var resetBtn = document.getElementById('mapResetBtn');
+    if (resetBtn) resetBtn.addEventListener('click', function () {
+      setTimeout(function () {
+        var ml2 = document.querySelector('.main-layout');
+        if (!ml2 || !ml2.classList.contains('drawer-open')) return;
+        anim++; saved = null; // リセットした配置を「パネルが出る前」の配置として扱う
+        fitBesideDrawer(true);
+      }, 0);
+    });
+    if (mqPC.addEventListener) mqPC.addEventListener('change', arrangeToolbar);
+    window.addEventListener('resize', arrangeToolbar);
+    if (ml && window.MutationObserver) {
+      var was = ml.classList.contains('drawer-open');
+      new MutationObserver(function () {
+        var now = ml.classList.contains('drawer-open');
+        if (now === was) return;
+        was = now;
+        setTimeout(syncDockHeight, 0);
+        fitBesideDrawer(now);
+      }).observe(ml, { attributes: true, attributeFilter: ['class'] });
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
 </body></html>

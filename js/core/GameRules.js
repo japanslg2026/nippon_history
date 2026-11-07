@@ -10,7 +10,7 @@ export const HISTORICAL_CHOICE_EVENTS = [
         year: 1087,
         title: '❖ 奥州藤原氏の黎明・清原清衡の復姓 ❖',
         subTitle: '後三年の役平定！清原の呪縛を断ち、父祖の藤原姓へ復姓',
-        check: (game) => (game.year === 1088 || (game.year === 1087 && game.seasonIdx >= 3)) && (game.playerClanId === 'kiyohara' || game.playerClanId === 'minamoto_tsunemoto'),
+        check: (game) => (game.year === 1088 || (game.year === 1087 && game.seasonIdx >= 4)) && (game.playerClanId === 'kiyohara' || game.playerClanId === 'minamoto_tsunemoto'),
         narrative: (game) => game.playerClanId === 'kiyohara'
           ? '寛治元年冬、出羽金沢柵が陥落し後三年の役は終結した。異父弟・家衡と叔父・武衡を討ち、奥羽六郡と出羽一円の実権を掌握した清衡。前九年の役で非業の最期を遂げた実父・藤原経清の無念と、連れ子として辛酸を舐めた清原一門の愛憎劇が胸に迫る。ここに養家の清原姓を捨てて父祖の「藤原」へと復姓し平泉に独自の仏国土・黄金平和王国を築くか、それとも出羽俘囚頭清原氏の武門を誇示し続けるか！'
           : '出羽金沢柵を攻め落とし、後三年の役を平定した源義家。共に戦い抜いた清原清衡は、実父・藤原経清の姓に復して「藤原清衡」と名乗り、奥州平泉の地に仏国土を拓くと伝えてきた。朝廷はこの戦いを私戦として義家に恩賞を出さない中、盟友・清衡の復姓と独立王国を承認するか、それとも源氏の武威のもとに奥羽への軍政を強めるか！',
