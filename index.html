@@ -444,7 +444,7 @@
       max-width: min(1044px, calc(100% - 190px));
       width: 100%;
       height: auto;
-      max-height: 176px;
+      max-height: none;
     }
 
     #mapDaimyoBox {
@@ -3770,8 +3770,8 @@
 
                 <!-- スマホ用：index.html用の名鑑ボタン（大名・武将名鑑モーダルを開く） -->
         <button type="button" class="nav-btn primary nav-btn-sp-only" id="openCombinedMeikanBtn" title="名鑑（武将・大名）を開く"><span class="nav-icon" aria-hidden="true">📜</span><span class="nav-text nav-text-sp">名鑑</span></button>
-        <button type="button" class="nav-btn" id="btnOpenAbout" title="このサイトの概要と使い方を表示"><span class="nav-icon" aria-hidden="true">ℹ️</span><span class="nav-text nav-text-pc">サイトの概要</span><span class="nav-text nav-text-sp">概要</span></button>
-        <a href="form.html" class="nav-btn" id="btnContactForm" title="修正依頼・お問い合わせフォームを開く"><span class="nav-icon" aria-hidden="true">📩</span><span class="nav-text nav-text-pc">問い合わせ</span><span class="nav-text nav-text-sp">問合せ</span></a>
+        <button type="button" class="nav-btn" id="btnOpenAbout" title="このサイトの概要と使い方を表示"><span class="nav-icon" aria-hidden="true">ℹ️</span><span class="nav-text nav-text-pc">概要</span><span class="nav-text nav-text-sp">概要</span></button>
+        <a href="form.html" class="nav-btn" id="btnContactForm" title="修正依頼・お問い合わせフォームを開く"><span class="nav-icon" aria-hidden="true">📩</span><span class="nav-text nav-text-pc">問合せ</span><span class="nav-text nav-text-sp">問合せ</span></a>
         <a href="japan_slg.html" class="nav-btn game-go" id="btnGoToGame" title="ゲーム本編（japan_slg.html）へ移動"><span class="nav-icon" aria-hidden="true">⚔️</span><span class="nav-text nav-text-pc">ゲームへ</span><span class="nav-text nav-text-sp">ゲーム</span></a>
       </nav>
     </header>
@@ -4812,7 +4812,9 @@
         var distinctTerritoryColors = {
           gamo: '#2f5f9e',
           gamou: '#2f5f9e',
-          todo: '#d5d8dc',
+          todo: '#d8dee2',
+          takeda: '#ea5424',
+          matsunaga: '#2d7a46',
           tosa: '#365a9c',
           clan_8849: '#c65d2e',
           sakai: '#8a6b3f',
@@ -4831,6 +4833,7 @@
           motoyama: '#7e57c2',
           saito: '#73787c',
           takigawa: '#2c5e8a',
+          ezo_native: '#1f5f8b',
           oda_nobutaka: '#b03a2e'
         };
         if (distinctTerritoryColors[clanId]) return distinctTerritoryColors[clanId];
@@ -4858,7 +4861,7 @@
       }
 
       // 家紋の背景も、その時点の領土色と一致させる必要がある大名家（斎藤道三・滝川一益を含む）。
-      var TERRITORY_COLOR_KAMON_CLANS = new Set(['saito', 'takigawa', 'niwa', 'goto', 'suwa', 'sengoku', 'bessho', 'shiina', 'sano', 'nanjo', 'aki_tosa', 'motoyama', 'ichijo', 'chosokabe', 'takato', 'oyama']);
+      var TERRITORY_COLOR_KAMON_CLANS = new Set(['ezo_native', 'saito', 'takigawa', 'niwa', 'goto', 'suwa', 'sengoku', 'bessho', 'shiina', 'sano', 'nanjo', 'aki_tosa', 'motoyama', 'ichijo', 'chosokabe', 'takato', 'oyama']);
 
       function getMapKamonSymbolId(clanId, provinceId, fillColor) {
         var baseId = getClanKamonSymbolId(clanId);
@@ -4958,7 +4961,7 @@
         animateMapPanZoom(mapScale, nx, ny);
       }
       function fitArchipelagoBesideDrawer(open) {
-        if (window.matchMedia('(max-width: 1100px)').matches) { keepSelectedVisibleOnMobile(open); return; }
+        if (window.matchMedia('(max-width: 1100px)').matches) { return; }
         if (!window.matchMedia('(min-width: 1101px)').matches) return;
         var svg = document.getElementById('atlasMapSvg');
         var stage = document.getElementById('mapStage');
@@ -5356,8 +5359,12 @@
           applyTransform();
         }, { passive: false });
 
-        // マウスホバーツールチップ（「武将〇名」は省略）
+        // マウスホバーツールチップ（「武将〇名」は省略、スマホ画面では省略）
         svg.addEventListener('mousemove', function (e) {
+          if (window.innerWidth <= 1100) {
+            tooltip.style.opacity = '0';
+            return;
+          }
           var path = e.target.closest('.prov-path');
           if (!path || isDragging) {
             tooltip.style.opacity = '0';
@@ -5758,8 +5765,8 @@
         var dBox = document.getElementById('mapDaimyoBox');
         if (dBox) dBox.classList.add('sp-unselected');
         document.getElementById('daimyoDetailContent').innerHTML = '';
-        document.getElementById('castleRegionBadge').textContent = '';
-        document.getElementById('castleDetailContent').innerHTML = '';
+        document.getElementById('castleRegionBadge').textContent = '未選択';
+        document.getElementById('castleDetailContent').innerHTML = '<div style="color:var(--text-sub); font-size:12pt; padding:14px 6px;">地図上の領国をクリックすると、その国の城郭・特産物・合戦史・武将が表示されます。</div>';
         document.getElementById('provOfficerCountBadge').textContent = '0 名';
         document.getElementById('provOfficersList').innerHTML = '';
       }
@@ -5852,16 +5859,31 @@
           '</div>' +
 
           '<div class="specialty-bar">' +
-            (base.specialty ? '<span class="spec-badge">🌾 特産：' + esc(base.specialty) + '</span>' : '') +
-            (base.goldMine ? '<span class="spec-badge mine">🪙 金山保有</span>' : '') +
-            (base.silverMine ? '<span class="spec-badge mine">🥈 銀山保有</span>' : '') +
+            '<div class="specialty-badges-wrap">' +
+              (base.specialty ? '<span class="spec-badge">🌾 特産：' + esc(base.specialty) + '</span>' : '') +
+              (base.goldMine ? '<span class="spec-badge mine">🪙 金山保有</span>' : '') +
+              (base.silverMine ? '<span class="spec-badge mine">🥈 銀山保有</span>' : '') +
+            '</div>' +
+            '<button type="button" class="btn-toggle-lore" id="btnToggleCastleLore" aria-expanded="false" title="城郭解説と合戦史を展開／折りたたみ"><span class="lore-toggle-icon">▼</span></button>' +
           '</div>' +
 
-          '<div class="lore-paragraph-expanded">' +
+          '<div class="lore-paragraph-expanded" id="castleLoreBox">' +
             '<strong class="lore-castle-heading" style="color:var(--gold);">【' + esc(pEntry.castle) + 'の解説】</strong> ' +
             esc(cleanLoreText(cLore)) +
             (base.battleHistory ? '<br><strong style="color:#ff9f7f;">【合戦史】</strong> ' + esc(base.battleHistory) : '') +
           '</div>';
+
+        var loreBtn = document.getElementById('btnToggleCastleLore');
+        var loreBox = document.getElementById('castleLoreBox');
+        if (loreBtn && loreBox) {
+          loreBtn.onclick = function (e) {
+            e.stopPropagation();
+            var isOpen = loreBox.classList.toggle('is-expanded');
+            loreBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            var icon = loreBtn.querySelector('.lore-toggle-icon');
+            if (icon) icon.textContent = isOpen ? '▲' : '▼';
+          };
+        }
 
         // ---------- 3. 右側下段：この国の武将一覧（城主表示のみ、家臣・浪人・主家・特技・能力値は省略） ----------
         var offListEl = document.getElementById('provOfficersList');
@@ -8176,6 +8198,147 @@
 <style id="pcClearHighlightAutoHide">
 /* パソコン：ハイライト解除するものがない時は「ハイライト解除」ボタンを出さない（2026-11-07） */
 @media (min-width: 1101px) { #btnClearHighlight.is-cleared { display: none !important; } }
+
+/* ==================== 要望4, 5, 6 の最適化スタイル ==================== */
+
+/* PC画面：左上のシナリオ説明は説明文が見切れないように上下幅可変とする */
+@media (min-width: 1101px) {
+  #mapScenBox {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  #mapScenBox #overlayScenDesc {
+    font-size: 11pt !important;
+    line-height: 1.48 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* 要望6: スマホ画面：領国選択時のツールチップ表示を省略 */
+@media (max-width: 1100px) {
+  #mapTooltip {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}
+
+/* 要望4: スマホ画面：下のパネル（領国・城郭・武将）を地図の直下に常時表示（ボトムシート方式の廃止） */
+@media (max-width: 1100px) {
+  .right-sidebar {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    height: auto !important;
+    z-index: 10 !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    border-top: 2px solid var(--border-gold) !important;
+    border-left: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    margin-top: 0 !important;
+    padding: 10px 10px 24px 10px !important;
+  }
+  .right-sidebar.is-open,
+  .right-sidebar.is-peek {
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    max-height: none !important;
+  }
+  .atlas-drawer-grabber,
+  .atlas-drawer-peek-btn,
+  #btnCloseAtlasDrawer,
+  .right-sidebar .atlas-drawer-actions {
+    display: none !important;
+  }
+  
+  /* 特産物バーと城郭解説・合戦史の下矢印ボタン */
+  .specialty-bar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    min-height: 32px !important;
+  }
+  .specialty-badges-wrap {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    flex: 1 1 auto !important;
+  }
+  .btn-toggle-lore {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    min-width: 32px !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    padding: 0 !important;
+    background: rgba(212, 175, 55, 0.15) !important;
+    border: 1px solid var(--border-gold) !important;
+    border-radius: 5px !important;
+    color: var(--gold-bright) !important;
+    font-size: 11pt !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
+    margin-left: auto !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
+  }
+  .btn-toggle-lore:active {
+    background: rgba(212, 175, 55, 0.35) !important;
+  }
+  /* スマホ画面では城郭解説と合戦史は初期折りたたみ、ボタン押下で展開 */
+  .lore-paragraph-expanded {
+    display: none;
+    margin-top: 6px !important;
+  }
+  .lore-paragraph-expanded.is-expanded {
+    display: block !important;
+  }
+}
+
+/* PC画面では城郭解説と合戦史は常時表示、下矢印ボタンは非表示 */
+@media (min-width: 1101px) {
+  .btn-toggle-lore {
+    display: none !important;
+  }
+  .lore-paragraph-expanded {
+    display: block !important;
+  }
+}
+
+
+/* PC画面：最上部メニューのピクトグラムを省略、サブタイトルのフォントサイズをやや小さく */
+.brand-title-sub {
+  font-size: 11.5pt !important;
+  font-weight: normal !important;
+  opacity: 0.88;
+}
+
+@media (min-width: 1101px) {
+  .top-header .top-nav .nav-icon {
+    display: none !important;
+  }
+}
+
 </style>
 </body>
 </html>
