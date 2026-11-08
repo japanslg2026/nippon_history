@@ -4,6 +4,75 @@
  */
 
 export const HISTORICAL_CHOICE_EVENTS = [
+  {
+    id: 'uesugi_kanto_kanrei_succession',
+    scenarioId: '*',
+    year: 1561,
+    title: '❖ 関東管領就任と上杉家名跡継承 ❖',
+    subTitle: '山内上杉憲政より関東管領職と家督・系図を継承！越後上杉家誕生',
+    check: (game) => {
+      if (game.year < 1561) return false;
+      if (game._kantoKanreiOccurred) return false;
+      const hasKagetora = (game.activeOfficers || []).some(o => (o.id === 'off_uesugi_kenshin' || o.name === '長尾景虎' || o.name === '上杉謙信') && !o.isDead);
+      const hasNagaoOrUesugi = (game.provinces || []).some(p => p.ownerId === 'nagao' || p.ownerId === 'uesugi');
+      return hasKagetora && hasNagaoOrUesugi;
+    },
+    narrative: (game) => {
+      const isPlayerKenshin = (game.playerClanId === 'nagao' || game.playerClanId === 'uesugi') && (game.playerDaimyo?.officerId === 'off_uesugi_kenshin' || game.playerDaimyo?.name?.includes('景虎') || game.playerDaimyo?.name?.includes('謙信'));
+      if (isPlayerKenshin) {
+        return '永禄四年、北条氏康の猛攻により上野平井城を逐われた関東管領・山内上杉憲政公が越後春日山城へ身を寄せてまいりました。憲政公は我が家の義心と武威に深く感じ入り、鎌倉鶴岡八幡宮にて関東管領職の重責とともに、上杉宗家の家督、重宝・系図を景虎公へ譲渡したいと強く申し出ております。これを受け「上杉政虎」と改名し、山内上杉家や長野家を統合して「越後上杉家」として坂東武士の盟主となるか、それとも長尾の旧名を貫くか！';
+      }
+      return '永禄四年春、北条氏康に平井城を逐われた関東管領・山内上杉憲政は、越後の長尾景虎を頼り、鶴岡八幡宮において関東管領職と上杉宗家の家督・系図・重宝を譲渡した。長尾景虎は名を「上杉政虎」と改め、山内上杉家や長野家を統合して「越後上杉家」として起ち上がった！越後・関東の諸勢力が激動の時代を迎える！';
+    },
+    choices: (game) => {
+      const isPlayerKenshin = (game.playerClanId === 'nagao' || game.playerClanId === 'uesugi');
+      if (isPlayerKenshin) {
+        return [
+          {
+            text: '【史実ルート】上杉宗家を継承し「越後上杉家」を称す！山内上杉家・長野家を統合し、家紋と領国色を改める！',
+            desc: '関東管領に就任し「上杉政虎」へ改名！山内上杉家・長野家の領国・武将をすべて統合！家紋を越後上杉家の竹に雀、領国色を越後上杉色へ一新！金+2,000、米+3,000、全軍兵力+5,000！',
+            isHistorical: true,
+            action: (g) => {
+              g._kantoKanreiOccurred = true;
+              g.gold += 2000;
+              g.rice += 3000;
+              g.integrateYamanouchiUesugi(true);
+              g.log('🏯【関東管領就任】長尾景虎公は関東管領職と上杉宗家の名跡を継承し、「越後上杉家・上杉政虎」として立ち上がりました！', 'important');
+              return '鶴岡八幡宮にて関東管領に就任！山内上杉家・長野家を統合し、「越後上杉家」として威信を天下に示しました！';
+            }
+          },
+          {
+            text: '【歴史改変IF】上杉の家名は受けず、長尾家の旗印のまま関東管領の軍事大権のみを振るう！',
+            desc: '長尾家の誇りを堅持！前線部隊の突撃力と士気向上、全領国の治安+20、兵力+3,000！',
+            isHistorical: false,
+            action: (g) => {
+              g._kantoKanreiOccurred = true;
+              (g.provinces || []).filter(pr => pr.ownerId === g.playerClanId).forEach(pr => {
+                pr.order = Math.min(100, (Number(pr.order) || 75) + 20);
+                pr.troops += 1500;
+              });
+              g.log('⚔️【長尾武門の誇り】長尾家の誇りを保ちつつ、関東管領の軍令権を行使して諸将を統率しました！', 'important');
+              return '長尾の家名を誇示しつつ関東の諸豪族を心服させ、強大な武威を確立しました！';
+            }
+          }
+        ];
+      } else {
+        return [
+          {
+            text: '【史実ルート】長尾景虎が関東管領に就任し「越後上杉家」が成立！情勢を注視する',
+            desc: '長尾景虎が上杉謙信へ改名し、山内上杉家を統合して越後上杉家が成立。関東・越後情勢が激変！',
+            isHistorical: true,
+            action: (g) => {
+              g._kantoKanreiOccurred = true;
+              g.integrateYamanouchiUesugi(false);
+              g.log('📜【関東管領就任】越後の長尾景虎公が関東管領職と上杉名跡を継承、「越後上杉家」として山内上杉家を統合しました！', 'important');
+              return '長尾景虎が上杉謙信と改名し越後上杉家が誕生！山内上杉家が統合されました。';
+            }
+          }
+        ];
+      }
+    }
+  },
 {
         id: 'fujiwara_kiyohira_restoration',
         scenarioId: '*',
@@ -143,7 +212,7 @@ export const HISTORICAL_CHOICE_EVENTS = [
         year: 1543,
         title: '❖ 南蛮船来航・新式鉄砲と火薬の交易 ❖',
         subTitle: 'はるかイスパニア・ポルトガルより来たりし黒船の威容',
-        check: (game) => game.year >= 1543 && game.year < 1600 && Math.random() < 0.01,
+        check: (game) => game.year === 1543,
         narrative: (game) => '領内の湊に、白帆を揚げた巨大な南蛮船が入港してまいりました。カピタン（船長）は珍奇な南蛮渡りの文物を献上するとともに、最新式の火縄銃・カルバリン巨砲と良質な硝石の大量売買を持ちかけております。',
         choices: (game) => [
           {
@@ -243,7 +312,7 @@ export const HISTORICAL_CHOICE_EVENTS = [
         choices: (game) => game.playerClanId === 'oda' ? [
           {
             text: '【史実ルート】豪雨に紛れ、田楽狭間の義元本陣へ乾坤一擲の急襲！',
-            desc: '義元を討ち取り今川軍を壊滅させる。尾張・三河の情勢が一変し、自軍兵力+4,000、金+600獲得！',
+            desc: '義元を討ち取り今川軍を壊滅させる。尾張・三河の情勢が一変し、自軍兵力+4,000、金+600獲得！松平家が独立し100季の清洲同盟締結！',
             isHistorical: true,
             action: (g) => {
               g.gold += 600;
@@ -252,8 +321,37 @@ export const HISTORICAL_CHOICE_EVENTS = [
               g.provinces.filter(pr => pr.ownerId === 'imagawa').forEach(pr => pr.troops = Math.round(pr.troops * 0.5));
               g.log('【桶狭間の奇襲 成功】織田信長公の急襲により今川義元が討死！今川軍は総崩れとなりました！', 'important');
               g.okehazamaOccurred = true;
+
+              // 三河国の松平（徳川）家独立
+              const mikawaProv = (g.provinces || []).find(pr => pr.id === 'mikawa');
+              if (mikawaProv && mikawaProv.ownerId === 'imagawa') {
+                mikawaProv.ownerId = 'matsudaira';
+                mikawaProv.troops = 3000;
+              }
+
               g.updateTokugawaSurname(true);
-              return '田楽狭間に雷鳴轟く中、信長公の突撃一番！見事今川義元を討ち取り、東海道の大軍を壊滅させました！';
+
+              // 織田家と徳川（松平）家との100季同盟（清洲同盟）締結
+              const tokuId = g.isClanExtant('tokugawa') ? 'tokugawa' : (g.isClanExtant('matsudaira') ? 'matsudaira' : 'tokugawa');
+              g.alliances = g.alliances || [];
+              const exists = g.alliances.find(al => al.members && al.members.includes('oda') && al.members.includes(tokuId));
+              if (exists) {
+                exists.durationSeasons = 100;
+                exists.formedYear = g.year;
+                exists.formedSeason = g.seasonIdx;
+                exists.label = '清洲同盟';
+              } else {
+                g.alliances.push({
+                  members: ['oda', tokuId],
+                  formedYear: g.year,
+                  formedSeason: g.seasonIdx,
+                  durationSeasons: 100,
+                  label: '清洲同盟'
+                });
+              }
+              g.log('🤝【清洲同盟】織田信長公と徳川（松平）家康公の間で百季（100季）に及ぶ不滅の盟約が結ばれました！', 'important');
+
+              return '田楽狭間に雷鳴轟く中、信長公の突撃一番！見事今川義元を討ち取り、三河の松平家と百季同盟（清洲同盟）を締結しました！';
             }
           },
           {
@@ -292,6 +390,103 @@ export const HISTORICAL_CHOICE_EVENTS = [
           }
         ]
       },
+      {
+        id: 'suruga_invasion',
+        scenarioId: '*',
+        year: 1568,
+        title: '❖ 駿河侵攻・今川氏滅亡 ❖',
+        subTitle: '甲相駿三国同盟の破綻と風林火山の駿河急襲',
+        check: (game) => game.year === 1568 && game.seasonIdx === 4 && (game.playerClanId === 'takeda' || game.playerClanId === 'imagawa'),
+        narrative: (game) => game.playerClanId === 'takeda'
+          ? '永禄11年12月、甲斐の武田信玄は駿河へと侵攻を開始した。桶狭間の戦い以降、動揺が続いていた今川家では重臣の裏切りが相次ぎ、当主・今川氏真は居城・駿府館を支えきれず敗走した。武田軍が駿河を電撃制圧して今川氏を滅ぼすか、あるいは三国同盟を尊重し侵攻を見送り駿河から撤退するか、運命の決断が迫る！'
+          : '永禄11年12月、甲斐の武田信玄は駿河へと侵攻を開始した。桶狭間の戦い以降、動揺が続いていた今川家では重臣の裏切りが相次ぎ、当主・今川氏真は居城・駿府館を支えきれず敗走の危機に瀕している。薩埵峠にて必死の防戦を試み武田軍を撃退するか、あるいは防備が崩壊し今川氏滅亡の時を迎えるか！',
+        choices: (game) => game.playerClanId === 'takeda' ? [
+          {
+            text: '【史実ルート】駿府館へ乾坤一擲の急襲！今川氏を滅亡させ駿河を領有！',
+            desc: '武田軍が勝利し今川氏は滅亡。甲斐・高遠飯田・駿河・諏訪小諸・筑摩木曽谷・北信濃を領土にし、兵力+4,000、金+800獲得！今川との同盟は決裂。',
+            isHistorical: true,
+            action: (g) => {
+              g.gold += 800;
+              const provIds = ['kai', 'takato_iida', 'suruga', 'suwa_komoro', 'south_shinano', 'north_shinano'];
+              provIds.forEach(pid => {
+                const pr = g.provinces.find(p => p.id === pid);
+                if (pr) {
+                  pr.ownerId = 'takeda';
+                  pr.troops = Math.max(3000, pr.troops || 3000);
+                }
+              });
+              const totomi = g.provinces.find(p => p.id === 'totomi');
+              if (totomi && totomi.ownerId === 'imagawa') {
+                const tokuId = g.isClanExtant('tokugawa') ? 'tokugawa' : (g.isClanExtant('matsudaira') ? 'matsudaira' : 'takeda');
+                totomi.ownerId = tokuId;
+                totomi.troops = Math.max(3000, totomi.troops || 3000);
+              }
+              g.alliances = (g.alliances || []).filter(al => {
+                const m = al.members || [];
+                return !(m.includes('takeda') && m.includes('imagawa'));
+              });
+              g.syncDaimyoStatus();
+              g.updateActiveOfficers();
+              if (g.currentScenario) g.resolveOfficerAffiliations(g.currentScenario);
+              g.log('【駿河侵攻 成功】武田軍の電撃侵攻により駿府今川館が陥落！名門・今川氏は滅亡し、武田家が甲斐、高遠・飯田、駿河、諏訪・小諸、筑摩・木曽谷、北信濃を領有しました！', 'important');
+              return '駿府今川館を急襲し駿河一国を完全制圧！今川氏を滅ぼし、甲斐・高遠飯田・駿河・諏訪小諸・筑摩木曽谷・北信濃を手中に収めました！';
+            }
+          },
+          {
+            text: '【歴史改変IF】侵攻を見送る（武田が勝たない）！同盟を維持し領内内政に専念',
+            desc: '武田は勝利せず駿河侵攻を中止。全領国の治安+20、備蓄兵糧+1,500獲得。今川家は存続。',
+            isHistorical: false,
+            action: (g) => {
+              g.rice += 1500;
+              g.provinces.filter(pr => pr.ownerId === 'takeda').forEach(pr => pr.order = Math.min(100, pr.order + 20));
+              g.log('【侵攻中止】武田信玄公は駿河侵攻を見送り、領内の治安向上と富国強兵に専念しました。');
+              return '駿河侵攻を行わず、今川家との盟約を尊重して領国の経営に専念しました。';
+            }
+          }
+        ] : [
+          {
+            text: '【歴史改変IF】重臣の動揺を鎮め、薩埵峠にて武田軍を撃退（武田が勝たない）！',
+            desc: '北条の救援を得て武田軍を撃退！今川家は駿河領国を死守し、兵力+4,000、城防+30！',
+            isHistorical: false,
+            action: (g) => {
+              const p = g.provinces.find(pr => pr.ownerId === 'imagawa');
+              if (p) {
+                p.troops += 4000;
+                p.defense = Math.min(150, p.defense + 30);
+              }
+              g.log('【薩埵峠の防戦 成功】今川軍は薩埵峠で武田軍の猛攻を凌ぎ、武田信玄を甲斐へ撤退させました！', 'important');
+              return '薩埵峠の峻険な要害に布陣し武田軍を撃攘！武田を撤退させ、駿河の領国を守り抜きました！';
+            }
+          },
+          {
+            text: '【史実ルート】重臣の離反を止められず、駿府館を支えきれず敗走（武田勝利・今川滅亡）',
+            desc: '武田軍の猛攻により今川館が陥落。今川氏は戦国大名として滅亡する。',
+            isHistorical: true,
+            action: (g) => {
+              const provIds = ['kai', 'takato_iida', 'suruga', 'suwa_komoro', 'south_shinano', 'north_shinano'];
+              provIds.forEach(pid => {
+                const pr = g.provinces.find(p => p.id === pid);
+                if (pr) {
+                  pr.ownerId = 'takeda';
+                  pr.troops = Math.max(3000, pr.troops || 3000);
+                }
+              });
+              const totomi = g.provinces.find(p => p.id === 'totomi');
+              if (totomi && totomi.ownerId === 'imagawa') {
+                const tokuId = g.isClanExtant('tokugawa') ? 'tokugawa' : (g.isClanExtant('matsudaira') ? 'matsudaira' : 'takeda');
+                totomi.ownerId = tokuId;
+                totomi.troops = Math.max(3000, totomi.troops || 3000);
+              }
+              g.syncDaimyoStatus();
+              g.updateActiveOfficers();
+              if (g.currentScenario) g.resolveOfficerAffiliations(g.currentScenario);
+              g.log('【今川氏滅亡】武田軍の電撃侵攻により駿府館は陥落し、今川家は戦国大名として滅亡しました。', 'important');
+              return '重臣の裏切り相次ぎ駿府館は陥落。今川氏真公は掛川城へ敗走し、名門・今川氏は戦国大名としての幕を閉じました。';
+            }
+          }
+        ]
+      },
+
 {
         id: 'kanegasaki',
         scenarioId: '*',
@@ -5398,6 +5593,13 @@ export const OFFICER_FAMILY_ROSTERS = {
     "off_jd_431",
     "off_kita_nobuchika",
     "off_nanbu_namioka_akiyasu"
+  ],
+  "toyotomi": [
+    "off_dm_toyotomi_1600",
+    "off_toyotomi_hideyori",
+    "off_toyotomi_hidetsugu",
+    "off_toyotomi_hidenaga",
+    "off_yododono"
   ]
 };;
 if (typeof window !== "undefined") window.OFFICER_FAMILY_ROSTERS = OFFICER_FAMILY_ROSTERS;

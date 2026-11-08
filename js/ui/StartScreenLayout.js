@@ -125,13 +125,38 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     });
   }
 
+  function scrollCardToCenter(card, smooth = true) {
+    if (!card) return;
+    const container = card.closest('.sl-daimyo-body') || card.closest('#daimyoGrid') || card.parentElement;
+    if (container && container.scrollHeight > container.clientHeight) {
+      const cardTop = card.offsetTop;
+      const cardHeight = card.offsetHeight;
+      const containerHeight = container.clientHeight;
+      const targetScrollTop = cardTop - (containerHeight / 2) + (cardHeight / 2);
+      if (typeof container.scrollTo === 'function') {
+        container.scrollTo({
+          top: Math.max(0, targetScrollTop),
+          behavior: smooth ? 'smooth' : 'auto'
+        });
+      } else {
+        container.scrollTop = Math.max(0, targetScrollTop);
+      }
+    } else {
+      try {
+        card.scrollIntoView({ block: 'center', inline: 'nearest', behavior: smooth ? 'smooth' : 'auto' });
+      } catch (e) {
+        card.scrollIntoView();
+      }
+    }
+  }
+
   // 選択中大名カードへ自動スクロール（ジャンプ）
   function scrollToSelectedDaimyo(smooth = false) {
     requestAnimationFrame(() => {
       const curId = selected || $('#daimyoGrid .daimyo-card.selected')?.dataset?.id;
       const card = curId ? document.querySelector(`#daimyoGrid .daimyo-card[data-id="${curId}"]`) : document.querySelector('#daimyoGrid .daimyo-card.selected');
       if (card) {
-        card.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'center' });
+        scrollCardToCenter(card, smooth);
       }
     });
   }
@@ -512,6 +537,14 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
         setStep(2);
         return;
       }
+      const g = game();
+      if (g?.audio) {
+        g.audio.init();
+        if (g.audio.ctx && g.audio.ctx.state === 'suspended') g.audio.ctx.resume().catch(() => {});
+      }
+      if (window.SengokuTitleBgm && typeof window.SengokuTitleBgm.horagai === 'function') {
+        window.SengokuTitleBgm.horagai();
+      }
       $('#slStartBtn')?.click();
     });
 
@@ -597,11 +630,15 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
       }
     });
 
-    // 乱世より前・乱世より後クッション開閉時に時代タブ表示を同期
+    // 歴史シナリオ選択時およびクッション開閉時の連動
     document.getElementById('scenarioSelectorGroup')?.addEventListener('click', (e) => {
       if (e.target.closest('.era-cushion-btn')) {
         setTimeout(() => syncEraTabsVisibility(), 50);
         setTimeout(() => syncEraTabsVisibility(), 180);
+      }
+      if (e.target.closest('.scenario-btn')) {
+        setTimeout(() => scrollToSelectedDaimyo(true), 60);
+        setTimeout(() => scrollToSelectedDaimyo(true), 150);
       }
     });
 
@@ -743,8 +780,23 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     $('#slStartBtn').addEventListener('click', () => {
       const g = game();
       if (!g) return;
-      const curSelected = selected || $('#daimyoGrid .daimyo-card.selected')?.dataset?.id || $('#daimyoGrid .daimyo-card')?.dataset?.id;
-      if (!curSelected) return;
+      const curSelected = selected || $('#daimyoGrid .daimyo-card.selected')?.dataset?.id;
+      if (!curSelected) {
+        if (typeof Swal !== 'undefined' && Swal.fire) {
+          Swal.fire({
+            title: '大名未選択',
+            text: '出陣する大名家を選択してください。',
+            icon: 'warning',
+            confirmButtonText: '閉じる',
+            confirmButtonColor: '#9a7b2c',
+            background: '#241710',
+            color: '#ffd700'
+          });
+        } else {
+          alert('出陣する大名家を選択してください。');
+        }
+        return;
+      }
 
       selectClan(curSelected, { scroll: false, silent: true });
       const pl = playables().find(x => x && x.id === curSelected);
@@ -762,6 +814,15 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
         if (g.music.ctx && g.music.ctx.state === 'suspended') {
           g.music.ctx.resume().catch(() => {});
         }
+      }
+      if (g.audio) {
+        g.audio.init();
+        if (g.audio.ctx && g.audio.ctx.state === 'suspended') {
+          g.audio.ctx.resume().catch(() => {});
+        }
+      }
+      if (window.SengokuTitleBgm && typeof window.SengokuTitleBgm.horagai === 'function') {
+        window.SengokuTitleBgm.horagai();
       }
       const popup = document.getElementById('daimyoPopup');
       if (popup) popup.classList.add('hidden');
@@ -829,6 +890,10 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     const tip = document.createElement('div'); tip.className = 'sl-tip'; el.appendChild(tip);
 
     svg.addEventListener('mousemove', (e) => {
+      if (window.innerWidth <= 768 || document.documentElement.classList.contains('sl-phone')) {
+        tip.style.opacity = 0;
+        return;
+      }
       const p = e.target.closest('.sl-prov'); if (!p) { tip.style.opacity = 0; return; }
       const o = owners()[p.dataset.p]; const ci = o ? clanInfo(o) : null;
       tip.innerHTML = `<b>${esc(provName(p.dataset.p))}</b>${ci ? `<span><i style="background:${ci.color}"></i>${esc(ci.name)}${ci.leader ? '・' + esc(ci.leader) : ''}${ci.playable ? '' : '（選択不可）'}</span>` : '<span>空白地</span>'}`;
@@ -923,7 +988,7 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     const ns = document.querySelectorAll('.scenario-btn').length; const sc = $('.sl-count-scen'); if (sc) sc.textContent = `${ns}`;
     $('.scenario-btn.selected')?.scrollIntoView({ block: 'nearest' });
     const sel = $('#daimyoGrid .daimyo-card.selected');
-    selectClan(sel ? sel.dataset.id : null, { scroll: false, silent: true });
+    selectClan(sel ? sel.dataset.id : (scen()?.recommendedClan || (playables()[0]?.id) || null), { scroll: true, silent: true });
 
     if (IS_PHONE) {
       decorateDaimyoCards();
@@ -997,21 +1062,26 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
   function selectClan(id, { scroll = false, silent = false } = {}) {
     selected = id;
     const g = game();
-    if (g && id) {
-      g.playerClanId = id;
-      const pl = playables().find(x => x && x.id === id);
-      if (pl) {
-        g.playerDaimyo = JSON.parse(JSON.stringify(pl));
-        if (typeof g._playableFunds === 'function') {
-          g.gold = g._playableFunds(pl, 'gold');
-          g.rice = g._playableFunds(pl, 'rice');
+    if (g) {
+      if (id) {
+        g.playerClanId = id;
+        const pl = playables().find(x => x && x.id === id);
+        if (pl) {
+          g.playerDaimyo = JSON.parse(JSON.stringify(pl));
+          if (typeof g._playableFunds === 'function') {
+            g.gold = g._playableFunds(pl, 'gold');
+            g.rice = g._playableFunds(pl, 'rice');
+          }
         }
+      } else {
+        g.playerClanId = null;
+        g.playerDaimyo = null;
       }
     }
     updateSlBorders(id);
     document.querySelectorAll('#daimyoGrid .daimyo-card').forEach(c => c.classList.toggle('selected', c.dataset.id === id));
     const card = id && [...document.querySelectorAll('#daimyoGrid .daimyo-card')].find(c => c.dataset.id === id);
-    if (card && (scroll || IS_PHONE)) card.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    if (card && (scroll || IS_PHONE)) scrollCardToCenter(card, true);
     svg?.classList.toggle('has-sel', !!id);
     let n = 0;
     for (const p of Object.values(paths)) { const on = !!id && p.dataset.owner === id; p.classList.toggle('sel', on); if (on) { n++; p.parentNode.appendChild(p); } }
@@ -1039,7 +1109,14 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     if (IS_PHONE) {
       updatePhoneBar(id, n);
     }
-    const badge = $('#selectedDaimyoBadge'); if (badge && card) badge.textContent = `選択中: ${clanInfo(id).leader}（${clanInfo(id).name}・${n}国）`;
+    const badge = $('#selectedDaimyoBadge');
+    if (badge) {
+      if (id && card) {
+        badge.textContent = `選択中: ${clanInfo(id).leader}（${clanInfo(id).name}・${n}国）`;
+      } else {
+        badge.textContent = '選択中: なし（大名家を選択してください）';
+      }
+    }
     if (!silent) { try { game()?.audio?.playHyoshigi?.(); } catch (_) {} }
   }
 

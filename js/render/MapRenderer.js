@@ -59,6 +59,7 @@ export const MapRendererMethods = {
    * 地図上の家紋シンボルを生成・更新する：
    * - 全ての地図家紋で外周の金色縁取り（stroke）を省略してすっきり見せる
    * - 斎藤道三（saito）や領土色連動大名は背景円を領土色（fillColor）に追随させる
+   * - 【重要】枠線専用円（fill="none"）や2つ目以降の大円をfillColorで塗りつぶさない（手前の絵柄が覆い隠されるのを防止）
    */
   getMapKamonId(province, fillColor) {
     const baseId = province?.ownerId ? this.getClanKamonId(province.ownerId) : '';
@@ -78,16 +79,34 @@ export const MapRendererMethods = {
       source.parentNode.appendChild(mapSymbol);
     }
 
-    const syncTerritoryFill = TERRITORY_COLOR_KAMON_CLANS.has(province.ownerId);
-    Array.from(mapSymbol.children).forEach(el => {
-      if (!el.tagName || el.tagName.toLowerCase() !== 'circle') return;
+    // viewBox に応じて大円の半径しきい値を判定（通常 32x32 は 13.5、100x100 等は 40）
+    const vb = mapSymbol.getAttribute('viewBox') || '0 0 32 32';
+    const vbParts = vb.trim().split(/[\s,]+/).map(Number);
+    const vbDim = (vbParts.length >= 4 && vbParts[2] > 0) ? vbParts[2] : 32;
+    const rThreshold = vbDim * 0.42;
+
+    let bgCircleReplaced = false;
+
+    // symbol 直下およびネストされた circle 要素を安全に走査
+    const circles = Array.from(mapSymbol.querySelectorAll('circle'));
+    circles.forEach(el => {
       const r = Number(el.getAttribute('r'));
-      if (r >= 13.5) {
-        // 地図上の家紋の周りの金色の縁取りを省略
+      if (r >= rThreshold) {
+        // 外周の金色縁取り（stroke）を省略
         el.setAttribute('stroke', 'none');
         el.setAttribute('stroke-width', '0');
-        if (fillColor) { // 家紋の背景色は全大名家とも領土の色に合わせる（2026-11-07）
+
+        const currentFill = (el.getAttribute('fill') || '').trim().toLowerCase();
+        // fill="none" や未指定の円は枠線専用なので中身を塗りつぶさない（重なって絵柄を隠すのを防止）
+        if (currentFill === 'none' || !currentFill) {
+          el.style.display = 'none';
+          return;
+        }
+
+        // 背景色は最初に見つかるベース背景円1つだけに適用（前景パーツや多重円の誤塗りつぶしを防止）
+        if (fillColor && !bgCircleReplaced) {
           el.setAttribute('fill', fillColor);
+          bgCircleReplaced = true;
         }
       }
     });
@@ -1036,20 +1055,38 @@ export const MapRendererMethods = {
       ? this.selectedProvId
       : null;
 
+    // 1勢力につき最大1箇所のみ本拠地家紋を表示するためのトラッカー（2重表示防止フェイルセーフ）
+    const displayedKamonClans = new Set();
+
     this.provinces.forEach(p => {
       const isMine = p.ownerId === this.playerClanId;
       const isSelected = p.id === visibleSelectedProvId;
       const fillCol = this.getProvinceColor(p);
       const kamonId = p.ownerId ? this.getMapKamonId(p, fillCol) : '';
+
+      let isCapital = p.ownerId ? (typeof this.isCapitalProvince === 'function' ? this.isCapitalProvince(p.id, p.ownerId) : true) : false;
+      // 同一勢力で既に家紋を表示済みの場合は2重表示を防ぐためfalse
+      if (isCapital && p.ownerId) {
+        if (displayedKamonClans.has(p.ownerId)) {
+          isCapital = false;
+        } else {
+          displayedKamonClans.add(p.ownerId);
+        }
+      }
+      const showKamon = !!(p.ownerId && isCapital);
+
       const cached = this._mapTileCache[p.id];
 
-      // キャッシュと同一ならDOM書き換えをスキップしてCPU負荷を劇的に低減
+      // キャッシュと同一ならDOM書き換えをスキップしてCPU負荷を劇的に低減（本拠地状態の変化も正確に反映）
       if (cached &&
           cached.ownerId === p.ownerId &&
           cached.isSelected === isSelected &&
           cached.fillCol === fillCol &&
           cached.highlightColor === highlightColor &&
-          cached.troops === p.troops) {
+          cached.troops === p.troops &&
+          cached.showKamon === showKamon &&
+          cached.kamonId === kamonId &&
+          cached.isMine === isMine) {
         return;
       }
 
@@ -1062,7 +1099,10 @@ export const MapRendererMethods = {
         isSelected,
         fillCol,
         highlightColor,
-        troops: p.troops
+        troops: p.troops,
+        showKamon,
+        kamonId,
+        isMine
       };
 
       const path = document.getElementById(`path-${p.id}`);
@@ -1086,9 +1126,6 @@ export const MapRendererMethods = {
           path.style.filter = 'none';
         }
       }
-
-      const isCapital = p.ownerId ? (typeof this.isCapitalProvince === 'function' ? this.isCapitalProvince(p.id, p.ownerId) : true) : false;
-      const showKamon = !!(p.ownerId && isCapital);
 
       const badge = document.getElementById(`badge-${p.id}`);
       if (badge) {

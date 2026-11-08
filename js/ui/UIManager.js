@@ -847,9 +847,9 @@ export const UIManagerMethods = {
 
     playables.forEach(d => {
 
-      const isSelected = d.id === defaultClanId;
+      const isSelected = !!defaultClanId && d.id === defaultClanId;
 
-      if (isSelected || (!initialSelectedDaimyo && !defaultClanId)) {
+      if (isSelected) {
 
         this.playerClanId = d.id;
 
@@ -1009,11 +1009,14 @@ export const UIManagerMethods = {
 
       // 北から並べたので、おすすめ大名がグリッドの下にあっても見えるところまで送る（ページ自体は動かさない）
 
-      const top = defaultCard.offsetTop - grid.offsetTop;
-
-      if (top > grid.clientHeight - defaultCard.offsetHeight) grid.scrollTop = Math.max(0, top - 8);
-
-      else grid.scrollTop = 0;
+      const container = grid.closest('.sl-daimyo-body') || grid;
+      const top = defaultCard.offsetTop - container.offsetTop;
+      const targetScroll = top - (container.clientHeight / 2) + (defaultCard.offsetHeight / 2);
+      if (typeof container.scrollTo === 'function') {
+        container.scrollTo({ top: Math.max(0, targetScroll), behavior: 'smooth' });
+      } else {
+        container.scrollTop = Math.max(0, targetScroll);
+      }
 
       const dData = playables.find(d => d.id === defaultCard.dataset.id) || playables[0];
 
@@ -1043,6 +1046,14 @@ export const UIManagerMethods = {
 
     }
 
+    if (!defaultClanId) {
+      this.playerClanId = null;
+      this.playerDaimyo = null;
+      const badge = document.getElementById('selectedDaimyoBadge');
+      if (badge) {
+        badge.textContent = '選択中: なし（大名家を選択してください）';
+      }
+    }
   },
 
 
@@ -4861,15 +4872,10 @@ export const UIManagerMethods = {
                   } else if (isAllied) {
 
                     actionHtml = `
-
                       <div style="display:flex; justify-content:center; align-items:center; gap:6px;">
-
                         <span style="background:#27ae60; color:#fff; padding:3px 8px; border-radius:4px; font-weight:bold; font-size:11pt;">🤝 盟友</span>
-
-                        <button class="btn-break-alliance-row" data-clan-id="${f.clanId}" style="background:#922b21; color:#fff; border:1px solid #c0392b; padding:3px 8px; border-radius:4px; cursor:pointer; font-size:11pt; transition:0.2s;" title="同盟を破棄し手切れとします (AP 1消費)">破棄</button>
-
+                        <button class="btn-break-alliance-row" data-clan-id="${f.clanId}" style="background:linear-gradient(180deg, #922b21, #7b241c); color:#fff; border:1px solid #c0392b; padding:3px 10px; border-radius:4px; cursor:pointer; font-size:11pt; font-weight:bold; white-space:nowrap; transition:0.2s;" title="同盟を破棄し敵対関係とします (AP 1消費)">敵対</button>
                       </div>
-
                     `;
 
                   } else {
@@ -4920,13 +4926,13 @@ export const UIManagerMethods = {
 
                       <td class="fac-td-rice" style="padding:10px 10px; text-align:right; color:#2ecc71; font-weight:bold;">
 
-                        ${(f.totalRice / 10).toFixed(1)} 万石
+                        ${(f.totalRice / 10).toLocaleString('ja-JP', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} 万石
 
                       </td>
 
                       <td class="fac-td-troops" style="padding:10px 10px; text-align:right; color:#f39c12; font-weight:bold;">
 
-                        ${f.totalTroops.toLocaleString()} 人
+                        ${Math.round(f.totalTroops / 1000).toLocaleString()} 千人
 
                       </td>
 
@@ -5422,11 +5428,33 @@ export const UIManagerMethods = {
 
                     </div>
 
-                    <div style="text-align:right; white-space:nowrap;">
+                    <div style="text-align:right; white-space:nowrap; display:flex; align-items:center; gap:10px;">
 
-                      <div style="font-size:10pt; color:#aaa;">盟約期間</div>
+                      <div>
 
-                      <div>${remainHtml}</div>
+                        <div style="font-size:10pt; color:#aaa;">盟約期間</div>
+
+                        <div>${remainHtml}</div>
+
+                      </div>
+
+                      ${!a.isMy ? `
+
+                        <div>
+
+                          ${a.isAlliedWithPlayer ? `
+
+                            <button class="btn-break-alliance-modal" data-clan-id="${a.clanId}" style="background:linear-gradient(180deg, #922b21, #7b241c); color:#fff; border:1px solid #c0392b; padding:4px 10px; border-radius:4px; cursor:pointer; font-size:11pt; font-weight:bold; white-space:nowrap; transition:0.2s; box-shadow:0 2px 4px rgba(0,0,0,0.4);" title="同盟を破棄し敵対関係とします (AP 1消費)">敵対</button>
+
+                          ` : `
+
+                            <span style="background:#555; color:#ddd; padding:3px 8px; border-radius:4px; font-size:10pt; white-space:nowrap;">敵対中</span>
+
+                          `}
+
+                        </div>
+
+                      ` : ''}
 
                     </div>
 
@@ -5471,6 +5499,30 @@ export const UIManagerMethods = {
       modal.style.display = 'none';
 
     };
+
+
+
+    // 同盟国一覧モーダル内の「敵対」ボタン
+
+    modal.querySelectorAll('.btn-break-alliance-modal').forEach(btn => {
+
+      btn.addEventListener('click', (e) => {
+
+        e.stopPropagation();
+
+        const targetClanId = btn.dataset.clanId;
+
+        this.breakAlliance(targetClanId, () => {
+
+          closeModal();
+
+          this.openFactionListModal();
+
+        });
+
+      });
+
+    });
 
 
 
@@ -7073,7 +7125,7 @@ export const UIManagerMethods = {
 
     const detailBox = document.getElementById('provDetailBox');
     if (detailBox) {
-      detailBox.innerHTML = '';
+      detailBox.innerHTML = '<p style="color:var(--text-muted); text-align:center; padding: 10px 0; font-size: 12pt;">地図上の領国をクリックしてください</p>';
     }
 
     if (typeof this.updateCommandButtons === 'function') {
@@ -7213,7 +7265,7 @@ export const UIManagerMethods = {
 
             <div style="display:flex; align-items:center; gap:5px; overflow:hidden;">
 
-              <span style="color:var(--gold-bright); font-weight:bold;">👑 本拠: ${effStats.name}</span>
+              <span style="color:var(--gold-bright); font-weight:bold;">👑 <span class="lbl-pc">本拠: </span>${effStats.name}</span>
 
               <span style="color:#f5eedc; font-size:12pt;" title="${this.describeLordAides(effStats)}">武<b style="color:#ff6b6b;">${effStats.military}</b>${this.lordAideMark(effStats, 'military')} 内<b style="color:#5dade2;">${effStats.politics}</b>${this.lordAideMark(effStats, 'politics')} 謀<b style="color:#a3e4d7;">${effStats.stratagem}</b>${this.lordAideMark(effStats, 'stratagem')}</span>
 
@@ -7331,7 +7383,9 @@ export const UIManagerMethods = {
 
 
 
-          const maxDefense = 100;
+          const maxDefense = typeof this.getProvinceMaxDefense === 'function'
+            ? this.getProvinceMaxDefense(p)
+            : (p.id === 'echigo' ? 200 : (p.id === 'sagami' ? 150 : 100));
 
           const isDefenseMax = (Number(p.defense) || 0) >= maxDefense;
 
@@ -7371,7 +7425,7 @@ export const UIManagerMethods = {
 
               <div class="prov-stat-row"><span>${troopsLbl}</span><span class="val${isTroopsMax ? ' is-max' : ''}" style="${isTroopsMax ? maxStyle : ''}" title="${isTroopsMax ? `扶養兵力上限に到達 (${maxTroops.toLocaleString()} ${troopsUnit})` : `扶養兵力上限: ${maxTroops.toLocaleString()} ${troopsUnit}`}">${p.troops.toLocaleString()} ${troopsUnit}</span></div>
 
-              <div class="prov-stat-row"><span>城郭防御</span><span class="val${isDefenseMax ? ' is-max' : ''}" style="${isDefenseMax ? maxStyle : ''}" title="${isDefenseMax ? '城郭防御上限 (100)' : '防御上限: 100'}">${p.defense} / 100</span></div>
+              <div class="prov-stat-row"><span><span class="lbl-pc">城郭防御</span><span class="lbl-sp">城防御</span></span><span class="val${isDefenseMax ? ' is-max' : ''}" style="${isDefenseMax ? maxStyle : ''}" title="${isDefenseMax ? `城郭防御上限 (${maxDefense})` : `防御上限: ${maxDefense}`}">${p.defense} / ${maxDefense}</span></div>
 
               <div class="prov-stat-row"><span>${kokuLbl}</span><span class="val${isRiceMax ? ' is-max' : ''}" style="${isRiceMax ? maxStyle : ''}" title="${isRiceMax ? `石高上限に到達 (${(maxRice / 10).toFixed(1)} ${kokuValUnit})` : (maxRice > 0 ? `石高上限: ${(maxRice / 10).toFixed(1)} ${kokuValUnit}` : '')}">${(Number(p.rice) / 10).toFixed(1)} ${kokuValUnit}</span></div>
 
@@ -7645,7 +7699,7 @@ export const UIManagerMethods = {
 
       statsEl.innerHTML = `
 
-        <span style="display:inline-flex; align-items:center; gap:3px;">🛡️ 城防: <strong style="color:var(--gold-bright);">${p.defense}</strong>/100</span>
+        <span style="display:inline-flex; align-items:center; gap:3px;">🛡️ 城防: <strong style="color:var(--gold-bright);">${p.defense}</strong>/${p.id === 'echigo' ? 200 : (p.id === 'sagami' ? 150 : 100)}</span>
 
         <span style="display:inline-flex; align-items:center; gap:3px;">👥 兵力: <strong style="color:#eee;">${p.troops.toLocaleString()}</strong>人</span>
 
@@ -8069,15 +8123,28 @@ export const UIManagerMethods = {
 
       }
 
+      // 大宝寺家は越後に攻め込まない
+      if (this.playerClanId === 'daihoji' && (p.id === 'echigo' || p.name === '越後')) {
+        this.showOrderResult('⚠ 出陣不可', `大宝寺家は越後への進攻を自重しています。`, '#e74c3c');
+        return;
+      }
+
       // 敵国を選択中に出陣を押した場合：その敵国に隣接する自国領土（兵力1000以上）を探索
 
       target = p;
 
-      const friendlyNeighbors = (p.neighbors || [])
+      let friendlyNeighbors = (p.neighbors || [])
 
         .map(nId => this.provinces.find(x => x.id === nId))
 
         .filter(x => x && x.ownerId === this.playerClanId && x.troops >= 1000);
+
+      // 佐渡につながる経路は越後のみに限定
+      if (target.id === 'sado') {
+        friendlyNeighbors = friendlyNeighbors.filter(x => x.id === 'echigo');
+      } else if (friendlyNeighbors.some(x => x.id === 'sado') && target.id !== 'echigo') {
+        friendlyNeighbors = friendlyNeighbors.filter(x => x.id !== 'sado');
+      }
 
       if (friendlyNeighbors.length === 0) {
 
@@ -8152,6 +8219,12 @@ export const UIManagerMethods = {
     (p.neighbors || []).forEach(nId => {
 
       const neighbor = this.provinces.find(x => x.id === nId);
+
+      // 大宝寺家は越後に攻め込まない
+      if (this.playerClanId === 'daihoji' && neighbor && (neighbor.id === 'echigo' || neighbor.name === '越後')) return;
+
+      // 佐渡につながる経路は越後のみに限定
+      if (neighbor && ((p.id === 'sado' && neighbor.id !== 'echigo') || (neighbor.id === 'sado' && p.id !== 'echigo'))) return;
 
       // 同盟国を攻撃対象から除外
 
@@ -8408,8 +8481,8 @@ export const UIManagerMethods = {
 
 
     const totalProvs = this.provinces?.length || (window.PROVINCES_DATA ? window.PROVINCES_DATA.length : 77);
-
-    const kanjiProvs = (typeof toKanjiNumber === 'function') ? toKanjiNumber(totalProvs) : `${totalProvs}`;
+    const toKanjiFn = (typeof toKanjiNumber === 'function') ? toKanjiNumber : (window.toKanjiNumber || (n => `${n}`));
+    const kanjiProvs = toKanjiFn(totalProvs);
 
     const titlePrefix = isShogun ? '朝廷勅許・征夷大将軍就任' : `日本全${kanjiProvs}州（全${totalProvs}国）完全平定`;
 
@@ -9094,1002 +9167,464 @@ export const UIManagerMethods = {
       const apTokens = document.getElementById('apTokensContainer');
 
       const headKamon = document.getElementById('headerKamonSvg');
-
       const totalCount = (this.provinces && this.provinces.length > 0) ? this.provinces.length : ((window.PROVINCES_DATA && window.PROVINCES_DATA.length) || 77);
-
-
 
       const targetClanId = p?.ownerId;
 
-
-
       if (targetClanId && targetClanId !== 'independent' && targetClanId !== 'court') {
-
         // 大名家の場合
-
         const clanProvs = (this.provinces || []).filter(x => x.ownerId === targetClanId);
-
         const ability = (typeof getClanAbility === 'function' ? getClanAbility(targetClanId) : null) || { military: 70, politics: 70, stratagem: 70, personality: 'balanced' };
-
         const livingLord = (this.activeOfficers || []).find(o => o.clanId === targetClanId && o.isDaimyo && !o.isDead);
-
         const daimyoName = livingLord ? livingLord.name : this.getClanDisplayName(targetClanId);
-
         const dynamicClan = this.getClanFamilyName(targetClanId);
 
-
-
         if (daimyoEl) daimyoEl.textContent = daimyoName;
-
         if (clanEl) clanEl.textContent = dynamicClan;
 
-
-
         // 家紋
-
         const kamonId = this.getClanKamonId(targetClanId);
-
         if (headKamon) {
-
           headKamon.innerHTML = `<use href="#${kamonId}" x="0" y="0" width="32" height="32"/>`;
-
         }
-
-
 
         // 性格バッジ
-
         const pers = ability.personality || 'balanced';
-
         const personLabel = pers === 'aggressive' ? '攻勢型'
-
                           : pers === 'domestic'   ? '内政型'
-
                           : 'バランス型';
-
         const personColor = pers === 'aggressive' ? '#ff8888'
-
                           : pers === 'domestic'   ? '#88ff88'
-
                           : '#88ccff';
-
         const personBg = pers === 'aggressive' ? 'rgba(255,107,107,0.18)'
-
                        : pers === 'domestic'   ? 'rgba(46,204,113,0.18)'
-
                        : 'rgba(52,152,219,0.18)';
-
         if (badgeEl) {
-
           badgeEl.textContent = `👀 ${personLabel}`;
-
           badgeEl.style.color = personColor;
-
           badgeEl.style.background = personBg;
-
           badgeEl.style.borderColor = personColor;
-
         }
-
-
 
         // 能力値（武・内・知）
-
         const stats = livingLord?.stats || ability;
-
         const milVal = stats.military ?? livingLord?.military ?? ability.military ?? 70;
-
         const polVal = stats.politics ?? stats.politic ?? livingLord?.politics ?? ability.politics ?? 70;
-
         const strVal = stats.stratagem ?? stats.intel ?? stats.intellect ?? livingLord?.stratagem ?? ability.stratagem ?? 70;
-
         if (milEl) milEl.textContent = milVal;
-
         if (polEl) polEl.textContent = polVal;
-
         if (stratEl) stratEl.textContent = strVal;
 
-
-
         // 覇道進捗（波動進捗）
-
         const prob = Math.min(100, Math.round((clanProvs.length / Math.max(1, totalCount)) * 100));
-
         if (probEl) probEl.textContent = `${prob}%`;
-
         if (probBar) probBar.style.width = `${prob}%`;
-
         if (probDesc) {
-
           const kanjiDigits = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
-
           const tenth = Math.min(10, Math.floor(prob / 10));
-
           const kanjiTenth = kanjiDigits[tenth] || `${tenth}`;
-
           probDesc.textContent = prob === 100 ? '天下統一達成 覇道成る' : `天下統一進捗 ${kanjiTenth}割`;
-
         }
-
-
 
         // 支配領域
-
         if (provsEl) provsEl.textContent = `${clanProvs.length} / ${totalCount} 国`;
-
         if (progEl) progEl.textContent = `天下統一まで ${Math.max(0, totalCount - clanProvs.length)}国`;
 
-
-
         // 軍略点・評定枚数（軍令権）
-
         const clanMaxAp = Math.min(5, Math.max(3, 3 + Math.floor(clanProvs.length / 15)));
-
         const clanAp = clanMaxAp;
-
         if (apEl) apEl.textContent = `${clanAp} / ${clanMaxAp}`;
-
         if (apTokens) {
-
           apTokens.innerHTML = '';
-
           for (let i = 0; i < clanMaxAp; i++) {
-
             const t = document.createElement('div');
-
             t.className = `ap-token ${i < clanAp ? 'active' : ''}`;
-
             apTokens.appendChild(t);
-
           }
-
         }
-
-
 
         // 備蓄点（金・米）
-
         let clanGold = 0;
-
         let clanRice = 0;
-
         if (typeof this.aiEcon === 'function') {
-
           const econ = this.aiEcon(targetClanId);
-
           if (econ) {
-
             clanGold = Math.max(0, Math.round(econ.gold || 0));
-
             clanRice = Math.max(0, Math.round(econ.rice || 0));
-
           }
-
         }
-
         if (clanGold === 0 && clanRice === 0) {
-
           clanGold = clanProvs.reduce((s, x) => s + (Number(x.commerce) || 0), 0);
-
           clanRice = clanProvs.reduce((s, x) => s + (Number(x.rice) || 0), 0);
-
         }
-
         if (goldEl) goldEl.textContent = clanGold.toLocaleString();
-
         if (riceEl) riceEl.textContent = clanRice.toLocaleString();
 
-
-
         // 総動員兵力
-
         let totalTroops = 0;
-
         clanProvs.forEach(x => totalTroops += (Number(x.troops) || 0));
-
         if (troopsEl) troopsEl.textContent = totalTroops.toLocaleString();
 
-
-
       } else if (p) {
-
         // 空白地・自治領・朝廷領の場合
-
         const isCourt = targetClanId === 'court';
-
         const title = isCourt ? '朝廷領' : `${p.name} 国人衆`;
-
         const clanTitle = isCourt ? '禁裏・朝廷' : '中立・自治領';
-
         if (daimyoEl) daimyoEl.textContent = title;
-
         if (clanEl) clanEl.textContent = clanTitle;
-
         if (headKamon) {
-
           headKamon.innerHTML = `<use href="#kamon-default" x="0" y="0" width="32" height="32"/>`;
-
         }
-
         if (badgeEl) {
-
           badgeEl.textContent = isCourt ? '👑 朝廷' : '🏕️ 自治中';
-
           badgeEl.style.color = '#bdc3c7';
-
           badgeEl.style.background = 'rgba(127,140,141,0.18)';
-
           badgeEl.style.borderColor = '#bdc3c7';
-
         }
-
         if (milEl) milEl.textContent = p.defense || 50;
-
         if (polEl) polEl.textContent = p.commerce || 50;
-
         if (stratEl) stratEl.textContent = p.morale || 50;
 
-
-
         if (probEl) probEl.textContent = '0%';
-
         if (probBar) probBar.style.width = '0%';
-
         if (probDesc) probDesc.textContent = '局地割拠';
 
-
-
         if (provsEl) provsEl.textContent = `1 / ${totalCount} 国`;
-
         if (progEl) progEl.textContent = '天下統一対象外';
 
-
-
         if (apEl) apEl.textContent = '- / -';
-
         if (apTokens) apTokens.innerHTML = '';
-
-
 
         if (goldEl) goldEl.textContent = (Number(p.commerce) || 0).toLocaleString();
-
         if (riceEl) riceEl.textContent = (Number(p.rice) || 0).toLocaleString();
-
         if (troopsEl) troopsEl.textContent = (Number(p.troops) || 0).toLocaleString();
-
       } else {
-
         // 万一の未選択・極限状況
-
         if (daimyoEl) daimyoEl.textContent = '天下観戦中';
-
         if (clanEl) clanEl.textContent = '成り行き見守り';
-
         if (badgeEl) {
-
           badgeEl.textContent = '👀 観戦中';
-
           badgeEl.style.color = '#ffd700';
-
           badgeEl.style.background = 'rgba(255, 215, 0, 0.18)';
-
           badgeEl.style.borderColor = '#ffd700';
-
         }
-
         if (milEl) milEl.textContent = '-';
-
         if (polEl) polEl.textContent = '-';
-
         if (stratEl) stratEl.textContent = '-';
-
         if (goldEl) goldEl.textContent = '---';
-
         if (riceEl) riceEl.textContent = '---';
-
         const activeClans = new Set((this.provinces || []).map(x => x.ownerId).filter(id => id && id !== 'independent' && id !== 'court'));
-
         if (provsEl) provsEl.textContent = `残存 ${activeClans.size} 勢力`;
-
         if (progEl) progEl.textContent = '全土争乱中';
-
         if (probEl) probEl.textContent = '0%';
-
         if (probBar) probBar.style.width = '0%';
-
         if (probDesc) probDesc.textContent = 'AI群雄割拠';
-
         if (troopsEl) troopsEl.textContent = '---';
-
         if (apEl) apEl.textContent = '---';
-
         if (apTokens) apTokens.innerHTML = '';
-
       }
-
-
 
       if (window.lucide && typeof lucide.createIcons === 'function') {
-
         lucide.createIcons();
-
       }
 
-
-
       return;
-
     }
-
-
 
     const daimyoEl = document.getElementById('statDaimyo');
-
     const livingPlayerDaimyo = (this.activeOfficers || []).find(o => o.clanId === this.playerClanId && o.isDaimyo && !o.isDead);
-
     if (livingPlayerDaimyo && this.playerDaimyo && livingPlayerDaimyo.name && this.playerDaimyo.name !== livingPlayerDaimyo.name) {
-
       this.playerDaimyo.name = livingPlayerDaimyo.name;
-
       this.playerDaimyo.officerId = livingPlayerDaimyo.id;
-
     }
-
     if (daimyoEl && this.playerDaimyo) daimyoEl.textContent = this.playerDaimyo.name;
 
-
-
     const ability = getClanAbility(this.playerClanId);
-
     const stats = this.playerDaimyo?.stats || ability;
-
     const milVal = stats.military ?? ability.military ?? 70;
-
     const polVal = stats.politics ?? stats.politic ?? ability.politics ?? 70;
-
     const strVal = stats.stratagem ?? stats.intel ?? stats.intellect ?? ability.stratagem ?? 70;
 
-
-
     const personLabel = (this.playerDaimyo?.personality || ability.personality) === 'aggressive' ? '攻勢型'
-
                       : (this.playerDaimyo?.personality || ability.personality) === 'domestic'   ? '内政型'
-
                       : 'バランス型';
-
     const personColor = (this.playerDaimyo?.personality || ability.personality) === 'aggressive' ? '#ff8888'
-
                       : (this.playerDaimyo?.personality || ability.personality) === 'domestic'   ? '#88ff88'
-
                       : '#88ccff';
-
     const personBg = (this.playerDaimyo?.personality || ability.personality) === 'aggressive' ? 'rgba(255,107,107,0.18)'
-
                    : (this.playerDaimyo?.personality || ability.personality) === 'domestic'   ? 'rgba(46,204,113,0.18)'
-
                    : 'rgba(52,152,219,0.18)';
 
-
-
     const clanEl = document.getElementById('statClan');
-
     const dynamicClan = this.getClanFamilyName(this.playerClanId);
-
     if (clanEl) clanEl.textContent = dynamicClan;
-
     if (this.playerDaimyo) this.playerDaimyo.clan = dynamicClan;
 
-
-
     const badgeEl = document.getElementById('statPersonalityBadge');
-
     if (badgeEl) {
-
       badgeEl.textContent = personLabel;
-
       badgeEl.style.color = personColor;
-
       badgeEl.style.background = personBg;
-
       badgeEl.style.borderColor = personColor;
-
     }
 
-
-
     const milEl = document.getElementById('statMil');
-
     if (milEl) milEl.textContent = milVal;
-
     const polEl = document.getElementById('statPol');
-
     if (polEl) polEl.textContent = polVal;
-
     const stratEl = document.getElementById('statStrat');
-
     if (stratEl) stratEl.textContent = strVal;
-
-
 
     const era = (typeof getEraFlavor === 'function') ? getEraFlavor(this.year) : null;
 
-
-
     const goldEl = document.getElementById('statGold');
-
-    if (goldEl) goldEl.textContent = (Number(this.gold) || 0).toLocaleString();
-
-
+    if (goldEl) goldEl.textContent = this.gold.toLocaleString();
 
     const riceEl = document.getElementById('statRice');
-
-    if (riceEl) riceEl.textContent = (Number(this.rice) || 0).toLocaleString();
-
-
+    if (riceEl) riceEl.textContent = this.rice.toLocaleString();
 
     const myProvs = this.provinces.filter(p => p.ownerId === this.playerClanId);
-
     const totalCount = (this.provinces && this.provinces.length > 0) ? this.provinces.length : ((window.PROVINCES_DATA && window.PROVINCES_DATA.length) || 77);
-
     const provsEl = document.getElementById('statProvinces');
-
     if (provsEl) provsEl.textContent = `${myProvs.length} / ${totalCount} 国`;
 
-
-
     const progEl = document.getElementById('statProgression');
-
     if (progEl) progEl.textContent = `天下統一まで ${Math.max(0, totalCount - myProvs.length)}国`;
 
-
-
     const prob = Math.min(100, Math.round((myProvs.length / Math.max(1, totalCount)) * 100));
-
     const probEl = document.getElementById('statProbability');
-
     if (probEl) probEl.textContent = `${prob}%`;
-
     const probBar = document.getElementById('statProbBar');
-
     if (probBar) probBar.style.width = `${prob}%`;
 
-
-
     const probDesc = document.getElementById('statProbDesc');
-
     if (probDesc) {
-
       const kanjiDigits = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
-
       const tenth = Math.min(10, Math.floor(prob / 10));
-
       const kanjiTenth = kanjiDigits[tenth] || `${tenth}`;
-
       probDesc.textContent = prob === 100 ? '天下統一達成 覇道成る' : `天下統一進捗 ${kanjiTenth}割`;
-
     }
-
-
 
     let totalTroops = 0;
-
     myProvs.forEach(p => totalTroops += p.troops);
-
     const troopsEl = document.getElementById('statTroops');
-
     if (troopsEl) troopsEl.textContent = totalTroops.toLocaleString();
 
-
-
     const apEl = document.getElementById('statAp');
-
     if (apEl) apEl.textContent = `${this.ap} / ${this.maxAp}`;
 
-
-
     const apTokens = document.getElementById('apTokensContainer');
-
     if (apTokens) {
-
       apTokens.innerHTML = '';
-
       for (let i = 0; i < this.maxAp; i++) {
-
         const t = document.createElement('div');
-
         t.className = `ap-token ${i < this.ap ? 'active' : ''}`;
-
         apTokens.appendChild(t);
-
       }
-
     }
-
-
 
     if (window.lucide && typeof lucide.createIcons === 'function') {
-
       lucide.createIcons();
-
     }
-
-
 
     const headKamon = document.getElementById('headerKamonSvg');
-
     if (headKamon && this.playerClanId) {
-
       headKamon.innerHTML = `<use href="#${this.getClanKamonId(this.playerClanId)}" x="0" y="0" width="32" height="32"/>`;
-
     }
-
   },
-
-
-
-  // 大名家・家紋に即した鮮明なハイライト輪郭カラーの取得,
-
-
-
-  log(msg, type = '') {
-
-    // type 'quiet'：画面下の最新ログ欄は書き換えず、戦況年代記の一覧にだけ記録する
-
-    const logBox = document.getElementById('gameLog');
-
-    if (logBox && type !== 'quiet') {
-
-      logBox.innerHTML = '';
-
-      const div = document.createElement('div');
-
-      div.className = `log-entry ${type}`;
-
-      div.textContent = msg;
-
-      if (window.armorIconHTML && /^【(御家滅亡|同盟消滅|攻城失敗|斬首処刑)/.test(msg)) div.insertAdjacentHTML('afterbegin', window.armorIconHTML() + ' '); // deploy47: 髑髏→甲冑
-
-      logBox.appendChild(div);
-
-    }
-
-    const fullList = document.getElementById('chronicleFullList');
-
-    if (fullList) {
-
-      const div = document.createElement('div');
-
-      div.className = `log-entry ${type}`;
-
-      div.textContent = `${(window.formatYearWithEra || formatHistoricalYear)(this.year)}年 ${this.seasonNames[this.seasonIdx]}: ${msg}`;
-
-      if (window.armorIconHTML && /^【(御家滅亡|同盟消滅|攻城失敗|斬首処刑)/.test(msg)) div.insertAdjacentHTML('afterbegin', window.armorIconHTML() + ' '); // deploy47
-
-      fullList.insertBefore(div, fullList.firstChild);
-
-      // 新しい3000件だけ残す（長いオート進行でページが重くなるのを防ぐ。2026-10-11 cl）
-
-      const maxEntries = Number(window.CHRONICLE_MAX_ENTRIES) || 3000;
-
-      while (fullList.childElementCount > maxEntries && fullList.lastElementChild) fullList.removeChild(fullList.lastElementChild);
-
-    }
-
-  },
-
-
-
-  // ============================================================================
 
   // UIイベントバインディング
-
-  // ============================================================================,
-
-
+  // ============================================================================
 
   initUI() {
-
     // 戦況年代記モーダル開閉
-
     const openChronicle = () => {
-
       this.pauseAutoPlayForScreen?.('戦況年代記の表示');
-
       document.getElementById('chronicleModal')?.classList.remove('hidden');
-
       this.audio.playHyoshigi();
-
     };
-
     document.getElementById('headerChronicleWrap')?.addEventListener('click', openChronicle);
-
     document.getElementById('headerChronicleBtnMobile')?.addEventListener('click', openChronicle);
-
     document.getElementById('closeChronicleModalBtn')?.addEventListener('click', () => {
-
       document.getElementById('chronicleModal')?.classList.add('hidden');
-
     });
-
     document.getElementById('closeChronicleModalBtn2')?.addEventListener('click', () => {
-
       document.getElementById('chronicleModal')?.classList.add('hidden');
-
     });
-
-
 
     // 厳選5大コマンドボタン
-
     document.getElementById('cmdDomestic')?.addEventListener('click', () => this.executeDomestic());
-
     document.getElementById('cmdMilitary')?.addEventListener('click', () => this.executeMilitary());
-
     document.getElementById('cmdStratagem')?.addEventListener('click', () => this.executeStratagem());
-
     document.getElementById('cmdRecruit')?.addEventListener('click', () => this.openRecruitRoninModal());
-
     document.getElementById('cmdAttack')?.addEventListener('click', () => this.openDeployModal());
-
     document.getElementById('cmdTransfer')?.addEventListener('click', () => this.openTransferModal());
-
     document.getElementById('nextTurnBtn')?.addEventListener('click', () => {
-
       if (this.isAutoPlay) {
-
         this.stopAutoPlay('手動停止');
-
       }
-
       this.nextSeason();
-
     });
-
-
 
     // オートプレーモード設定
-
     document.getElementById('autoPlayToggleBtn')?.addEventListener('click', () => {
-
       this.toggleAutoPlay();
-
     });
-
     const autoSpeedSlider = document.getElementById('autoPlaySpeedSlider');
-
     if (autoSpeedSlider) {
-
       autoSpeedSlider.addEventListener('input', (e) => {
-
         this.updateAutoPlaySpeed(e.target.value);
-
       });
-
     }
-
-
 
     // 観戦モード（成り行きを見守る）設定
-
     document.getElementById('startSpectatorBtn')?.addEventListener('click', () => {
-
       this.startSpectatorMode();
-
     });
-
     document.getElementById('spectatorToggleBtn')?.addEventListener('click', () => {
-
       this.toggleSpectatorMode();
-
     });
-
     document.getElementById('spectatorSelectDaimyoBtn')?.addEventListener('click', () => {
-
       this.openSpectatorDaimyoModal();
-
     });
-
     document.getElementById('spectatorAutoPlayPauseBtn')?.addEventListener('click', () => {
-
       this.toggleAutoPlay();
-
     });
-
     document.getElementById('closeSpectatorDaimyoModalBtn')?.addEventListener('click', () => {
-
       document.getElementById('spectatorDaimyoModal')?.classList.add('hidden');
-
     });
-
     document.getElementById('closeSpectatorDaimyoModalBtn2')?.addEventListener('click', () => {
-
       document.getElementById('spectatorDaimyoModal')?.classList.add('hidden');
-
     });
-
-
 
     // 出陣モーダル
-
     document.getElementById('deployCancelBtn')?.addEventListener('click', () => {
-
       document.getElementById('deployModal')?.classList.add('hidden');
-
     });
-
     document.getElementById('deployConfirmBtn')?.addEventListener('click', () => this.confirmDeploy());
 
-
-
     // 陣形選択
-
     document.querySelectorAll('#formationOptionGroup .diff-option-btn').forEach(btn => {
-
       btn.addEventListener('click', () => {
-
         document.querySelectorAll('#formationOptionGroup .diff-option-btn').forEach(b => b.classList.remove('selected'));
-
         btn.classList.add('selected');
-
         this.selectedFormationKey = btn.dataset.form;
-
         this.refreshDeployFormationIntel();
-
       });
-
     });
-
-
 
     // 地図ヒートマップ切替
-
     document.querySelectorAll('#mapHeatFilter .map-heat-btn').forEach(btn => {
-
       btn.addEventListener('click', () => {
-
         this.setMapHeatMode(btn.dataset.heat);
-
       });
-
     });
-
-
 
     // 兵力移動モーダル
-
     document.getElementById('transferCancelBtn')?.addEventListener('click', () => {
-
       document.getElementById('transferModal')?.classList.add('hidden');
-
     });
-
     document.getElementById('transferConfirmBtn')?.addEventListener('click', () => this.confirmTransfer());
 
-
-
     // 合戦行動ボタン (一騎討ち廃止)
-
     document.getElementById('bCmdAssault')?.addEventListener('click', () => this.handleBattleAction('assault'));
-
     document.getElementById('bCmdShoot')?.addEventListener('click', () => this.handleBattleAction('shoot'));
-
     document.getElementById('bCmdDefend')?.addEventListener('click', () => this.handleBattleAction('defend'));
-
     document.getElementById('bCmdTactic')?.addEventListener('click', () => this.handleBattleAction('tactic'));
-
     document.getElementById('bCmdRetreat')?.addEventListener('click', () => this.handleBattleAction('retreat'));
 
-
-
     // 攻城戦行動ボタン (完全強化)
-
     document.getElementById('siegeBtnAssault')?.addEventListener('click', () => this.handleSiegeAction('assault'));
-
     document.getElementById('siegeBtnShoot')?.addEventListener('click', () => this.handleSiegeAction('shoot'));
-
     document.getElementById('siegeBtnSurround')?.addEventListener('click', () => this.handleSiegeAction('surround'));
-
     document.getElementById('siegeBtnPersuade')?.addEventListener('click', () => this.handleSiegeAction('persuade'));
-
     document.getElementById('siegeBtnRetreat')?.addEventListener('click', () => this.handleSiegeAction('retreat'));
 
-
-
     // 勢力一覧モーダル
-
     document.getElementById('factionListModalBtn')?.addEventListener('click', () => this.openFactionListModal());
 
-
-
     // 領国一覧モーダル
-
     document.getElementById('provinceListModalBtn')?.addEventListener('click', () => this.openProvinceListModal());
 
-
-
     // 武将一覧モーダル
-
     document.getElementById('officerListModalBtn')?.addEventListener('click', () => this.openOfficerListModal());
 
-
-
     // 城郭解説モーダル（スマホ用ピクトグラムボタン連動）
-
     document.getElementById('btnMobileCastleLore')?.addEventListener('click', () => {
-
       if (this.selectedProvId) {
-
         this.openCastleLoreModal(this.selectedProvId);
-
       }
-
     });
-
     document.getElementById('closeCastleLoreModalBtn')?.addEventListener('click', () => {
-
       this.closeCastleLoreModal();
-
     });
-
     document.getElementById('closeCastleLoreModalBtn2')?.addEventListener('click', () => {
-
       this.closeCastleLoreModal();
-
     });
-
     document.getElementById('castleLoreModal')?.addEventListener('click', (e) => {
-
       if (e.target.id === 'castleLoreModal') {
-
         this.closeCastleLoreModal();
-
       }
-
     });
-
-    document.getElementById('btnCloseProvDrawer')?.addEventListener('click', () => {
-      this.clearProvinceSelection();
-    });
-
-    // スマホ用ボトムシートの上部ハンドルタップ／下スワイプで閉じる
-    const sheetGrabber = document.querySelector('.drawer-sheet-grabber');
-    if (sheetGrabber) {
-      sheetGrabber.addEventListener('click', () => this.clearProvinceSelection());
-      let sy = null;
-      sheetGrabber.addEventListener('touchstart', (ev) => {
-        if (ev.touches.length === 1) sy = ev.touches[0].clientY;
-      }, { passive: true });
-      sheetGrabber.addEventListener('touchend', (ev) => {
-        if (sy !== null && ev.changedTouches.length === 1) {
-          const dy = ev.changedTouches[0].clientY - sy;
-          if (dy > 32) this.clearProvinceSelection();
-        }
-        sy = null;
-      }, { passive: true });
-    }
-
     document.addEventListener('keydown', (e) => {
-
       if (e.key === 'Escape') {
-
         const loreModal = document.getElementById('castleLoreModal');
-
         if (loreModal && !loreModal.classList.contains('hidden')) {
-
           this.closeCastleLoreModal();
-          return;
-
         }
-
-        const anyOpenModal = document.querySelector('.modal-overlay:not(.hidden), .custom-modal[style*="flex"], .daimyo-popup-overlay:not(.hidden)');
-        if (!anyOpenModal && this.selectedProvId) {
-          this.clearProvinceSelection();
-        }
-
       }
-
     });
-
-
 
     // 領国一括委任モーダル
-
     document.getElementById('governModalBtn')?.addEventListener('click', () => this.openGovernModal());
-
     document.getElementById('closeGovernModalBtn')?.addEventListener('click', () => {
-
       document.getElementById('governModal')?.classList.add('hidden');
-
       if (this.selectedProvId) this.selectProvince(this.selectedProvId);
-
     });
-
-
 
     // 委任プリセット
-
     document.getElementById('btnPresetDomestic')?.addEventListener('click', () => this.applyPresetGovernance('rear_domestic'));
-
     document.getElementById('btnPresetLogistics')?.addEventListener('click', () => this.applyPresetGovernance('rear_logistics'));
-
     document.getElementById('btnPresetMilitary')?.addEventListener('click', () => this.applyPresetGovernance('front_military'));
-
     document.getElementById('btnPresetDirect')?.addEventListener('click', () => this.applyPresetGovernance('all_direct'));
 
-
-
     // 委任一括適用
-
     document.getElementById('applyDirectBatch')?.addEventListener('click', () => this.applyBatchGovernance('direct'));
-
     document.getElementById('applyMilitaryBatch')?.addEventListener('click', () => this.applyBatchGovernance('military'));
-
     document.getElementById('applyDomesticBatch')?.addEventListener('click', () => this.applyBatchGovernance('domestic'));
-
     document.getElementById('applyBalancedBatch')?.addEventListener('click', () => this.applyBatchGovernance('balanced'));
-
     document.getElementById('applyLogisticsBatch')?.addEventListener('click', () => this.applyBatchGovernance('logistics'));
 
-
-
     // 全選択チェックボックス
-
     document.getElementById('selectAllProvsCheckbox')?.addEventListener('change', (e) => {
-
       document.querySelectorAll('.govern-select-cb').forEach(cb => cb.checked = e.target.checked);
-
     });
-
-
 
     // 征夷大将軍宣下モーダルボタン
-
     document.getElementById('shogunAcceptEndingBtn')?.addEventListener('click', () => {
-
       document.getElementById('shogunModal')?.classList.add('hidden');
-
       if (this.isShogunEndingAllowed && !this.isShogunEndingAllowed()) return;
-
       this.shogunAppointed = true;
-
       this.triggerVictory(true); // 将軍就任エンディング
-
     });
-
     document.getElementById('shogunContinueConquestBtn')?.addEventListener('click', () => {
-
       document.getElementById('shogunModal')?.classList.add('hidden');
-
       this.shogunAppointed = true;
-
       this.audio.playHoragai();
-
       const totalCount = (this.provinces && this.provinces.length > 0) ? this.provinces.length : ((window.PROVINCES_DATA && window.PROVINCES_DATA.length) || 77);
-
-      const kanjiTotal = (typeof toKanjiNumber === 'function') ? toKanjiNumber(totalCount) : `${totalCount}`;
-
+      const toKanjiFn = (typeof toKanjiNumber === 'function') ? toKanjiNumber : (window.toKanjiNumber || (n => `${n}`));
+      const kanjiTotal = toKanjiFn(totalCount);
       this.log(`👑【征夷大将軍宣下】朝廷より征夷大将軍に任ぜられました！残る群雄を平定し日本全${kanjiTotal}州（全${totalCount}国）完全統一へ進軍します！`, 'important');
-
       Swal.fire({
-
         icon: 'success',
-
         title: '👑 征夷大将軍 拝命！',
-
         text: `大将軍の武威を轟かせ、残る群雄を平定し日本全${kanjiTotal}州（全${totalCount}国）の完全統一へ邁進します！`,
-
         background: '#241710',
-
         color: '#ffd700'
-
       });
-
       this.updateUI();
-
       this.resumeAutoPlayAfterEvent?.(); // 宣下で一時停止したオート進行を再開（2026-10-11 cc）
-
     });
-
 
 
     // [81位] 天下統一・証書画像保存 & 𝕏ポストボタン
@@ -11886,7 +11421,7 @@ export const UIManagerMethods = {
 
 
 
-    if (this.audio.playEventChime) this.audio.playEventChime(); else this.audio.playEventNotice?.();
+    if (this.audio && this.audio.playEventChimeExclusive) this.audio.playEventChimeExclusive(); else if (this.audio && this.audio.playEventChime) this.audio.playEventChime(); else this.audio.playEventNotice?.();
 
 
 

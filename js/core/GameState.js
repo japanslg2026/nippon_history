@@ -65,13 +65,13 @@ if (typeof window !== 'undefined') { window.officerFiefAt = officerFiefAt; windo
 var SEASONS_PER_YEAR = 5;
 var SEASON_NAMES = ['春', '初夏', '盛夏', '秋', '冬'];
 var SEASON = { SPRING: 0, EARLY_SUMMER: 1, MIDSUMMER: 2, AUTUMN: 3, WINTER: 4 };
-var LEGACY_SEASON_TO_NEW = [0, 1, 3, 4]; // 旧 0春 1夏 2秋 3冬 → 新
-/** 季節名 → 新インデックス。旧データの「夏」は初夏として扱う */
+var LEGACY_SEASON_TO_NEW = [0, 2, 3, 4]; // 旧 0春 1夏 2秋 3冬 → 新 0春 2盛夏 3秋 4冬
+/** 季節名 → 新インデックス。旧データの「夏」は盛夏として扱う */
 function seasonIdxFromName(name) {
-  const m = { '春': 0, '初夏': 1, '夏': 1, '盛夏': 2, '秋': 3, '冬': 4 };
+  const m = { '春': 0, '初夏': 1, '盛夏': 2, '夏': 2, '秋': 3, '冬': 4 };
   return m[String(name || '').trim()];
 }
-/** 季節名を正規化（「夏」→「初夏」） */
+/** 季節名を正規化（「夏」→「盛夏」） */
 function normalizeSeasonName(name) {
   if (name === undefined || name === null) return name;
   const i = seasonIdxFromName(name);
@@ -401,30 +401,37 @@ if (typeof window !== 'undefined') window.formatYearWithEraHtml = formatYearWith
 
 
 
-/** 数値を漢数字・大字（七拾七、六拾九など）へ変換 */
-
+/** 数値を漢数字・大字（百拾七、七拾七、六拾九など）へ変換（100以上・1000以上にも完全対応） */
 export function toKanjiNumber(n) {
-
   const digits = ['〇', '壱', '弐', '参', '四', '五', '六', '七', '八', '九'];
-
   n = Math.floor(Number(n)) || 0;
-
   if (n <= 0) return '零';
-
   if (n < 10) return digits[n];
-
   if (n < 20) {
-
     return (n === 10) ? '拾' : ('拾' + digits[n % 10]);
-
   }
-
-  const tens = Math.floor(n / 10);
-
-  const ones = n % 10;
-
-  return digits[tens] + '拾' + (ones > 0 ? digits[ones] : '');
-
+  if (n < 100) {
+    const tens = Math.floor(n / 10);
+    const ones = n % 10;
+    return digits[tens] + '拾' + (ones > 0 ? digits[ones] : '');
+  }
+  if (n < 1000) {
+    const hundreds = Math.floor(n / 100);
+    const remainder = n % 100;
+    const hStr = (hundreds === 1) ? '百' : (digits[hundreds] + '百');
+    if (remainder === 0) return hStr;
+    if (remainder < 10) return hStr + digits[remainder];
+    if (remainder === 10) return hStr + '拾';
+    if (remainder < 20) return hStr + '拾' + digits[remainder % 10];
+    const tens = Math.floor(remainder / 10);
+    const ones = remainder % 10;
+    return hStr + digits[tens] + '拾' + (ones > 0 ? digits[ones] : '');
+  }
+  const thousands = Math.floor(n / 1000);
+  const rem1000 = n % 1000;
+  const tStr = (thousands === 1) ? '千' : (digits[thousands] + '千');
+  if (rem1000 === 0) return tStr;
+  return tStr + toKanjiNumber(rem1000);
 }
 
 if (typeof window !== 'undefined') window.toKanjiNumber = toKanjiNumber;
@@ -1292,6 +1299,20 @@ export const GameStateMethods = {
 
     this.provinces = JSON.parse(JSON.stringify(rawProvs));
 
+    // 佐渡につながる経路は越後のみに限定する
+    const sado = this.provinces.find(p => p && p.id === 'sado');
+    if (sado) {
+      sado.neighbors = ['echigo'];
+    }
+    this.provinces.forEach(p => {
+      if (!p || !Array.isArray(p.neighbors)) return;
+      if (p.id !== 'echigo') {
+        p.neighbors = p.neighbors.filter(nId => nId !== 'sado');
+      } else if (!p.neighbors.includes('sado')) {
+        p.neighbors.push('sado');
+      }
+    });
+
     this.provinces.forEach(p => {
 
       p.governance = 'direct';
@@ -1320,9 +1341,12 @@ export const GameStateMethods = {
 
     if (isBad(p.troops)) p.troops = this.getProvinceInitialTroops(kokudaka);
 
-    // 兵糧 (石): 石高÷1000 (20〜80石)
+    // 兵糧・石高 (千石): 最大値（基準石高）の4割からスタート（越後も含む）
 
-    if (isBad(p.rice)) p.rice = Math.max(20, Math.round(kokudaka / 1000));
+    if (isBad(p.rice)) {
+      const baseKoku = Math.round(kokudaka / 1000);
+      p.rice = Math.max(10, Math.round(baseKoku * 0.4));
+    }
 
     // 商業 (貫): 石高÷2000 (10〜90貫)
 
@@ -1332,11 +1356,27 @@ export const GameStateMethods = {
 
     if (isBad(p.morale)) p.morale = Number(p.loyalty) || 80;
 
-    // 城郭防御・治安度の補正
+    // 城郭防御・治安度の補正（越後・相模は他国の1.5倍＝75）
 
-    if (isBad(p.defense)) p.defense = 50;
+    if (isBad(p.defense)) p.defense = (p.id === 'echigo') ? 200 : (p.id === 'kai' ? 100 : (p.id === 'sagami' ? 75 : 50));
 
     if (isBad(p.order)) p.order = 85;
+
+  },
+
+  getProvinceMaxDefense(p) {
+
+    if (!p) return 100;
+
+    const pid = typeof p === 'string' ? p : p.id;
+
+    if (pid === 'echigo') return 200;
+
+    if (pid === 'kai') return 150;
+
+    if (pid === 'sagami') return 150;
+
+    return 100;
 
   },
 
@@ -1415,6 +1455,7 @@ export const GameStateMethods = {
     this._virtualDeadOfficerIds = new Set();
 
     this.playerClanId = null;
+    this.playerDaimyo = null;
 
     this.activeOfficers = null;
 
@@ -1488,6 +1529,31 @@ export const GameStateMethods = {
       : (seasonIdxFromName(scen.season) ?? 0);
 
     this.alliances = this.normalizeAlliances(scen.alliances || [], this.year, this.seasonIdx, INITIAL_ALLIANCE_DURATION_SEASONS, scen.seasonScheme !== SEASONS_PER_YEAR);
+
+    // 建武朝廷（godaiho）と楠木家（kusunoki）、北畠家（kitabatake）、菊池家（kikuchi）は互いにシナリオ開始時に20年間（100季）の同盟関係にあるものとする
+    const kenmuTargetClans = ['godaiho', 'kusunoki', 'kitabatake', 'kikuchi'];
+    const activeKenmuClans = kenmuTargetClans.filter(id => this.isClanExtant(id));
+    if (activeKenmuClans.includes('godaiho') && activeKenmuClans.length >= 2) {
+      let kenmuPact = this.alliances.find(g => {
+        const m = this.allianceMembers(g);
+        return m.includes('godaiho') && activeKenmuClans.some(id => id !== 'godaiho' && m.includes(id)) && !m.includes('ashikaga');
+      });
+      if (kenmuPact) {
+        activeKenmuClans.forEach(id => {
+          if (!kenmuPact.members.includes(id)) kenmuPact.members.push(id);
+        });
+        kenmuPact.durationSeasons = Math.max(kenmuPact.durationSeasons || 0, 100);
+        if (!kenmuPact.label) kenmuPact.label = '建武南朝盟約';
+      } else {
+        this.alliances.push({
+          members: activeKenmuClans,
+          formedYear: this.year,
+          formedSeason: this.seasonIdx,
+          durationSeasons: 100,
+          label: '建武南朝盟約'
+        });
+      }
+    }
 
     this.allianceCooldown = {};
 
@@ -1604,7 +1670,6 @@ export const GameStateMethods = {
       // 全シナリオで同じ基準式を用いる。旧 provinceTroops / troopScale の
       // 個別上書きは石高と乖離するため、開始時の駐留兵力には反映しない。
       p.troops = this.getProvinceInitialTroops(Number(p.kokudaka) || 0);
-      p.rice = Math.max(p.rice, Math.round(p.troops * 0.5));
 
     });
 
@@ -2129,7 +2194,13 @@ export const GameStateMethods = {
 
     scen.playables = allPlayables;
 
-    this.renderDaimyoGrid(allPlayables, scen.recommendedClan);
+    // シナリオ切り替え時は以前の大名をリセットし、そのシナリオのお勧め初期選択大名を選択状態にする
+    const defaultClanId = scen.recommendedClan || (allPlayables.length > 0 ? allPlayables[0].id : null);
+    const defaultDaimyo = allPlayables.find(p => p.id === defaultClanId) || (allPlayables.length > 0 ? allPlayables[0] : null);
+    this.playerClanId = defaultDaimyo ? defaultDaimyo.id : null;
+    this.playerDaimyo = defaultDaimyo ? JSON.parse(JSON.stringify(defaultDaimyo)) : null;
+
+    this.renderDaimyoGrid(allPlayables, this.playerClanId);
 
     // ここで領主データが反映された正確な位置・家紋でSVGマップを再構築する
 
@@ -2543,9 +2614,9 @@ export const GameStateMethods = {
 
 
 
-    // ★追加: 九州・東北の大名、および佐竹氏・村上氏（村上水軍を含む）を「内政型」に一括変更する
+    // ★追加: 九州・東北の大名、および佐竹氏・村上氏・大宝寺氏・鈴木氏・椎名氏・神保氏・姉小路氏を「内政型」に一括変更する
 
-    const FORCED_DOMESTIC_CLANS = new Set(['satake', 'murakami', 'murakami_suigun']);
+    const FORCED_DOMESTIC_CLANS = new Set(['satake', 'murakami', 'murakami_suigun', 'daihoji', 'suzuki', 'saika', 'shiina', 'jinbo', 'anekoji']);
 
     allPlayables.forEach(d => {
 
@@ -4935,27 +5006,29 @@ export const GameStateMethods = {
 
 
   isCapitalProvince(provId, ownerId) {
-
     if (!ownerId || !provId) return false;
-
     const owned = (this.provinces || []).filter(p => p.ownerId === ownerId);
-
     if (!owned.some(p => p.id === provId)) return false;
 
-    const capitals = window.CLAN_CAPITAL_PROVINCES || {};
-
-    const registered = capitals[ownerId];
-
-    if (registered && owned.some(p => p.id === registered)) {
-
-      return registered === provId;
-
+    // 1. 当主（大名）自身が実際に居城（城主）として座っている国があれば、そこが唯一無二の本拠地
+    const daimyo = (this.activeOfficers || this.officers || []).find(o => o.clanId === ownerId && o.isDaimyo && !o.isDead);
+    if (daimyo) {
+      const seatedProv = owned.find(p => p.governorId === daimyo.id || (daimyo.assignedProvId && p.id === daimyo.assignedProvId));
+      if (seatedProv) {
+        return seatedProv.id === provId;
+      }
     }
 
+    // 2. 勢力本拠地マスター・シナリオ定義（CLAN_CAPITAL_PROVINCES）
+    const capitals = window.CLAN_CAPITAL_PROVINCES || {};
+    const registered = capitals[ownerId];
+    if (registered && owned.some(p => p.id === registered)) {
+      return registered === provId;
+    }
+
+    // 3. フォールバック本拠地計算
     const home = this.pickFallbackCapital(owned, ownerId);
-
     return !!(home && home.id === provId);
-
   },
 
 
@@ -6833,7 +6906,7 @@ export const GameStateMethods = {
 
     const isKenshinEra = (this.year >= 1561);
 
-    const targetName = isKenshinEra ? '上杉謙信' : '長尾景虎';
+    const targetName = isKenshinEra ? (this.year >= 1570 ? '上杉謙信' : (this.year > 1561 ? '上杉輝虎' : '上杉政虎')) : '長尾景虎';
 
     const oldName = isKenshinEra ? '長尾景虎' : '上杉謙信';
 
@@ -6915,12 +6988,130 @@ export const GameStateMethods = {
 
       this._kenshinAnnounced = true;
 
-      this.log('📜【改名】長尾景虎公は関東管領上杉家の名跡を継承し、「上杉謙信」へと改名しました！', 'important');
+      this.log('📜【改名】長尾景虎公は関東管領上杉家の名跡を継承し、「上杉政虎」へと改名しました！', 'important');
 
       if (this.audio) this.audio.playHyoshigi();
 
     }
 
+    // 1561年以降で関東管領就任時、山内上杉家が存在すれば統合し越後上杉家を確立
+    if (isKenshinEra && !this._kantoKanreiIntegrated) {
+      this._kantoKanreiIntegrated = true;
+      this.integrateYamanouchiUesugi(false);
+    }
+
+  },
+
+  /**
+   * 関東管領就任と上杉名跡継承：山内上杉家が存在したら統合して「越後上杉家」とし、
+   * 越後上杉家の家紋（kamon-uesugi）・領土色（#1483bf）を反映する
+   */
+  integrateYamanouchiUesugi(isPlayerChoice = false) {
+    let targetClanId = 'uesugi';
+    if ((this.provinces || []).some(p => p.ownerId === 'nagao')) {
+      targetClanId = 'nagao';
+    } else if (this.playerClanId === 'nagao') {
+      targetClanId = 'nagao';
+    }
+
+    // 山内上杉家（yamanouchi または 上杉憲政が当主の家）を探索
+    let yamanouchiId = null;
+    if ((this.provinces || []).some(p => p.ownerId === 'yamanouchi')) {
+      yamanouchiId = 'yamanouchi';
+    } else {
+      const uOwner = (this.provinces || []).find(p => p.ownerId === 'uesugi');
+      if (uOwner && this.getDaimyoLeaderName('uesugi') === '上杉憲政') {
+        yamanouchiId = 'uesugi';
+      }
+    }
+
+    // 山内上杉家が存在する場合の領国・武将統合
+    if (yamanouchiId && yamanouchiId !== targetClanId) {
+      const yProvs = (this.provinces || []).filter(p => p.ownerId === yamanouchiId);
+      yProvs.forEach(p => {
+        p.ownerId = targetClanId;
+      });
+
+      (this.activeOfficers || []).forEach(o => {
+        if (o.clanId === yamanouchiId && !o.isDead) {
+          o.clanId = targetClanId;
+          o.isDaimyo = false; // 上杉憲政は家臣・一門へ
+        }
+      });
+      this.log(`🤝【御家統合】関東管領・山内上杉家の領国（${yProvs.length}ヶ国）および麾下の全武将が越後上杉家へ統合されました！`, 'important');
+    }
+
+    // 長野家（nagano: 上野箕輪城・長野業正・業盛等）が存在する場合の領国・武将統合
+    if ((this.provinces || []).some(p => p.ownerId === 'nagano') && targetClanId !== 'nagano') {
+      const nProvs = (this.provinces || []).filter(p => p.ownerId === 'nagano');
+      nProvs.forEach(p => {
+        p.ownerId = targetClanId;
+      });
+
+      (this.activeOfficers || []).forEach(o => {
+        if (o.clanId === 'nagano' && !o.isDead) {
+          o.clanId = targetClanId;
+          o.isDaimyo = false; // 長野業正・業盛らは越後上杉家の重臣へ
+        }
+      });
+      this.log(`🤝【御家統合】上野の盟友・長野家の領国（${nProvs.length}ヶ国）および麾下の全武将が越後上杉家へ統合されました！`, 'important');
+    }
+
+    // 越後上杉家の家名・家紋・領土色の確立
+    const echigoColor = '#1483bf';
+    const echigoKamon = 'kamon-uesugi';
+    const echigoFamily = '越後上杉家';
+
+    this.clanLookOverrides = this.clanLookOverrides || {};
+    this.clanLookOverrides[targetClanId] = {
+      kamon: echigoKamon,
+      color: echigoColor,
+      family: echigoFamily
+    };
+    if (targetClanId !== 'uesugi') {
+      this.clanLookOverrides['uesugi'] = {
+        kamon: echigoKamon,
+        color: echigoColor,
+        family: echigoFamily
+      };
+    }
+
+    if (window.CLAN_MASTER_DATA) {
+      [targetClanId, 'nagao', 'uesugi'].forEach(cid => {
+        if (window.CLAN_MASTER_DATA[cid]) {
+          window.CLAN_MASTER_DATA[cid].family = echigoFamily;
+          window.CLAN_MASTER_DATA[cid].color = echigoColor;
+          window.CLAN_MASTER_DATA[cid].kamon = echigoKamon;
+        }
+      });
+    }
+
+    // プレイヤー大名の家名・当主名の更新
+    if (this.playerClanId === targetClanId || this.playerClanId === 'nagao' || this.playerClanId === 'yamanouchi') {
+      this.playerClanId = targetClanId;
+      if (this.playerDaimyo) {
+        this.playerDaimyo.clan = echigoFamily;
+        this.playerDaimyo.color = echigoColor;
+        this.playerDaimyo.kamon = echigoKamon;
+        this.playerDaimyo.name = '上杉政虎';
+      }
+    }
+
+    // 武将名の更新（長尾景虎 -> 上杉政虎）
+    const allOffs = [...(this.activeOfficers || []), ...(window.OFFICERS_MASTER || [])];
+    allOffs.forEach(o => {
+      if (o.id === 'off_uesugi_kenshin' || o.name === '長尾景虎' || o.name === '上杉謙信') {
+        o.name = '上杉政虎';
+      }
+    });
+
+    try {
+      if (typeof this.initSvgMap === 'function') this.initSvgMap();
+      if (typeof this.updateMapDisplay === 'function') this.updateMapDisplay();
+      if (typeof this.updateUI === 'function') this.updateUI();
+    } catch (e) {
+      console.warn('UI refresh failed during Uesugi integration:', e);
+    }
   },
 
 
@@ -8325,30 +8516,67 @@ export const GameStateMethods = {
 
 
 
-  isIchimonName(officerName, clanId, deceasedName) {
-
-    const sur = this.extractPersonSurname(officerName);
-
-    return this.ichimonSurnames(clanId, deceasedName).has(sur);
-
+  // 天皇・上皇・法皇・親王・内親王・小倉宮（皇族）の判定
+  isImperialFamilyPerson(personOrName) {
+    if (!personOrName) return false;
+    const name = typeof personOrName === 'string' ? personOrName : (personOrName.name || '');
+    const id = typeof personOrName === 'object' && personOrName ? (personOrName.id || '') : (typeof personOrName === 'string' ? personOrName : '');
+    if (/天皇|上皇|法皇|親王|内親王|小倉宮/.test(name)) return true;
+    if (id && (id.includes('tenno') || id.includes('shinno') || id.includes('oguramiya') || id.endsWith('_in'))) return true;
+    return false;
   },
 
+  // 武将同士の一門判定（登場する天皇と上皇と親王と小倉宮は全て互いに一門とする）
+  areOfficersIchimon(offA, offB) {
+    if (!offA || !offB) return false;
+    if (offA.id && offB.id && offA.id === offB.id) return true;
+    // 皇族同士は全て互いに一門
+    if (this.isImperialFamilyPerson(offA) && this.isImperialFamilyPerson(offB)) return true;
+    // 淀殿
+    if (offA.id === 'off_yododono' && (this.isHideyoshiHouseHead(offB.name) || offB.clanId === 'toyotomi' || offB.clanId === 'oda')) return true;
+    if (offB.id === 'off_yododono' && (this.isHideyoshiHouseHead(offA.name) || offA.clanId === 'toyotomi' || offA.clanId === 'oda')) return true;
+    const surA = this.extractPersonSurname(offA.name);
+    const surB = this.extractPersonSurname(offB.name);
+    if (surA && surB) {
+      const grpA = this.surnameGroup(surA);
+      if (grpA.includes(surB)) return true;
+    }
+    return false;
+  },
 
+  isIchimonName(officerName, clanId, deceasedName) {
+    // 皇族の一門判定（天皇・上皇・親王・小倉宮）
+    if (this.isImperialFamilyPerson(officerName)) {
+      if (this.isImperialFamilyPerson(deceasedName)) return true;
+      const founding = this.foundingLeaderNames?.[clanId];
+      if (this.isImperialFamilyPerson(founding)) return true;
+      const imperialClans = ['godaiho', 'gotoba_in', 'goshirakawa_in', 'sutoku_in', 'heian_court', 'yamato_court', 'jimmu', 'meiji', 'court'];
+      if (clanId && imperialClans.includes(clanId)) return true;
+    }
+    const sur = this.extractPersonSurname(officerName);
+    return this.ichimonSurnames(clanId, deceasedName).has(sur);
+  },
 
-  // 一門判定：OFFICER_FAMILY_ROSTERS に家の一門 ID 名簿があればそれを優先、なければ苗字（完全一致）で判定,
-
-
-
+  // 一門判定：OFFICER_FAMILY_ROSTERS に家の一門 ID 名簿があればそれを優先、なければ苗字（完全一致）で判定
   isIchimonOfficer(off, clanId, deceasedName) {
-
     if (!off) return false;
+    // 淀殿は豊臣秀吉の一門
+    if (off.id === 'off_yododono' && (clanId === 'toyotomi' || this.isHideyoshiHouseHead(deceasedName) || this.isHideyoshiHouseHead(this.foundingLeaderNames?.[clanId]) || clanId === 'oda')) return true;
+
+    // 天皇・上皇・親王・小倉宮は全て互いに一門とする
+    if (this.isImperialFamilyPerson(off)) {
+      if (this.isImperialFamilyPerson(deceasedName)) return true;
+      const founding = this.foundingLeaderNames?.[clanId];
+      if (this.isImperialFamilyPerson(founding)) return true;
+      const currentDaimyo = (this.activeOfficers || []).find(o => o.clanId === clanId && o.isDaimyo && !o.isDead);
+      if (currentDaimyo && this.isImperialFamilyPerson(currentDaimyo)) return true;
+      const imperialClans = ['godaiho', 'gotoba_in', 'goshirakawa_in', 'sutoku_in', 'heian_court', 'yamato_court', 'jimmu', 'meiji', 'court'];
+      if (clanId && imperialClans.includes(clanId)) return true;
+    }
 
     const roster = (window.OFFICER_FAMILY_ROSTERS || {})[clanId];
-
     if (Array.isArray(roster) && roster.length && this.officerIdIn(off, roster)) return true;
-
     return this.isIchimonName(off.name, clanId, deceasedName);
-
   },
 
 
@@ -8725,7 +8953,11 @@ export const GameStateMethods = {
 
         this.music.playTrack('crisis', false, { stinger: true, noFirstHit: true });
 
-        this.audio.playHoragai();
+        if (this.audio && this.audio.playDaimyoDeathSeExclusive) {
+          this.audio.playDaimyoDeathSeExclusive();
+        } else if (this.audio) {
+          this.audio.playHoragai();
+        }
 
 
 
@@ -9025,7 +9257,11 @@ export const GameStateMethods = {
 
           this.music.playTrack('crisis', false, { stinger: true, noFirstHit: true });
 
+          if (this.audio && this.audio.playDaimyoDeathSeExclusive) {
+          this.audio.playDaimyoDeathSeExclusive();
+        } else if (this.audio) {
           this.audio.playHoragai();
+        }
 
 
 
@@ -10396,7 +10632,24 @@ export const GameStateMethods = {
 
       const match = this.playerClanId ? scen.playables.find(p => p.id === this.playerClanId) : null;
 
-      this.playerDaimyo = match || scen.playables.find(p => p.id === scen.recommendedClan) || scen.playables[0];
+      if (!match) {
+        if (typeof Swal !== 'undefined' && Swal.fire) {
+          Swal.fire({
+            title: '大名未選択',
+            text: '出陣する大名家を選択してください。',
+            icon: 'warning',
+            confirmButtonText: '閉じる',
+            confirmButtonColor: '#9a7b2c',
+            background: '#241710',
+            color: '#ffd700'
+          });
+        } else {
+          alert('出陣する大名家を選択してください。');
+        }
+        if (modal) modal.classList.remove('hidden');
+        return;
+      }
+      this.playerDaimyo = match;
 
       this.playerClanId = this.playerDaimyo.id;
 
@@ -10724,24 +10977,39 @@ export const GameStateMethods = {
 
 
 
-    // 出陣ボタン押下によるゲーム開始時は必ず法螺貝を鳴らす（TitleBgm側の1500msデバウンスで二重再生防止）
+    // 出陣ボタン押下によるゲーム開始時は必ず法螺貝を鳴らす（TitleBgm側・本編Audio両構えで確実再生）
     try {
       if (this.music && this.music.currentTrack === 'op' && this.music.timerId) {
         this.music.stop();
       }
-      window.SengokuTitleBgm?.horagai?.();
+      if (window.SengokuTitleBgm && typeof window.SengokuTitleBgm.horagai === 'function') {
+        window.SengokuTitleBgm.horagai();
+      }
+      if (this.audio) {
+        this.audio.init?.();
+        if (this.audio.ctx && this.audio.ctx.state === 'suspended') {
+          this.audio.ctx.resume?.().catch(() => {});
+        }
+        // TitleBgmで鳴っていない場合も本編Audioで必ず再生
+        const tLeft = window.SengokuTitleBgm?.horagaiRemainingMs?.() || 0;
+        if (tLeft <= 0) {
+          try { this.audio.playHoragai(1.1); } catch (err) {}
+        }
+      }
     } catch (e) {}
-    const horaLeftMs = (() => { try { return window.SengokuTitleBgm?.horagaiRemainingMs?.() || 0; } catch (e) { return 0; } })();
-    if (horaLeftMs > 0) {
-      clearTimeout(this._postHoragaiBgmTimer);
-      this._postHoragaiBgmTimer = setTimeout(() => {
-        this._postHoragaiBgmTimer = null;
-        try { if (!this.music.timerId || this.music.currentTrack === 'op') this.music.playTrack(this.getSeasonTrackKey()); } catch (e) {}
-      }, horaLeftMs);
-    } else {
-      this.music.playTrack(this.getSeasonTrackKey(), false, { noFirstHit: true });
-      this.audio.playFanfare();
-    }
+    const horaLeftMs = Math.max(
+      (() => { try { return window.SengokuTitleBgm?.horagaiRemainingMs?.() || 0; } catch (e) { return 0; } })(),
+      2500
+    );
+    clearTimeout(this._postHoragaiBgmTimer);
+    this._postHoragaiBgmTimer = setTimeout(() => {
+      this._postHoragaiBgmTimer = null;
+      try {
+        if (!this.music.timerId || this.music.currentTrack === 'op') {
+          this.music.playTrack(this.getSeasonTrackKey(), false, { noFirstHit: true });
+        }
+      } catch (e) {}
+    }, horaLeftMs);
 
 
 
@@ -11684,7 +11952,9 @@ export const GameStateMethods = {
     const distinctTerritoryColors = {
       gamo: '#2f5f9e',       // 蒲生家: 深い青
       gamou: '#2f5f9e',      // 蒲生家の別ID
-      todo: '#5b6068',       // 藤堂家: 渋い青灰
+      todo: '#d8dee2',       // 藤堂家: 明るめのグレー
+    takeda: '#ea5424',     // 甲斐武田家: 織田より明るい赤系オレンジ
+    matsunaga: '#2d7a46',  // 松永家: 信長の野望の緑
       tosa: '#365a9c',       // 土佐藩山内家: 藍紫
       clan_8849: '#c65d2e', // 加藤嘉明・明成系: 朱茶
       sakai: '#8a6b3f',     // 酒井家: 渋い黄土
@@ -12999,7 +13269,7 @@ export const GameStateMethods = {
 
     p.troops += troopsGain;
 
-    p.defense = Math.min(100, p.defense + defenseGain);
+    p.defense = Math.min(this.getProvinceMaxDefense(p), p.defense + defenseGain);
 
     p.morale = Math.min(100, p.morale + moraleGain);
 
@@ -13712,6 +13982,28 @@ export const GameStateMethods = {
   },
 
 
+
+  // 戦況ログ（年代記）への出力。リファクタ時に欠落していたため復旧。
+  // シナリオ切替中（開始画面）は年代記へ流さず、呼び出し側が例外で止まらないようにする。
+  log(msg, type = '') {
+    if (this._isSwitchingScenario) return;
+    const logBox = document.getElementById('gameLog');
+    if (logBox) {
+      logBox.innerHTML = '';
+      const div = document.createElement('div');
+      div.className = `log-entry ${type}`;
+      div.textContent = msg;
+      logBox.appendChild(div);
+    }
+    const fullList = document.getElementById('chronicleFullList');
+    if (fullList) {
+      const div = document.createElement('div');
+      div.className = `log-entry ${type}`;
+      const seasonName = (this.seasonNames && this.seasonNames[this.seasonIdx]) || '';
+      div.textContent = `${this.year}年 ${seasonName}: ${msg}`;
+      fullList.insertBefore(div, fullList.firstChild);
+    }
+  },
 
   logBattle(msg) {
 
@@ -15124,7 +15416,7 @@ export const GameStateMethods = {
 
               <!-- 列伝ダイアログ -->
 
-              <div style="font-size:11.5pt; color:#ddd; max-height:95px; overflow-y:auto; line-height:1.6; margin-bottom:14px; background:rgba(0,0,0,0.4); padding:8px 10px; border-radius:4px; border:1px solid #4a3b2c;">
+              <div style="font-size:11.5pt; color:#ddd; min-height:50px; max-height:240px; height:auto; overflow-y:auto; word-break:break-word; line-height:1.6; margin-bottom:14px; background:rgba(0,0,0,0.4); padding:8px 10px; border-radius:4px; border:1px solid #4a3b2c;">
 
                 <strong>【列伝】</strong> ${this.cleanOfficerLore(off.lore) || '歴史に名高い名将。'}
 
@@ -15228,7 +15520,10 @@ export const GameStateMethods = {
 
               color: '#fff',
 
-              confirmButtonColor: '#27ae60'
+              confirmButtonColor: '#27ae60',
+              confirmButtonText: '次へ (1秒で進行)',
+              timer: 1000,
+              timerProgressBar: true
 
             });
 
@@ -15276,7 +15571,10 @@ export const GameStateMethods = {
 
               color: '#fff',
 
-              confirmButtonColor: '#7f8c8d'
+              confirmButtonColor: '#7f8c8d',
+              confirmButtonText: '次へ (1秒で進行)',
+              timer: 1000,
+              timerProgressBar: true
 
             });
 
@@ -15316,7 +15614,10 @@ export const GameStateMethods = {
 
             color: '#fff',
 
-            confirmButtonColor: '#c0392b'
+            confirmButtonColor: '#c0392b',
+              confirmButtonText: '次へ (1秒で進行)',
+              timer: 1000,
+              timerProgressBar: true
 
           });
 
@@ -15362,7 +15663,10 @@ export const GameStateMethods = {
 
             color: '#fff',
 
-            confirmButtonColor: '#3498db'
+            confirmButtonColor: '#3498db',
+              confirmButtonText: '次へ (1秒で進行)',
+              timer: 1000,
+              timerProgressBar: true
 
           });
 
@@ -16932,7 +17236,7 @@ export const GameStateMethods = {
 
         if (port && this.provinceMatchesSpecialty(p, port)) {
 
-          p.defense = Math.min(100, (p.defense || 50) + (port.effects.autumnDefenseBonus || 2));
+          p.defense = Math.min(this.getProvinceMaxDefense(p), (p.defense || 50) + (port.effects.autumnDefenseBonus || 2));
 
           p.troops = (p.troops || 0) + (port.effects.autumnTroopBonus || 80);
 
@@ -20509,7 +20813,7 @@ export const GameStateMethods = {
       const choiceId = typeof lc === 'string' ? lc : lc.choiceId;
       if (!choiceId) return;
       const year = (lc.year !== undefined && lc.year !== null) ? lc.year : ev.year;
-      const season = normalizeSeasonName(lc.season || ev.season); // 旧「夏」は初夏
+      const season = normalizeSeasonName(lc.season || ev.season); // 旧「夏」は盛夏
       const same = links.find(l => l.choiceId === choiceId && l.year === year && l.season === season);
       if (same) same.dataIds.push(ev.id);
       else links.push({ choiceId, dataIds: [ev.id], year, season });
@@ -20909,7 +21213,7 @@ export const GameStateMethods = {
 
         if (ev.year !== undefined && ev.year !== this.year) continue;
 
-        if (ev.season !== undefined && normalizeSeasonName(ev.season) !== currentSeasonName) continue; // 旧「夏」のイベントは初夏に発生
+        if (ev.season !== undefined && normalizeSeasonName(ev.season) !== currentSeasonName) continue; // 旧「夏」のイベントは盛夏に発生
 
 
 
@@ -21349,8 +21653,32 @@ export const GameStateMethods = {
     const pacts = Array.isArray(changes.alliances) ? changes.alliances : [];
 
     pacts.forEach(pact => {
-
-      if (!pact || !pact.a || !pact.b) return;
+      if (!pact) return;
+      if (Array.isArray(pact.members) && pact.members.length >= 2) {
+        const members = pact.members
+          .map(m => this.resolveEventTargetClan(m) || m)
+          .filter(m => m && this.isClanExtant(m));
+        if (members.length >= 2) {
+          this.alliances = this.alliances || [];
+          const dur = Number(pact.durationSeasons) > 0
+            ? (Number(pact.durationSeasons) >= 40 ? Number(pact.durationSeasons) : legacySeasonCountToNew(Number(pact.durationSeasons)))
+            : ALLIANCE_DURATION_SEASONS;
+          const formedY = Number(pact.formedYear) || this.year;
+          const formedS = Number(pact.formedSeason) !== undefined && Number(pact.formedSeason) !== null ? Number(pact.formedSeason) : this.seasonIdx;
+          this.alliances.push({
+            members: members,
+            formedYear: formedY,
+            formedSeason: formedS,
+            durationSeasons: dur,
+            label: pact.label || '同盟'
+          });
+          const labels = members.map(m => this.allianceClanLabel(m)).join('・');
+          this.log(`🤝【史実同盟】${labels}が${pact.label || '同盟'}を結びました。`, 'important');
+          changed = true;
+          return;
+        }
+      }
+      if (!pact.a || !pact.b) return;
 
       const a = this.resolveEventTargetClan(pact.a) || pact.a;
 
@@ -21370,7 +21698,7 @@ export const GameStateMethods = {
 
         formedSeason: this.seasonIdx,
 
-        durationSeasons: Number(pact.durationSeasons) > 0 ? legacySeasonCountToNew(Number(pact.durationSeasons)) : ALLIANCE_DURATION_SEASONS
+        durationSeasons: Number(pact.durationSeasons) > 0 ? (Number(pact.durationSeasons) >= 40 ? Number(pact.durationSeasons) : legacySeasonCountToNew(Number(pact.durationSeasons))) : ALLIANCE_DURATION_SEASONS
 
       });
 
@@ -21695,15 +22023,23 @@ export const GameStateMethods = {
     });
 
     (changes.alliances || []).forEach(pact => {
-
       if (!pact) return;
-
-      const a = this.getClanDisplayName(this.resolveEventTargetClan(pact.a) || pact.a);
-
-      const b = this.getClanDisplayName(this.resolveEventTargetClan(pact.b) || pact.b);
-
-      lines.push(`${a}と${b}が${pact.label || '同盟'}を結ぶ`);
-
+      if (Array.isArray(pact.members) && pact.members.length > 0) {
+        const names = pact.members
+          .map(m => this.getClanDisplayName(this.resolveEventTargetClan(m) || m))
+          .filter(n => n && n !== '空白地');
+        if (names.length >= 2) {
+          lines.push(`${names.join('・')}が${pact.label || '同盟'}を結ぶ`);
+          return;
+        }
+      }
+      if (pact.a && pact.b) {
+        const a = this.getClanDisplayName(this.resolveEventTargetClan(pact.a) || pact.a);
+        const b = this.getClanDisplayName(this.resolveEventTargetClan(pact.b) || pact.b);
+        if (a && b && a !== '空白地' && b !== '空白地') {
+          lines.push(`${a}と${b}が${pact.label || '同盟'}を結ぶ`);
+        }
+      }
     });
 
     (changes.chanceKills || []).forEach(item => {
@@ -22437,7 +22773,11 @@ applyEventTerritory(changes) {
 
     try {
 
-      this.audio.playEventNotice?.();
+      if (this.audio && this.audio.playEventChimeExclusive) {
+        this.audio.playEventChimeExclusive();
+      } else {
+        this.audio.playEventNotice?.();
+      }
 
     } catch(e) {}
 

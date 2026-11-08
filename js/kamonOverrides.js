@@ -23,25 +23,205 @@
   var OYAMA_SYMBOL_ID = 'kamon-oyama-tomoe';
   var NANJO_SYMBOL_ID = 'kamon-nanjo';
   var SAITO_SYMBOL_ID = 'kamon-saito';
+  var AINU_PATTERN_SYMBOL_ID = 'kamon-ainu-pattern';
+  var AINU_PATTERN_SYMBOL_MARKUP = `
+    <symbol id="kamon-ainu-pattern" viewBox="0 0 32 32">
+      <title>蝦夷諸部族・アイヌ文様</title>
+      <circle cx="16" cy="16" r="15" fill="#1f5f8b" stroke="#ffd700" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="12.8" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="0.6"/>
+      <g fill="none" stroke="#ffffff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M 16,6.2 L 16,8.5 M 14.3,7.6 L 16,6.2 L 17.7,7.6" stroke-width="1.4"/>
+        <path d="M 16,8.5 C 13.2,8.5 10.2,10.2 10.2,13.2 C 10.2,15.2 11.8,16.2 13.5,15.5 C 14.5,15.0 14.8,13.8 14.0,13.2 C 13.2,12.6 12.2,13.5 12.5,14.2"/>
+        <path d="M 16,8.5 C 18.8,8.5 21.8,10.2 21.8,13.2 C 21.8,15.2 20.2,16.2 18.5,15.5 C 17.5,15.0 17.2,13.8 18.0,13.2 C 18.8,12.6 19.8,13.5 19.5,14.2"/>
+        <path d="M 16,25.8 L 16,23.5 M 14.3,24.4 L 16,25.8 L 17.7,24.4" stroke-width="1.4"/>
+        <path d="M 16,23.5 C 13.2,23.5 10.2,21.8 10.2,18.8 C 10.2,16.8 11.8,15.8 13.5,16.5 C 14.5,17.0 14.8,18.2 14.0,18.8 C 13.2,19.4 12.2,18.5 12.5,17.8"/>
+        <path d="M 16,23.5 C 18.8,23.5 21.8,21.8 21.8,18.8 C 21.8,16.8 20.2,15.8 18.5,16.5 C 17.5,17.0 17.2,18.2 18.0,18.8 C 18.8,19.4 19.8,18.5 19.5,17.8"/>
+        <path d="M 6.2,16 L 8.5,16 M 7.6,14.3 L 6.2,16 L 7.6,17.7" stroke-width="1.4"/>
+        <path d="M 25.8,16 L 23.5,16 M 24.4,14.3 L 25.8,16 L 24.4,17.7" stroke-width="1.4"/>
+        <path d="M 8.5,16 C 8.5,13.2 10.2,11.2 12.5,11.2"/>
+        <path d="M 8.5,16 C 8.5,18.8 10.2,20.8 12.5,20.8"/>
+        <path d="M 23.5,16 C 23.5,13.2 21.8,11.2 19.5,11.2"/>
+        <path d="M 23.5,16 C 23.5,18.8 21.8,20.8 19.5,20.8"/>
+      </g>
+      <polygon points="16,13.5 18.5,16 16,18.5 13.5,16" fill="#ffd700" stroke="#ffffff" stroke-width="0.8"/>
+      <circle cx="16" cy="16" r="1.0" fill="#1f5f8b"/>
+    </symbol>`;
+
+  var MATSUNAGA_SYMBOL_ID = 'kamon-matsunaga';
+  var MATSUNAGA_SYMBOL_MARKUP = `
+<symbol id="kamon-matsunaga" viewBox="0 0 32 32">
+      <title>松永家・蔦紋（つたもん）</title>
+      <circle cx="16" cy="16" r="15" fill="#2d7a46" stroke="#ffd700" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="12" fill="none" stroke="#ffd700" stroke-width="1.1"/>
+      
+      <!-- 蔦の巻き蔓（下部の巻きひげ） -->
+      <path d="M16 23 C15.5 24.5 14.5 25.8 13.0 25.8 C11.5 25.8 10.8 24.5 11.4 23.2 C11.8 22.2 13.0 22.2 13.2 23.2 C13.4 23.8 12.8 24.2 12.4 23.8" fill="none" stroke="#ffd700" stroke-width="0.75" stroke-linecap="round"/>
+      <path d="M16 23 C16.5 24.5 17.5 25.8 19.0 25.8 C20.5 25.8 21.2 24.5 20.6 23.2 C20.2 22.2 19.0 22.2 18.8 23.2 C18.6 23.8 19.2 24.2 19.6 23.8" fill="none" stroke="#ffd700" stroke-width="0.75" stroke-linecap="round"/>
+      <!-- 下部主茎 -->
+      <path d="M16 24.8 L16 18.5" stroke="#ffd700" stroke-width="1.3" stroke-linecap="round"/>
+      
+      <!-- 蔦の実（3つの果実と花柄） -->
+      <path d="M16 11.2 L16 7.2 M16 10.5 L12.8 8.8 M16 10.5 L19.2 8.8" fill="none" stroke="#ffd700" stroke-width="0.7" stroke-linecap="round"/>
+      <circle cx="16" cy="6.6" r="1.15" fill="#ffd700"/>
+      <circle cx="12.2" cy="8.4" r="1.0" fill="#ffd700"/>
+      <circle cx="19.8" cy="8.4" r="1.0" fill="#ffd700"/>
+
+      <!-- 蔦の三枚葉（白面＋深緑輪郭） -->
+      <g fill="#ffffff" stroke="#2d7a46" stroke-width="0.45" stroke-linejoin="round">
+        <!-- 中央主葉（掌状三裂・上部に凛と立つ） -->
+        <path d="M16 8.2 
+                 C16.8 10.2 18.5 10.8 19.6 10.6 
+                 C18.8 12.0 18.6 13.4 19.4 14.6 
+                 C18.2 15.0 17.0 16.2 16.0 18.2 
+                 C15.0 16.2 13.8 15.0 12.6 14.6 
+                 C13.4 13.4 13.2 12.0 12.4 10.6 
+                 C13.5 10.8 15.2 10.2 16 8.2 Z"/>
+                 
+        <!-- 左側葉（左斜め下へ三裂展開） -->
+        <path d="M14.2 17.0 
+                 C13.2 15.4 11.2 14.6 9.5 15.0 
+                 C10.0 16.4 9.2 17.6 7.6 18.4 
+                 C8.8 19.6 9.6 21.2 11.2 21.8 
+                 C12.0 20.2 13.2 19.2 15.0 18.8 Z"/>
+                 
+        <!-- 右側葉（右斜め下へ三裂展開） -->
+        <path d="M17.8 17.0 
+                 C18.8 15.4 20.8 14.6 22.5 15.0 
+                 C22.0 16.4 22.8 17.6 24.4 18.4 
+                 C23.2 19.6 22.4 21.2 20.8 21.8 
+                 C20.0 20.2 18.8 19.2 17.0 18.8 Z"/>
+      </g>
+      
+      <!-- 葉脈（繊細な主脈・側脈） -->
+      <g fill="none" stroke="#2d7a46" stroke-width="0.6" stroke-linecap="round">
+        <!-- 主葉脈 -->
+        <path d="M16 17.5 L16 10.0"/>
+        <path d="M16 14.2 L18.0 12.2"/>
+        <path d="M16 14.2 L14.0 12.2"/>
+        <!-- 左葉脈 -->
+        <path d="M14.2 17.6 L9.6 18.0"/>
+        <path d="M12.2 17.7 L10.8 16.2"/>
+        <path d="M12.2 17.7 L11.0 19.8"/>
+        <!-- 右葉脈 -->
+        <path d="M17.8 17.6 L22.4 18.0"/>
+        <path d="M19.8 17.7 L21.2 16.2"/>
+        <path d="M19.8 17.7 L21.0 19.8"/>
+      </g>
+      
+      <!-- 葉の結束点（ゴールドアクセント） -->
+      <circle cx="16" cy="18.0" r="0.9" fill="#ffd700"/>
+    </symbol>`;
+  var KIMOTSUKI_SYMBOL_ID = 'kamon-kimotsuki';
+  var KIMOTSUKI_SYMBOL_MARKUP = `
+<symbol id="kamon-kimotsuki" viewBox="0 0 32 32">
+      <title>肝付家・対い鶴喰若松三つ雁金（むかいづるくいはかまつみつかりがね）</title>
+      <circle cx="16" cy="16" r="15" fill="#2e7d32" stroke="#ffd700" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="12.3" fill="none" stroke="#ffffff" stroke-width="1.2"/>
+      
+      <!-- 1. 中央喰若松（向かい合う鶴が嘴にくわえる若松） -->
+      <g stroke="#ffd700" stroke-linecap="round">
+        <!-- 若松の主幹 -->
+        <path d="M16 7.2 L16 14.5" stroke-width="1.1" fill="none"/>
+        <!-- 若松の松葉対 -->
+        <path d="M16 8.5 C14.5 7.2 13.0 7.5 11.8 8.8 M16 8.5 C17.5 7.2 19.0 7.5 20.2 8.8" stroke-width="0.75" fill="none"/>
+        <path d="M16 10.0 C14.2 9.0 12.8 9.8 11.6 11.2 M16 10.0 C17.8 9.0 19.2 9.8 20.4 11.2" stroke-width="0.75" fill="none"/>
+        <path d="M16 11.6 C14.5 11.0 13.5 12.0 12.2 13.2 M16 11.6 C17.5 11.0 18.5 12.0 19.8 13.2" stroke-width="0.75" fill="none"/>
+      </g>
+      <!-- 若松の芽（頂点） -->
+      <circle cx="16" cy="6.8" r="0.85" fill="#ffd700"/>
+
+      <!-- 2. 二羽の対い鶴（左右対称に向かい合い若松をくわえる） -->
+      <!-- 左鶴 -->
+      <g id="tsuru-l">
+        <!-- 嘴（若松をくわえ込む） -->
+        <path d="M12.0 10.8 L15.5 11.6 L12.2 11.9 Z" fill="#ffd700"/>
+        <!-- 鶴の胴体・首・頭部（白） -->
+        <path d="M11.4 10.2 
+                 C10.6 9.0 9.6 9.4 9.0 10.4 
+                 C8.4 11.5 8.8 13.0 8.0 14.5 
+                 C7.0 16.2 5.8 18.5 6.4 21.4 
+                 C7.4 20.2 8.6 19.0 9.0 17.2 
+                 C9.6 19.2 10.4 21.2 11.4 22.8 
+                 C11.6 20.8 11.6 18.8 11.2 16.8 
+                 C11.8 15.2 11.6 13.6 11.0 12.2 
+                 C11.6 12.0 12.0 11.2 11.4 10.2 Z" 
+              fill="#ffffff" stroke="#2e7d32" stroke-width="0.4"/>
+        <!-- 翼の羽先（外周円に沿う風切羽） -->
+        <path d="M6.6 16.8 C5.6 18.8 5.6 21.8 7.0 23.8 C7.6 22.2 8.4 20.6 8.8 19.2 Z" fill="#ffffff"/>
+        <!-- 丹頂（頭頂の鮮やかな赤） -->
+        <circle cx="10.0" cy="9.6" r="0.8" fill="#d32f2f"/>
+        <!-- 目 -->
+        <circle cx="10.6" cy="10.6" r="0.35" fill="#2e7d32"/>
+      </g>
+
+      <!-- 右鶴 -->
+      <g id="tsuru-r">
+        <!-- 嘴（若松をくわえ込む） -->
+        <path d="M20.0 10.8 L16.5 11.6 L19.8 11.9 Z" fill="#ffd700"/>
+        <!-- 鶴の胴体・首・頭部（白） -->
+        <path d="M20.6 10.2 
+                 C21.4 9.0 22.4 9.4 23.0 10.4 
+                 C23.6 11.5 23.2 13.0 24.0 14.5 
+                 C25.0 16.2 26.2 18.5 25.6 21.4 
+                 C24.6 20.2 23.4 19.0 23.0 17.2 
+                 C22.4 19.2 21.6 21.2 20.6 22.8 
+                 C20.4 20.8 20.4 18.8 20.8 16.8 
+                 C20.2 15.2 20.4 13.6 21.0 12.2 
+                 C20.4 12.0 20.0 11.2 20.6 10.2 Z" 
+              fill="#ffffff" stroke="#2e7d32" stroke-width="0.4"/>
+        <!-- 翼の羽先 -->
+        <path d="M25.4 16.8 C26.4 18.8 26.4 21.8 25.0 23.8 C24.4 22.2 23.6 20.6 23.2 19.2 Z" fill="#ffffff"/>
+        <!-- 丹頂 -->
+        <circle cx="22.0" cy="9.6" r="0.8" fill="#d32f2f"/>
+        <!-- 目 -->
+        <circle cx="21.4" cy="10.6" r="0.35" fill="#2e7d32"/>
+      </g>
+
+      <!-- 3. 三つ雁金（中央下部に端正に配された3羽の伝統雁金紋） -->
+      <!-- 雁金1（上中央） -->
+      <g transform="translate(16 16.2)">
+        <!-- 嘴（金） -->
+        <path d="M-1.5 -0.3 L0 -1.1 L-0.4 0.3 Z" fill="#ffd700"/>
+        <!-- 雁金の丸い頭と結び羽（白） -->
+        <path d="M-0.2 -0.9 C0.9 -1.4 2.0 -0.7 2.0 0.4 C2.0 1.5 0.9 2.2 -0.2 1.7 C-1.1 1.3 -1.3 0.0 -0.2 -0.9 Z" fill="#ffffff"/>
+        <!-- つぶらな目（背景抜き丸） -->
+        <circle cx="0.4" cy="0.2" r="0.35" fill="#2e7d32"/>
+      </g>
+
+      <!-- 雁金2（左下） -->
+      <g transform="translate(13.2 21.0)">
+        <path d="M-1.5 -0.3 L0 -1.1 L-0.4 0.3 Z" fill="#ffd700"/>
+        <path d="M-0.2 -0.9 C0.9 -1.4 2.0 -0.7 2.0 0.4 C2.0 1.5 0.9 2.2 -0.2 1.7 C-1.1 1.3 -1.3 0.0 -0.2 -0.9 Z" fill="#ffffff"/>
+        <circle cx="0.4" cy="0.2" r="0.35" fill="#2e7d32"/>
+      </g>
+
+      <!-- 雁金3（右下、右向きの嘴で対をなす） -->
+      <g transform="translate(18.8 21.0)">
+        <path d="M1.5 -0.3 L0 -1.1 L0.4 0.3 Z" fill="#ffd700"/>
+        <path d="M0.2 -0.9 C-0.9 -1.4 -2.0 -0.7 -2.0 0.4 C-2.0 1.5 -0.9 2.2 0.2 1.7 C1.1 1.3 1.3 0.0 0.2 -0.9 Z" fill="#ffffff"/>
+        <circle cx="-0.4" cy="0.2" r="0.35" fill="#2e7d32"/>
+      </g>
+    </symbol>`;
+
   var TAKIGAWA_SYMBOL_ID = 'kamon-takigawa';
   var TODO_SYMBOL_ID = 'kamon-todo-tsuta';
   var TODO_SYMBOL_MARKUP = `
     <symbol id="kamon-todo-tsuta" viewBox="0 0 32 32">
       <title>藤堂家・藤堂蔦</title>
-      <circle cx="16" cy="16" r="15" fill="#d5d8dc" stroke="#4b5563" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="15" fill="#d8dee2" stroke="#4b5563" stroke-width="1.5"/>
       <circle cx="16" cy="16" r="12" fill="none" stroke="#4b5563" stroke-width="1.1"/>
-      <g fill="#374151" stroke="#d5d8dc" stroke-width="0.55" stroke-linejoin="round">
+      <g fill="#374151" stroke="#d8dee2" stroke-width="0.55" stroke-linejoin="round">
         <g transform="translate(16 16.6)">
           <path d="M0 1.4 C-2.8 0.7 -4.2 -1.8 -3.3 -4.2 C-2.5 -6.2 -1.1 -7.8 0 -10.1 C1.1 -7.8 2.5 -6.2 3.3 -4.2 C4.2 -1.8 2.8 0.7 0 1.4 Z"/>
-          <path d="M0 0.2 V-8.2 M0-4.1 L-1.9-5.7 M0-4.1 L1.9-5.7 M0-1.9 L-2.35-3.1 M0-1.9 L2.35-3.1" fill="none" stroke="#d5d8dc" stroke-width="0.72" stroke-linecap="round"/>
+          <path d="M0 0.2 V-8.2 M0-4.1 L-1.9-5.7 M0-4.1 L1.9-5.7 M0-1.9 L-2.35-3.1 M0-1.9 L2.35-3.1" fill="none" stroke="#d8dee2" stroke-width="0.72" stroke-linecap="round"/>
         </g>
         <g transform="translate(16 16.6) rotate(120)">
           <path d="M0 1.4 C-2.8 0.7 -4.2 -1.8 -3.3 -4.2 C-2.5 -6.2 -1.1 -7.8 0 -10.1 C1.1 -7.8 2.5 -6.2 3.3 -4.2 C4.2 -1.8 2.8 0.7 0 1.4 Z"/>
-          <path d="M0 0.2 V-8.2 M0-4.1 L-1.9-5.7 M0-4.1 L1.9-5.7 M0-1.9 L-2.35-3.1 M0-1.9 L2.35-3.1" fill="none" stroke="#d5d8dc" stroke-width="0.72" stroke-linecap="round"/>
+          <path d="M0 0.2 V-8.2 M0-4.1 L-1.9-5.7 M0-4.1 L1.9-5.7 M0-1.9 L-2.35-3.1 M0-1.9 L2.35-3.1" fill="none" stroke="#d8dee2" stroke-width="0.72" stroke-linecap="round"/>
         </g>
         <g transform="translate(16 16.6) rotate(240)">
           <path d="M0 1.4 C-2.8 0.7 -4.2 -1.8 -3.3 -4.2 C-2.5 -6.2 -1.1 -7.8 0 -10.1 C1.1 -7.8 2.5 -6.2 3.3 -4.2 C4.2 -1.8 2.8 0.7 0 1.4 Z"/>
-          <path d="M0 0.2 V-8.2 M0-4.1 L-1.9-5.7 M0-4.1 L1.9-5.7 M0-1.9 L-2.35-3.1 M0-1.9 L2.35-3.1" fill="none" stroke="#d5d8dc" stroke-width="0.72" stroke-linecap="round"/>
+          <path d="M0 0.2 V-8.2 M0-4.1 L-1.9-5.7 M0-4.1 L1.9-5.7 M0-1.9 L-2.35-3.1 M0-1.9 L2.35-3.1" fill="none" stroke="#d8dee2" stroke-width="0.72" stroke-linecap="round"/>
         </g>
       </g>
       <circle cx="16" cy="16.6" r="1.2" fill="#4b5563"/>
@@ -323,7 +503,9 @@
     if (!window.KAMONS_SVG_CONTENT) return;
     [
       ['kamon-gamo', '#2f5f9e'],
-      ['kamon-todo', '#d5d8dc'],
+      ['kamon-todo', '#d8dee2'],
+      ['kamon-takeda', '#ea5424'],
+      ['kamon-matsunaga', '#2d7a46'],
       ['kamon-yamanouchi', '#365a9c'],
       ['kamon-fukui', '#8a4a36'],
       ['kamon-okayama', '#3f5c9a'],
@@ -331,12 +513,13 @@
       ['kamon-matsue', '#2f6f68'],
       ['kamon-nagaoka', '#643e21'],
       ['kamon-kuwana', '#5d6d7e'],
-      ['kamon-saito', '#73787c']
+      ['kamon-saito', '#73787c'],
+      ['kamon-ainu-pattern', '#1f5f8b']
     ].forEach(function ([symbolId, color]) {
       var pattern = new RegExp(`(<symbol id="${symbolId}"[\\s\\S]*?<circle\\b[^>]*\\bfill=")[^"]+`);
       window.KAMONS_SVG_CONTENT = window.KAMONS_SVG_CONTENT.replace(pattern, `$1${color}`);
     });
-    [[SYMBOL_ID, SYMBOL_MARKUP], [KUMAMOTO_HOSOKAWA_SYMBOL_ID, KUMAMOTO_HOSOKAWA_SYMBOL_MARKUP], [AKO_RONIN_SYMBOL_ID, AKO_RONIN_SYMBOL_MARKUP], [SAKAI_SYMBOL_ID, SAKAI_SYMBOL_MARKUP], [UWAJIMA_DATE_SYMBOL_ID, UWAJIMA_DATE_SYMBOL_MARKUP], [ANDO_SYMBOL_ID, ANDO_SYMBOL_MARKUP], [NIWA_SYMBOL_ID, NIWA_SYMBOL_MARKUP], [GOTO_SYMBOL_ID, GOTO_SYMBOL_MARKUP], [SUWA_SYMBOL_ID, SUWA_SYMBOL_MARKUP], [SENGOKU_SYMBOL_ID, SENGOKU_SYMBOL_MARKUP], [ICHIJO_SYMBOL_ID, ICHIJO_SYMBOL_MARKUP], [CHOSOKABE_SYMBOL_ID, CHOSOKABE_SYMBOL_MARKUP], [BESSHO_SYMBOL_ID, BESSHO_SYMBOL_MARKUP], [SHIINA_SYMBOL_ID, SHIINA_SYMBOL_MARKUP], [SANO_SYMBOL_ID, SANO_SYMBOL_MARKUP], [AKI_TOSA_SYMBOL_ID, AKI_TOSA_SYMBOL_MARKUP], [MOTOYAMA_SYMBOL_ID, MOTOYAMA_SYMBOL_MARKUP], [TAKATO_SYMBOL_ID, TAKATO_SYMBOL_MARKUP], [OYAMA_SYMBOL_ID, OYAMA_SYMBOL_MARKUP], [NANJO_SYMBOL_ID, NANJO_SYMBOL_MARKUP], [SAITO_SYMBOL_ID, SAITO_SYMBOL_MARKUP], [TAKIGAWA_SYMBOL_ID, TAKIGAWA_SYMBOL_MARKUP], [TODO_SYMBOL_ID, TODO_SYMBOL_MARKUP]].forEach(function ([symbolId, markup]) {
+    [[SYMBOL_ID, SYMBOL_MARKUP], [KUMAMOTO_HOSOKAWA_SYMBOL_ID, KUMAMOTO_HOSOKAWA_SYMBOL_MARKUP], [AKO_RONIN_SYMBOL_ID, AKO_RONIN_SYMBOL_MARKUP], [SAKAI_SYMBOL_ID, SAKAI_SYMBOL_MARKUP], [UWAJIMA_DATE_SYMBOL_ID, UWAJIMA_DATE_SYMBOL_MARKUP], [ANDO_SYMBOL_ID, ANDO_SYMBOL_MARKUP], [NIWA_SYMBOL_ID, NIWA_SYMBOL_MARKUP], [GOTO_SYMBOL_ID, GOTO_SYMBOL_MARKUP], [SUWA_SYMBOL_ID, SUWA_SYMBOL_MARKUP], [SENGOKU_SYMBOL_ID, SENGOKU_SYMBOL_MARKUP], [ICHIJO_SYMBOL_ID, ICHIJO_SYMBOL_MARKUP], [CHOSOKABE_SYMBOL_ID, CHOSOKABE_SYMBOL_MARKUP], [BESSHO_SYMBOL_ID, BESSHO_SYMBOL_MARKUP], [SHIINA_SYMBOL_ID, SHIINA_SYMBOL_MARKUP], [SANO_SYMBOL_ID, SANO_SYMBOL_MARKUP], [AKI_TOSA_SYMBOL_ID, AKI_TOSA_SYMBOL_MARKUP], [MOTOYAMA_SYMBOL_ID, MOTOYAMA_SYMBOL_MARKUP], [TAKATO_SYMBOL_ID, TAKATO_SYMBOL_MARKUP], [OYAMA_SYMBOL_ID, OYAMA_SYMBOL_MARKUP], [NANJO_SYMBOL_ID, NANJO_SYMBOL_MARKUP], [SAITO_SYMBOL_ID, SAITO_SYMBOL_MARKUP], [AINU_PATTERN_SYMBOL_ID, AINU_PATTERN_SYMBOL_MARKUP], [TAKIGAWA_SYMBOL_ID, TAKIGAWA_SYMBOL_MARKUP], [TODO_SYMBOL_ID, TODO_SYMBOL_MARKUP], [MATSUNAGA_SYMBOL_ID, MATSUNAGA_SYMBOL_MARKUP], [KIMOTSUKI_SYMBOL_ID, KIMOTSUKI_SYMBOL_MARKUP]].forEach(function ([symbolId, markup]) {
       if (symbolId === SENGOKU_SYMBOL_ID || symbolId === SAITO_SYMBOL_ID) window.KAMONS_SVG_CONTENT = window.KAMONS_SVG_CONTENT.replace(new RegExp(`<symbol id="${symbolId}"[\\s\\S]*?</symbol>`), '');
       if (window.KAMONS_SVG_CONTENT.indexOf(`id="${symbolId}"`) === -1) {
         window.KAMONS_SVG_CONTENT = window.KAMONS_SVG_CONTENT.replace('</defs>', `${markup}\n</defs>`);
@@ -348,7 +531,9 @@
     if (typeof document === 'undefined') return;
     [
       ['kamon-gamo', '#2f5f9e'],
-      ['kamon-todo', '#d5d8dc'],
+      ['kamon-todo', '#d8dee2'],
+      ['kamon-takeda', '#ea5424'],
+      ['kamon-matsunaga', '#2d7a46'],
       ['kamon-yamanouchi', '#365a9c'],
       ['kamon-fukui', '#8a4a36'],
       ['kamon-okayama', '#3f5c9a'],
@@ -356,15 +541,30 @@
       ['kamon-matsue', '#2f6f68'],
       ['kamon-nagaoka', '#643e21'],
       ['kamon-kuwana', '#5d6d7e'],
-      ['kamon-saito', '#73787c']
+      ['kamon-saito', '#73787c'],
+      ['kamon-ainu-pattern', '#1f5f8b']
     ].forEach(function ([symbolId, color]) {
       var symbol = document.getElementById(symbolId);
       var outerCircle = symbol && (symbol.querySelector('circle[r="15"]') || symbol.querySelector('circle'));
       if (outerCircle) outerCircle.setAttribute('fill', color);
     });
+    [
+      ['kamon-matsunaga', '松永家・蔦紋（つたもん）'],
+      ['kamon-kimotsuki', '肝付家・対い鶴喰若松三つ雁金（むかいづるくいはかまつみつかりがね）']
+    ].forEach(function ([symbolId, titleText]) {
+      var symbol = document.getElementById(symbolId);
+      if (symbol) {
+        var title = symbol.querySelector('title');
+        if (!title) {
+          title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+          symbol.insertBefore(title, symbol.firstChild);
+        }
+        title.textContent = titleText;
+      }
+    });
     var defs = document.getElementById('mapSvgDefs') || document.querySelector('#kamonsGlobalContainer defs');
     if (!defs) return;
-    [[SYMBOL_ID, SYMBOL_MARKUP], [KUMAMOTO_HOSOKAWA_SYMBOL_ID, KUMAMOTO_HOSOKAWA_SYMBOL_MARKUP], [AKO_RONIN_SYMBOL_ID, AKO_RONIN_SYMBOL_MARKUP], [SAKAI_SYMBOL_ID, SAKAI_SYMBOL_MARKUP], [UWAJIMA_DATE_SYMBOL_ID, UWAJIMA_DATE_SYMBOL_MARKUP], [ANDO_SYMBOL_ID, ANDO_SYMBOL_MARKUP], [NIWA_SYMBOL_ID, NIWA_SYMBOL_MARKUP], [GOTO_SYMBOL_ID, GOTO_SYMBOL_MARKUP], [SUWA_SYMBOL_ID, SUWA_SYMBOL_MARKUP], [SENGOKU_SYMBOL_ID, SENGOKU_SYMBOL_MARKUP], [ICHIJO_SYMBOL_ID, ICHIJO_SYMBOL_MARKUP], [CHOSOKABE_SYMBOL_ID, CHOSOKABE_SYMBOL_MARKUP], [BESSHO_SYMBOL_ID, BESSHO_SYMBOL_MARKUP], [SHIINA_SYMBOL_ID, SHIINA_SYMBOL_MARKUP], [SANO_SYMBOL_ID, SANO_SYMBOL_MARKUP], [AKI_TOSA_SYMBOL_ID, AKI_TOSA_SYMBOL_MARKUP], [MOTOYAMA_SYMBOL_ID, MOTOYAMA_SYMBOL_MARKUP], [TAKATO_SYMBOL_ID, TAKATO_SYMBOL_MARKUP], [OYAMA_SYMBOL_ID, OYAMA_SYMBOL_MARKUP], [NANJO_SYMBOL_ID, NANJO_SYMBOL_MARKUP], [SAITO_SYMBOL_ID, SAITO_SYMBOL_MARKUP], [TAKIGAWA_SYMBOL_ID, TAKIGAWA_SYMBOL_MARKUP], [TODO_SYMBOL_ID, TODO_SYMBOL_MARKUP]].forEach(function ([symbolId, markup]) {
+    [[SYMBOL_ID, SYMBOL_MARKUP], [KUMAMOTO_HOSOKAWA_SYMBOL_ID, KUMAMOTO_HOSOKAWA_SYMBOL_MARKUP], [AKO_RONIN_SYMBOL_ID, AKO_RONIN_SYMBOL_MARKUP], [SAKAI_SYMBOL_ID, SAKAI_SYMBOL_MARKUP], [UWAJIMA_DATE_SYMBOL_ID, UWAJIMA_DATE_SYMBOL_MARKUP], [ANDO_SYMBOL_ID, ANDO_SYMBOL_MARKUP], [NIWA_SYMBOL_ID, NIWA_SYMBOL_MARKUP], [GOTO_SYMBOL_ID, GOTO_SYMBOL_MARKUP], [SUWA_SYMBOL_ID, SUWA_SYMBOL_MARKUP], [SENGOKU_SYMBOL_ID, SENGOKU_SYMBOL_MARKUP], [ICHIJO_SYMBOL_ID, ICHIJO_SYMBOL_MARKUP], [CHOSOKABE_SYMBOL_ID, CHOSOKABE_SYMBOL_MARKUP], [BESSHO_SYMBOL_ID, BESSHO_SYMBOL_MARKUP], [SHIINA_SYMBOL_ID, SHIINA_SYMBOL_MARKUP], [SANO_SYMBOL_ID, SANO_SYMBOL_MARKUP], [AKI_TOSA_SYMBOL_ID, AKI_TOSA_SYMBOL_MARKUP], [MOTOYAMA_SYMBOL_ID, MOTOYAMA_SYMBOL_MARKUP], [TAKATO_SYMBOL_ID, TAKATO_SYMBOL_MARKUP], [OYAMA_SYMBOL_ID, OYAMA_SYMBOL_MARKUP], [NANJO_SYMBOL_ID, NANJO_SYMBOL_MARKUP], [SAITO_SYMBOL_ID, SAITO_SYMBOL_MARKUP], [AINU_PATTERN_SYMBOL_ID, AINU_PATTERN_SYMBOL_MARKUP], [TAKIGAWA_SYMBOL_ID, TAKIGAWA_SYMBOL_MARKUP], [TODO_SYMBOL_ID, TODO_SYMBOL_MARKUP], [MATSUNAGA_SYMBOL_ID, MATSUNAGA_SYMBOL_MARKUP], [KIMOTSUKI_SYMBOL_ID, KIMOTSUKI_SYMBOL_MARKUP]].forEach(function ([symbolId, markup]) {
       var old = document.getElementById(symbolId);
       if (old && (symbolId === SENGOKU_SYMBOL_ID || symbolId === SAITO_SYMBOL_ID) && old.getAttribute('data-v') !== '2') old.parentNode.removeChild(old);
       else if (old) return;

@@ -59,9 +59,12 @@
   let horaCtx = null, horaAt = 0, horaEndAt = 0;
   const horagaiRemainingMs = () => Math.max(0, horaEndAt - Date.now());
   const isHoragaiMuted = () => {
-    if (window.SengokuSoundSync && window.SengokuSoundSync.isMuted) return true;
+    // ほら貝は効果音(SE)のため、効果音が明示的にミュートされている場合のみ停止
     const g = window.game;
-    if (g && g.audio && g.audio.isMuted) return true;
+    if (g && g.audio && g.audio.isSeMuted) return true;
+    if (window.SengokuSoundSync && typeof window.SengokuSoundSync.isSeMuted === 'boolean') {
+      return window.SengokuSoundSync.isSeMuted;
+    }
     return false;
   };
   function scheduleHoragaiNodes(c) {
@@ -93,7 +96,7 @@
   }
   function horagai() {
     if (isHoragaiMuted()) return;
-    const now0 = Date.now(); if (now0 - horaAt < 1500) return; horaAt = now0;
+    const now0 = Date.now(); if (now0 - horaAt < 800) return; horaAt = now0;
     try {
       const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
       if (!horaCtx || horaCtx.state === 'closed') horaCtx = new AC();
@@ -101,14 +104,13 @@
       const D = 2.6;
       horaEndAt = Date.now() + Math.ceil((D + 0.2) * 1000);
       window.__horagaiPlayed = (window.__horagaiPlayed || 0) + 1;
+      const play = () => {
+        try { scheduleHoragaiNodes(c); } catch (_) {}
+      };
       if (c.state === 'suspended') {
-        c.resume().then(() => {
-          try { scheduleHoragaiNodes(c); } catch (_) {}
-        }).catch(() => {
-          try { scheduleHoragaiNodes(c); } catch (_) {}
-        });
+        c.resume().then(play).catch(play);
       } else {
-        scheduleHoragaiNodes(c);
+        play();
       }
     } catch (_) {
       horaAt = 0;

@@ -30,6 +30,22 @@ export class DataLoader {
         window.MAP_BORDERS_DATA = mapBordersData;
       }
 
+      // 佐渡につながる経路は越後のみに限定する（サニタイズ処理）
+      if (Array.isArray(provinces)) {
+        const sado = provinces.find(p => p && p.id === 'sado');
+        if (sado) {
+          sado.neighbors = ['echigo'];
+        }
+        provinces.forEach(p => {
+          if (!p || !Array.isArray(p.neighbors)) return;
+          if (p.id !== 'echigo') {
+            p.neighbors = p.neighbors.filter(nId => nId !== 'sado');
+          } else if (!p.neighbors.includes('sado')) {
+            p.neighbors.push('sado');
+          }
+        });
+      }
+
       const gameData = {
         scenarios: scenarios || [],
         officers: officers || [],

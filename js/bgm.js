@@ -3384,26 +3384,79 @@ class SengokuMusicEngine {
       'playGrandFanfare', 'playSword', 'playGachaGacha', 'playTeppo', 'playArrow', 'playCoin',
       'playSlash', 'playKachi', 'playDecision', 'playCancel',
       'playEventNotice', 'playEventChime', 'playDoraSound', 'playOugiVoiceSe',
-      'playDomesticSound', 'playMilitarySound'];
+      'playDomesticSound', 'playMilitarySound', 'playEventChimeExclusive', 'playDaimyoDeathSeExclusive'];
   }
 
   wrapSeMethods() {
     SengokuMusicEngine.SE_METHODS.forEach(name => {
       const orig = SengokuMusicEngine.prototype[name];
       if (typeof orig !== 'function') return;
-      this[name] = (...args) => this.asSe(() => orig.apply(this, args));
+      this[name] = (...args) => this.asSe(() => orig.apply(this, args), name);
     });
   }
 
   // 効果音として鳴らす（OFF なら何もしない。中で鳴る楽器音も効果音バスへ）
-  asSe(fn) {
+  asSe(fn, name = null) {
     if (this.isSeMuted) return undefined;
+    // 排他効果音（イベントチャリーン、大名死亡効果音など）の再生中は他の効果音の重複発音を遮断
+    if (this._exclusiveSeUntil && performance.now() < this._exclusiveSeUntil) {
+      if (!this._currentExclusiveScope && name !== this._exclusiveMethod) {
+        return undefined; // 他の効果音をスキップして重複を防止
+      }
+    }
     this._seDepth = (this._seDepth || 0) + 1;
     try {
       return fn();
     } finally {
       this._seDepth -= 1;
     }
+  }
+
+  // 現在再生中のすべての効果音を即時停止・消音
+  stopAllSe() {
+    if (!this.ctx || !this.seGain) return;
+    try {
+      const t = this.ctx.currentTime;
+      this.seGain.gain.cancelScheduledValues(t);
+      this.seGain.gain.setValueAtTime(0, t);
+      // マスターゲインへ再接続した新規SEゲインへ速やかに切り替える
+      const oldGain = this.seGain;
+      const newGain = this.ctx.createGain();
+      newGain.gain.setValueAtTime(this.isSeMuted ? 0 : this.seVolume, t + 0.005);
+      newGain.connect(this.masterGain);
+      this.seGain = newGain;
+      setTimeout(() => {
+        try { oldGain.disconnect(); } catch (e) {}
+      }, 60);
+    } catch (e) {
+      console.warn('stopAllSe failed:', e);
+    }
+  }
+
+  // 排他効果音再生ヘルパー（他のSEを停止し、指定時間他の効果音の重複を抑止）
+  playExclusiveSe(methodName, durationMs = 1800, ...args) {
+    this.stopAllSe();
+    this._exclusiveSeUntil = performance.now() + durationMs;
+    this._exclusiveMethod = methodName;
+    this._currentExclusiveScope = true;
+    try {
+      const fn = SengokuMusicEngine.prototype[methodName] || this[methodName];
+      if (typeof fn === 'function') {
+        return this.asSe(() => fn.apply(this, args), methodName);
+      }
+    } finally {
+      this._currentExclusiveScope = false;
+    }
+  }
+
+  // イベント発生時専用「チャリーン」効果音（他の効果音と重複しない）
+  playEventChimeExclusive(vol = 1.0) {
+    return this.playExclusiveSe('playEventChime', 1900, vol);
+  }
+
+  // 世継ぎ発生・大名死亡時専用効果音（他の効果音と重複しない）
+  playDaimyoDeathSeExclusive(vol = 1.1) {
+    return this.playExclusiveSe('playHoragai', 2200, vol);
   }
 
   // 楽器音の出力先：効果音の最中は効果音バス、それ以外は BGM バス

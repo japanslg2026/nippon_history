@@ -1004,7 +1004,20 @@ html.sl-phone #daimyoPopup .daimyo-popup-stat .val {
   font-size: 15px !important;
 }
 html:not(.sl-phone) #startModal.sl-active .scenario-btn .scen-title, html:not(.sl-phone) #startModal.sl-active .scenario-btn .scen-sub { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; }
-html.sl-phone .sl-tip { display: none !important; }
+html.sl-phone .sl-tip {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+@media (max-width: 768px) {
+  .sl-tip {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}
 html.sl-phone #startModal.sl-active #scenarioDescBox > div:first-child { flex-direction: column !important; align-items: flex-start !important; gap: 2px; }
 html.sl-phone #startModal.sl-active #scenarioDescBox > div:first-child > span { white-space: nowrap; }
 html:not(.sl-phone) #startModal.sl-active .sl-diff .diff-option-btn { padding: 2px 0 !important; white-space: nowrap; }

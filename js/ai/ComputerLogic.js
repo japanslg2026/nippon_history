@@ -830,6 +830,8 @@ export const ComputerLogicMethods = {
         (src.neighbors || []).forEach(nId => {
           const tgt = this.aiProvById(nId);
           if (tgt && tgt.ownerId && tgt.ownerId !== clanId && !this.isAllied(clanId, tgt.ownerId) && !this.isTruceBlocked?.(clanId, tgt.ownerId)) {
+            if (clanId === 'daihoji' && (tgt.id === 'echigo' || tgt.name === '越後')) return; // 大宝寺家は越後へ工作を行わない
+            if ((src.id === 'sado' && tgt.id !== 'echigo') || (tgt.id === 'sado' && src.id !== 'echigo')) return; // 佐渡につながる経路は越後のみに限定
             potentialTargets.push({ src, target: tgt });
           }
         });
@@ -1873,7 +1875,9 @@ export const ComputerLogicMethods = {
       const neighborTargets = (srcProv.neighbors || [])
         .map(nId => this.provinces.find(x => x.id === nId))
         .filter(n => n && n.ownerId !== clanId && !this.isAllied(clanId, n.ownerId) && !this.isTruceBlocked?.(clanId, n.ownerId))
-        .filter(n => !regionReachable || regionTargets.includes(n.region));
+        .filter(n => !regionReachable || regionTargets.includes(n.region))
+        .filter(n => !(clanId === 'daihoji' && (n.id === 'echigo' || n.name === '越後'))) // 大宝寺家は越後に攻め込まない
+        .filter(n => !((srcProv.id === 'sado' && n.id !== 'echigo') || (n.id === 'sado' && srcProv.id !== 'echigo'))); // 佐渡につながる経路は越後のみに限定
 
       for (const target of neighborTargets) {
         // 兵の集中：攻め先に接する他の自領からも加勢（2026-10-11 cn）
@@ -2568,7 +2572,9 @@ export const ComputerLogicMethods = {
       const attackForce = Math.round((srcProv.troops || 0) * 0.72);
       const enemyNeighbors = (srcProv.neighbors || [])
         .map(nId => this.provinces.find(x => x.id === nId))
-        .filter(n => n && n.ownerId !== this.playerClanId && !this.isAllied(this.playerClanId, n.ownerId) && !this.isTruceBlocked?.(this.playerClanId, n.ownerId));
+        .filter(n => n && n.ownerId !== this.playerClanId && !this.isAllied(this.playerClanId, n.ownerId) && !this.isTruceBlocked?.(this.playerClanId, n.ownerId))
+        .filter(n => !(this.playerClanId === 'daihoji' && (n.id === 'echigo' || n.name === '越後'))) // 大宝寺家は越後に攻め込まない
+        .filter(n => !((srcProv.id === 'sado' && n.id !== 'echigo') || (n.id === 'sado' && srcProv.id !== 'echigo'))); // 佐渡につながる経路は越後のみに限定
 
       for (const target of enemyNeighbors) {
         const isBlank = !target.ownerId || target.ownerId === 'null';
