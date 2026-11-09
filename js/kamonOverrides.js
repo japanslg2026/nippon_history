@@ -229,20 +229,20 @@
   var TODO_SYMBOL_MARKUP = `
     <symbol id="kamon-todo-tsuta" viewBox="0 0 32 32">
       <title>藤堂家・藤堂蔦</title>
-      <circle cx="16" cy="16" r="15" fill="#d8dee2" stroke="#4b5563" stroke-width="1.5"/>
-      <circle cx="16" cy="16" r="12" fill="none" stroke="#4b5563" stroke-width="1.1"/>
-      <g fill="#374151" stroke="#d8dee2" stroke-width="0.55" stroke-linejoin="round">
+      <circle cx="16" cy="16" r="15" fill="#7b8791" stroke="#4b5563" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="12" fill="none" stroke="#ffffff" stroke-width="1.1"/>
+      <g fill="#ffffff" stroke="#7b8791" stroke-width="0.55" stroke-linejoin="round">
         <g transform="translate(16 16.6)">
           <path d="M0 1.4 C-2.8 0.7 -4.2 -1.8 -3.3 -4.2 C-2.5 -6.2 -1.1 -7.8 0 -10.1 C1.1 -7.8 2.5 -6.2 3.3 -4.2 C4.2 -1.8 2.8 0.7 0 1.4 Z"/>
-          <path d="M0 0.2 V-8.2 M0-4.1 L-1.9-5.7 M0-4.1 L1.9-5.7 M0-1.9 L-2.35-3.1 M0-1.9 L2.35-3.1" fill="none" stroke="#d8dee2" stroke-width="0.72" stroke-linecap="round"/>
+          <path d="M0 0.2 V-8.2 M0-4.1 L-1.9-5.7 M0-4.1 L1.9-5.7 M0-1.9 L-2.35-3.1 M0-1.9 L2.35-3.1" fill="none" stroke="#7b8791" stroke-width="0.72" stroke-linecap="round"/>
         </g>
         <g transform="translate(16 16.6) rotate(120)">
           <path d="M0 1.4 C-2.8 0.7 -4.2 -1.8 -3.3 -4.2 C-2.5 -6.2 -1.1 -7.8 0 -10.1 C1.1 -7.8 2.5 -6.2 3.3 -4.2 C4.2 -1.8 2.8 0.7 0 1.4 Z"/>
-          <path d="M0 0.2 V-8.2 M0-4.1 L-1.9-5.7 M0-4.1 L1.9-5.7 M0-1.9 L-2.35-3.1 M0-1.9 L2.35-3.1" fill="none" stroke="#d8dee2" stroke-width="0.72" stroke-linecap="round"/>
+          <path d="M0 0.2 V-8.2 M0-4.1 L-1.9-5.7 M0-4.1 L1.9-5.7 M0-1.9 L-2.35-3.1 M0-1.9 L2.35-3.1" fill="none" stroke="#7b8791" stroke-width="0.72" stroke-linecap="round"/>
         </g>
         <g transform="translate(16 16.6) rotate(240)">
           <path d="M0 1.4 C-2.8 0.7 -4.2 -1.8 -3.3 -4.2 C-2.5 -6.2 -1.1 -7.8 0 -10.1 C1.1 -7.8 2.5 -6.2 3.3 -4.2 C4.2 -1.8 2.8 0.7 0 1.4 Z"/>
-          <path d="M0 0.2 V-8.2 M0-4.1 L-1.9-5.7 M0-4.1 L1.9-5.7 M0-1.9 L-2.35-3.1 M0-1.9 L2.35-3.1" fill="none" stroke="#d8dee2" stroke-width="0.72" stroke-linecap="round"/>
+          <path d="M0 0.2 V-8.2 M0-4.1 L-1.9-5.7 M0-4.1 L1.9-5.7 M0-1.9 L-2.35-3.1 M0-1.9 L2.35-3.1" fill="none" stroke="#7b8791" stroke-width="0.72" stroke-linecap="round"/>
         </g>
       </g>
       <circle cx="16" cy="16.6" r="1.2" fill="#4b5563"/>
@@ -524,7 +524,7 @@
     if (!window.KAMONS_SVG_CONTENT) return;
     [
       ['kamon-gamo', '#2f5f9e'],
-      ['kamon-todo', '#d8dee2'],
+      ['kamon-todo', '#7b8791'],
       ['kamon-takeda', '#ea5424'],
       ['kamon-matsunaga', '#2d7a46'],
       ['kamon-yamanouchi', '#365a9c'],
@@ -552,7 +552,7 @@
     if (typeof document === 'undefined') return;
     [
       ['kamon-gamo', '#2f5f9e'],
-      ['kamon-todo', '#d8dee2'],
+      ['kamon-todo', '#7b8791'],
       ['kamon-takeda', '#ea5424'],
       ['kamon-matsunaga', '#2d7a46'],
       ['kamon-yamanouchi', '#365a9c'],

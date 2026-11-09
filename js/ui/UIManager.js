@@ -4873,7 +4873,7 @@ export const UIManagerMethods = {
 
                     actionHtml = `
                       <div style="display:flex; justify-content:center; align-items:center; gap:6px;">
-                        <span style="background:#27ae60; color:#fff; padding:3px 8px; border-radius:4px; font-weight:bold; font-size:11pt;">🤝 盟友</span>
+                        <span style="background:#27ae60; color:#fff; padding:3px 8px; border-radius:4px; font-weight:bold; font-size:11pt;"><span class="pict-pc">🤝 </span>盟友</span>
                         <button class="btn-break-alliance-row" data-clan-id="${f.clanId}" style="background:linear-gradient(180deg, #922b21, #7b241c); color:#fff; border:1px solid #c0392b; padding:3px 10px; border-radius:4px; cursor:pointer; font-size:11pt; font-weight:bold; white-space:nowrap; transition:0.2s;" title="同盟を破棄し敵対関係とします (AP 1消費)">敵対</button>
                       </div>
                     `;
@@ -5386,7 +5386,7 @@ export const UIManagerMethods = {
 
                   : (a.isAlliedWithPlayer 
 
-                      ? `<span style="background:#27ae60; color:#fff; font-size:9.5pt; font-weight:bold; padding:2px 7px; border-radius:3px;">🤝 盟友</span>`
+                      ? `<span style="background:#27ae60; color:#fff; font-size:9.5pt; font-weight:bold; padding:2px 7px; border-radius:3px;"><span class="pict-pc">🤝 </span>盟友</span>`
 
                       : `<span style="background:#443322; color:#bbb; font-size:9.5pt; padding:2px 7px; border-radius:3px;">他家</span>`);
 
@@ -5422,7 +5422,7 @@ export const UIManagerMethods = {
 
                       <div style="font-size:10pt; color:#aaa; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
 
-                        当主: <span style="color:#ddd;">${a.daimyoName}</span> ｜ 領国: <strong style="color:#fff;">${a.provCount}</strong>ヶ国 ｜ 兵力: <strong style="color:#f39c12;">${a.totalTroops.toLocaleString()}</strong>人
+                        <span class="ally-ruler-pc">当主: <span style="color:#ddd;">${a.daimyoName}</span> ｜ </span>領国: <strong style="color:#fff;">${a.provCount}</strong>ヶ国 ｜ 兵力: <strong style="color:#f39c12;">${a.totalTroops.toLocaleString()}</strong>人
 
                       </div>
 

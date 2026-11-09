@@ -7827,7 +7827,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
   },
   {
     id: 'ando_sadasue_tsugaru_1350',
-    officerIds: ['off_jd_363'],
+    officerIds: ['off_dm_ando_1331'],
     scenarioIds: ['1350'],
     setClanId: 'ando',
     setDefaultProv: 'nishi_tsugaru',

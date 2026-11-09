@@ -9,12 +9,12 @@
  * @typedef {import('./types.js').GameSaveData} GameSaveData
  */
 
-import { GameState, GameStateMethods } from './core/GameState.js?v=20261108_kamon_fix';
-import { UIManager, UIManagerMethods } from './ui/UIManager.js?v=20261107_offnone';
-import { MapRenderer, MapRendererMethods } from './render/MapRenderer.js?v=20261108_kamon_fix';
-import { ComputerLogic, ComputerLogicMethods } from './ai/ComputerLogic.js?v=20261107_hist_v16';
-import { DataLoader } from './core/DataLoader.js?v=20261107_takeda_hongan';
-import * as GameRules from './core/GameRules.js?v=20261107_hist_v16';
+import { GameState, GameStateMethods } from './core/GameState.js?v=20261109_bulk';
+import { UIManager, UIManagerMethods } from './ui/UIManager.js?v=20261109_exec';
+import { MapRenderer, MapRendererMethods } from './render/MapRenderer.js?v=20261109_exec';
+import { ComputerLogic, ComputerLogicMethods } from './ai/ComputerLogic.js?v=20261109_exec';
+import { DataLoader } from './core/DataLoader.js?v=20261109_exec';
+import * as GameRules from './core/GameRules.js?v=20261109_dedup';
 
 // 早期初期化: モジュール評価時点で即座に window.getClanAbility を配備
 if (typeof window !== 'undefined') {

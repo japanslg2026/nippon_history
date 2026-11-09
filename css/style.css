@@ -6330,3 +6330,23 @@ html.sl-phone .main-layout > .side-panel {
   pointer-events: auto !important;
   margin-bottom: calc(68px + env(safe-area-inset-bottom, 0px)) !important;
 }
+
+/* === 2026-11-09 スマホ画面の表示簡略化 === */
+.pict-pc { display: inline; }
+@media (max-width: 768px) {
+  /* 大名情報：家名・当主名の右の能力値（武・内・知）を省略 */
+  #statAbilities, .clan-bar.is-open #statAbilities { display: none !important; }
+  /* 進捗〜兵の6ボックス：ピクトグラムを削除 */
+  .clan-bar .stat-card .label > i[data-lucide],
+  .clan-bar .stat-card .label > svg { display: none !important; }
+  /* 軍令発令所：6コマンドのピクトグラムを削除し、右側の説明は見切れないように表示 */
+  .cmd-panel .cmd-icon { display: none !important; }
+  .cmd-panel .cmd-cost { max-width: none !important; flex: 0 0 auto !important; text-overflow: clip !important; }
+  /* 勢力一覧・同盟諸国録：盟友の前のピクトグラム、同盟相手の当主名を省略 */
+  .pict-pc, .ally-ruler-pc { display: none !important; }
+  /* 名鑑のタブ（武将／大名） */
+  .mk-tab .lbl-pc { display: none !important; }
+  /* 地図ボタン：⟲ の右に 🏠 を表示し、表示切替4ボタンはその右へ */
+  .map-ctrl-btn.map-home-btn { display: flex !important; }
+  .map-heat-panel { left: calc(32px * 4 + 4px * 3 + 6px + 8px) !important; }
+}

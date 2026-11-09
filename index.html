@@ -3817,7 +3817,6 @@
               <!-- 地図操作ボタン群（＋、−、⟲、国 ＆ スマホ用ハイライト解除）: 水平配置＆上端揃え -->
               <div class="map-floating-bar" id="mapFloatingBar">
                 <div class="map-controls">
-                  <button type="button" class="map-ctrl-btn" id="btnToggleLabels" title="国名ラベルの表示／非表示切替（初期：非表示）">国</button>
                   <button type="button" class="map-ctrl-btn" id="btnZoomIn" title="拡大 (ズームイン)">＋</button>
                   <button type="button" class="map-ctrl-btn" id="btnZoomOut" title="縮小 (ズームアウト)">－</button>
                   <button type="button" class="map-ctrl-btn" id="btnZoomReset" title="全体表示にリセット">⟲</button>
@@ -4367,7 +4366,7 @@
           var rulesPromise = loadAffiliationRulesSafe();
 
           var results = await Promise.all([
-            fetchJsonSmart('scenarios.json?v=20261107_takeda_hongan'),
+            fetchJsonSmart('scenarios.json?v=20261109_dedup'),
             fetchJsonSmart('provinces.json?v=20261107_hist_v16'),
             fetchJsonSmart('clans.json?v=20261108_kamon_fix'),
             fetchJsonSmart('officers.json?v=20261107_hist_v16'),
@@ -4850,7 +4849,7 @@
         var distinctTerritoryColors = {
           gamo: '#2f5f9e',
           gamou: '#2f5f9e',
-          todo: '#d8dee2',
+          todo: '#7b8791',
           takeda: '#ea5424',
           matsunaga: '#2d7a46',
           tosa: '#365a9c',
@@ -5276,7 +5275,7 @@
             txt.setAttribute('y', ky + badgeSize / 2 + 7);
             if (provinceTransform) txt.setAttribute('transform', provinceTransform);
             txt.textContent = p.name;
-            labelGroup.appendChild(txt);
+            // 国名を地図上に描く機能は廃止（2026-11-09）
           }
         }
 
@@ -5460,7 +5459,8 @@
             fitArchipelagoBesideDrawer(true);
           }
         };
-        document.getElementById('btnToggleLabels').onclick = function (e) {
+        var btnToggleLabels = document.getElementById('btnToggleLabels'); // 国ボタンは廃止（2026-11-09）
+        if (btnToggleLabels) btnToggleLabels.onclick = function (e) {
           State.showLabels = !State.showLabels;
           e.currentTarget.classList.toggle('active', State.showLabels);
           svg.classList.toggle('hide-labels', !State.showLabels);
@@ -5904,7 +5904,7 @@
               '城主：<b>' + esc(govName) + '</b></span>' +
           '</div>' +
 
-          '<div class="stat-pills-grid-2">' +
+          '<div class="stat-pills-grid-2 stat-pills-top">' +
             '<div class="stat-pill">' +
               '<span class="stat-pill-label"><span class="prov-stat-sp">石高</span></span>' +
               '<span class="stat-pill-val">' + Math.round(pEntry.kokudaka / 10000).toLocaleString() + '万石</span>' +
@@ -5921,6 +5921,16 @@
               esc(cleanLoreText(cLore)) +
               (base.battleHistory ? '<br><strong style="color:#ff9f7f;">【合戦史】</strong> ' + esc(base.battleHistory) : '') +
             '</div>' +
+          '<div class="stat-pills-grid-2 stat-pills-in-exp">' +
+            '<div class="stat-pill">' +
+              '<span class="stat-pill-label"><span class="prov-stat-sp">石高</span></span>' +
+              '<span class="stat-pill-val">' + Math.round(pEntry.kokudaka / 10000).toLocaleString() + '万石</span>' +
+            '</div>' +
+            '<div class="stat-pill">' +
+              '<span class="stat-pill-label">駐留兵力</span>' +
+              '<span class="stat-pill-val">' + fmtTroopsInThousands(pEntry.troops) + '</span>' +
+            '</div>' +
+          '</div>' +
             specialtyHtml +
           '</div>';
 
@@ -6767,9 +6777,7 @@
           // スマホ用カード行
           if (cardsEl) {
             cardsEl.innerHTML = rows.map(function (r) {
-              var badge = r.isBlank
-                ? '<span class="role-badge role-ronin">空白</span>'
-                : (r.isCap ? '<span class="role-badge role-daimyo" title="本拠">👑</span>' : (r.govOff ? '<span class="role-badge role-governor" title="城主">🏯</span>' : ''));
+              var badge = ''; // スマホ：城主の手前の空白・👑・🏯は省略（2026-11-09）
               return (
                 '<div class="prov-card" data-row-prov="' + esc(r.p.id) + '">' +
                   '<div class="card-head-row">' +
@@ -8523,6 +8531,23 @@
   }
 }
 
+
+/* === 2026-11-09 スマホ画面の表示簡略化 === */
+.stat-pills-in-exp { display: none !important; }
+@media (max-width: 768px) {
+  .brand-emblem { display: none !important; }
+  .stat-pills-top { display: none !important; }
+  .castle-expanded-content .stat-pills-in-exp { display: grid !important; margin: 6px 0 !important; }
+  .mk-stat .mk-bar { display: none !important; }
+  .mk-stat { grid-template-columns: 76px 44px !important; }
+}
+@media (max-width: 768px) {
+  /* シナリオ説明：展開後の▲ボタンはシナリオ名の右端に置き、副題・説明はその下へ（余分な1行をなくす） */
+  #mapScenBox.is-expanded .overlay-box-header { flex-wrap: wrap !important; align-items: flex-start !important; }
+  #mapScenBox.is-expanded .overlay-box-title { order: 1 !important; flex: 1 1 0 !important; min-width: 0 !important; }
+  #mapScenBox.is-expanded #scenMoreBtn { order: 2 !important; flex: 0 0 auto !important; margin-left: 4px !important; align-self: flex-start !important; }
+  #mapScenBox.is-expanded .overlay-box-sub { order: 3 !important; flex: 1 0 100% !important; }
+}
 </style>
 </body>
 </html>

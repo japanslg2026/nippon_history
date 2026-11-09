@@ -249,3 +249,12 @@
   font-variant-numeric: tabular-nums !important;
   font-feature-settings: "tnum" 1 !important;
 }
+
+/* === 2026-11-09 スマホ：能力値バー省略・登場シナリオ名は西暦年の下に改行 === */
+@media (max-width: 768px), (pointer: coarse) and (max-width: 500px), (pointer: coarse) and (max-height: 500px) {
+  .mk-stat .mk-bar { display: none !important; }
+  .mk-stat { grid-template-columns: 64px 40px !important; }
+  .mk-ap { grid-template-columns: 1fr auto !important; gap: 2px 10px !important; }
+  .mk-ap-y { grid-column: 1 / -1; }
+  .mk-ap-t { grid-column: 1 / -1; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; }
+}

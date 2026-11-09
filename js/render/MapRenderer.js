@@ -529,6 +529,7 @@ export const MapRendererMethods = {
       'iyo-suo',              // 伊予と周防
       'bungo-iyo',            // 伊予と豊後
       'chikuzen-tsushima',    // 対馬と筑前
+      'hirado-tsushima',      // 対馬と平戸
       'ryukyu-satsuma',       // 薩摩と琉球
       'echigo-sado',          // 越後と佐渡
       'izumo-oki'             // 出雲と隠岐
@@ -887,7 +888,84 @@ export const MapRendererMethods = {
     this.mapPanX = centerSvgX - hx * targetScale;
     this.mapPanY = centerSvgY - hy * targetScale;
     this.applyPanZoom();
+    // 拡大後の画面の上下左右に海だけの余白ができないよう、本拠を画面内に残したまま陸地側へ寄せる（2026-11-09）
+    try {
+      const rightInset = (isDesktop && sidePanel) ? Math.min(w * 0.7, sidePanel.getBoundingClientRect().width || 0) : 0;
+      this.fitHomeZoomToLand(homeProv, rightInset);
+    } catch (e) { console.warn('[homeZoom fit]', e); }
     try { this.audio?.playHyoshigi?.(); } catch (_) {}
+  },
+
+  /**
+   * 🏠拡大後の表示位置を、各国ポリゴンの中心が最も多く画面に入る位置へずらす。
+   * 本拠国は画面の内側（端から15%以上）に残す。列島の外周より外側の海は画面端に出さない。
+   */
+  fitHomeZoomToLand(homeProv, rightInset = 0) {
+    const wrapper = document.getElementById('mapWrapper');
+    const svg = document.getElementById('sengokuMapSvg');
+    if (!wrapper || !svg || !homeProv) return;
+    const wr = wrapper.getBoundingClientRect();
+    const V = { l: wr.left, t: wr.top, r: wr.right - (rightInset || 0), b: wr.bottom };
+    const vw = V.r - V.l, vh = V.b - V.t;
+    if (vw < 50 || vh < 50) return;
+    const ctm = svg.getScreenCTM && svg.getScreenCTM();
+    const pxPerUnitX = ctm ? Math.abs(ctm.a) : 0;
+    const pxPerUnitY = ctm ? Math.abs(ctm.d) : 0;
+    if (!pxPerUnitX || !pxPerUnitY) return;
+
+    const pts = [];
+    let land = null, home = null;
+    (this.provinces || []).forEach(p => {
+      const el = document.getElementById(`path-${p.id}`);
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      if (!r || (r.width === 0 && r.height === 0)) return;
+      const c = { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+      if (p.id === homeProv.id) home = { c, r };
+      if (p.id === 'ryukyu') return; // 琉球は離れて配置されるため寄せ先の判定から外す
+      pts.push(c);
+      land = land ? { l: Math.min(land.l, r.left), t: Math.min(land.t, r.top), r: Math.max(land.r, r.right), b: Math.max(land.b, r.bottom) }
+                  : { l: r.left, t: r.top, r: r.right, b: r.bottom };
+    });
+    if (!home || !land || pts.length === 0) return;
+
+    // 本拠中心を画面端から15%以上内側に保つ移動量(dx,dy)の範囲
+    const mx = vw * 0.15, my = vh * 0.15;
+    const dxMin = (V.l + mx) - home.c.x, dxMax = (V.r - mx) - home.c.x;
+    const dyMin = (V.t + my) - home.c.y, dyMax = (V.b - my) - home.c.y;
+    if (dxMin > dxMax || dyMin > dyMax) return;
+
+    // 列島外周の外の海を画面に出さない移動量の範囲（陸地の方が画面より大きい場合のみ）
+    const clampRange = (lo, hi, aLo, aHi) => {
+      const nlo = Math.max(lo, aLo), nhi = Math.min(hi, aHi);
+      return nlo <= nhi ? [nlo, nhi] : [lo, hi];
+    };
+    let [xLo, xHi] = [dxMin, dxMax];
+    let [yLo, yHi] = [dyMin, dyMax];
+    if (land.r - land.l >= vw) [xLo, xHi] = clampRange(xLo, xHi, V.r - land.r, V.l - land.l);
+    if (land.b - land.t >= vh) [yLo, yHi] = clampRange(yLo, yHi, V.b - land.b, V.t - land.t);
+
+    const N = 24;
+    let best = null;
+    for (let i = 0; i <= N; i++) {
+      const dx = xLo + (xHi - xLo) * i / N;
+      for (let j = 0; j <= N; j++) {
+        const dy = yLo + (yHi - yLo) * j / N;
+        let n = 0;
+        for (let k = 0; k < pts.length; k++) {
+          const x = pts[k].x + dx, y = pts[k].y + dy;
+          if (x >= V.l && x <= V.r && y >= V.t && y <= V.b) n++;
+        }
+        // 同点なら本拠が画面中央に近い位置を優先
+        const ex = (home.c.x + dx) - (V.l + vw / 2), ey = (home.c.y + dy) - (V.t + vh / 2);
+        const score = n - Math.hypot(ex / vw, ey / vh) * 0.5;
+        if (!best || score > best.score) best = { score, dx, dy };
+      }
+    }
+    if (!best) return;
+    this.mapPanX += best.dx / pxPerUnitX;
+    this.mapPanY += best.dy / pxPerUnitY;
+    this.applyPanZoom();
   },
 
   applyPanZoom() {

@@ -1420,6 +1420,12 @@ export const GameStateMethods = {
 
 
 
+  // 全領国オールスター群雄割拠：武将は斬首（処刑）以外では死なない（不老不死）（2026-11-09）
+  isAllstarImmortalScenario() {
+    const id = String(this.currentScenarioId || this.currentScenario?.id || '');
+    return id === 'allstar_feudal' || id === 'allstar_shuffle';
+  },
+
   isVirtualScenario() {
 
     if (this.currentScenario?.isVirtual || this.currentScenario?.category === 'virtual') return true;
@@ -2960,7 +2966,9 @@ export const GameStateMethods = {
 
       if (isVirtual) {
 
-        const effClanId = virtualAffiliations[officer.id] || officer.clanId;
+        // 所属指定は文字列（家ID）でも {clanId: ...} でもよい（2026-11-09 オールスター修正）
+        const affV = virtualAffiliations[officer.id];
+        const effClanId = (affV && typeof affV === 'object' ? affV.clanId : affV) || officer.clanId;
 
         const isBelongingToActiveClan = effClanId && virtualClanIds && virtualClanIds.has(effClanId);
 
@@ -2968,10 +2976,17 @@ export const GameStateMethods = {
 
           // 仮想シナリオでも開始時だけ年齢をそろえ、死亡年は年次更新で延長しない。
           // 以前は毎年 +200 年へ上書きしていたため、武将が死亡しなかった。
-          const invalidOrLegacyLifetime = !officer._virtualLifespan
+          if (this.isAllstarImmortalScenario()) {
+            // オールスター：年を取らず寿命で没しない。開始時の年齢（30歳）のまま
+            if (!Number.isFinite(Number(officer._allstarAge))) officer._allstarAge = 30;
+            officer.birthYear = Number(this.year) - officer._allstarAge;
+            officer.deathYear = 99999;
+            officer._virtualLifespan = true;
+          }
+          const invalidOrLegacyLifetime = !this.isAllstarImmortalScenario() && (!officer._virtualLifespan
             || !Number.isFinite(Number(officer.birthYear))
             || !Number.isFinite(Number(officer.deathYear))
-            || Number(officer.deathYear) - Number(this.year) > 80;
+            || Number(officer.deathYear) - Number(this.year) > 80);
 
           if (invalidOrLegacyLifetime) {
 
@@ -3922,105 +3937,80 @@ export const GameStateMethods = {
   // 各家の当主＋重臣（能力上位）を最低数確保し、残り枠を全体の能力・知名度上位で埋める。
 
   getAllstarFeudalRoster(clanIds, affiliations) {
-
     const key = [...(clanIds || [])].sort().join(',');
-
     if (this._allstarRosterCache && this._allstarRosterCache.key === key) return this._allstarRosterCache.set;
-
     const LIMIT = 498, MIN_PER_CLAN = 4, PER_PROV = 2, MAX_PER_CLAN = 14, RONIN_SLOTS = 10;
-
     const score = o => {
-
       const m = Number(o.military) || 0, p = Number(o.politic) || 0, i = Number(o.intel) || 0;
-
       return m + p + i + Math.max(m, p, i) * 0.5 + (o.comment ? 15 : 0) + ((o.lore || '').length > 80 ? 10 : 0) + (o.isDaimyo ? 20 : 0);
-
     };
-
+    // 所属指定は文字列（家ID）でも {clanId: ...} でもよい（2026-11-09: オブジェクト形式が無視され、名将が名簿から漏れていた）
+    const affClan = (a) => (a && typeof a === 'object') ? (a.clanId || a.clan || null) : (a || null);
+    const affs = affiliations || {};
     const provCount = {};
-
     (this.provinces || []).forEach(pv => { if (pv.ownerId) provCount[pv.ownerId] = (provCount[pv.ownerId] || 0) + 1; });
-
-    const byClan = new Map();
-
-    const ronin = [];
-
-    for (const o of window.OFFICERS_MASTER || []) {
-
-      const eff = (affiliations && affiliations[o.id]) || o.clanId;
-
-      // 応仁の乱向け追加武将（off_onin2_）はオールスター名簿の選定対象外（名簿を従来どおりに保つ）
-
-      // 配置仕様（place_*.json）由来の追加武将（off_pl）も同様に対象外
-
-      if (String(o.id).startsWith('off_onin2_') || /^off_pl\d+_/.test(String(o.id))) continue;
-
-      // 後年登場武将（lateDebut / off_mod_）もオールスター名簿の選定対象外
-
-      if (o.lateDebut) continue;
-
-      if (eff === 'ronin') { ronin.push(o); continue; }
-
-      if (!eff || !clanIds || !clanIds.has(eff)) continue;
-
-      if (!byClan.has(eff)) byClan.set(eff, []);
-
-      byClan.get(eff).push(o);
-
-    }
-
+    const masterById = new Map((window.OFFICERS_MASTER || []).map(o => [o.id, o]));
     const keep = new Set();
-
+    const keptNames = new Set();
     const clanTaken = {};
-
     const playables = this.currentScenario?.playables || [];
-
-    const take = (o, c) => { if (!keep.has(o.id)) { keep.add(o.id); clanTaken[c] = (clanTaken[c] || 0) + 1; } };
-
+    const normName = (n) => String(n || '').replace(/\s*[（(][^）)]+[）)]/g, '').trim();
+    // 同名の別IDは一人だけ（同じ人物が二家に現れないように）
+    const take = (o, c, force = false) => {
+      if (!o || keep.has(o.id)) return false;
+      const nm = normName(o.name);
+      if (nm && keptNames.has(nm)) return false;
+      if (!force && c !== 'ronin' && (clanTaken[c] || 0) >= MAX_PER_CLAN) return false;
+      keep.add(o.id); if (nm) keptNames.add(nm);
+      clanTaken[c] = (clanTaken[c] || 0) + 1;
+      return true;
+    };
+    // 1) 各家の当主（シナリオ指定の officerId）
+    playables.forEach(pl => { if (pl && pl.officerId && clanIds && clanIds.has(pl.id)) take(masterById.get(pl.officerId), pl.id, true); });
+    // 2) シナリオで所属を指定した名将（家臣・浪人）。追加武将IDの除外規則より優先する
+    Object.keys(affs).forEach(id => {
+      const c = affClan(affs[id]);
+      if (!c || (c !== 'ronin' && !(clanIds && clanIds.has(c)))) return;
+      take(masterById.get(id), c, true);
+    });
+    const byClan = new Map();
+    const ronin = [];
+    for (const o of window.OFFICERS_MASTER || []) {
+      if (keep.has(o.id)) continue;
+      const eff = affClan(affs[o.id]) || o.clanId;
+      // 応仁の乱向け追加武将（off_onin2_）はオールスター名簿の選定対象外（名簿を従来どおりに保つ）
+      // 配置仕様（place_*.json）由来の追加武将（off_pl）も同様に対象外
+      if (String(o.id).startsWith('off_onin2_') || /^off_pl\d+_/.test(String(o.id))) continue;
+      // 後年登場武将（lateDebut / off_mod_）もオールスター名簿の選定対象外
+      if (o.lateDebut) continue;
+      if (eff === 'ronin') { ronin.push(o); continue; }
+      if (!eff || !clanIds || !clanIds.has(eff)) continue;
+      if (!byClan.has(eff)) byClan.set(eff, []);
+      byClan.get(eff).push(o);
+    }
     const pool = [];
-
     for (const [c, list] of byClan) {
-
       list.sort((a, b) => score(b) - score(a) || String(a.id).localeCompare(String(b.id)));
-
-      const pl = playables.find(d => d.id === c);
-
-      const names = [pl && pl.name, pl && pl.leaderName, this.getRosterLeaderName(c)].filter(Boolean);
-
-      const leader = list.find(o => names.some(n => this.leaderNamesMatch(o.name, n)))
-
-        || list.find(o => o.isDaimyo) || list[0];
-
-      if (leader) take(leader, c);
-
+      if (!clanTaken[c]) {
+        const pl = playables.find(d => d.id === c);
+        const names = [pl && pl.name, pl && pl.leaderName, this.getRosterLeaderName(c)].filter(Boolean);
+        const leader = list.find(o => names.some(n => this.leaderNamesMatch(o.name, n)))
+          || list.find(o => o.isDaimyo) || list[0];
+        if (leader) take(leader, c);
+      }
       const need = Math.min(MAX_PER_CLAN, Math.max(MIN_PER_CLAN, (provCount[c] || 1) * PER_PROV));
-
       for (const o of list) { if ((clanTaken[c] || 0) >= need) break; take(o, c); }
-
       list.forEach(o => { if (!keep.has(o.id)) pool.push([o, c]); });
-
     }
-
     pool.sort((a, b) => score(b[0]) - score(a[0]) || String(a[0].id).localeCompare(String(b[0].id)));
-
     for (const [o, c] of pool) {
-
       if (keep.size >= LIMIT - RONIN_SLOTS) break;
-
-      if ((clanTaken[c] || 0) >= MAX_PER_CLAN) continue;
-
       take(o, c);
-
     }
-
     ronin.sort((a, b) => score(b) - score(a));
-
-    for (const o of ronin) { if (keep.size >= LIMIT) break; keep.add(o.id); }
-
+    for (const o of ronin) { if (keep.size >= LIMIT) break; take(o, 'ronin'); }
     this._allstarRosterCache = { key, set: keep };
-
     return keep;
-
   },
 
 
@@ -4294,11 +4284,14 @@ export const GameStateMethods = {
 
           if (!isPlayerConquest) {
 
-            // AI同士の滅亡なら自刃
-
+            // AI同士の滅亡なら自刃（オールスターでは斬首以外で死なないため、落ち延びて浪人となる）
+            if (this.isAllstarImmortalScenario()) {
+              gov.isDaimyo = false; gov.clanId = 'ronin'; gov.assignedProvId = null;
+              this.log(`【御家滅亡・落ち延び】${gov.name}公は最後の居城を落とされ、${this.getClanFamilyName(oldOwnerId)}は滅亡しました。${gov.name}公は落ち延びて浪人となりました。`, 'important');
+            } else {
             gov.isDead = true;
-
             this.log(`【御家滅亡・自刃】${gov.name}公は最後の居城にて討死または自刃し、${this.getClanFamilyName(oldOwnerId)}は滅亡しました……`, 'important');
+            }
 
           }
 
@@ -4352,7 +4345,7 @@ export const GameStateMethods = {
 
         if (oldDaimyo) {
 
-          oldDaimyo.isDead = true;
+          if (this.isAllstarImmortalScenario()) { oldDaimyo.isDaimyo = false; oldDaimyo.clanId = 'ronin'; } else oldDaimyo.isDead = true; // オールスターは落ち延びて浪人
 
           oldDaimyo.assignedProvId = null;
 
@@ -8654,6 +8647,8 @@ export const GameStateMethods = {
   },
 
   enforceScenarioLifespanFinal(scen) {
+    // 仮想シナリオは全時代の武将が共演するため、史実の生没年で名簿から外さない（2026-11-09）
+    if (this.isVirtualScenario && this.isVirtualScenario()) return;
 
     if (!Array.isArray(this.activeOfficers) || !this.provinces) return;
 
@@ -11952,7 +11947,7 @@ export const GameStateMethods = {
     const distinctTerritoryColors = {
       gamo: '#2f5f9e',       // 蒲生家: 深い青
       gamou: '#2f5f9e',      // 蒲生家の別ID
-      todo: '#d8dee2',       // 藤堂家: 明るめのグレー
+      todo: '#7b8791',       // 藤堂家: やや濃いめのグレー（2026-11-09）
     takeda: '#ea5424',     // 甲斐武田家: 織田より明るい赤系オレンジ
     matsunaga: '#2d7a46',  // 松永家: 信長の野望の緑
       tosa: '#365a9c',       // 土佐藩山内家: 藍紫
@@ -15289,6 +15284,7 @@ export const GameStateMethods = {
 
     if (!officers || officers.length === 0) return;
 
+    const noExecution = Number(this.year) >= 1880; // 1880年以降は敵武将を斬首できない（2026-11-09）
     const clanName = this.getClanFamilyName(oldOwnerId);
 
 
@@ -15319,7 +15315,7 @@ export const GameStateMethods = {
 
             <div style="background:rgba(0,0,0,0.4); padding:10px 14px; border-radius:5px; border-left:3px solid var(--gold); margin-top:10px;">
 
-              捕縛した武将一人ひとりと対面し、<strong>【登用】</strong>（登用確率60%）、<strong>【斬首】</strong>（処刑）、<strong>【解放】</strong>（放免・浪人）の処遇をご決断ください。
+              捕縛した武将一人ひとりと対面し、<strong>【登用】</strong>（登用確率60%）、${noExecution ? '' : '<strong>【斬首】</strong>（処刑）、'}<strong>【解放】</strong>（放免・浪人）の処遇をご決断ください。
 
             </div>
 
@@ -15341,7 +15337,10 @@ export const GameStateMethods = {
 
 
 
-    // 1人ずつ対面処断
+    // 1人ずつ対面処断（5名以上なら一括登用・一括解放・一括斬首も選べる。一括斬首は1880年以降は不可）（2026-11-09）
+    const canBulk = officers.length >= 5;
+    let bulk = null;
+    const bulkResults = [];
 
     for (let i = 0; i < officers.length; i++) {
 
@@ -15358,11 +15357,13 @@ export const GameStateMethods = {
 
 
       let decision = 'release'; // デフォルト
+      if (bulk) decision = bulk;
 
 
 
-      if (window.Swal) {
-
+      if (window.Swal && !bulk) {
+        let bulkChoice = null;
+        const remain = officers.length - i;
         const res = await Swal.fire({
 
           title: `❖ 捕縛武将 (${i + 1}/${officers.length}) ❖`,
@@ -15436,6 +15437,15 @@ export const GameStateMethods = {
                 いかが処遇なさいますか？
 
               </div>
+              ${canBulk ? `
+              <div style="margin-top:10px; padding:8px 10px; border-top:1px dashed #5a4638; text-align:center;">
+                <div style="font-size:11pt; color:#c8b896; margin-bottom:6px;">残り${remain}名をまとめて処遇</div>
+                <div style="display:flex; gap:6px; justify-content:center; flex-wrap:wrap;">
+                  <button type="button" class="cap-bulk-btn" data-bulk="recruit" style="background:#1e8449; color:#fff; border:1px solid #2ecc71; border-radius:4px; padding:5px 12px; font-size:11.5pt; font-weight:bold; cursor:pointer;">一括登用</button>
+                  <button type="button" class="cap-bulk-btn" data-bulk="release" style="background:#5d6d7e; color:#fff; border:1px solid #95a5a6; border-radius:4px; padding:5px 12px; font-size:11.5pt; font-weight:bold; cursor:pointer;">一括解放</button>
+                  ${noExecution ? '' : `<button type="button" class="cap-bulk-btn" data-bulk="execute" style="background:#922b21; color:#fff; border:1px solid #e74c3c; border-radius:4px; padding:5px 12px; font-size:11.5pt; font-weight:bold; cursor:pointer;">一括斬首</button>`}
+                </div>
+              </div>` : ''}
 
             </div>
 
@@ -15447,7 +15457,7 @@ export const GameStateMethods = {
 
           showCancelButton: true,
 
-          showDenyButton: true,
+          showDenyButton: !noExecution, // 1880年以降は斬首できない（2026-11-09）
 
           confirmButtonText: '🤝 登用 (確率60%)',
 
@@ -15461,17 +15471,24 @@ export const GameStateMethods = {
 
           cancelButtonColor: '#7f8c8d',
 
-          allowOutsideClick: false
+          allowOutsideClick: false,
+          didOpen: (popup) => {
+            popup.querySelectorAll('.cap-bulk-btn').forEach(btn => {
+              btn.addEventListener('click', () => { bulkChoice = btn.dataset.bulk; Swal.close(); });
+            });
+          }
 
         });
 
-
-
-        if (res.isConfirmed) {
+        if (bulkChoice && !(bulkChoice === 'execute' && noExecution)) {
+          bulk = bulkChoice;
+          bulkResults.length = 0; // 一括開始前の個別処遇は一覧に含めない
+          decision = bulk;
+        } else if (res.isConfirmed) {
 
           decision = 'recruit';
 
-        } else if (res.isDenied) {
+        } else if (res.isDenied && !noExecution) {
 
           decision = 'execute';
 
@@ -15504,10 +15521,11 @@ export const GameStateMethods = {
           this.log(`🤝【登用成功】「我が命、貴殿に捧げましょう！」${off.name}が我が軍の配下に加わりました！`, 'important');
 
           this.appointHistoricalHomeGovernors(this.playerClanId);
+          bulkResults.push({ name: off.name, text: '登用成功（配下に加わる）', color: '#2ecc71' });
 
           try { this.audio.playTaiko?.(); } catch(e) {}
 
-          if (window.Swal) {
+          if (window.Swal && !bulk) {
 
             await Swal.fire({
 
@@ -15554,11 +15572,12 @@ export const GameStateMethods = {
 
           }
 
+          bulkResults.push({ name: off.name, text: '登用拒絶（浪人となる）', color: '#e74c3c' });
           this.log(`💢【登用拒絶】「主君を討たれ、仇敵に仕えるつもりはない！」${off.name}は登用を拒絶し、浪人となりました。`, 'battle');
 
           try { this.audio.playHyoshigi?.(); } catch(e) {}
 
-          if (window.Swal) {
+          if (window.Swal && !bulk) {
 
             await Swal.fire({
 
@@ -15597,11 +15616,12 @@ export const GameStateMethods = {
 
         off.assignedProvId = null;
 
+        bulkResults.push({ name: off.name, text: '斬首', color: '#c0392b' });
         this.log(`【斬首処刑】${off.name}を処刑いたしました。「無念……！」`, 'important');
 
         try { this.audio.playHyoshigi?.(); } catch(e) {}
 
-        if (window.Swal) {
+        if (window.Swal && !bulk) {
 
           await Swal.fire({
 
@@ -15648,9 +15668,10 @@ export const GameStateMethods = {
 
         }
 
+        bulkResults.push({ name: off.name, text: '解放（浪人となる）', color: '#5dade2' });
         this.log(`🕊️【放免解放】「情けは無用なれど……忝い」${off.name}を放免いたしました（浪人となりました）。`);
 
-        if (window.Swal) {
+        if (window.Swal && !bulk) {
 
           await Swal.fire({
 
@@ -15685,6 +15706,38 @@ export const GameStateMethods = {
 
 
 
+    // 一括処遇の結果はまとめて一つの画面に、一人ずつ続けて表示する
+    if (bulk && window.Swal) {
+      const shown = bulkResults.slice();
+      const label = { recruit: '一括登用', release: '一括解放', execute: '一括斬首' }[bulk] || '一括処遇';
+      const cnt = (t) => shown.filter(r => r.text.startsWith(t)).length;
+      const summary = bulk === 'recruit'
+        ? `登用成功 ${cnt('登用成功')}名 ／ 登用拒絶 ${cnt('登用拒絶')}名`
+        : (bulk === 'execute' ? `斬首 ${cnt('斬首')}名` : `解放 ${cnt('解放')}名`);
+      await Swal.fire({
+        title: `❖ ${label}の結果 ❖`,
+        html: `
+          <div style="font-size:12pt; color:#f5eedc; text-align:left; font-family:'Noto Serif JP',serif;">
+            <div id="capBulkList" style="max-height:50vh; overflow-y:auto; background:rgba(0,0,0,0.35); border:1px solid #4a3b2c; border-radius:4px; padding:6px 10px;">
+              ${shown.map(r => `<div class="cap-bulk-line" style="display:flex; justify-content:space-between; gap:10px; padding:3px 0; border-bottom:1px dotted #3d2f22; opacity:0; transition:opacity .25s;"><span style="color:#fff; font-weight:bold;">${r.name}</span><span style="color:${r.color}; white-space:nowrap;">${r.text}</span></div>`).join('')}
+            </div>
+            <div style="text-align:center; margin-top:8px; color:#ffd700; font-weight:bold;">${summary}</div>
+          </div>
+        `,
+        background: '#1c130d',
+        color: '#f5eedc',
+        confirmButtonText: '了解',
+        confirmButtonColor: '#922b21',
+        didOpen: (popup) => {
+          const lines = popup.querySelectorAll('.cap-bulk-line');
+          const box = popup.querySelector('#capBulkList');
+          lines.forEach((ln, idx) => setTimeout(() => {
+            ln.style.opacity = '1';
+            if (box) box.scrollTop = ln.offsetTop - box.offsetTop - box.clientHeight + ln.offsetHeight + 8;
+          }, 180 * idx));
+        }
+      });
+    }
     this.updateActiveOfficers();
 
     this.updateUI();

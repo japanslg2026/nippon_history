@@ -160,6 +160,8 @@ function miniMapHTML(pid) {
 let overlay = null, current = null;
 function openShell(kind) {
   closeShell();
+  // スマホ画面ではタブを2文字（武将／大名）で表示（2026-11-09）
+  const MK_SP = !!window.SENGOKU_IS_PHONE || (window.matchMedia && matchMedia('(max-width: 768px)').matches);
   overlay = document.createElement('div');
   overlay.className = 'mk-overlay';
   overlay.innerHTML = `
@@ -169,8 +171,8 @@ function openShell(kind) {
         <span>${kind === 'officer' ? '武将名鑑' : '大名名鑑'}</span>
         <small>${kind === 'officer' ? '— 古今の英傑列伝 —' : '— 群雄割拠・支配域の変遷 —'}</small></div>
       <div class="mk-tabs">
-        <button type="button" class="mk-tab ${kind === 'officer' ? 'on' : ''}" data-k="officer">武将名鑑</button>
-        <button type="button" class="mk-tab ${kind === 'clan' ? 'on' : ''}" data-k="clan">大名名鑑</button>
+        <button type="button" class="mk-tab ${kind === 'officer' ? 'on' : ''}" data-k="officer">${MK_SP ? '武将' : '武将名鑑'}</button>
+        <button type="button" class="mk-tab ${kind === 'clan' ? 'on' : ''}" data-k="clan">${MK_SP ? '大名' : '大名名鑑'}</button>
       </div>
       <button type="button" class="mk-back" aria-label="一覧へ戻る">◀ 一覧</button>
       <button type="button" class="mk-close" title="閉じる (Esc)">✕</button>

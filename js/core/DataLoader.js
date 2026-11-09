@@ -15,7 +15,7 @@ export class DataLoader {
    */
   static async loadAllData() {
     try {
-      const v = '20261107_takeda_hongan'; // japan_slg.html の preload と同じ値にすること
+      const v = '20261109_dedup'; // japan_slg.html の preload と同じ値にすること
       const [scenarios, officers, provinces, clansData, governorsData, eventsData, mapBordersData] = await Promise.all([
         DataLoader.fetchJson(`data/scenarios.json?v=${v}`),
         DataLoader.fetchJson(`data/officers.json?v=${v}`),
@@ -42,6 +42,21 @@ export class DataLoader {
             p.neighbors = p.neighbors.filter(nId => nId !== 'sado');
           } else if (!p.neighbors.includes('sado')) {
             p.neighbors.push('sado');
+          }
+        });
+      }
+
+      // 対馬につながる経路は筑前と平戸のみに限定する（2026-11-09）
+      if (Array.isArray(provinces)) {
+        const TSUSHIMA_LINKS = ['chikuzen', 'hirado'];
+        provinces.forEach(p => {
+          if (!p || !Array.isArray(p.neighbors)) return;
+          if (p.id === 'tsushima') {
+            p.neighbors = TSUSHIMA_LINKS.slice();
+          } else if (TSUSHIMA_LINKS.includes(p.id)) {
+            if (!p.neighbors.includes('tsushima')) p.neighbors.push('tsushima');
+          } else {
+            p.neighbors = p.neighbors.filter(nId => nId !== 'tsushima');
           }
         });
       }
