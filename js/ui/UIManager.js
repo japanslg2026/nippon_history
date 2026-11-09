@@ -7125,7 +7125,9 @@ export const UIManagerMethods = {
 
     const detailBox = document.getElementById('provDetailBox');
     if (detailBox) {
-      detailBox.innerHTML = '<p style="color:var(--text-muted); text-align:center; padding: 10px 0; font-size: 12pt;">地図上の領国をクリックしてください</p>';
+      // 2026-11-09: 列島外クリック等で選択解除した際は案内文を出さない（PCは従来どおり）
+      const isNarrow = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+      detailBox.innerHTML = isNarrow ? '' : '<p style="color:var(--text-muted); text-align:center; padding: 10px 0; font-size: 12pt;">地図上の領国をクリックしてください</p>';
     }
 
     if (typeof this.updateCommandButtons === 'function') {
@@ -7285,7 +7287,7 @@ export const UIManagerMethods = {
 
             <div style="display:flex; align-items:center; gap:5px; overflow:hidden;">
 
-              <span style="color:#2ecc71; font-weight:bold;">🏯 城主: ${effStats.name}</span>
+              <span style="color:#2ecc71; font-weight:bold;">🏯 <span class="lbl-pc">城主: </span>${effStats.name}</span>
 
               
 
@@ -7341,7 +7343,7 @@ export const UIManagerMethods = {
 
             `}
 
-            ${abStr ? `<span style="font-size: 12pt; color:#f9e79f; font-weight:bold; background:rgba(0,0,0,0.45); padding:1px 6px; border-radius:3px; border:1px solid #7d6608; white-space:nowrap; letter-spacing:0.5px;">${abStr}</span>` : ''}
+            ${abStr ? `<span class="prov-owner-ab" style="font-size: 12pt; color:#f9e79f; font-weight:bold; background:rgba(0,0,0,0.45); padding:1px 6px; border-radius:3px; border:1px solid #7d6608; white-space:nowrap; letter-spacing:0.5px;">${abStr}</span>` : ''}
 
           </div>
 
@@ -7423,7 +7425,7 @@ export const UIManagerMethods = {
 
             <div class="prov-detail-grid">
 
-              <div class="prov-stat-row"><span>${troopsLbl}</span><span class="val${isTroopsMax ? ' is-max' : ''}" style="${isTroopsMax ? maxStyle : ''}" title="${isTroopsMax ? `扶養兵力上限に到達 (${maxTroops.toLocaleString()} ${troopsUnit})` : `扶養兵力上限: ${maxTroops.toLocaleString()} ${troopsUnit}`}">${p.troops.toLocaleString()} ${troopsUnit}</span></div>
+              <div class="prov-stat-row"><span><span class="lbl-pc">${troopsLbl}</span><span class="lbl-sp">兵力</span></span><span class="val${isTroopsMax ? ' is-max' : ''}" style="${isTroopsMax ? maxStyle : ''}" title="${isTroopsMax ? `扶養兵力上限に到達 (${maxTroops.toLocaleString()} ${troopsUnit})` : `扶養兵力上限: ${maxTroops.toLocaleString()} ${troopsUnit}`}">${p.troops.toLocaleString()} ${troopsUnit}</span></div>
 
               <div class="prov-stat-row"><span><span class="lbl-pc">城郭防御</span><span class="lbl-sp">城防御</span></span><span class="val${isDefenseMax ? ' is-max' : ''}" style="${isDefenseMax ? maxStyle : ''}" title="${isDefenseMax ? `城郭防御上限 (${maxDefense})` : `防御上限: ${maxDefense}`}">${p.defense} / ${maxDefense}</span></div>
 

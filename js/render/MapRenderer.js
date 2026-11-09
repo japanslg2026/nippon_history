@@ -771,7 +771,9 @@ export const MapRendererMethods = {
       // 領国ポリゴン外（海域など）クリックで輪郭ハイライトを解除
       wrapper.addEventListener('click', (e) => {
         if (this.mapSuppressClick) return;
-        if (e.target.closest && e.target.closest('.map-ctrl-btn, .prov-path, button, a, input, select, textarea')) return;
+        if (e.target.closest && e.target.closest('.map-ctrl-btn, .prov-path, button, a, input, select, textarea, .map-heat-panel')) return;
+        // 2026-11-09: 日本列島の領域外クリックでは国のハイライト（選択・ホバー輪郭）を一切表示しない
+        if (typeof this.clearMapHighlightVisuals === 'function') this.clearMapHighlightVisuals();
         if (!this.selectedProvId) return;
         if (typeof this.clearProvinceSelection === 'function') this.clearProvinceSelection();
         else {

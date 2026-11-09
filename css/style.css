@@ -5973,7 +5973,10 @@
 @media (max-width: 768px) {
   .lbl-sp { display: inline !important; }
   .clan-bar.is-open .lbl-pc,
-  .prov-panel .lbl-pc { display: none !important; }
+  .prov-panel .lbl-pc,
+  .cmd-panel .lbl-pc { display: none !important; }
+  /* 2026-11-09: スマホ国軍情では領主名右の能力値（武・内・謀）を省略 */
+  .prov-panel .prov-owner-ab { display: none !important; }
 
   /* 覇道進捗〜総動員兵力の6ボックス：各ボックスを1行（ラベルの右に数値） */
   .clan-bar.is-open .stat-card:not(:first-child) {

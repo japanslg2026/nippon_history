@@ -1,4 +1,4 @@
-/**
+﻿/**
 
  * @file js/core/GameState.js - データ状態管理・ターン進行・武将人事・合戦・歴史イベント
 
@@ -12048,7 +12048,10 @@ export const GameStateMethods = {
       uwajima_date: 'kamon-uwajima-date',
       ando: 'kamon-ando-northern',
       chosokabe: 'kamon-chosokabe-nanatsu-katabami',
-      ichijo: 'kamon-ichijo-fuji'
+      ichijo: 'kamon-ichijo-fuji',
+      goryokaku: 'kamon-shinsengumi',
+      enomoto: 'kamon-shinsengumi',
+      mimura: 'kamon-mimura'
     };
     if (kamonOverrides[clanId]) return kamonOverrides[clanId];
 
@@ -12061,6 +12064,8 @@ export const GameStateMethods = {
     if (clanId === 'hattori') clanId = 'momochi';
 
     if (clanId === 'saika') clanId = 'suzuki';
+
+    if (clanId === 'enomoto') clanId = 'goryokaku';
 
     let candidate = null;
 
@@ -12536,6 +12541,8 @@ export const GameStateMethods = {
     if (clanId === 'hattori') clanId = 'momochi';
 
     if (clanId === 'saika') clanId = 'suzuki';
+
+    if (clanId === 'enomoto') clanId = 'goryokaku';
 
 
 

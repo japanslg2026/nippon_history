@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file js/app.js - 戦国天下統一伝 メインエントリーポイント (ES6モジュール)
  * @typedef {import('./types.js').Officer} Officer
  * @typedef {import('./types.js').Province} Province
@@ -9,9 +9,9 @@
  * @typedef {import('./types.js').GameSaveData} GameSaveData
  */
 
-import { GameState, GameStateMethods } from './core/GameState.js?v=20261107_gov_boost30';
+import { GameState, GameStateMethods } from './core/GameState.js?v=20261108_kamon_fix';
 import { UIManager, UIManagerMethods } from './ui/UIManager.js?v=20261107_offnone';
-import { MapRenderer, MapRendererMethods } from './render/MapRenderer.js?v=20261107_tilt_left3';
+import { MapRenderer, MapRendererMethods } from './render/MapRenderer.js?v=20261108_kamon_fix';
 import { ComputerLogic, ComputerLogicMethods } from './ai/ComputerLogic.js?v=20261107_hist_v16';
 import { DataLoader } from './core/DataLoader.js?v=20261107_takeda_hongan';
 import * as GameRules from './core/GameRules.js?v=20261107_hist_v16';

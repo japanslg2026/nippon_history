@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja" prefix="og: http://ogp.me/ns#">
 <head>
 
@@ -2324,6 +2324,9 @@
         font-size: 11pt !important;
         gap: 4px !important;
       }
+      .header-scenario-indicator .header-scen-title {
+        display: none !important;
+      }
       .top-nav {
         width: 100% !important;
         display: flex !important;
@@ -2553,7 +2556,7 @@
         fill: rgba(212, 175, 55, 0.4);
       }
 
-      /* シナリオ説明：初期は「〜副題〜」の1行＋ピクトグラムのみ。ピクトグラムで全文展開 */
+      /* シナリオ説明：初期は「シナリオ名」の1行＋ピクトグラム（下矢印）のみ。ピクトグラムで全文展開 */
       #mapScenBox .overlay-box-header {
         flex-wrap: nowrap !important;
         align-items: center !important;
@@ -2561,14 +2564,23 @@
         padding-bottom: 0 !important;
         margin-bottom: 0 !important;
       }
-      #mapScenBox .overlay-box-sub {
-        flex: 1 1 auto;
-        min-width: 0;
+      #mapScenBox .overlay-box-title {
+        display: block !important;
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
         color: var(--gold-bright) !important;
-        font-weight: bold;
+        font-size: 11pt !important;
+        font-weight: bold !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
       }
-      #mapScenBox .overlay-box-title { display: none !important; }
-      #mapScenBox.no-subtitle .overlay-box-title { display: inline !important; }
+      #overlayScenTitle .scen-title-year {
+        display: none !important;
+      }
+      #mapScenBox .overlay-box-sub {
+        display: none !important;
+      }
       #mapScenBox .overlay-box-body { display: none !important; }
       #mapScenBox.is-expanded .overlay-box-header {
         flex-wrap: wrap !important;
@@ -2577,8 +2589,16 @@
         margin-bottom: 3px !important;
       }
       #mapScenBox.is-expanded .overlay-box-title {
+        flex: 1 0 100% !important;
+        white-space: normal !important;
+      }
+      #mapScenBox.is-expanded .overlay-box-sub {
         display: block !important;
         flex: 1 0 100% !important;
+        color: var(--text-sub) !important;
+        font-size: 10.5pt !important;
+        font-weight: normal !important;
+        margin-top: 2px !important;
       }
       #mapScenBox.is-expanded .overlay-box-body { display: block !important; }
 
@@ -3787,7 +3807,7 @@
             <div class="map-scen-row">
               <div class="overlay-box-auto" id="mapScenBox">
                 <div class="overlay-box-header">
-                  <span class="overlay-box-title" id="overlayScenTitle">【1560年】桶狭間の戦い</span>
+                  <span class="overlay-box-title" id="overlayScenTitle"><span class="scen-title-year">【1560年】</span><span class="scen-title-text">桶狭間の戦い</span></span>
                   <span class="overlay-box-sub" id="overlayScenSub">尾張の風雲児と東海の巨星</span>
                   <button type="button" class="sp-more-btn" id="scenMoreBtn" aria-expanded="false" aria-label="シナリオ説明の全文を表示／非表示" title="シナリオ説明を表示／非表示"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7 10l5 5 5-5"/></svg></button>
                 </div>
@@ -3891,7 +3911,7 @@
             <span class="section-badge" id="castleRegionBadge">未選択</span>
           </div>
           <div id="castleDetailContent">
-            <div style="color:var(--text-sub); font-size:12pt;">地図上の国をクリックすると、その国の城郭と歴史解説が表示されます。</div>
+            <div class="unselected-castle-hint" style="color:var(--text-sub); font-size:12pt;">地図上の国をクリックすると、その国の城郭と歴史解説が表示されます。</div>
           </div>
         </div>
 
@@ -4319,11 +4339,11 @@
       async function initAllData() {
         var statusEl = document.getElementById('loadingStatusText');
         try {
-          await loadExternalScript(['assets/kamons.js?v=20261107_takeda_hongan', 'assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
+          await loadExternalScript(['assets/kamons.js?v=20261108_kamon_fix', 'assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
           if (typeof window.loadKamonSymbols === 'function') {
             window.loadKamonSymbols();
           }
-          await loadExternalScript(['js/kamonOverrides.js?v=20261107_hist_v17']);
+          await loadExternalScript(['js/kamonOverrides.js?v=20261108_kamon_fix']);
 
           statusEl.textContent = '歴史配置ルールとシナリオ・領国・大名・武将データを読み込み中…';
           var rulesPromise = loadAffiliationRulesSafe();
@@ -4331,7 +4351,7 @@
           var results = await Promise.all([
             fetchJsonSmart('scenarios.json?v=20261107_takeda_hongan'),
             fetchJsonSmart('provinces.json?v=20261107_hist_v16'),
-            fetchJsonSmart('clans.json?v=20261107_takeda_hongan'),
+            fetchJsonSmart('clans.json?v=20261108_kamon_fix'),
             fetchJsonSmart('officers.json?v=20261107_hist_v16'),
             fetchJsonSmart('governors.json?v=20261107_hist_v16').catch(function () { return {}; }),
             fetchJsonSmart('events.json?v=20261107_hist_v16').catch(function () { return {}; }),
@@ -5728,6 +5748,13 @@
       }
 
       // ==================== 国選択＆左上大名ボックス・右側パネル描画 ====================
+      function fmtTroopsInThousands(num) {
+        var n = Number(num) || 0;
+        if (n <= 0) return '0千人';
+        var k = Math.round(n / 1000);
+        if (k === 0 && n > 0) k = 1;
+        return k.toLocaleString() + '千人';
+      }
       function selectProvinceOnMap(provId, selOpts) {
         if (!State.computedProvs.has(provId)) return;
         var keepPeek = !!(selOpts && selOpts.keepSheetState) && !!document.querySelector('#rightSidebar.is-open.is-peek');
@@ -5766,7 +5793,7 @@
         if (dBox) dBox.classList.add('sp-unselected');
         document.getElementById('daimyoDetailContent').innerHTML = '';
         document.getElementById('castleRegionBadge').textContent = '未選択';
-        document.getElementById('castleDetailContent').innerHTML = '<div style="color:var(--text-sub); font-size:12pt; padding:14px 6px;">地図上の領国をクリックすると、その国の城郭・特産物・合戦史・武将が表示されます。</div>';
+        document.getElementById('castleDetailContent').innerHTML = '<div class="unselected-castle-hint" style="color:var(--text-sub); font-size:12pt; padding:14px 6px;">地図上の領国をクリックすると、その国の城郭・特産物・合戦史・武将が表示されます。</div>';
         document.getElementById('provOfficerCountBadge').textContent = '0 名';
         document.getElementById('provOfficersList').innerHTML = '';
       }
@@ -5813,9 +5840,9 @@
                 '<span style="color:var(--gold-pale);">当主：<b style="color:var(--gold-bright);">' + esc(cEntry.leaderName) + '</b></span>' +
               '</div>' +
               '<div class="daimyo-metrics-group">' +
-                '<span class="metric-chip">支配 <b>' + cEntry.provIds.length + '</b>国</span>' +
-                '<span class="metric-chip">石高 <b>' + (cEntry.totalKoku / 10000).toFixed(1) + '</b>万石</span>' +
-                '<span class="metric-chip">兵力 <b>' + cEntry.totalTroops.toLocaleString() + '</b>人</span>' +
+                '<span class="metric-chip"><b>' + cEntry.provIds.length + '</b>国</span>' +
+                '<span class="metric-chip">石高 <b>' + Math.round(cEntry.totalKoku / 10000).toLocaleString() + '</b>万石</span>' +
+                '<span class="metric-chip">兵力 <b>' + fmtTroopsInThousands(cEntry.totalTroops) + '</b></span>' +
                 '<button type="button" class="sp-more-btn daimyo-more-btn" aria-expanded="false" aria-label="大名家の説明の全文を表示／非表示" title="大名家の説明を表示／非表示"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7 10l5 5 5-5"/></svg></button>' +
               '</div>' +
             '</div>' +
@@ -5834,13 +5861,25 @@
         var govName = pEntry.governor ? pEntry.governor.name : (ownerId ? '城代統治' : '国人自治');
         var cLore = pEntry.castleLore || (pEntry.name + 'の要衝・' + pEntry.castle + '。古来より交通と軍事の拠点として栄えた名城。');
 
+        var hasSpecialty = !!(base.specialty || base.goldMine || base.silverMine);
+        var specialtyHtml = hasSpecialty ? (
+          '<div class="specialty-bar">' +
+            '<div class="specialty-badges-wrap">' +
+              (base.specialty ? '<span class="spec-badge">🌾 特産：' + esc(base.specialty) + '</span>' : '') +
+              (base.goldMine ? '<span class="spec-badge mine">🪙 金山保有</span>' : '') +
+              (base.silverMine ? '<span class="spec-badge mine">🥈 銀山保有</span>' : '') +
+            '</div>' +
+          '</div>'
+        ) : '';
+
         castleBox.innerHTML =
           '<div class="castle-header-box">' +
-            '<div>' +
+            '<div class="castle-title-wrap" style="display:inline-flex; align-items:center; flex-wrap:wrap; gap:4px;">' +
               '<span class="castle-prov-name">' + esc(pEntry.name) + '</span>' +
-              '<span style="color:var(--text-sub); font-size:12pt; margin-left:6px;">／ 居城：</span>' +
+              '<span style="color:var(--text-sub); font-size:12pt; margin-left:4px;">／ 居城：</span>' +
               '<span class="castle-name-sub">🏯 ' + esc(pEntry.castle) + '</span>' +
               (isCapProv ? ' <span class="role-badge role-daimyo" style="margin-left:4px;">👑本国</span>' : '') +
+              '<button type="button" class="btn-toggle-lore" id="btnToggleCastleLore" aria-expanded="false" title="城郭解説・特産物を展開／折りたたみ"><span class="lore-toggle-icon">▼</span></button>' +
             '</div>' +
             '<span style="font-size:12pt; color:var(--gold-pale);">' +
               (ownerId ? '<span class="castle-owner-fam" style="color:#fff; font-weight:bold; margin-right:6px;">' + esc(getClanFamilyName(ownerId, year)) + '</span>' : '') +
@@ -5849,36 +5888,30 @@
 
           '<div class="stat-pills-grid-2">' +
             '<div class="stat-pill">' +
-              '<span class="stat-pill-label"><span class="prov-stat-sp">石高</span></span>' + /* PCは「表高（石高）」の表示を省略し〇万石のみ（2026-11-07） */
-              '<span class="stat-pill-val"><span class="prov-stat-pc" style="white-space:nowrap;">' + (pEntry.kokudaka / 10000).toFixed(1) + '万石</span><span class="prov-stat-sp">' + (pEntry.kokudaka / 10000).toFixed(1).replace(/\.0$/, '') + '万石</span></span>' +
+              '<span class="stat-pill-label"><span class="prov-stat-sp">石高</span></span>' +
+              '<span class="stat-pill-val">' + Math.round(pEntry.kokudaka / 10000).toLocaleString() + '万石</span>' +
             '</div>' +
             '<div class="stat-pill">' +
               '<span class="stat-pill-label">駐留兵力</span>' +
-              '<span class="stat-pill-val">' + pEntry.troops.toLocaleString() + ' 人</span>' +
+              '<span class="stat-pill-val">' + fmtTroopsInThousands(pEntry.troops) + '</span>' +
             '</div>' +
           '</div>' +
 
-          '<div class="specialty-bar">' +
-            '<div class="specialty-badges-wrap">' +
-              (base.specialty ? '<span class="spec-badge">🌾 特産：' + esc(base.specialty) + '</span>' : '') +
-              (base.goldMine ? '<span class="spec-badge mine">🪙 金山保有</span>' : '') +
-              (base.silverMine ? '<span class="spec-badge mine">🥈 銀山保有</span>' : '') +
+          '<div class="castle-expanded-content" id="castleExpandedContent">' +
+            '<div class="lore-paragraph-expanded" id="castleLoreBox">' +
+              '<strong class="lore-castle-heading" style="color:var(--gold);">【' + esc(pEntry.castle) + 'の解説】</strong> ' +
+              esc(cleanLoreText(cLore)) +
+              (base.battleHistory ? '<br><strong style="color:#ff9f7f;">【合戦史】</strong> ' + esc(base.battleHistory) : '') +
             '</div>' +
-            '<button type="button" class="btn-toggle-lore" id="btnToggleCastleLore" aria-expanded="false" title="城郭解説と合戦史を展開／折りたたみ"><span class="lore-toggle-icon">▼</span></button>' +
-          '</div>' +
-
-          '<div class="lore-paragraph-expanded" id="castleLoreBox">' +
-            '<strong class="lore-castle-heading" style="color:var(--gold);">【' + esc(pEntry.castle) + 'の解説】</strong> ' +
-            esc(cleanLoreText(cLore)) +
-            (base.battleHistory ? '<br><strong style="color:#ff9f7f;">【合戦史】</strong> ' + esc(base.battleHistory) : '') +
+            specialtyHtml +
           '</div>';
 
         var loreBtn = document.getElementById('btnToggleCastleLore');
-        var loreBox = document.getElementById('castleLoreBox');
-        if (loreBtn && loreBox) {
+        var expBox = document.getElementById('castleExpandedContent');
+        if (loreBtn && expBox) {
           loreBtn.onclick = function (e) {
             e.stopPropagation();
-            var isOpen = loreBox.classList.toggle('is-expanded');
+            var isOpen = expBox.classList.toggle('is-expanded');
             loreBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
             var icon = loreBtn.querySelector('.lore-toggle-icon');
             if (icon) icon.textContent = isOpen ? '▲' : '▼';
@@ -6168,37 +6201,18 @@
         SCALE_LABEL_INDICES = [];
 
         if (isMobile) {
-          // スマートフォン向け：画面幅に対して視覚的に完全等間隔で配置
+          // スマートフォン向け：flexbox で両端揃えかつ完全等間隔で配置
           var labelCount = total <= 4 ? total : (total <= 8 ? 4 : 5);
           if (labelCount < 2) labelCount = Math.max(1, total);
 
-          // 目盛り線（全シナリオ分配置）
-          for (var i = 0; i < total; i++) {
-            var p = total > 1 ? (i / (total - 1)) * 100 : 50;
-            html += '<div class="scale-tick-mark" style="left:' + p.toFixed(3) + '%;"></div>';
-          }
-
-          var usedIndices = [];
           for (var k = 0; k < labelCount; k++) {
             var fIdx = labelCount > 1 ? Math.round(k * (total - 1) / (labelCount - 1)) : 0;
-            usedIndices.push(fIdx);
             SCALE_LABEL_INDICES.push(fIdx);
 
             var sc = State.filteredScenarios[fIdx];
-            var leftPct = labelCount > 1 ? (k / (labelCount - 1)) * 100 : 50;
             var yrText = fmtYear(sc ? sc.year : 0);
 
-            // 画面端（0%および100%）での文字見切れ防止アライメント
-            var alignStyle = '';
-            if (k === 0) {
-              alignStyle = 'transform: translateX(0); left: 0%;';
-            } else if (k === labelCount - 1) {
-              alignStyle = 'transform: translateX(-100%); left: 100%;';
-            } else {
-              alignStyle = 'transform: translateX(-50%); left:' + leftPct.toFixed(2) + '%;';
-            }
-
-            html += '<div class="scale-tick-label" data-fscen-idx="' + fIdx + '" style="' + alignStyle + '" title="' + yrText + '年 ' + esc(sc ? sc.title : '') + '">' + esc(yrText) + '</div>';
+            html += '<div class="scale-tick-label" data-fscen-idx="' + fIdx + '" title="' + yrText + '年 ' + esc(sc ? sc.title : '') + '">' + esc(yrText) + '</div>';
           }
         } else {
           // PC向け：従来のロジックを完全維持（PC表示は変えない）
@@ -6296,7 +6310,7 @@
         document.getElementById('hdrGengo').textContent = scen.gengo || getEraLabel(getEraKeyByYear(scen.year));
         document.getElementById('hdrTitle').textContent = scen.title;
 
-        document.getElementById('overlayScenTitle').textContent = '【' + yStr + '】' + scen.title;
+        document.getElementById('overlayScenTitle').innerHTML = '<span class="scen-title-year">【' + yStr + '】</span><span class="scen-title-text">' + esc(scen.title) + '</span>';
         document.getElementById('overlayScenSub').textContent = scen.subtitle ? '〜' + scen.subtitle + '〜' : (scen.gengo || '');
         document.getElementById('overlayScenDesc').textContent = scen.lore_background || scen.desc || '';
         var scenBoxForSub = document.getElementById('mapScenBox');
@@ -6524,6 +6538,7 @@
             return {
               c: c,
               capId: capId,
+              capRegion: capProv ? capProv.region : '',
               familyName: getClanFamilyName(c.id, year) || String(c.id),
               leaderName: c.leaderName || (lo ? lo.name : '') || '―',
               capital: capProv ? (capProv.castle + '（' + capProv.name + '）') : '―',
@@ -6542,8 +6557,11 @@
             var diff = 0;
             var latA = getProvNorthLat(a.capId);
             var latB = getProvNorthLat(b.capId);
-            if (sortKey === 'familyName' || sortKey === 'leaderName' || sortKey === 'capital' || sortKey === 'castle') {
-              diff = latB - latA;
+            var regA = REGION_NORTH_ORDER[a.capRegion] || 99;
+            var regB = REGION_NORTH_ORDER[b.capRegion] || 99;
+            if (sortKey === 'capital' || sortKey === 'castle' || sortKey === 'familyName' || sortKey === 'leaderName') {
+              diff = regA - regB;
+              if (diff === 0) diff = latB - latA;
               if (Math.abs(diff) < 0.001) {
                 var tieKey = sortKey === 'castle' ? 'capCastle' : sortKey;
                 diff = String(a[tieKey] || a.familyName).localeCompare(String(b[tieKey] || b.familyName), 'ja');
@@ -6655,22 +6673,34 @@
               var cid = (ce && (ce.capitalProvId || (ce.provIds && ce.provIds[0]))) || r.p.id;
               return getProvNorthLat(cid);
             }
-            if (sortKey === 'name') {
-              diff = latB - latA;
-              if (Math.abs(diff) < 0.001) diff = a.p.name.localeCompare(b.p.name, 'ja');
-            } else if (sortKey === 'castle') {
-              diff = latB - latA;
-              if (Math.abs(diff) < 0.001) diff = a.p.castle.localeCompare(b.p.castle, 'ja');
+            var regA = REGION_NORTH_ORDER[a.p.region] || 99;
+            var regB = REGION_NORTH_ORDER[b.p.region] || 99;
+            function ownerCapRegion(r) {
+              if (!r.p.ownerId) return r.p.region;
+              var ce = State.computedClans.get(r.p.ownerId);
+              var cid = (ce && (ce.capitalProvId || (ce.provIds && ce.provIds[0]))) || r.p.id;
+              var cp = State.computedProvs.get(cid);
+              return cp ? cp.region : r.p.region;
+            }
+            if (sortKey === 'name' || sortKey === 'castle') {
+              diff = regA - regB;
+              if (diff === 0) diff = latB - latA;
+              if (Math.abs(diff) < 0.001) {
+                var strKey = sortKey === 'name' ? 'name' : 'castle';
+                diff = a.p[strKey].localeCompare(b.p[strKey], 'ja');
+              }
             } else if (sortKey === 'region') {
-              var regA = REGION_NORTH_ORDER[a.p.region] || 99;
-              var regB = REGION_NORTH_ORDER[b.p.region] || 99;
               diff = regA - regB;
               if (diff === 0) diff = latB - latA;
             } else if (sortKey === 'owner') {
-              diff = ownerCapLat(b) - ownerCapLat(a);
+              var oRegA = REGION_NORTH_ORDER[ownerCapRegion(a)] || 99;
+              var oRegB = REGION_NORTH_ORDER[ownerCapRegion(b)] || 99;
+              diff = oRegA - oRegB;
+              if (diff === 0) diff = ownerCapLat(b) - ownerCapLat(a);
               if (Math.abs(diff) < 0.001) diff = a.ownerName.localeCompare(b.ownerName, 'ja');
             } else if (sortKey === 'governor') {
-              diff = latB - latA;
+              diff = regA - regB;
+              if (diff === 0) diff = latB - latA;
               if (Math.abs(diff) < 0.001) diff = a.govName.localeCompare(b.govName, 'ja');
             } else if (sortKey === 'military') {
               diff = (a.military ?? -1) - (b.military ?? -1);
@@ -8229,8 +8259,38 @@
   }
 }
 
-/* 要望4: スマホ画面：下のパネル（領国・城郭・武将）を地図の直下に常時表示（ボトムシート方式の廃止） */
+/* 要望4, 5, 6 & 新要望: スマホ画面：領国パネル表示・右見切れ根絶・スライダー西暦等間隔・未選択説明ボックス省略 */
 @media (max-width: 1100px) {
+  /* ページ全体の水平はみ出し・見切れ完全根絶 */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+  }
+  .app-shell, .workspace, .center-column, .map-stage, .timeline-dock {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+  .slider-track-container {
+    padding: 8px 8px 2px 8px !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    box-sizing: border-box !important;
+  }
+  .scenario-slider {
+    margin: 4px 0 !important;
+  }
+
+  /* 国未選択時は領国・城郭パネル（「地図上の領国をクリックすると…」の説明ボックス）を省略 */
+  .right-sidebar:not(.is-open) {
+    display: none !important;
+  }
+  .unselected-castle-hint {
+    display: none !important;
+  }
+
+  /* 国選択時の領国・城郭パネル（右サイドバー）のはみ出し・見切れ修正 */
   .right-sidebar {
     position: relative !important;
     left: auto !important;
@@ -8251,8 +8311,10 @@
     border-radius: 0 !important;
     box-shadow: none !important;
     overflow: visible !important;
+    overflow-x: hidden !important;
     margin-top: 0 !important;
-    padding: 10px 10px 24px 10px !important;
+    padding: 8px 8px 24px 8px !important;
+    box-sizing: border-box !important;
   }
   .right-sidebar.is-open,
   .right-sidebar.is-peek {
@@ -8261,66 +8323,170 @@
     visibility: visible !important;
     max-height: none !important;
   }
+  .right-sidebar > * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
   .atlas-drawer-grabber,
   .atlas-drawer-peek-btn,
   #btnCloseAtlasDrawer,
-  .right-sidebar .atlas-drawer-actions {
+  .right-sidebar .atlas-drawer-actions,
+  #mapDaimyoBox > .atlas-drawer-actions {
     display: none !important;
   }
+
+  /* 支配大名概要ボックスの不要な右パディング解除と折り返し対応（右見切れ修正） */
+  #mapDaimyoBox {
+    padding: 6px 8px !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  #mapDaimyoBox .daimyo-top-row,
+  #mapDaimyoBox .overlay-box-header {
+    padding-right: 0 !important;
+  }
+  #mapDaimyoBox .daimyo-metrics-group {
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+    width: 100% !important;
+  }
+  #mapDaimyoBox .metric-chip {
+    font-size: 10pt !important;
+    padding: 2px 6px !important;
+  }
+
+  /* 城郭解説ボックスの不要な右パディング解除とグリッドはみ出し修正 */
+  #castleSection {
+    padding: 4px 2px !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  #castleSection .castle-header-box {
+    padding-right: 0 !important;
+  }
+  .stat-pills-grid-2 {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
+  .stat-pill {
+    padding: 4px 6px !important;
+    font-size: 10pt !important;
+    min-width: 0 !important;
+  }
+  .stat-pill-label, .stat-pill-val {
+    font-size: 10pt !important;
+  }
+  .stat-pill-val span {
+    font-size: 10pt !important;
+  }
   
-  /* 特産物バーと城郭解説・合戦史の下矢印ボタン */
+  /* 居城の右隣に配置する下矢印ボタン */
+  .btn-toggle-lore {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 24px !important;
+    min-width: 24px !important;
+    height: 22px !important;
+    min-height: 22px !important;
+    padding: 0 !important;
+    margin-left: 4px !important;
+    vertical-align: middle !important;
+    background: rgba(212, 175, 55, 0.18) !important;
+    border: 1px solid var(--border-gold) !important;
+    border-radius: 4px !important;
+    color: var(--gold-bright) !important;
+    font-size: 9.5pt !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
+  }
+  .btn-toggle-lore:active {
+    background: rgba(212, 175, 55, 0.4) !important;
+  }
+
+  /* 特産物バー */
   .specialty-bar {
     display: flex !important;
     align-items: center !important;
-    justify-content: space-between !important;
-    gap: 8px !important;
-    min-height: 32px !important;
+    justify-content: flex-start !important;
+    gap: 6px !important;
+    min-height: 28px !important;
+    max-width: 100% !important;
   }
   .specialty-badges-wrap {
     display: flex !important;
     align-items: center !important;
     flex-wrap: wrap !important;
-    gap: 6px !important;
+    gap: 4px !important;
     flex: 1 1 auto !important;
+    min-width: 0 !important;
   }
-  .btn-toggle-lore {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 32px !important;
-    min-width: 32px !important;
-    height: 28px !important;
-    min-height: 28px !important;
-    padding: 0 !important;
-    background: rgba(212, 175, 55, 0.15) !important;
-    border: 1px solid var(--border-gold) !important;
-    border-radius: 5px !important;
-    color: var(--gold-bright) !important;
-    font-size: 11pt !important;
-    cursor: pointer !important;
-    flex-shrink: 0 !important;
-    margin-left: auto !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
-  }
-  .btn-toggle-lore:active {
-    background: rgba(212, 175, 55, 0.35) !important;
-  }
-  /* スマホ画面では城郭解説と合戦史は初期折りたたみ、ボタン押下で展開 */
-  .lore-paragraph-expanded {
+
+  /* スマホ画面では城郭解説・合戦史・特産物は初期折りたたみ、居城右隣の下矢印で展開 */
+  .castle-expanded-content {
     display: none;
     margin-top: 6px !important;
+    width: 100% !important;
   }
-  .lore-paragraph-expanded.is-expanded {
+  .castle-expanded-content.is-expanded {
     display: block !important;
+  }
+  .castle-expanded-content .lore-paragraph-expanded {
+    display: block !important;
+    margin-top: 4px !important;
+  }
+  .castle-expanded-content .specialty-bar {
+    margin-top: 6px !important;
+    margin-bottom: 2px !important;
   }
 }
 
-/* PC画面では城郭解説と合戦史は常時表示、下矢印ボタンは非表示 */
+/* スライダー下の西暦表示：文字サイズ縮小＋flexbox等間隔配置 */
+@media (max-width: 768px) {
+  .slider-scale-bar {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+    margin: 4px 0 0 0 !important;
+    padding: 0 4px !important;
+    height: auto !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+  }
+  .slider-scale-bar .scale-tick-mark {
+    display: none !important;
+  }
+  .slider-scale-bar .scale-tick-label {
+    position: static !important;
+    transform: none !important;
+    left: auto !important;
+    font-size: 8.5pt !important;
+    letter-spacing: -0.02em !important;
+    padding: 1px 2px !important;
+    text-align: center !important;
+    flex: 0 0 auto !important;
+    line-height: 1.2 !important;
+  }
+  .slider-scale-bar .scale-tick-label::before {
+    margin: 0 auto 2px auto !important;
+  }
+}
+
+/* PC画面では城郭解説・特産物は常時表示、下矢印ボタンは非表示 */
 @media (min-width: 1101px) {
   .btn-toggle-lore {
     display: none !important;
   }
-  .lore-paragraph-expanded {
+  .castle-expanded-content {
+    display: block !important;
+  }
+  .castle-expanded-content .specialty-bar {
+    margin: 6px 0 !important;
+  }
+  .castle-expanded-content .lore-paragraph-expanded {
     display: block !important;
   }
 }
