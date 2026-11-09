@@ -4054,6 +4054,7 @@
         'sado': 38.00,
         'yonezawa_date': 37.91,
         'soma': 37.80,
+        'nihonmatsu': 37.59,
         'iwashiro': 37.49,
         'tamura': 37.44,
         'echigo': 37.15,
@@ -4067,6 +4068,7 @@
         'shimotsuke': 36.55, 'sano_oyama': 36.33,
         'hitachi': 36.54,
         'kozuke': 36.41, 'agatsuma': 36.58, 'numata': 36.65, 'maebashi_tatebayashi': 36.36,
+        'suwa_komoro': 36.20,
         'south_shinano': 36.24, 'takato_iida': 35.70,
         'koga': 36.19,
         'oki': 36.13,
@@ -4088,6 +4090,7 @@
         'sagami': 35.25,
         'owari': 35.22,
         'south_omi': 35.15,
+        'kuwana': 35.06,
         'tamba': 35.07,
         'mimasaka': 35.06,
         'izu': 35.05,
@@ -4115,6 +4118,7 @@
         'awaji': 34.34,
         'saika_wakayama': 34.23,
         'tsushima': 34.20,
+        'noshima': 34.19,
         'suo': 34.18,
         'kii_kichu': 34.08,
         'awa_shikoku': 34.07,
@@ -4123,14 +4127,17 @@
         'kinan_kumano': 33.72,
         'chikuzen': 33.68,
         'tosa_kochi': 33.58, 'tosa_aki': 33.50, 'tosa_gun': 33.60,
+        'oshu': 33.51,
         'hirado': 33.37,
         'chikugo': 33.32,
         'hizen': 33.25,
         'bungo': 33.24,
+        'uwajima': 33.22,
         'tosa_nakamura': 32.99,
         'omura': 32.90,
         'higo_kumamoto': 32.80,
         'shimabara': 32.79,
+        'goto': 32.69,
         'nobeoka': 32.58,
         'higo_hitoyoshi': 32.21,
         'osumi': 31.74,
@@ -4139,15 +4146,26 @@
         'ryukyu': 26.22
       };
 
+      var REGION_FALLBACK_LAT = {
+        '北海道': 42.0,
+        '東北': 39.0,
+        '関東': 36.2,
+        '中部': 35.8,
+        '近畿': 34.9,
+        '中国': 34.6,
+        '四国': 33.7,
+        '九州': 32.5
+      };
+
       function getProvNorthLat(pid) {
         if (!pid) return 0;
         if (PROV_NORTH_LAT[pid] != null) return PROV_NORTH_LAT[pid];
         if (typeof State !== 'undefined' && State.provById) {
           var p = State.provById.get(pid);
           if (p && PROV_NORTH_LAT[p.id] != null) return PROV_NORTH_LAT[p.id];
-          if (p && p.cy != null) return 50 - (p.cy / 50);
+          if (p && p.region && REGION_FALLBACK_LAT[p.region] != null) return REGION_FALLBACK_LAT[p.region];
         }
-        return 0;
+        return 30.0;
       }
 
       var PROV_JP_MAP = {
