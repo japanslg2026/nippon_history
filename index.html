@@ -3966,7 +3966,7 @@
       <div class="modal-body" id="aboutModalBody" style="line-height: 1.75; font-size: 12pt;"></div>
     </div>
   </div>
-  <script src="js/data/map_borders.js?v=20261106_hist_v15"></script>
+  <script src="js/data/map_borders.js?v=20261110_v9map"></script>
 
   <script>
     (function () {
@@ -4091,7 +4091,7 @@
         'south_omi': 35.15,
         'kuwana': 35.06,
         'tamba': 35.07,
-        'mimasaka': 35.06,
+        'nishi_mimasaka': 35.08, 'higashi_mimasaka': 35.05,
         'izu': 35.05,
         'yamashiro': 35.01,
         'awa_boshu': 34.99,
@@ -4122,25 +4122,25 @@
         'kii_kichu': 34.08,
         'awa_shikoku': 34.07,
         'buzen': 33.88,
-        'iyo': 33.85,
+        'iyo_matsuyama': 33.85, 'nii_saijo': 33.92,
         'kinan_kumano': 33.72,
-        'chikuzen': 33.68,
+        'chikuzen': 33.68, 'chikuzen_akizuki': 33.47,
         'tosa_kochi': 33.58, 'tosa_aki': 33.50, 'tosa_gun': 33.60,
         'oshu': 33.51,
         'hirado': 33.37,
         'chikugo': 33.32,
         'hizen': 33.25,
-        'bungo': 33.24,
+        'bungo': 33.24, 'saiki_usuki': 33.12, 'bungo_oka': 32.97,
         'uwajima': 33.22,
         'tosa_nakamura': 32.99,
         'omura': 32.90,
-        'higo_kumamoto': 32.80,
+        'higo_kumamoto': 32.80, 'uto_yatsushiro': 32.60,
         'shimabara': 32.79,
         'goto': 32.69,
         'nobeoka': 32.58,
         'higo_hitoyoshi': 32.21,
         'osumi': 31.74,
-        'hyuga': 31.63,
+        'takanabe': 32.13, 'sadowara': 32.05, 'hyuga_obi': 31.63,
         'satsuma': 31.60,
         'ryukyu': 26.22
       };
@@ -4178,11 +4178,11 @@
         'kawachi': '河内', 'izumi': '和泉', 'settsu': '摂津', 'iga': '伊賀', 'ise': '伊勢', 'shima': '志摩',
         'kii': '紀伊', 'saika_wakayama': '雑賀・和歌山', 'kii_kichu': '紀中', 'kinan_kumano': '紀南・熊野',
         'tamba': '丹波', 'tango': '丹後', 'tajima': '但馬', 'inaba': '因幡', 'hoki': '西伯耆', 'higashi_hoki': '東伯耆', 'izumo': '出雲',
-        'iwami': '石見', 'oki': '隠岐', 'harima': '西播磨', 'higashi_harima': '東播磨', 'mimasaka': '美作', 'bizen': '備前', 'bicchu': '備中',
+        'iwami': '石見', 'oki': '隠岐', 'harima': '西播磨', 'higashi_harima': '東播磨', 'nishi_mimasaka': '西美作', 'higashi_mimasaka': '東美作', 'bizen': '備前', 'bicchu': '備中',
         'bingo': '備後', 'aki': '安芸', 'aki_koriyama': '安芸郡山', 'suo': '周防', 'nagato': '長門',
-        'awa_shikoku': '阿波', 'sanuki': '讃岐', 'iyo': '伊予', 'tosa_kochi': '土佐長岡郡', 'tosa_aki': '土佐安芸', 'tosa_gun': '土佐郡', 'tosa_nakamura': '土佐中村',
-        'tosa': '土佐', 'chikuzen': '筑前', 'chikugo': '筑後', 'buzen': '豊前', 'bungo': '豊後', 'hizen': '肥前',
-        'higo_kumamoto': '肥後熊本', 'higo_hitoyoshi': '肥後人吉', 'nobeoka': '延岡', 'hyuga': '日向',
+        'awa_shikoku': '阿波', 'sanuki': '讃岐', 'iyo_matsuyama': '伊予松山', 'nii_saijo': '新居・西条', 'tosa_kochi': '土佐長岡郡', 'tosa_aki': '土佐安芸', 'tosa_gun': '土佐郡', 'tosa_nakamura': '土佐中村',
+        'tosa': '土佐', 'chikuzen': '筑前福岡', 'chikuzen_akizuki': '夜須郡秋月', 'chikugo': '筑後', 'buzen': '豊前', 'bungo': '豊後府内', 'bungo_oka': '豊後岡', 'saiki_usuki': '佐伯・臼杵', 'hizen': '肥前',
+        'higo_kumamoto': '熊本・阿蘇', 'uto_yatsushiro': '宇土・八代', 'higo_hitoyoshi': '肥後人吉', 'nobeoka': '延岡', 'takanabe': '高鍋', 'sadowara': '佐土原', 'hyuga_obi': '飫肥',
         'osumi': '大隅', 'satsuma': '薩摩', 'tsushima': '対馬', 'ezo': '蝦夷', 'tsugaru': '津軽',
         'nishi_tsugaru': '西津軽', 'higashi_tsugaru': '東津軽', 'ryukyu': '琉球', 'wakasa': '若狭', 'awaji': '淡路'
       };
@@ -4360,18 +4360,18 @@
           if (typeof window.loadKamonSymbols === 'function') {
             window.loadKamonSymbols();
           }
-          await loadExternalScript(['js/kamonOverrides.js?v=20261108_kamon_fix']);
+          await loadExternalScript(['js/kamonOverrides.js?v=20261110_v8map']);
 
           statusEl.textContent = '歴史配置ルールとシナリオ・領国・大名・武将データを読み込み中…';
           var rulesPromise = loadAffiliationRulesSafe();
 
           var results = await Promise.all([
-            fetchJsonSmart('scenarios.json?v=20261109_dedup'),
-            fetchJsonSmart('provinces.json?v=20261107_hist_v16'),
-            fetchJsonSmart('clans.json?v=20261108_kamon_fix'),
-            fetchJsonSmart('officers.json?v=20261107_hist_v16'),
-            fetchJsonSmart('governors.json?v=20261107_hist_v16').catch(function () { return {}; }),
-            fetchJsonSmart('events.json?v=20261107_hist_v16').catch(function () { return {}; }),
+            fetchJsonSmart('scenarios.json?v=20261110_v9f'),
+            fetchJsonSmart('provinces.json?v=20261110_v9f'),
+            fetchJsonSmart('clans.json?v=20261110_v9f'),
+            fetchJsonSmart('officers.json?v=20261110_v9f'),
+            fetchJsonSmart('governors.json?v=20261110_v9f').catch(function () { return {}; }),
+            fetchJsonSmart('events.json?v=20261110_v9f').catch(function () { return {}; }),
             rulesPromise
           ]);
 
@@ -5068,7 +5068,7 @@
         if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bind); else bind();
       })();
       // 四国だけを既存の全国地図とは別に時計回りへ4度回転する。
-      var SHIKOKU_PROVINCE_IDS = new Set(['iyo', 'oshu', 'uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_aki', 'tosa_gun', 'tosa_nakamura']);
+      var SHIKOKU_PROVINCE_IDS = new Set(['iyo_matsuyama', 'nii_saijo', 'oshu', 'uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_aki', 'tosa_gun', 'tosa_nakamura']);
       var SHIKOKU_MAP_TRANSFORM = 'rotate(4 280 450)';
       // 地図枠と列島全体の傾きは変えず、五島以外だけを右へ寄せる。
       var NON_GOTO_MAP_TRANSFORM = 'translate(16 0)';
@@ -5396,7 +5396,7 @@
           applyTransform();
         }, { passive: false });
 
-        // マウスホバーツールチップ（「武将〇名」は省略、スマホ画面では省略）
+        // マウスホバーツールチップ（城主名・在国武将数つき。スマホ画面では省略）
         svg.addEventListener('mousemove', function (e) {
           if (window.innerWidth <= 1100) {
             tooltip.style.opacity = '0';
@@ -5415,9 +5415,12 @@
           var cEntry = State.computedClans.get(pEntry.ownerId);
           var isCap = cEntry && cEntry.capitalProvId === pid;
           var leader = cEntry && cEntry.leaderName ? '（当主：' + cEntry.leaderName + '）' : '';
+          var tipGov = pEntry.governor ? pEntry.governor.name : (pEntry.ownerId ? '城代統治' : '国人自治');
+          var tipOffCount = (pEntry.officers || []).length;
           tooltip.innerHTML =
             '<div style="font-weight:bold; color:var(--gold-bright); font-size:12.5pt;">' + esc(pEntry.name) + ' — ' + esc(pEntry.castle) + (isCap ? ' <span style="color:#ffd700;">[本国]</span>' : '') + '</div>' +
-            '<div style="font-size:12pt; margin-top:2px;">支配：<b style="color:#fff;">' + esc(fam) + '</b>' + esc(leader) + '</div>';
+            '<div style="font-size:12pt; margin-top:2px;">支配：<b style="color:#fff;">' + esc(fam) + '</b>' + esc(leader) + '</div>' +
+            '<div style="font-size:12pt; margin-top:2px;">城主：<b style="color:#fff;">' + esc(tipGov) + '</b>　武将：<b style="color:#fff;">' + tipOffCount + '名</b></div>';
           var rect = stage.getBoundingClientRect();
           tooltip.style.left = Math.min(rect.width - 260, e.clientX - rect.left + 14) + 'px';
           tooltip.style.top = Math.max(10, e.clientY - rect.top - 10) + 'px';
@@ -8547,6 +8550,41 @@
   #mapScenBox.is-expanded .overlay-box-title { order: 1 !important; flex: 1 1 0 !important; min-width: 0 !important; }
   #mapScenBox.is-expanded #scenMoreBtn { order: 2 !important; flex: 0 0 auto !important; margin-left: 4px !important; align-self: flex-start !important; }
   #mapScenBox.is-expanded .overlay-box-sub { order: 3 !important; flex: 1 0 100% !important; }
+}
+@media (max-width: 1100px) {
+  /* === 2026-11-10 スマホ：シナリオ名（省略表示）の上下余白を詰める === */
+  #mapScenBox:not(.is-expanded) { padding: 1px 8px !important; }
+  #mapScenBox:not(.is-expanded) .overlay-box-title { line-height: 1.3 !important; }
+  #mapScenBox:not(.is-expanded) #scenMoreBtn { width: 24px !important; height: 22px !important; }
+  #mapScenBox:not(.is-expanded) #scenMoreBtn svg { width: 20px !important; height: 20px !important; }
+  /* === 2026-11-10 スマホ：＋－⟲・ハイライト解除は地図の左上に重ねて溶け込ませる === */
+  .map-floating-bar {
+    position: absolute !important;
+    top: calc(100% + 4px) !important;
+    left: 8px !important;
+    width: auto !important;
+    margin: 0 !important;
+    gap: 4px !important;
+    z-index: 40 !important;
+  }
+  .map-controls {
+    background: rgba(10, 8, 5, 0.42) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+  }
+  .map-controls .map-ctrl-btn {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+  .mobile-clear-highlight-btn {
+    background: rgba(10, 8, 5, 0.42) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+  }
+  .mobile-clear-highlight-btn.is-cleared { border-color: rgba(255, 255, 255, 0.12) !important; }
 }
 </style>
 </body>

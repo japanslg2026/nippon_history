@@ -839,7 +839,7 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     svg = document.createElementNS(NS, 'svg'); svg.setAttribute('class', 'sl-svgmap');
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
     const provs = window.PROVINCES_DATA || [];
-    const SHIKOKU_IDS = new Set(['iyo', 'oshu', 'uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_aki', 'tosa_gun', 'tosa_nakamura']);
+    const SHIKOKU_IDS = new Set(['iyo_matsuyama', 'nii_saijo', 'oshu', 'uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_aki', 'tosa_gun', 'tosa_nakamura']);
     const provById = new Map(provs.map(p => [p.id, p]));
     const getProvTransform = (pid) => {
       const tr = [];

@@ -229,6 +229,7 @@
         "territory": {
           "satsuma": "yamato_court",
           "higo_kumamoto": "yamato_court",
+          "uto_yatsushiro": "yamato_court",
           "higo_hitoyoshi": "yamato_court"
         },
         "killOfficerIds": [
@@ -275,7 +276,9 @@
       "desc": "【物語】<br>川上梟帥を失った熊襲の残兵は総崩れとなった。弟梟帥（熊襲建）と隼人の猛者たちは、小碓命改めヤマトタケルの神がかった威容に恐れ服し、ことごとく武装を解いて平伏した。<br>タケルは無用な殺戮を戒め、隼人族に大和王権への永代の服属を誓わせた。<br>薩摩・大隅・日向の南九州全土が大和王権の版図に組み込まれ、隼人の精強なる戦士団は、後宮を守護する近衛武官（隼人司）や宮廷儀礼の呪術者として大和朝廷に仕えることとなった！<br><br>【歴史解説（この時代に何があったのか）】<br>南九州の隼人は、精強無比な戦士として知られ、特異な隼人盾や呪術的な舞（隼人舞）を伝える集団でした。<br>ヤマト政権は武力平定後、彼らの武威と呪術性を王権の儀礼や近衛護衛（宮廷警備）に積極的に組み込みました。平安時代に至るまで朝廷で「隼人司」が置かれ続けた背景には、このヤマトタケル西征期に始まる服属と統合の歴史があります。",
       "changes": {
         "territory": {
-          "hyuga": "yamato_court",
+          "takanabe": "yamato_court",
+          "sadowara": "yamato_court",
+          "hyuga_obi": "yamato_court",
           "osumi": "yamato_court",
           "nobeoka": "yamato_court"
         },
@@ -1016,14 +1019,16 @@
           "nagato": "heian_court",
           "sanuki": "heian_court",
           "awa_shikoku": "heian_court",
-          "iyo": "heian_court",
+          "iyo_matsuyama": "heian_court",
+          "nii_saijo": "heian_court",
           "awaji": "heian_court",
           "tosa_kochi": "heian_court",
           "tosa_aki": "heian_court",
           "tosa_gun": "heian_court",
           "tosa_nakamura": "heian_court",
           "aki_koriyama": "heian_court",
-          "chikuzen": "heian_court"
+          "chikuzen": "heian_court",
+          "chikuzen_akizuki": "heian_court"
         },
         "killOfficerIds": [
           "off_fujiwara_sumitomo"
@@ -1803,6 +1808,7 @@
           "bingo": "genji_yoritomo",
           "buzen": "genji_yoritomo",
           "chikuzen": "genji_yoritomo",
+          "chikuzen_akizuki": "genji_yoritomo",
           "awa_shikoku": "genji_yoritomo",
           "sanuki": "genji_yoritomo",
           "chikugo": "genji_yoritomo"
@@ -2053,7 +2059,8 @@
           "harima": "akamatsu",
           "higashi_harima": "akamatsu",
           "bizen": "akamatsu",
-          "mimasaka": "akamatsu"
+          "nishi_mimasaka": "akamatsu",
+          "higashi_mimasaka": "akamatsu"
         },
         "message": "足利尊氏が京都を制圧し、光明天皇を奉戴して室町幕府を樹立しました！",
         "killOfficerIds": [
@@ -2200,8 +2207,9 @@
         "territory": {
           "harima": "yamana",
           "higashi_harima": "yamana",
-          "mimasaka": "yamana",
-          "bizen": "yamana"
+          "bizen": "yamana",
+          "nishi_mimasaka": "yamana",
+          "higashi_mimasaka": "yamana"
         },
         "message": "赤松氏が討滅され、山名宗全が播磨・美作・備前を領有し強大化しました！",
         "killOfficerIds": [
@@ -2941,7 +2949,9 @@
       ],
       "changes": {
         "territory": {
-          "hyuga": "shimazu"
+          "takanabe": "shimazu",
+          "sadowara": "shimazu",
+          "hyuga_obi": "shimazu"
         },
         "killOfficerIds": [
           "off_takita_shigekane",
@@ -3042,9 +3052,11 @@
         "troopShock": {
           "mori": 0.8
         },
-        "message": "高松城は水に沈み、清水宗治が切腹して城兵は助命されました。和睦により備中は羽柴方の宇喜多家に渡り、毛利方の兵力が減ります。",
+        "message": "高松城は水に沈み、清水宗治が切腹して城兵は助命されました。和睦により備中・美作は羽柴方の宇喜多家に渡り、毛利方の兵力が減ります。",
         "territory": {
-          "bicchu": "ukita"
+          "bicchu": "ukita",
+          "nishi_mimasaka": "ukita",
+          "higashi_mimasaka": "ukita"
         },
         "provinceEffects": {
           "bicchu": {
@@ -3351,13 +3363,19 @@
         "shimazu"
       ],
       "onlyFrom": [
-        "ryuzoji"
+        "ryuzoji",
+        "arima",
+        "akizuki"
       ],
       "changes": {
         "territory": {
           "chikugo": "shimazu",
-          "higo_kumamoto": "shimazu",
-          "higo_hitoyoshi": "shimazu"
+          "uto_yatsushiro": "shimazu",
+          "higo_hitoyoshi": "shimazu",
+          "hizen": "shimazu",
+          "shimabara": "shimazu",
+          "chikuzen_akizuki": "shimazu",
+          "omura": "omura"
         },
         "killOfficerIds": [
           "off_ryuzoji_takanobu",
@@ -3367,15 +3385,33 @@
         "troopShock": {
           "ryuzoji": 0.5
         },
-        "message": "沖田畷で龍造寺隆信と四天王の成松信勝・江里口信常らが討ち死にし、肥後・筑後は島津の支配に入りました。",
-        "alliances": [
-          {
-            "a": "shimazu",
-            "b": "arima",
-            "label": "島津・有馬の盟約",
-            "durationSeasons": 12
-          }
-        ]
+        "message": "沖田畷で龍造寺隆信が討ち死にしました。跡を継いだ龍造寺政家は人質を出して島津に降り、有馬晴信・秋月種実も島津に服属しました。肥前・筑後・筑前秋月は島津の支配下に入り、龍造寺・有馬・秋月の家臣は島津家の配下となります。龍造寺に追われていた大村純忠は三城城に復帰し、大村家を再興しました。",
+        "setLeader": {
+          "omura": "off_hist_1551_omura_sumitada"
+        }
+      },
+      "rules": {
+        "afterApply": {
+          "transferOfficers": [
+            {
+              "officerIds": [
+                "off_hist_1587_omura_yoshisaki"
+              ],
+              "toClan": "omura",
+              "revive": false
+            },
+            {
+              "fromClans": [
+                "ryuzoji",
+                "arima",
+                "akizuki"
+              ],
+              "toClan": "shimazu",
+              "revive": false
+            }
+          ],
+          "log": "【服属】龍造寺政家・有馬晴信・秋月種実が島津義久に従い、その家臣団は島津家の配下となりました。大村純忠は三城城に戻り、大村家を再興しました。"
+        }
       }
     },
     {
@@ -3389,7 +3425,8 @@
         "territory": {
           "awa_shikoku": "hachisuka",
           "sanuki": "toyotomi",
-          "iyo": "toyotomi"
+          "iyo_matsuyama": "toyotomi",
+          "nii_saijo": "toyotomi"
         },
         "message": "長宗我部元親が降伏！阿波・讃岐・伊予が豊臣政権に割譲され、土佐一国に減封されました。"
       },
@@ -3512,7 +3549,8 @@
           "mino": "tokugawa",
           "owari": "tokugawa",
           "yamashiro": "tokugawa",
-          "chikuzen": "kuroda"
+          "chikuzen": "kuroda",
+          "chikuzen_akizuki": "kuroda"
         },
         "message": "徳川家康が関ヶ原の戦いに大勝利し、全国諸大名の領地を大規模に再編しました！",
         "killOfficerIds": [
@@ -4157,7 +4195,9 @@
         "territory": {
           "satsuma": "saigo_gun",
           "osumi": "saigo_gun",
-          "hyuga": "saigo_gun"
+          "takanabe": "saigo_gun",
+          "sadowara": "saigo_gun",
+          "hyuga_obi": "saigo_gun"
         },
         "message": "西郷隆盛が鹿児島で挙兵し、薩摩・大隅・日向を掌握して西南戦争が勃発しました！"
       },
@@ -4184,7 +4224,9 @@
         "territory": {
           "satsuma": "meiji",
           "osumi": "meiji",
-          "hyuga": "meiji"
+          "takanabe": "meiji",
+          "sadowara": "meiji",
+          "hyuga_obi": "meiji"
         },
         "killOfficerIds": [
           "off_saigo_takamori",
@@ -4356,7 +4398,9 @@
       "changes": {
         "territory": {
           "chikugo": "kuna",
-          "bungo": "kuna"
+          "bungo": "kuna",
+          "bungo_oka": "kuna",
+          "saiki_usuki": "kuna"
         },
         "clanEffects": {
           "kuna": {
@@ -4372,6 +4416,12 @@
             "defenseDelta": 10
           },
           "bungo": {
+            "defenseDelta": 10
+          },
+          "bungo_oka": {
+            "defenseDelta": 10
+          },
+          "saiki_usuki": {
             "defenseDelta": 10
           }
         },
@@ -4400,7 +4450,9 @@
       "changes": {
         "territory": {
           "chikugo": "yamatai",
-          "bungo": "yamatai"
+          "bungo": "yamatai",
+          "bungo_oka": "yamatai",
+          "saiki_usuki": "yamatai"
         },
         "killOfficerIds": [
           "off_kumaki"
@@ -4445,6 +4497,7 @@
       "changes": {
         "territory": {
           "higo_kumamoto": "yamatai",
+          "uto_yatsushiro": "yamatai",
           "higo_hitoyoshi": "yamatai"
         },
         "killOfficerIds": [
@@ -4795,7 +4848,9 @@
       "changes": {
         "territory": {
           "chikugo": "yamatai",
-          "bungo": "yamatai"
+          "bungo": "yamatai",
+          "bungo_oka": "yamatai",
+          "saiki_usuki": "yamatai"
         },
         "killOfficerIds": [
           "off_kumaki"
@@ -4840,6 +4895,7 @@
       "changes": {
         "territory": {
           "higo_kumamoto": "yamatai",
+          "uto_yatsushiro": "yamatai",
           "higo_hitoyoshi": "yamatai"
         },
         "killOfficerIds": [
@@ -5118,7 +5174,13 @@
             "orderDelta": -15,
             "moraleDelta": -10
           },
-          "iyo": {
+          "iyo_matsuyama": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "nii_saijo": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
@@ -6132,7 +6194,13 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
-          "iyo": {
+          "iyo_matsuyama": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "nii_saijo": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
@@ -6204,13 +6272,31 @@
             "orderDelta": -8,
             "moraleDelta": -5
           },
-          "hyuga": {
+          "takanabe": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "sadowara": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "hyuga_obi": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
             "moraleDelta": -5
           },
           "bungo": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "saiki_usuki": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -6390,7 +6476,13 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
-          "iyo": {
+          "iyo_matsuyama": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "nii_saijo": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -6415,6 +6507,12 @@
             "moraleDelta": -5
           },
           "bungo": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "saiki_usuki": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -6605,6 +6703,35 @@
           "mino": "oda"
         },
         "message": "稲葉山城が落城し、斎藤龍興は長島へ落ち延びました！美濃は織田信長のものとなりました。"
+      }
+    },
+    {
+      "id": "evt_1550_toishi_kuzure",
+      "scenarioId": "*",
+      "year": 1550,
+      "season": "盛夏",
+      "title": "砥石崩れ・村上義清の大逆襲",
+      "desc": "【物語】<br>天文19年8月、林城を落として中信濃を手にした武田晴信は、余勢を駆って村上義清の砥石城を囲んだ。<br>しかし断崖に守られた城兵は熱湯や大石を浴びせて寄せ手を寄せつけず、ひと月に及ぶ攻囲も実を結ばない。<br>やがて高梨政頼と和睦した村上義清が葛尾城から救援に駆けつけると、晴信は撤退を決める。退く武田勢に村上勢が襲いかかり、殿軍を務めた足軽大将横田高松をはじめ、郡内衆の小沢式部・渡辺伊豆守ら一千余の将兵が討たれた。<br><br>【歴史解説】<br>上田原の戦いに続く武田晴信の二度目の大敗で、「砥石崩れ」と呼ばれます。砥石城はこの翌年、真田幸隆の調略によって落ち、村上義清は1553年に葛尾城を捨てて越後の長尾景虎を頼ることになります。",
+      "requiresClans": [
+        "takeda",
+        "murakami"
+      ],
+      "changes": {
+        "troopShock": {
+          "takeda": 0.75
+        },
+        "clanEffects": {
+          "takeda": {
+            "moraleDelta": -15
+          },
+          "murakami": {
+            "moraleDelta": 15
+          }
+        },
+        "message": "砥石城攻めは失敗に終わり、殿軍を務めた横田高松が討ち死にしました。退却する武田勢は村上勢の追撃で一千余の将兵を失い、兵力が大きく減ります。村上方の士気は大いに上がります。",
+        "killOfficerIds": [
+          "off_yokota_takatoshi"
+        ]
       }
     }
   ],
@@ -7197,16 +7324,6 @@
         "浜田城"
       ]
     ],
-    "mimasaka": [
-      [
-        1600,
-        "美作三星城"
-      ],
-      [
-        9999,
-        "津山城"
-      ]
-    ],
     "bizen": [
       [
         1569,
@@ -7295,20 +7412,6 @@
         "徳島城"
       ]
     ],
-    "iyo": [
-      [
-        950,
-        "日振島砦"
-      ],
-      [
-        1585,
-        "湯築城"
-      ],
-      [
-        9999,
-        "松山城"
-      ]
-    ],
     "buzen": [
       [
         1587,
@@ -7321,12 +7424,12 @@
     ],
     "bungo": [
       [
-        1593,
-        "府内城・大友館"
+        1596,
+        "府内館（大友氏館）"
       ],
       [
         9999,
-        "臼杵城"
+        "府内城"
       ]
     ],
     "chikuzen": [
@@ -7361,16 +7464,6 @@
       [
         9999,
         "佐賀城"
-      ]
-    ],
-    "hyuga": [
-      [
-        1577,
-        "都於郡城"
-      ],
-      [
-        9999,
-        "飫肥城"
       ]
     ],
     "osumi": [
@@ -7943,6 +8036,164 @@
       [
         9999,
         "壬生城"
+      ]
+    ],
+    "takanabe": [
+      [
+        1577,
+        "都於郡城"
+      ],
+      [
+        1587,
+        "高城（新納院高城）"
+      ],
+      [
+        1703,
+        "財部城"
+      ],
+      [
+        9999,
+        "高鍋城"
+      ]
+    ],
+    "sadowara": [
+      [
+        9999,
+        "佐土原城"
+      ]
+    ],
+    "hyuga_obi": [
+      [
+        1456,
+        "飫肥院"
+      ],
+      [
+        9999,
+        "飫肥城"
+      ]
+    ],
+    "iyo_matsuyama": [
+      [
+        1587,
+        "湯築城"
+      ],
+      [
+        1594,
+        "国分山城"
+      ],
+      [
+        1601,
+        "松前城（正木城）"
+      ],
+      [
+        9999,
+        "松山城"
+      ]
+    ],
+    "nii_saijo": [
+      [
+        1585,
+        "高峠城"
+      ],
+      [
+        1635,
+        "川之江城（仏殿城）"
+      ],
+      [
+        9999,
+        "西条陣屋"
+      ]
+    ],
+    "bungo_oka": [
+      [
+        9999,
+        "岡城"
+      ]
+    ],
+    "saiki_usuki": [
+      [
+        1561,
+        "栂牟礼城"
+      ],
+      [
+        1593,
+        "臼杵城（丹生島城）"
+      ],
+      [
+        9999,
+        "臼杵城"
+      ]
+    ],
+    "chikuzen_akizuki": [
+      [
+        1600,
+        "古処山城"
+      ],
+      [
+        1622,
+        "秋月館（黒田直之の旧領）"
+      ],
+      [
+        9999,
+        "秋月城（秋月陣屋）"
+      ]
+    ],
+    "uto_yatsushiro": [
+      [
+        1332,
+        "宇土荘"
+      ],
+      [
+        1589,
+        "古麓城"
+      ],
+      [
+        1600,
+        "宇土城"
+      ],
+      [
+        1621,
+        "麦島城"
+      ],
+      [
+        9999,
+        "八代城"
+      ]
+    ],
+    "higashi_mimasaka": [
+      [
+        1578,
+        "三星城"
+      ],
+      [
+        1600,
+        "竹山城"
+      ],
+      [
+        9999,
+        "津山城"
+      ]
+    ],
+    "nishi_mimasaka": [
+      [
+        1466,
+        "美作守護所（院庄）"
+      ],
+      [
+        1615,
+        "高田城"
+      ],
+      [
+        1696,
+        "勝山（津山藩領）"
+      ],
+      [
+        1763,
+        "久世代官所"
+      ],
+      [
+        9999,
+        "勝山城"
       ]
     ]
   },

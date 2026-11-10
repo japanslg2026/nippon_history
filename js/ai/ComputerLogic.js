@@ -118,20 +118,18 @@ var AmbitionMethods = {
   /** 志向・難易度から CPU の性格（思考アルゴリズム）を決める */
   resolveAmbitionPersonality(clanId, basePersonality) {
     const base = basePersonality || 'balanced';
-    const relaxed = this.currentDifficulty === 'relaxed';
     const fixed = CLAN_PERSONALITY_FIXED[clanId];
-    if (fixed) return (relaxed && !['balanced', 'domestic'].includes(fixed)) ? 'balanced' : fixed;
+    if (fixed) return fixed;
     const minorType = DOMESTIC_LIKE_PERSONALITIES.has(base) ? 'domestic' : 'balanced';
     const amb = this.getClanAmbition(clanId);
-    if (relaxed) return amb === 'minor' ? minorType : 'balanced'; // 楽級：全大名がバランス型または内政型
     if (amb === 'tenka') return 'aggressive';
     if (amb === 'regional') return this.isRegionalUnified(clanId) ? 'balanced' : 'aggressive';
     return minorType;
   },
 
-  /** 地方統一を目指している最中か（楽級は地方への固執なし） */
+  /** 地方統一を目指している最中か */
   isPursuingRegionalUnification(clanId) {
-    return this.currentDifficulty !== 'relaxed' && this.getClanAmbition(clanId) === 'regional' && !this.isRegionalUnified(clanId);
+    return this.getClanAmbition(clanId) === 'regional' && !this.isRegionalUnified(clanId);
   }
 };
 
@@ -1461,6 +1459,8 @@ export const ComputerLogicMethods = {
 
   /** 徴兵：払える分だけ兵を増やし、実際の増分を返す */
   aiPayTroops(clanId, want) {
+    // 楽級：相手方AIの兵力増加を20%削減（2026-11-10）
+    if (this.currentDifficulty === 'relaxed' && !this.isSpectatorMode) want = Math.round(want * 0.8);
     if (want <= 0) return 0;
     const e = this.aiEcon(clanId);
     if (!e) return want;
@@ -1856,7 +1856,7 @@ export const ComputerLogicMethods = {
     const regionTargets = pursuingRegion ? this.getAmbitionTargetRegions(clanId) : [];
     const isKyotoAmbitionClan = !pursuingRegion && (
       (this.getClanAmbition && this.getClanAmbition(clanId) === 'tenka') ||
-      (personality === 'aggressive' && this.currentDifficulty !== 'relaxed') || this.coalitionFormed);
+      personality === 'aggressive' || this.coalitionFormed);
     // 地方統一を目指す家：地方内に攻め先が一つでもあれば、地方外へは攻めない（地方内に手が届かない時だけ外へ）
     const regionReachable = pursuingRegion && regionTargets.length > 0 && candidateFrontiers.some(p => (p.neighbors || []).some(nId => {
       const n = this.provinces.find(x => x.id === nId);
@@ -2310,7 +2310,7 @@ export const ComputerLogicMethods = {
 
       // 包囲網結成時やプレイヤー勢力拡大時は包囲網参加大名が好戦的に（内政型は控えめに）
       const myProvsCount = this.provinces.filter(p => p.ownerId === this.playerClanId).length;
-      if (this.currentDifficulty !== 'relaxed' && (this.coalitionFormed || myProvsCount >= 12)) { // 楽級は包囲網の気運なし
+      if (this.coalitionFormed || myProvsCount >= 12) {
         attackProb = Math.min(tune.coalitionCap, attackProb + tune.coalitionBoost);
       }
       // 内政型は多正面作戦をほぼ起こさない：既に他所で戦が起きている季は更に自重

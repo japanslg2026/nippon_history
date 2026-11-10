@@ -608,7 +608,7 @@ export const UIManagerMethods = {
 
     const info = {
 
-      relaxed:{ name: '楽級・安泰の世', lines: ['大名ごとの基準値に金+1,200／兵糧+1,500', '覇道包囲網は起きず、諸大名はバランス型・内政型で動く', 'はじめてでも余裕を持って遊べる難易度'] },
+      relaxed:{ name: '楽級・安泰の世', lines: ['大名ごとの基準値に金+1,200／兵糧+1,500', '敵方AIの兵力増加を20%抑える', 'はじめてでも余裕を持って遊べる難易度'] },
 
       easy:   { name: '初級・天下泰平', lines: ['大名ごとの基準値に金+650／兵糧+850', '遊びやすさを重視した難易度'] },
 
@@ -4377,7 +4377,7 @@ export const UIManagerMethods = {
 
           closeModal();
 
-          this.selectProvince(provId);
+          this.selectProvince(provId, { fromUser: true });
 
         });
 
@@ -5414,7 +5414,7 @@ export const UIManagerMethods = {
 
                       <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
 
-                        <strong style="font-size:12pt; color:${a.isMy ? 'var(--gold-bright)' : '#fff'};">🤝 ${a.clanName}</strong>
+                        <strong style="font-size:12pt; color:${a.isMy ? 'var(--gold-bright)' : '#fff'};">${a.clanName}</strong>
 
                         ${relationBadge}
 
@@ -7160,10 +7160,14 @@ export const UIManagerMethods = {
     this.hideSelectionOutline = !canShowHighlight;
     this.selectedProvId = provId;
 
-    const sidePanel = document.querySelector('.side-panel');
-    if (sidePanel) sidePanel.classList.add('is-open');
-    const mainLayout = document.querySelector('.main-layout');
-    if (mainLayout) mainLayout.classList.add('drawer-open');
+    // ドロワー（国軍情・コマンド）は領国を選んだ時だけ開く。季節進行などの再描画や観戦中の自動選択では開かない（2026-11-10）
+    const openDrawer = !opts.refresh && (!this.isSpectatorMode || !!opts.fromUser);
+    if (openDrawer) {
+      const sidePanel = document.querySelector('.side-panel');
+      if (sidePanel) sidePanel.classList.add('is-open');
+      const mainLayout = document.querySelector('.main-layout');
+      if (mainLayout) mainLayout.classList.add('drawer-open');
+    }
 
     const p = this.provinces.find(x => x.id === provId);
 
@@ -9699,7 +9703,7 @@ export const UIManagerMethods = {
 
     const diffDescriptions = {
 
-      relaxed: '💡 <strong>【楽級・安泰の世】</strong> 大名ごとの基準値に金+1,200／兵糧+1,500。覇道包囲網は起きず、諸大名はバランス型・内政型で動きます。ゆったり遊べる難易度です。',
+      relaxed: '💡 <strong>【楽級・安泰の世】</strong> 大名ごとの基準値に金+1,200／兵糧+1,500。敵方AIの兵力増加を20%抑えます。ゆったり遊べる難易度です。',
 
       easy: '💡 <strong>【初級・天下泰平】</strong> 大名ごとの基準値に金+650／兵糧+850。遊びやすさを重視した難易度です。',
 

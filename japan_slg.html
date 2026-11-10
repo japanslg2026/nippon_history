@@ -17,12 +17,12 @@
 
   <!-- Google Fonts: 武士の魂が宿る力強い和風・毛筆フォント -->
   <!-- 起動高速化: ゲームデータJSONをHTML解析と並行して先読み -->
-  <link rel="preload" href="data/scenarios.json?v=20261109_dedup" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/clans.json?v=20261109_dedup" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/provinces.json?v=20261109_dedup" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/officers.json?v=20261109_dedup" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/governors.json?v=20261109_dedup" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/events.json?v=20261109_dedup" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/scenarios.json?v=20261110_v9f" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/clans.json?v=20261110_v9f" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/provinces.json?v=20261110_v9f" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/officers.json?v=20261110_v9f" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/governors.json?v=20261110_v9f" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/events.json?v=20261110_v9f" as="fetch" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&amp;family=Dela+Gothic+One&amp;family=Sawarabi+Mincho&amp;family=Shippori+Mincho:wght@600;700;800&amp;family=Yuji+Boku&amp;display=swap" rel="stylesheet">
@@ -763,6 +763,11 @@
           <strong class="scen-title">河越夜戦</strong>
           <span class="scen-sub">氏康乾坤一擲</span>
         </button>
+        <button class="scenario-btn" data-scen-id="1550" data-era="sengoku_climax">
+          <span class="scen-badge">1550年</span>
+          <strong class="scen-title">砥石崩れ</strong>
+          <span class="scen-sub">晴信vs村上義清</span>
+        </button>
         <button class="scenario-btn" data-scen-id="1555" data-era="sengoku_climax">
           <span class="scen-badge">1555年</span>
           <strong class="scen-title">厳島の戦い</strong>
@@ -822,6 +827,11 @@
           <span class="scen-badge">1584年</span>
           <strong class="scen-title">小牧長久手の戦い</strong>
           <span class="scen-sub">秀吉vs家康</span>
+        </button>
+        <button class="scenario-btn" data-scen-id="1585" data-era="unification">
+          <span class="scen-badge">1585年</span>
+          <strong class="scen-title">四国征伐</strong>
+          <span class="scen-sub">元親の四国統一vs秀吉</span>
         </button>
         <button class="scenario-btn" data-scen-id="1587" data-era="unification">
           <span class="scen-badge">1587年</span>
@@ -1912,17 +1922,17 @@
   <!-- モジュール化されたJavaScript群 (順序保証ロード) -->
   <!-- 1. 全大名家・全シナリオ・全106領国データベース -->
   <script defer src="assets/kamons.js?v=20261108_kamon_fix"></script>
-  <script defer src="js/kamonOverrides.js?v=20261108_kamon_fix"></script>
-  <script defer src="js/data/map_borders.js?v=20261107_hist_v16"></script>
+  <script defer src="js/kamonOverrides.js?v=20261110_v8map"></script>
+  <script defer src="js/data/map_borders.js?v=20261110_v9map"></script>
   
   <!-- 2. 和洋折衷フルオーケストラBGMエンジン (全15曲) -->
   <script defer src="js/bgm.js?v=20261101_mobfix3"></script>
   <script defer src="js/MobileAudioKeepAlive.js?v=20261101_mobfix3"></script>
 
   <!-- 3. 戦国天下統一伝 ゲームエンジン本体 -->
-  <script type="module" src="js/app.js?v=20261109_dedup"></script>
+  <script type="module" src="js/app.js?v=20261110_v9f"></script>
   <script type="module" src="js/ui/Encyclopedia.js?v=20261109_sp"></script>
-  <script defer src="js/ui/StartScreenLayout.js?v=20261107_horagai_fix"></script>
+  <script defer src="js/ui/StartScreenLayout.js?v=20261110_v8map"></script>
   <script defer src="js/ui/TitleBgm.js?v=20261107_horagai_fix"></script>
 
 
