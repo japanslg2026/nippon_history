@@ -61,6 +61,7 @@
         "territory": {
           "iga": "jimmu",
           "ise": "jimmu",
+          "ise_suzuka": "jimmu",
           "shima": "jimmu"
         },
         "killOfficerIds": [
@@ -111,12 +112,16 @@
       "desc": "天香久山の埴土で平瓮を造り天神地祇を祀った皇軍は、鳥見にて長髄彦本隊と最終決戦に突入！激戦の最中、天空から黄金に眩く輝く霊鳥『金鵄』が飛来し神武天皇の弓弭に止まった！稲妻の如き瑞光に長髄彦軍は目が眩み総崩れ。主君・饒速日命は天羽羽矢を交わして神武天皇の天孫の正統を認め、頑迷に抗戦を主張する長髄彦を誅殺して宇摩志麻治命とともに皇軍へ帰順した！",
       "changes": {
         "territory": {
-          "yamato": "jimmu",
+          "yamato_koriyama": "jimmu",
+          "yamato_takatori": "jimmu",
+          "yamato_yoshino": "jimmu",
+          "yamato_eastyamauchi": "jimmu",
           "kawachi": "jimmu",
           "yamashiro": "jimmu",
           "south_omi": "jimmu",
           "north_omi": "jimmu",
-          "tamba": "jimmu"
+          "tamba_west": "jimmu",
+          "tamba_east": "jimmu"
         },
         "killOfficerIds": [
           "off_nagasunehiko",
@@ -162,7 +167,7 @@
               "nagasunehiko"
             ],
             "toClan": "jimmu",
-            "provId": "yamato",
+            "provId": "yamato_koriyama",
             "revive": true
           },
           "log": "🦅【帰順】天孫・饒速日命と宇摩志麻治命が神武軍に帰順し、物部・大和の諸族が従いました！"
@@ -229,6 +234,7 @@
         "territory": {
           "satsuma": "yamato_court",
           "higo_kumamoto": "yamato_court",
+          "higo_aso": "yamato_court",
           "uto_yatsushiro": "yamato_court",
           "higo_hitoyoshi": "yamato_court"
         },
@@ -511,7 +517,15 @@
             "defenseDelta": 25,
             "orderDelta": 25
           },
-          "hizen": {
+          "hizen_saga": {
+            "defenseDelta": 20,
+            "orderDelta": 20
+          },
+          "hizen_tsukushi": {
+            "defenseDelta": 20,
+            "orderDelta": 20
+          },
+          "hizen_karatsu": {
             "defenseDelta": 20,
             "orderDelta": 20
           }
@@ -553,6 +567,9 @@
         "message": "大海人皇子が美濃不破関を封鎖し東国軍団を動員！大海人軍の士気と兵力が劇的に向上しました！",
         "provinceEffects": {
           "mino": {
+            "defenseDelta": 20
+          },
+          "mino_iwamura": {
             "defenseDelta": 20
           }
         }
@@ -602,7 +619,19 @@
           }
         ],
         "provinceEffects": {
-          "yamato": {
+          "yamato_koriyama": {
+            "defenseDelta": 15,
+            "orderDelta": 10
+          },
+          "yamato_takatori": {
+            "defenseDelta": 15,
+            "orderDelta": 10
+          },
+          "yamato_yoshino": {
+            "defenseDelta": 15,
+            "orderDelta": 10
+          },
+          "yamato_eastyamauchi": {
             "defenseDelta": 15,
             "orderDelta": 10
           }
@@ -679,9 +708,13 @@
       "desc": "【物語】<br>壬申の乱を勝ち抜いた大海人皇子は飛鳥へ凱旋し、飛鳥浄御原宮（きよみはらのみや）を造営！<br>春二月、群臣百寮が寿詞を奏上する中、高御座に昇り第40代『天武天皇』として即位した！<br>正妃・鵜野讚良皇女を皇后に冊立し、従来の豪族連合体制を解体して『八色の姓（やくさのかばね）』を制定。天皇親政による強大な律令国家の幕が切って落とされた！<br><br>【歴史解説（この時代に何があったのか）】<br>天武天皇の即位は、日本の歴史における最大の画期の一つです。<br>『大日本』という国号や『天皇』という称号の成立、伊勢神宮の式年遷宮、日本書紀・古事記の編纂開始、飛鳥浄御原令の制定など、現在の日本の原型となる国家制度の根幹はすべてこの天武・持統両帝の時代に創始されました。",
       "changes": {
         "territory": {
-          "yamato": "oama",
+          "yamato_koriyama": "oama",
+          "yamato_takatori": "oama",
+          "yamato_yoshino": "oama",
+          "yamato_eastyamauchi": "oama",
           "kawachi": "oama",
           "settsu": "oama",
+          "settsu_osaka": "oama",
           "izumi": "oama"
         },
         "clanEffects": {
@@ -782,7 +815,23 @@
       "desc": "【物語】<br>胆沢の首長・阿弖流為（アテルイ）と副将・母礼（モレ）は、十倍を超える朝廷軍に対し、山河の天険を利用したゲリラ戦法を展開！<br>険阻な山道や泥湿地に誘い込まれた朝廷軍は、木陰から放たれる蝦夷の強弓と毒矢に射すくめられ、幾度も撃退された。<br>かつて巣伏の戦いにおいて朝廷大軍数千を溺死・敗走させた北天の英雄の武名が、再びみちのくの空に轟く！<br><br>【歴史解説（この時代に何があったのか）】<br>古代の東北に暮らした『蝦夷（エミシ）』は、優れた騎射（馬に乗りながら弓を射る術）と製鉄技術を持つ屈強な武人集団でした。<br>朝廷の重装歩兵部隊は、蝦夷の俊敏な軽騎兵ゲリラ戦に何度も壊滅させられました。この蝦夷の優れた馬術と弓矢の技術が、やがて坂東（関東）へ伝わり、日本の『武士（サムライ）』を生み出す源流となったと最新の歴史学では考えられています。",
       "changes": {
         "provinceEffects": {
-          "rikuchu": {
+          "rikuchu_morioka": {
+            "defenseDelta": 20,
+            "moraleDelta": 20
+          },
+          "rikuchu_kamiheii": {
+            "defenseDelta": 20,
+            "moraleDelta": 20
+          },
+          "rikuchu_shimoheii": {
+            "defenseDelta": 20,
+            "moraleDelta": 20
+          },
+          "rikuchu_hienuki": {
+            "defenseDelta": 20,
+            "moraleDelta": 20
+          },
+          "rikuchu_waga": {
             "defenseDelta": 20,
             "moraleDelta": 20
           },
@@ -811,7 +860,11 @@
       "desc": "【物語】<br>延暦21年春、胆沢城の完成により包囲された阿弖流為と母礼は、これ以上の民の犠牲を防ぐため、五百余人の戦士を率いて田村麻呂の軍門に降った。<br>田村麻呂は二人の武勇と誠心を深く惜しみ、都へ連れ帰って『この者たちを助命して故郷に帰せば、奥羽の民は心より服属いたしましょう』と朝廷に命懸けの嘆願を行った。<br>しかし公卿百官は『夷狄は野獣の心を持つ、信を置くべからず』と頑迷に処刑を強硬主張。二人は河内国杜山にて散った。<br><br>【歴史解説（この時代に何があったのか）】<br>古代日本史屈指の感動と悲劇のドラマです。<br>敵味方を超えて互いの器量を認め合った田村麻呂と阿弖流為。田村麻呂が建立した京都の名刹・清水寺の境内には、現在アテルイ・モレの顕彰碑が建立され、その高潔な魂が今なお称えられています。",
       "changes": {
         "territory": {
-          "rikuchu": "heian_court",
+          "rikuchu_morioka": "heian_court",
+          "rikuchu_kamiheii": "heian_court",
+          "rikuchu_shimoheii": "heian_court",
+          "rikuchu_hienuki": "heian_court",
+          "rikuchu_waga": "heian_court",
           "kasai": "heian_court"
         },
         "killOfficerIds": [
@@ -922,19 +975,29 @@
       "desc": "【物語】<br>朝廷の命を受けた平貞盛（将門の従兄弟）と、下野の剛勇なる武人『俵藤太』こと藤原秀郷が連合軍を結成して下総へ進撃！<br>北山の合戦にて、将門は寡兵四百騎を率いて自ら先頭に立ち奮戦するが、突如として激しい突風が風向きを変えた！<br>風に煽られ馬の足が止まった刹那、秀郷の放った矢が将門の額を深く射抜き、坂東の風雲児・新皇平将門は壮烈に討死した！<br><br>【歴史解説（この時代に何があったのか）】<br>武士の反乱を、朝廷の軍ではなく在地武士（秀郷・貞盛）が鎮圧した歴史的瞬間です。<br>将門を討った藤原秀郷の子孫からは奥州藤原氏や足利氏が、平貞盛の子孫からは伊勢平氏（平清盛）が生まれ、日本の武士階級の二大潮流を形成していくことになります。",
       "changes": {
         "territory": {
-          "hitachi": "heian_court",
+          "hitachi_ohta": "heian_court",
+          "hitachi_mito": "heian_court",
+          "hitachi_makabe": "heian_court",
+          "hitachi_kashima": "heian_court",
           "shimousa": "heian_court",
           "kazusa": "heian_court",
+          "kazusa_isumi": "heian_court",
           "awa_boshu": "heian_court",
           "kozuke": "heian_court",
           "agatsuma": "heian_court",
           "numata": "heian_court",
           "maebashi_tatebayashi": "heian_court",
-          "musashi": "heian_court",
+          "musashi_oshi": "heian_court",
+          "musashi_hachigata": "heian_court",
+          "musashi_iwatsuki": "heian_court",
+          "musashi_kawagoe": "heian_court",
+          "musashi_edo_tama": "heian_court",
           "sagami": "heian_court",
+          "sagami_miura": "heian_court",
           "izu": "heian_court",
           "shimotsuke": "fujiwara_hidesato",
-          "sano_oyama": "fujiwara_hidesato",
+          "shimotsuke_oyama": "fujiwara_hidesato",
+          "shimotsuke_sano": "fujiwara_hidesato",
           "koga": "heian_court",
           "nasu": "fujiwara_hidesato"
         },
@@ -1174,6 +1237,7 @@
       "changes": {
         "territory": {
           "kazusa": "minamoto_tsunemoto",
+          "kazusa_isumi": "minamoto_tsunemoto",
           "shimousa": "minamoto_tsunemoto",
           "awa_boshu": "minamoto_tsunemoto"
         },
@@ -1225,7 +1289,23 @@
           }
         },
         "provinceEffects": {
-          "rikuchu": {
+          "rikuchu_morioka": {
+            "defenseDelta": 20,
+            "troopsRate": 1.2
+          },
+          "rikuchu_kamiheii": {
+            "defenseDelta": 20,
+            "troopsRate": 1.2
+          },
+          "rikuchu_shimoheii": {
+            "defenseDelta": 20,
+            "troopsRate": 1.2
+          },
+          "rikuchu_hienuki": {
+            "defenseDelta": 20,
+            "troopsRate": 1.2
+          },
+          "rikuchu_waga": {
             "defenseDelta": 20,
             "troopsRate": 1.2
           }
@@ -1272,7 +1352,11 @@
       "desc": "【物語】<br>出羽の大豪族・清原武則の一万の大軍が源頼義に合流！<br>連合軍は安倍氏最後の拠点・厨川柵（くりやがわのさく）を総攻撃。激しい矢戦の末、柵に火を放ち火炎地獄の中で安倍貞任を討ち取った！<br>十二年に及ぶ前九年の役は終結。しかし貞任の妹婿・藤原経清は裏切り者として鈍刀で鋸引きの刑に処された。その遺児・清衡が、後の奥州藤原氏の祖となる！<br><br>【歴史解説（この時代に何があったのか）】<br>前九年の役の終結。<br>この戦いで安倍氏は滅亡し、勝利に決定的な役割を果たした出羽の清原氏が奥羽全土の新たな支配者となりました。処刑された藤原経清の無念と、その子・清衡が背負った過酷な運命が、次なる『後三年の役』への導火線となります。",
       "changes": {
         "territory": {
-          "rikuchu": "kiyohara",
+          "rikuchu_morioka": "kiyohara",
+          "rikuchu_kamiheii": "kiyohara",
+          "rikuchu_shimoheii": "kiyohara",
+          "rikuchu_hienuki": "kiyohara",
+          "rikuchu_waga": "kiyohara",
           "mutsu": "kiyohara",
           "kasai": "kiyohara",
           "nishi_tsugaru": "kiyohara",
@@ -1317,10 +1401,16 @@
       "desc": "【物語】<br>寛治元年11月、激しい兵糧攻めと寒波の中、出羽金沢柵がついに陥落！清原家衡・武衡は敗死した。<br>しかし白河上皇の平安朝廷は『此度の合戦は朝廷の追討にあらず、武士の私戦なり』として義家に一切の恩賞を出さず、陸奥守を解任した。<br>義家は都の不当な仕打ちに対し、自らの私財を投げ打って共に戦った東国武士たちに恩賞を分配した！<br><br>【歴史解説（この時代に何があったのか）】<br>朝廷の冷遇が、皮肉にも『武士の棟梁・源氏』の神話的カリスマを決定づけました。<br>命懸けで戦ったのに朝廷から見捨てられた東国武士たちに対し、義家が自腹を切って報いたことで、坂東武士の義家に対する忠誠心は絶対的なものとなりました。これが鎌倉幕府を開く源頼朝の最大の政治的資産となったのです。",
       "changes": {
         "territory": {
-          "ugo": "kiyohara",
+          "ugo_minato": "kiyohara",
+          "ugo_hinai": "kiyohara",
+          "ugo_yuri": "kiyohara",
           "kakunodate": "kiyohara",
           "yokote": "kiyohara",
-          "rikuchu": "kiyohara"
+          "rikuchu_morioka": "kiyohara",
+          "rikuchu_kamiheii": "kiyohara",
+          "rikuchu_shimoheii": "kiyohara",
+          "rikuchu_hienuki": "kiyohara",
+          "rikuchu_waga": "kiyohara"
         },
         "killOfficerIds": [
           "off_kiyohara_iehira",
@@ -1374,7 +1464,11 @@
       "desc": "【物語】<br>激戦を生き抜いた清原清衡は、養家・清原の姓を脱し、非業の死を遂げた実父の姓『藤原』へと復姓した！<br>奥州藤原氏初代・藤原清衡は平泉に本拠を定め、前九年・後三年で敵味方として散ったすべての生命を平等に供養すべく、莫大な黄金を用いて『中尊寺金色堂』の建立に着手！<br>武器を置き、争いのない仏国土を目指した百年の黄金平和都市・平泉の歴史が始まった！<br><br>【歴史解説（この時代に何があったのか）】<br>世界遺産・平泉の誕生です。<br>父や親族が互いに殺し合う地獄を生き延びた清衡は、戦乱の悲劇を二度と繰り返さぬよう、東北の豊かな砂金と北方貿易の富を文化と仏教に注ぎ込みました。平泉は平安京に次ぐ日本第二の大都市として栄華を極めることになります。",
       "changes": {
         "territory": {
-          "rikuchu": "kiyohara"
+          "rikuchu_morioka": "kiyohara",
+          "rikuchu_kamiheii": "kiyohara",
+          "rikuchu_shimoheii": "kiyohara",
+          "rikuchu_hienuki": "kiyohara",
+          "rikuchu_waga": "kiyohara"
         },
         "clanEffects": {
           "kiyohara": {
@@ -1445,6 +1539,7 @@
         "territory": {
           "yamashiro": "taira",
           "settsu": "taira",
+          "settsu_osaka": "taira",
           "kawachi": "taira",
           "harima": "taira",
           "higashi_harima": "taira"
@@ -1472,7 +1567,10 @@
       "desc": "【物語】<br>鳥羽法皇崩御を契機に、崇徳上皇と後白河天皇、摂関家の対立が爆発！<br>上皇方に源為義・平忠正、そして剛弓無双の鎮西八郎・源為朝が参集。後白河天皇方には平清盛と源義朝が結集した。<br>若き義朝は先制の火攻め夜襲を進言！清盛・義朝軍は白河北殿に火を放ち、上皇方は壊滅。崇徳上皇は讃岐へ配流、頼長は敗死した。<br><br>【歴史解説（この時代に何があったのか）】<br>古代貴族政治の決定的な終焉となった『保元の乱』です。<br>天皇家・摂関家・源平武士団がそれぞれ骨肉相食む二派に分かれて激突しました。公家の争いが武士の武力によって決着したことで、慈円は歴史書『愚管抄』で『武者の世になりにけるなり（武士の世が始まった）』と記しました。",
       "changes": {
         "territory": {
-          "yamato": "goshirakawa_in",
+          "yamato_koriyama": "goshirakawa_in",
+          "yamato_takatori": "goshirakawa_in",
+          "yamato_yoshino": "goshirakawa_in",
+          "yamato_eastyamauchi": "goshirakawa_in",
           "kawachi": "goshirakawa_in"
         },
         "killOfficerIds": [
@@ -1541,8 +1639,10 @@
         "territory": {
           "owari": "taira",
           "mino": "taira",
+          "mino_iwamura": "taira",
           "suruga": "taira",
-          "totomi": "taira"
+          "totomi": "taira",
+          "totomi_joto": "taira"
         },
         "message": "源義朝が敗死し、東海道諸国が平氏の知行国となりました！",
         "killOfficerIds": [
@@ -1569,8 +1669,10 @@
         "territory": {
           "yamashiro": "taira",
           "sagami": "taira",
+          "sagami_miura": "taira",
           "shimotsuke": "taira",
-          "sano_oyama": "taira",
+          "shimotsuke_oyama": "taira",
+          "shimotsuke_sano": "taira",
           "nasu": "taira",
           "koga": "taira"
         },
@@ -1651,7 +1753,8 @@
       "changes": {
         "territory": {
           "yamashiro": "taira",
-          "tamba": "taira",
+          "tamba_west": "taira",
+          "tamba_east": "taira",
           "north_omi": "taira",
           "south_omi": "taira"
         },
@@ -1676,9 +1779,15 @@
       "changes": {
         "territory": {
           "sagami": "genji_yoritomo",
-          "musashi": "genji_yoritomo",
+          "sagami_miura": "genji_yoritomo",
+          "musashi_oshi": "genji_yoritomo",
+          "musashi_hachigata": "genji_yoritomo",
+          "musashi_iwatsuki": "genji_yoritomo",
+          "musashi_kawagoe": "genji_yoritomo",
+          "musashi_edo_tama": "genji_yoritomo",
           "suruga": "genji_yoritomo",
-          "totomi": "genji_yoritomo"
+          "totomi": "genji_yoritomo",
+          "totomi_joto": "genji_yoritomo"
         },
         "message": "富士川の大勝！源頼朝が相模鎌倉を本拠に関東・東海道を掌握しました。"
       },
@@ -1726,7 +1835,8 @@
           "yamashiro": "genji_yoritomo",
           "north_omi": "genji_yoritomo",
           "south_omi": "genji_yoritomo",
-          "settsu": "genji_yoritomo"
+          "settsu": "genji_yoritomo",
+          "settsu_osaka": "genji_yoritomo"
         },
         "message": "木曽義仲が敗死！源頼朝（義経）軍が京都・近江を掌握しました。"
       },
@@ -1747,9 +1857,11 @@
       "changes": {
         "territory": {
           "settsu": "genji_yoritomo",
+          "settsu_osaka": "genji_yoritomo",
           "harima": "genji_yoritomo",
           "higashi_harima": "genji_yoritomo",
-          "tamba": "genji_yoritomo"
+          "tamba_west": "genji_yoritomo",
+          "tamba_east": "genji_yoritomo"
         },
         "message": "義経の神速の奇襲により一ノ谷が陥落、摂津・播磨が鎌倉幕府軍の手に渡りました！"
       },
@@ -1806,7 +1918,8 @@
           "suo": "genji_yoritomo",
           "aki": "genji_yoritomo",
           "bingo": "genji_yoritomo",
-          "buzen": "genji_yoritomo",
+          "buzen_ogura": "genji_yoritomo",
+          "buzen_nakatsu": "genji_yoritomo",
           "chikuzen": "genji_yoritomo",
           "chikuzen_akizuki": "genji_yoritomo",
           "awa_shikoku": "genji_yoritomo",
@@ -1837,12 +1950,23 @@
       "changes": {
         "territory": {
           "mutsu": "genji_yoritomo",
-          "rikuchu": "genji_yoritomo",
+          "rikuchu_morioka": "genji_yoritomo",
+          "rikuchu_kamiheii": "genji_yoritomo",
+          "rikuchu_shimoheii": "genji_yoritomo",
+          "rikuchu_hienuki": "genji_yoritomo",
+          "rikuchu_waga": "genji_yoritomo",
           "rikuzen": "genji_yoritomo",
           "iwashiro": "genji_yoritomo",
+          "iwashiro_sukagawa": "genji_yoritomo",
+          "iwashiro_ishikawa": "genji_yoritomo",
           "iwaki": "genji_yoritomo",
-          "ugo": "genji_yoritomo",
-          "uzen": "genji_yoritomo",
+          "ugo_minato": "genji_yoritomo",
+          "ugo_hinai": "genji_yoritomo",
+          "ugo_yuri": "genji_yoritomo",
+          "uzen_mogami": "genji_yoritomo",
+          "uzen_kitamurayama": "genji_yoritomo",
+          "uzen_nishimurayama": "genji_yoritomo",
+          "uzen_higashimurayama": "genji_yoritomo",
           "kakunodate": "genji_yoritomo",
           "yokote": "genji_yoritomo",
           "osaki": "genji_yoritomo",
@@ -1876,10 +2000,12 @@
         "territory": {
           "yamashiro": "hojo_kamakura",
           "settsu": "hojo_kamakura",
+          "settsu_osaka": "hojo_kamakura",
           "south_omi": "hojo_kamakura",
           "harima": "hojo_kamakura",
           "higashi_harima": "hojo_kamakura",
-          "tamba": "hojo_kamakura",
+          "tamba_west": "hojo_kamakura",
+          "tamba_east": "hojo_kamakura",
           "kawachi": "hojo_kamakura",
           "izumi": "hojo_kamakura"
         },
@@ -1925,8 +2051,10 @@
       "changes": {
         "territory": {
           "kazusa": "hojo_kamakura",
+          "kazusa_isumi": "hojo_kamakura",
           "awa_boshu": "hojo_kamakura",
-          "sagami": "hojo_kamakura"
+          "sagami": "hojo_kamakura",
+          "sagami_miura": "hojo_kamakura"
         },
         "killOfficerIds": [
           "off_miura_yasumura",
@@ -1962,10 +2090,22 @@
           "yamashiro": {
             "orderDelta": -15
           },
-          "yamato": {
+          "yamato_koriyama": {
+            "orderDelta": -15
+          },
+          "yamato_takatori": {
+            "orderDelta": -15
+          },
+          "yamato_yoshino": {
+            "orderDelta": -15
+          },
+          "yamato_eastyamauchi": {
             "orderDelta": -15
           },
           "settsu": {
+            "orderDelta": -10
+          },
+          "settsu_osaka": {
             "orderDelta": -10
           },
           "izumi": {
@@ -2020,13 +2160,19 @@
           "yamashiro": "ashikaga",
           "south_omi": "ashikaga",
           "sagami": "nitta",
-          "musashi": "nitta",
+          "sagami_miura": "nitta",
+          "musashi_oshi": "nitta",
+          "musashi_hachigata": "nitta",
+          "musashi_iwatsuki": "nitta",
+          "musashi_kawagoe": "nitta",
+          "musashi_edo_tama": "nitta",
           "kozuke": "nitta",
           "agatsuma": "nitta",
           "numata": "nitta",
           "maebashi_tatebayashi": "nitta",
           "shimotsuke": "ashikaga",
-          "sano_oyama": "ashikaga",
+          "shimotsuke_oyama": "ashikaga",
+          "shimotsuke_sano": "ashikaga",
           "harima": "akamatsu",
           "higashi_harima": "akamatsu",
           "bizen": "akamatsu",
@@ -2054,8 +2200,10 @@
       "changes": {
         "territory": {
           "settsu": "ashikaga",
+          "settsu_osaka": "ashikaga",
           "yamashiro": "ashikaga",
-          "tamba": "ashikaga",
+          "tamba_west": "ashikaga",
+          "tamba_east": "ashikaga",
           "harima": "akamatsu",
           "higashi_harima": "akamatsu",
           "bizen": "akamatsu",
@@ -2147,14 +2295,20 @@
       "desc": "応永9年、鎌倉公方・足利満兼の召命に応じた伊達政宗は鎌倉へ下り、謝罪のうえ出家して許された。出羽へ押し出した羽前は返上し、霊山城と陸前は伊達氏の手に残る。史実に従うか、討伐令を拒んで南奥の新領を守り抜くか。",
       "changes": {
         "territory": {
-          "uzen": "mogami"
+          "uzen_mogami": "mogami",
+          "uzen_kitamurayama": "mogami",
+          "uzen_nishimurayama": "mogami",
+          "uzen_higashimurayama": "mogami"
         },
         "message": "政宗は鎌倉で謝罪・出家し、羽前を最上氏へ返上しました。霊山城と陸前は伊達氏に残ります。"
       },
       "onReject": {
         "territory": {
           "rikuzen": "date",
-          "uzen": "date",
+          "uzen_mogami": "date",
+          "uzen_kitamurayama": "date",
+          "uzen_nishimurayama": "date",
+          "uzen_higashimurayama": "date",
           "iwaki": "date"
         },
         "message": "政宗は鎌倉の召命を拒み、陸前・羽前・磐城を守り抜きました。伊達の乱はなお続きます。"
@@ -2190,7 +2344,22 @@
           "sagami": {
             "orderDelta": -15
           },
-          "musashi": {
+          "sagami_miura": {
+            "orderDelta": -15
+          },
+          "musashi_oshi": {
+            "orderDelta": -10
+          },
+          "musashi_hachigata": {
+            "orderDelta": -10
+          },
+          "musashi_iwatsuki": {
+            "orderDelta": -10
+          },
+          "musashi_kawagoe": {
+            "orderDelta": -10
+          },
+          "musashi_edo_tama": {
             "orderDelta": -10
           }
         }
@@ -2251,7 +2420,8 @@
       "changes": {
         "territory": {
           "yamashiro": "hosokawa",
-          "tamba": "hosokawa",
+          "tamba_west": "hosokawa",
+          "tamba_east": "hosokawa",
           "tajima": "yamana",
           "inaba": "yamana"
         },
@@ -2375,7 +2545,11 @@
       "desc": "両上杉氏・古河公方の連合軍八万が河越城を完全包囲。北条氏康は兵八千を率いて闇夜と暴風雨の中を奇襲突撃！大軍はパニックに陥り潰走、扇谷上杉氏は滅亡し北条の関東覇権が確立した！",
       "changes": {
         "territory": {
-          "musashi": "hojo",
+          "musashi_oshi": "hojo",
+          "musashi_hachigata": "hojo",
+          "musashi_iwatsuki": "hojo",
+          "musashi_kawagoe": "hojo",
+          "musashi_edo_tama": "hojo",
           "kozuke": "hojo",
           "maebashi_tatebayashi": "hojo"
         },
@@ -2386,7 +2560,8 @@
       ],
       "onlyFrom": [
         "ogigayatsu",
-        "uesugi"
+        "uesugi",
+        "yamanouchi"
       ],
       "rules": {
         "linkedChoice": {
@@ -2413,7 +2588,8 @@
           "nagato": "sue",
           "iwami": "sue",
           "aki": "sue",
-          "buzen": "sue",
+          "buzen_ogura": "sue",
+          "buzen_nakatsu": "sue",
           "chikuzen": "sue"
         },
         "killOfficerIds": [
@@ -2635,7 +2811,8 @@
       ],
       "changes": {
         "territory": {
-          "yamato": "matsunaga"
+          "yamato_koriyama": "matsunaga",
+          "yamato_takatori": "matsunaga"
         },
         "troopShock": {
           "miyoshi": 0.85
@@ -2688,9 +2865,11 @@
           "kai": "takeda",
           "takato_iida": "takeda",
           "suruga": "takeda",
-          "suwa_komoro": "takeda",
+          "shinano_saku_komoro": "takeda",
+          "shinano_suwa": "takeda",
           "south_shinano": "takeda",
           "totomi": "tokugawa",
+          "totomi_joto": "tokugawa",
           "north_shinano": "takeda"
         },
         "breakAlliances": [
@@ -2749,14 +2928,18 @@
       "desc": "上洛を目指す武田信玄が遠江へ進み、浜松城を素通りして三方ヶ原で徳川家康を迎え撃った。魚鱗の陣の騎馬突撃で徳川軍は壊滅し、家康は浜松へ敗走。遠江は武田領となった！",
       "changes": {
         "territory": {
-          "totomi": "takeda"
+          "totomi": "takeda",
+          "totomi_joto": "takeda",
+          "mino_iwamura": "takeda"
         },
         "message": "三方ヶ原で武田軍が勝利し、遠江が武田領となりました。"
       },
       "onlyFrom": [
         "tokugawa",
         "matsudaira",
-        "imagawa"
+        "imagawa",
+        "oda",
+        "toyama_iwamura"
       ],
       "rules": {
         "linkedChoice": {
@@ -2810,7 +2993,8 @@
       ],
       "changes": {
         "territory": {
-          "ise": "oda"
+          "ise": "oda",
+          "ise_suzuka": "oda"
         },
         "troopShock": {
           "honganji": 0.6
@@ -2823,6 +3007,9 @@
         },
         "provinceEffects": {
           "ise": {
+            "orderDelta": 25
+          },
+          "ise_suzuka": {
             "orderDelta": 25
           }
         }
@@ -2841,7 +3028,8 @@
       "changes": {
         "territory": {
           "totomi": "tokugawa",
-          "mikawa": "tokugawa"
+          "mikawa": "tokugawa",
+          "mino_iwamura": "oda"
         },
         "message": "長篠設楽原の戦いで武田軍が壊滅し、徳川家康が遠江・三河を完全奪回しました！",
         "killOfficerIds": [
@@ -2871,6 +3059,7 @@
           "higashi_etchu": "uesugi",
           "etchu": "uesugi",
           "echigo": "uesugi",
+          "echigo_murakami": "uesugi",
           "numata": "uesugi"
         },
         "troopShock": {
@@ -2902,7 +3091,10 @@
       ],
       "onReject": {
         "territory": {
-          "yamato": "matsunaga"
+          "yamato_koriyama": "matsunaga",
+          "yamato_takatori": "matsunaga",
+          "yamato_yoshino": "matsunaga",
+          "yamato_eastyamauchi": "matsunaga"
         },
         "message": "松永久秀が信貴山城を守り抜き、大和一国を押さえて織田家から独立しました。織田との盟約は破れ、包囲した織田勢は兵を損ないます。",
         "breakAlliances": [
@@ -2917,7 +3109,9 @@
       },
       "changes": {
         "territory": {
-          "yamato": "tsutsui"
+          "yamato_koriyama": "tsutsui",
+          "yamato_takatori": "tsutsui",
+          "yamato_eastyamauchi": "tsutsui"
         },
         "killOfficerIds": [
           "off_matsunaga_hisahide",
@@ -3087,14 +3281,19 @@
       "changes": {
         "territory": {
           "yamashiro": "akechi",
-          "tamba": "akechi",
+          "tamba_west": "akechi",
+          "tamba_east": "akechi",
           "south_omi": "akechi",
           "settsu": "toyotomi",
+          "settsu_osaka": "toyotomi",
           "kawachi": "toyotomi",
           "izumi": "toyotomi",
           "harima": "toyotomi",
           "higashi_harima": "toyotomi",
-          "yamato": "toyotomi",
+          "yamato_koriyama": "toyotomi",
+          "yamato_takatori": "toyotomi",
+          "yamato_yoshino": "toyotomi",
+          "yamato_eastyamauchi": "toyotomi",
           "tajima": "toyotomi",
           "inaba": "toyotomi",
           "awaji": "toyotomi",
@@ -3103,10 +3302,12 @@
           "kaga": "shibata",
           "noto": "shibata",
           "wakasa": "shibata",
-          "hida": "shibata",
+          "hida_takayama": "shibata",
           "owari": "oda",
           "ise": "oda",
+          "ise_suzuka": "oda",
           "mino": "oda",
+          "mino_iwamura": "oda",
           "shima": "oda",
           "iga": "oda",
           "kai": "tokugawa",
@@ -3116,6 +3317,7 @@
           "ueda": "sanada",
           "suruga": "tokugawa",
           "totomi": "tokugawa",
+          "totomi_joto": "tokugawa",
           "mikawa": "tokugawa",
           "kozuke": "hojo",
           "agatsuma": "sanada",
@@ -3149,15 +3351,20 @@
           "minTroops": 3000,
           "territory": {
             "yamashiro": "akechi",
-            "tamba": "akechi",
+            "tamba_west": "akechi",
+            "tamba_east": "akechi",
             "tango": "akechi",
             "south_omi": "akechi",
             "harima": "toyotomi",
             "higashi_harima": "toyotomi",
             "settsu": "toyotomi",
+            "settsu_osaka": "toyotomi",
             "kawachi": "toyotomi",
             "izumi": "toyotomi",
-            "yamato": "toyotomi",
+            "yamato_koriyama": "toyotomi",
+            "yamato_takatori": "toyotomi",
+            "yamato_yoshino": "toyotomi",
+            "yamato_eastyamauchi": "toyotomi",
             "tajima": "toyotomi",
             "inaba": "toyotomi",
             "awaji": "toyotomi",
@@ -3166,10 +3373,14 @@
             "noto": "shibata",
             "north_omi": "toyotomi",
             "wakasa": "shibata",
-            "hida": "shibata",
+            "hida_takayama": "shibata",
+            "hida_kiun": "shibata",
+            "hida_kamioka": "shibata",
             "owari": "oda",
             "mino": "oda",
+            "mino_iwamura": "oda",
             "ise": "oda",
+            "ise_suzuka": "oda",
             "shima": "oda",
             "iga": "oda",
             "kai": "tokugawa",
@@ -3301,7 +3512,8 @@
       "changes": {
         "territory": {
           "yamashiro": "toyotomi",
-          "tamba": "toyotomi",
+          "tamba_west": "toyotomi",
+          "tamba_east": "toyotomi",
           "tango": "toyotomi",
           "south_omi": "toyotomi"
         },
@@ -3365,14 +3577,18 @@
       "onlyFrom": [
         "ryuzoji",
         "arima",
-        "akizuki"
+        "akizuki",
+        "tsukushi_katsuo",
+        "hata"
       ],
       "changes": {
         "territory": {
           "chikugo": "shimazu",
           "uto_yatsushiro": "shimazu",
           "higo_hitoyoshi": "shimazu",
-          "hizen": "shimazu",
+          "hizen_saga": "shimazu",
+          "hizen_tsukushi": "shimazu",
+          "hizen_karatsu": "shimazu",
           "shimabara": "shimazu",
           "chikuzen_akizuki": "shimazu",
           "omura": "omura"
@@ -3404,7 +3620,9 @@
               "fromClans": [
                 "ryuzoji",
                 "arima",
-                "akizuki"
+                "akizuki",
+                "tsukushi_katsuo",
+                "hata"
               ],
               "toClan": "shimazu",
               "revive": false
@@ -3454,6 +3672,8 @@
           "yonezawa_date": "date",
           "rikuzen": "date",
           "iwashiro": "date",
+          "iwashiro_sukagawa": "date",
+          "iwashiro_ishikawa": "date",
           "tamura": "date",
           "iwaki": "date",
           "shirakawa": "date"
@@ -3462,6 +3682,17 @@
           "ashina": 0.5
         },
         "message": "摺上原で蘆名軍が総崩れとなり、蘆名義広は常陸へ落ち延びました。伊達政宗は黒川城に入り、米沢・伊達、陸前、岩代、田村、磐城、白河を治める南奥州の覇者となりました。"
+      },
+      "rules": {
+        "afterApply": {
+          "transferOfficers": {
+            "officerIds": [
+              "off_pl1570_172"
+            ],
+            "toClan": "date",
+            "revive": false
+          }
+        }
       }
     },
     {
@@ -3474,22 +3705,32 @@
       "changes": {
         "territory": {
           "sagami": "tokugawa",
-          "musashi": "tokugawa",
+          "sagami_miura": "tokugawa",
+          "musashi_oshi": "tokugawa",
+          "musashi_hachigata": "tokugawa",
+          "musashi_iwatsuki": "tokugawa",
+          "musashi_kawagoe": "tokugawa",
+          "musashi_edo_tama": "tokugawa",
           "kozuke": "tokugawa",
           "agatsuma": "sanada",
           "numata": "sanada",
           "maebashi_tatebayashi": "tokugawa",
           "shimotsuke": "tokugawa",
-          "sano_oyama": "tokugawa",
+          "shimotsuke_oyama": "tokugawa",
+          "shimotsuke_sano": "tokugawa",
           "kazusa": "tokugawa",
+          "kazusa_isumi": "tokugawa",
           "shimousa": "tokugawa",
           "suruga": "toyotomi",
           "totomi": "toyotomi",
+          "totomi_joto": "toyotomi",
           "mikawa": "toyotomi",
           "kai": "toyotomi",
           "south_shinano": "toyotomi",
           "takato_iida": "toyotomi",
-          "koga": "tokugawa"
+          "koga": "tokugawa",
+          "shinano_saku_komoro": "toyotomi",
+          "shinano_suwa": "toyotomi"
         },
         "message": "後北条氏が滅亡して豊臣秀吉が天下統一を達成！徳川家康は関東へ国替えとなりました！",
         "killOfficerIds": [
@@ -3502,7 +3743,8 @@
       ],
       "onlyFrom": [
         "hojo",
-        "tokugawa"
+        "tokugawa",
+        "toki_kazusa"
       ]
     },
     {
@@ -3521,7 +3763,7 @@
       "onReject": {
         "territory": {
           "mutsu": "kunohe",
-          "rikuchu": "kunohe"
+          "rikuchu_morioka": "kunohe"
         },
         "message": "【九戸政実の乱 成功】九戸政実が仕置軍を撃退し、陸奥・陸中を掌握して奥州独立を果たしました！"
       },
@@ -3547,6 +3789,7 @@
           "south_omi": "tokugawa",
           "north_omi": "ii",
           "mino": "tokugawa",
+          "mino_iwamura": "tokugawa",
           "owari": "tokugawa",
           "yamashiro": "tokugawa",
           "chikuzen": "kuroda",
@@ -3585,6 +3828,7 @@
       "changes": {
         "territory": {
           "settsu": "tokugawa",
+          "settsu_osaka": "tokugawa",
           "kawachi": "tokugawa",
           "izumi": "tokugawa"
         },
@@ -3662,9 +3906,14 @@
       },
       "onReject": {
         "territory": {
-          "musashi": "yui",
+          "musashi_oshi": "yui",
+          "musashi_hachigata": "yui",
+          "musashi_iwatsuki": "yui",
+          "musashi_kawagoe": "yui",
+          "musashi_edo_tama": "yui",
           "suruga": "yui",
-          "sagami": "yui"
+          "sagami": "yui",
+          "sagami_miura": "yui"
         },
         "message": "【由比正雪の乱 成功】丸橋忠弥が江戸城を制圧し、由比正雪が武蔵・駿河・相模を掌握しました！"
       },
@@ -3801,6 +4050,7 @@
       "changes": {
         "territory": {
           "settsu": "tokugawa",
+          "settsu_osaka": "tokugawa",
           "kawachi": "tokugawa",
           "izumi": "tokugawa"
         },
@@ -3812,6 +4062,7 @@
       "onReject": {
         "territory": {
           "settsu": "oshio",
+          "settsu_osaka": "oshio",
           "kawachi": "oshio",
           "izumi": "oshio"
         },
@@ -3849,7 +4100,8 @@
       },
       "onReject": {
         "territory": {
-          "echigo": "oshio"
+          "echigo": "oshio",
+          "echigo_murakami": "oshio"
         },
         "message": "【生田万の乱 成功】越後柏崎を制圧し、北越の民衆救済拠点を確立しました！"
       },
@@ -3910,7 +4162,10 @@
       },
       "onReject": {
         "territory": {
-          "yamato": "nakayama"
+          "yamato_koriyama": "nakayama",
+          "yamato_takatori": "nakayama",
+          "yamato_yoshino": "nakayama",
+          "yamato_eastyamauchi": "nakayama"
         },
         "message": "【天誅組の変 成功】大和国が解放され、尊王攘夷義勇軍の大和拠点が確立されました！"
       },
@@ -3982,7 +4237,10 @@
         "territory": {
           "yamashiro": "mito",
           "south_omi": "mito",
-          "hitachi": "mito"
+          "hitachi_ohta": "mito",
+          "hitachi_mito": "mito",
+          "hitachi_makabe": "mito",
+          "hitachi_kashima": "mito"
         },
         "message": "【天狗党の乱 成功】天狗党が敦賀の包囲を突破し、近江へ進出して尊皇の主導権を握りました！"
       },
@@ -4040,7 +4298,8 @@
       "desc": "幕府軍十万による長州征伐に対し、高杉晋作の奇兵隊と大村益次郎の洋式軍備が芸州口・石州口・小倉口で幕府軍を連破！小倉城は自焼開城し、長州藩が山陽・山陰・北九州で圧倒的勝利を収めた！",
       "changes": {
         "territory": {
-          "buzen": "mori",
+          "buzen_ogura": "mori",
+          "buzen_nakatsu": "mori",
           "iwami": "mori"
         },
         "message": "長州藩が四境戦争で幕府軍を壊滅させ、周防・長門・豊前・石見を掌握しました！"
@@ -4066,9 +4325,13 @@
         "territory": {
           "yamashiro": "meiji",
           "settsu": "meiji",
+          "settsu_osaka": "meiji",
           "kawachi": "meiji",
           "izumi": "meiji",
-          "yamato": "meiji"
+          "yamato_koriyama": "meiji",
+          "yamato_takatori": "meiji",
+          "yamato_yoshino": "meiji",
+          "yamato_eastyamauchi": "meiji"
         },
         "message": "鳥羽・伏見の戦いで新政府軍が大勝利し、近畿全土が明治新政府の支配下に入りました！"
       },
@@ -4095,8 +4358,13 @@
       "desc": "東征大総督府参謀・西郷隆盛と陸軍総裁・勝海舟の命がけの直談判により、江戸総攻撃は直前で中止！江戸城は平和裏に新政府軍へ引き渡され、徳川慶喜は水戸へ退去、関東諸国が新政府の管轄となった！",
       "changes": {
         "territory": {
-          "musashi": "meiji",
+          "musashi_oshi": "meiji",
+          "musashi_hachigata": "meiji",
+          "musashi_iwatsuki": "meiji",
+          "musashi_kawagoe": "meiji",
+          "musashi_edo_tama": "meiji",
           "sagami": "meiji",
+          "sagami_miura": "meiji",
           "suruga": "tokugawa"
         },
         "message": "江戸城が無血開城され、武蔵・相模が新政府領となり徳川家は駿府へ移封されました！"
@@ -4118,8 +4386,11 @@
       "changes": {
         "territory": {
           "iwashiro": "meiji",
+          "iwashiro_sukagawa": "meiji",
+          "iwashiro_ishikawa": "meiji",
           "iwaki": "meiji",
           "echigo": "meiji",
+          "echigo_murakami": "meiji",
           "rikuzen": "meiji",
           "yonezawa_date": "meiji",
           "osaki": "meiji",
@@ -4248,7 +4519,8 @@
       "changes": {
         "territory": {
           "awa_boshu": "yamato_court",
-          "kazusa": "yamato_court"
+          "kazusa": "yamato_court",
+          "kazusa_isumi": "yamato_court"
         },
         "killOfficerIds": [
           "off_ototachibana"
@@ -4258,7 +4530,14 @@
             "orderDelta": 15,
             "moraleDelta": 20
           },
+          "kazusa_isumi": {
+            "orderDelta": 15,
+            "moraleDelta": 20
+          },
           "sagami": {
+            "orderDelta": -15
+          },
+          "sagami_miura": {
             "orderDelta": -15
           }
         },
@@ -4280,7 +4559,12 @@
       "changes": {
         "territory": {
           "sagami": "yamato_court",
-          "musashi": "yamato_court",
+          "sagami_miura": "yamato_court",
+          "musashi_oshi": "yamato_court",
+          "musashi_hachigata": "yamato_court",
+          "musashi_iwatsuki": "yamato_court",
+          "musashi_kawagoe": "yamato_court",
+          "musashi_edo_tama": "yamato_court",
           "shimousa": "yamato_court"
         },
         "killOfficerIds": [
@@ -4326,7 +4610,10 @@
       "desc": "【物語】<br>北関東・毛野国や日高見の蝦夷をことごとく平定したヤマトタケルは、甲斐の酒折宮を経て信濃へ抜ける碓氷峠の頂に立った。<br>南の海をはるかに見下ろしたタケルは、あの走水の海で命を捧げて散った弟橘媛を偲び、深く三度ため息をついて『吾妻はや（我が妻よ……）』と悲痛の叫びをあげた。<br>タケルの勇武と誠心に打たれた東国の諸豪族は、ことごとく大和王権への恭順を誓った！<br><br>【歴史解説（この時代に何があったのか）】<br>東国を「あづま（吾妻・東）」と呼ぶ語源となった古事記屈指の感動的な名場面です。<br>また、甲斐の酒折宮では『新治 筑波を過ぎて 幾夜か寝つる』という日本最古の連歌（問答歌）が詠まれています。関東から甲信越、東北南部に及ぶ広大な地域が大和王権の版図に組み込まれ、前方後円墳が東国全域へと急速に波及していきました。",
       "changes": {
         "territory": {
-          "hitachi": "yamato_court"
+          "hitachi_ohta": "yamato_court",
+          "hitachi_mito": "yamato_court",
+          "hitachi_makabe": "yamato_court",
+          "hitachi_kashima": "yamato_court"
         },
         "alliances": [
           {
@@ -4497,6 +4784,7 @@
       "changes": {
         "territory": {
           "higo_kumamoto": "yamatai",
+          "higo_aso": "yamatai",
           "uto_yatsushiro": "yamatai",
           "higo_hitoyoshi": "yamatai"
         },
@@ -4569,7 +4857,19 @@
           }
         },
         "provinceEffects": {
-          "yamato": {
+          "yamato_koriyama": {
+            "defenseDelta": 15,
+            "orderDelta": 15
+          },
+          "yamato_takatori": {
+            "defenseDelta": 15,
+            "orderDelta": 15
+          },
+          "yamato_yoshino": {
+            "defenseDelta": 15,
+            "orderDelta": 15
+          },
+          "yamato_eastyamauchi": {
             "defenseDelta": 15,
             "orderDelta": 15
           }
@@ -4597,7 +4897,22 @@
           }
         },
         "provinceEffects": {
-          "yamato": {
+          "yamato_koriyama": {
+            "defenseDelta": 15,
+            "orderDelta": 10,
+            "troopsRate": 1.1
+          },
+          "yamato_takatori": {
+            "defenseDelta": 15,
+            "orderDelta": 10,
+            "troopsRate": 1.1
+          },
+          "yamato_yoshino": {
+            "defenseDelta": 15,
+            "orderDelta": 10,
+            "troopsRate": 1.1
+          },
+          "yamato_eastyamauchi": {
             "defenseDelta": 15,
             "orderDelta": 10,
             "troopsRate": 1.1
@@ -4620,7 +4935,16 @@
           }
         },
         "provinceEffects": {
-          "yamato": {
+          "yamato_koriyama": {
+            "orderDelta": 20
+          },
+          "yamato_takatori": {
+            "orderDelta": 20
+          },
+          "yamato_yoshino": {
+            "orderDelta": 20
+          },
+          "yamato_eastyamauchi": {
             "orderDelta": 20
           },
           "kawachi": {
@@ -4653,7 +4977,11 @@
             "orderDelta": 20,
             "troopsRate": 1.2
           },
-          "buzen": {
+          "buzen_ogura": {
+            "defenseDelta": 15,
+            "orderDelta": 15
+          },
+          "buzen_nakatsu": {
             "defenseDelta": 15,
             "orderDelta": 15
           },
@@ -4718,7 +5046,10 @@
           "higashi_harima": {
             "defenseDelta": 15
           },
-          "tamba": {
+          "tamba_west": {
+            "defenseDelta": 15
+          },
+          "tamba_east": {
             "defenseDelta": 15
           },
           "echizen": {
@@ -4784,7 +5115,16 @@
           "yamashiro": {
             "orderDelta": -10
           },
-          "yamato": {
+          "yamato_koriyama": {
+            "orderDelta": 15
+          },
+          "yamato_takatori": {
+            "orderDelta": 15
+          },
+          "yamato_yoshino": {
+            "orderDelta": 15
+          },
+          "yamato_eastyamauchi": {
             "orderDelta": 15
           }
         },
@@ -4825,13 +5165,25 @@
           }
         },
         "provinceEffects": {
-          "yamato": {
+          "yamato_koriyama": {
+            "orderDelta": 15
+          },
+          "yamato_takatori": {
+            "orderDelta": 15
+          },
+          "yamato_yoshino": {
+            "orderDelta": 15
+          },
+          "yamato_eastyamauchi": {
             "orderDelta": 15
           },
           "kawachi": {
             "orderDelta": 10
           },
           "settsu": {
+            "orderDelta": 10
+          },
+          "settsu_osaka": {
             "orderDelta": 10
           }
         },
@@ -4895,6 +5247,7 @@
       "changes": {
         "territory": {
           "higo_kumamoto": "yamatai",
+          "higo_aso": "yamatai",
           "uto_yatsushiro": "yamatai",
           "higo_hitoyoshi": "yamatai"
         },
@@ -4934,7 +5287,16 @@
           }
         },
         "provinceEffects": {
-          "yamato": {
+          "yamato_koriyama": {
+            "orderDelta": 15
+          },
+          "yamato_takatori": {
+            "orderDelta": 15
+          },
+          "yamato_yoshino": {
+            "orderDelta": 15
+          },
+          "yamato_eastyamauchi": {
             "orderDelta": 15
           }
         },
@@ -4962,7 +5324,19 @@
           }
         },
         "provinceEffects": {
-          "yamato": {
+          "yamato_koriyama": {
+            "orderDelta": 30,
+            "defenseDelta": 20
+          },
+          "yamato_takatori": {
+            "orderDelta": 30,
+            "defenseDelta": 20
+          },
+          "yamato_yoshino": {
+            "orderDelta": 30,
+            "defenseDelta": 20
+          },
+          "yamato_eastyamauchi": {
             "orderDelta": 30,
             "defenseDelta": 20
           },
@@ -5043,7 +5417,19 @@
         },
         "message": "太田道灌が江戸城・河越城を築城！扇谷上杉家の軍事力と防衛力が大幅に向上しました！",
         "provinceEffects": {
-          "musashi": {
+          "musashi_oshi": {
+            "defenseDelta": 30
+          },
+          "musashi_hachigata": {
+            "defenseDelta": 30
+          },
+          "musashi_iwatsuki": {
+            "defenseDelta": 30
+          },
+          "musashi_kawagoe": {
+            "defenseDelta": 30
+          },
+          "musashi_edo_tama": {
             "defenseDelta": 30
           }
         }
@@ -5248,13 +5634,49 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
-          "rikuchu": {
+          "rikuchu_morioka": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "rikuchu_kamiheii": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "rikuchu_shimoheii": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "rikuchu_hienuki": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "rikuchu_waga": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
             "moraleDelta": -5
           },
           "iwashiro": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "iwashiro_sukagawa": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "iwashiro_ishikawa": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -5275,6 +5697,12 @@
       "changes": {
         "provinceEffects": {
           "settsu": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
+          "settsu_osaka": {
             "troopsRate": 0.85,
             "defenseDelta": -25,
             "orderDelta": -15,
@@ -5328,7 +5756,25 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
-          "yamato": {
+          "yamato_koriyama": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "yamato_takatori": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "yamato_yoshino": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "yamato_eastyamauchi": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -5378,7 +5824,19 @@
             "orderDelta": -15,
             "moraleDelta": -10
           },
+          "totomi_joto": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
           "ise": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "ise_suzuka": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
@@ -5452,13 +5910,37 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
-          "yamato": {
+          "yamato_koriyama": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "yamato_takatori": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "yamato_yoshino": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "yamato_eastyamauchi": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
             "moraleDelta": -5
           },
           "settsu": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "settsu_osaka": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -5508,7 +5990,25 @@
             "orderDelta": -8,
             "moraleDelta": -5
           },
-          "yamato": {
+          "yamato_koriyama": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "yamato_takatori": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "yamato_yoshino": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "yamato_eastyamauchi": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -5520,7 +6020,19 @@
             "orderDelta": -8,
             "moraleDelta": -5
           },
-          "tamba": {
+          "settsu_osaka": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "tamba_west": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "tamba_east": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -5552,7 +6064,37 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
-          "musashi": {
+          "sagami_miura": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "musashi_oshi": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "musashi_hachigata": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "musashi_iwatsuki": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "musashi_kawagoe": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "musashi_edo_tama": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -5571,6 +6113,12 @@
             "moraleDelta": -5
           },
           "kazusa": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "kazusa_isumi": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -5596,7 +6144,37 @@
             "orderDelta": -15,
             "moraleDelta": -10
           },
-          "musashi": {
+          "sagami_miura": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
+          "musashi_oshi": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "musashi_hachigata": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "musashi_iwatsuki": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "musashi_kawagoe": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "musashi_edo_tama": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -5658,6 +6236,12 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
+          "settsu_osaka": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
           "kii_kichu": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
@@ -5676,7 +6260,25 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
-          "yamato": {
+          "yamato_koriyama": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "yamato_takatori": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "yamato_yoshino": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "yamato_eastyamauchi": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -5726,7 +6328,19 @@
             "orderDelta": -15,
             "moraleDelta": -10
           },
+          "totomi_joto": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
           "ise": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
+          "ise_suzuka": {
             "troopsRate": 0.85,
             "defenseDelta": -25,
             "orderDelta": -15,
@@ -5768,6 +6382,12 @@
             "orderDelta": -8,
             "moraleDelta": -5
           },
+          "sagami_miura": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
           "owari": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
@@ -5794,7 +6414,19 @@
       "forced": true,
       "changes": {
         "provinceEffects": {
-          "hida": {
+          "hida_takayama": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
+          "hida_kiun": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
+          "hida_kamioka": {
             "troopsRate": 0.85,
             "defenseDelta": -25,
             "orderDelta": -15,
@@ -5807,6 +6439,12 @@
             "moraleDelta": -8
           },
           "mino": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "mino_iwamura": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
@@ -5831,6 +6469,12 @@
             "moraleDelta": -8
           },
           "ise": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "ise_suzuka": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -5867,7 +6511,10 @@
             "moraleDelta": -5
           }
         },
-        "message": "天正の大地震！飛騨の帰雲城が山崩れに埋まり、近江長浜城・越中木舟城も倒壊。中部諸国の兵と城郭が大打撃を受けました。"
+        "message": "天正の大地震！飛騨の帰雲城が山崩れに埋まり、近江長浜城・越中木舟城も倒壊。中部諸国の兵と城郭が大打撃を受けました。",
+        "killOfficerIds": [
+          "off_pl1570_191"
+        ]
       }
     },
     {
@@ -5892,6 +6539,12 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
+          "settsu_osaka": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
           "kawachi": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
@@ -5910,13 +6563,37 @@
             "orderDelta": -8,
             "moraleDelta": -5
           },
-          "yamato": {
+          "yamato_koriyama": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
             "moraleDelta": -5
           },
-          "tamba": {
+          "yamato_takatori": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "yamato_yoshino": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "yamato_eastyamauchi": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "tamba_west": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "tamba_east": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -5972,6 +6649,12 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
+          "totomi_joto": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
           "kii_kichu": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
@@ -6013,6 +6696,12 @@
             "defenseDelta": -12,
             "orderDelta": -8,
             "moraleDelta": -5
+          },
+          "kazusa_isumi": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
           }
         },
         "message": "慶長の大津波！太平洋沿岸の諸国が津波に襲われ、土佐・阿波・遠江などで兵と治安が損なわれました。"
@@ -6034,7 +6723,31 @@
             "orderDelta": -15,
             "moraleDelta": -10
           },
-          "rikuchu": {
+          "rikuchu_morioka": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "rikuchu_kamiheii": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "rikuchu_shimoheii": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "rikuchu_hienuki": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "rikuchu_waga": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
@@ -6084,6 +6797,12 @@
             "orderDelta": -15,
             "moraleDelta": -10
           },
+          "sagami_miura": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
           "awa_boshu": {
             "troopsRate": 0.85,
             "defenseDelta": -25,
@@ -6096,13 +6815,43 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
+          "kazusa_isumi": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
           "izu": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
             "moraleDelta": -8
           },
-          "musashi": {
+          "musashi_oshi": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "musashi_hachigata": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "musashi_iwatsuki": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "musashi_kawagoe": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "musashi_edo_tama": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
@@ -6170,6 +6919,12 @@
             "orderDelta": -15,
             "moraleDelta": -10
           },
+          "settsu_osaka": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
           "kii_kichu": {
             "troopsRate": 0.85,
             "defenseDelta": -25,
@@ -6183,6 +6938,12 @@
             "moraleDelta": -10
           },
           "totomi": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
+          "totomi_joto": {
             "troopsRate": 0.85,
             "defenseDelta": -25,
             "orderDelta": -15,
@@ -6213,6 +6974,12 @@
             "moraleDelta": -8
           },
           "ise": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "ise_suzuka": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
@@ -6266,7 +7033,25 @@
             "orderDelta": -8,
             "moraleDelta": -5
           },
-          "yamato": {
+          "yamato_koriyama": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "yamato_takatori": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "yamato_yoshino": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "yamato_eastyamauchi": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -6334,6 +7119,12 @@
             "orderDelta": -8,
             "moraleDelta": -5
           },
+          "echigo_murakami": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
           "south_shinano": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
@@ -6378,6 +7169,12 @@
             "orderDelta": -15,
             "moraleDelta": -10
           },
+          "totomi_joto": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
           "mikawa": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
@@ -6385,6 +7182,12 @@
             "moraleDelta": -8
           },
           "ise": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "ise_suzuka": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
@@ -6409,6 +7212,12 @@
             "moraleDelta": -5
           },
           "sagami": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "sagami_miura": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -6459,6 +7268,12 @@
             "moraleDelta": -8
           },
           "settsu": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "settsu_osaka": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
@@ -6532,7 +7347,31 @@
       "forced": true,
       "changes": {
         "provinceEffects": {
-          "musashi": {
+          "musashi_oshi": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
+          "musashi_hachigata": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
+          "musashi_iwatsuki": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
+          "musashi_kawagoe": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
+          "musashi_edo_tama": {
             "troopsRate": 0.85,
             "defenseDelta": -25,
             "orderDelta": -15,
@@ -6550,7 +7389,19 @@
             "orderDelta": -8,
             "moraleDelta": -5
           },
+          "sagami_miura": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
           "kazusa": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "kazusa_isumi": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -6700,7 +7551,8 @@
       ],
       "changes": {
         "territory": {
-          "mino": "oda"
+          "mino": "oda",
+          "mino_iwamura": "oda"
         },
         "message": "稲葉山城が落城し、斎藤龍興は長島へ落ち延びました！美濃は織田信長のものとなりました。"
       }
@@ -6732,6 +7584,55 @@
         "killOfficerIds": [
           "off_yokota_takatoshi"
         ]
+      }
+    },
+    {
+      "id": "evt_1516_arai_fall",
+      "scenarioId": "*",
+      "year": 1516,
+      "season": "盛夏",
+      "title": "新井城落城・相模三浦氏の滅亡",
+      "desc": "1516年、北条早雲は三年に及ぶ包囲の末に三浦半島の新井城を落とした。三浦義同（道寸）・義意父子は自刃し、鎌倉以来の名族・相模三浦氏は滅亡。相模一国は北条氏のものとなった。",
+      "requiresClans": [
+        "hojo"
+      ],
+      "onlyFrom": [
+        "ogigayatsu",
+        "miura"
+      ],
+      "changes": {
+        "territory": {
+          "sagami_miura": "hojo"
+        },
+        "killOfficerIds": [
+          "off_hist_1495_miura_yoshiatsu",
+          "off_miura_yoshioki"
+        ],
+        "message": "新井城が落ち、三浦義同・義意父子が自刃しました。相模三浦は北条領となります。"
+      }
+    },
+    {
+      "id": "evt_1591_nanpo_33kan",
+      "scenarioId": "*",
+      "year": 1591,
+      "season": "春",
+      "title": "南方三十三館の謀殺",
+      "desc": "1591年2月、佐竹義宣は鹿島・行方の諸領主（南方三十三館）を太田城の梅見の宴に招いて謀殺し、常陸南部を一挙に併呑した。鹿島清秀もこのとき討たれ、鹿島氏は滅亡した。",
+      "requiresClans": [
+        "satake",
+        "kashima"
+      ],
+      "onlyFrom": [
+        "kashima"
+      ],
+      "changes": {
+        "territory": {
+          "hitachi_kashima": "satake"
+        },
+        "killOfficerIds": [
+          "off_kashima_kiyohide"
+        ],
+        "message": "佐竹義宣が南方三十三館の諸将を謀殺し、常陸鹿島を併合しました。"
       }
     }
   ],
@@ -6800,12 +7701,36 @@
         "芥川山城"
       ],
       [
+        1573,
+        "高槻城"
+      ],
+      [
+        1574,
+        "池田城"
+      ],
+      [
+        1579,
+        "有岡城"
+      ],
+      [
+        1580,
+        "伊丹城（有岡城）"
+      ],
+      [
         1582,
-        "石山本願寺"
+        "兵庫城"
+      ],
+      [
+        1585,
+        "高槻城"
+      ],
+      [
+        1615,
+        "茨木城"
       ],
       [
         9999,
-        "大坂城"
+        "尼崎城"
       ]
     ],
     "kawachi": [
@@ -6844,18 +7769,22 @@
         "小田原城"
       ]
     ],
-    "musashi": [
-      [
-        1180,
-        "武蔵国府・秩父館"
-      ],
+    "musashi_edo_tama": [
       [
         1457,
-        "河越館・比企館"
+        "武蔵国府（府中）"
+      ],
+      [
+        1559,
+        "江戸城"
+      ],
+      [
+        1586,
+        "滝山城"
       ],
       [
         1590,
-        "河越城・岩付城"
+        "八王子城"
       ],
       [
         9999,
@@ -6891,7 +7820,7 @@
       ],
       [
         9999,
-        "大多喜城"
+        "佐貫城"
       ]
     ],
     "awa_boshu": [
@@ -6908,18 +7837,14 @@
         "勝山城"
       ]
     ],
-    "hitachi": [
+    "hitachi_ohta": [
       [
         1180,
         "常陸国府・府中館"
       ],
       [
-        1590,
-        "太田城"
-      ],
-      [
         9999,
-        "水戸城"
+        "太田城"
       ]
     ],
     "shimotsuke": [
@@ -7218,10 +8143,10 @@
         "金沢城"
       ]
     ],
-    "hida": [
+    "hida_takayama": [
       [
         1585,
-        "帰雲城"
+        "松倉城"
       ],
       [
         9999,
@@ -7246,10 +8171,10 @@
         "姫路城"
       ]
     ],
-    "tamba": [
+    "tamba_east": [
       [
         1579,
-        "八上城・黒井城"
+        "八上城"
       ],
       [
         9999,
@@ -7412,10 +8337,10 @@
         "徳島城"
       ]
     ],
-    "buzen": [
+    "buzen_ogura": [
       [
-        1587,
-        "城井谷城"
+        1569,
+        "香春岳城"
       ],
       [
         9999,
@@ -7456,7 +8381,7 @@
         "久留米城"
       ]
     ],
-    "hizen": [
+    "hizen_saga": [
       [
         1584,
         "村中城"
@@ -7544,7 +8469,7 @@
         "仙台城"
       ]
     ],
-    "rikuchu": [
+    "rikuchu_morioka": [
       [
         1189,
         "衣川柵"
@@ -7576,7 +8501,7 @@
         "盛岡城"
       ]
     ],
-    "ugo": [
+    "ugo_minato": [
       [
         1087,
         "秋田城・払田柵"
@@ -7590,14 +8515,10 @@
         "久保田城"
       ]
     ],
-    "uzen": [
-      [
-        1622,
-        "山形城"
-      ],
+    "uzen_higashimurayama": [
       [
         9999,
-        "新庄城"
+        "山形城"
       ]
     ],
     "ezo": [
@@ -8012,30 +8933,18 @@
         "安芸土居"
       ]
     ],
-    "sano_oyama": [
-      [
-        1180,
-        "唐沢山館・下野国府"
-      ],
+    "shimotsuke_sano": [
       [
         1350,
         "足利荘館"
-      ],
-      [
-        1554,
-        "祇園城"
       ],
       [
         1602,
         "唐沢山城"
       ],
       [
-        1614,
-        "佐野城"
-      ],
-      [
         9999,
-        "壬生城"
+        "佐野城"
       ]
     ],
     "takanabe": [
@@ -8194,6 +9103,350 @@
       [
         9999,
         "勝山城"
+      ]
+    ],
+    "hida_kiun": [
+      [
+        1585,
+        "帰雲城"
+      ],
+      [
+        9999,
+        "荻町城"
+      ]
+    ],
+    "hida_kamioka": [
+      [
+        1582,
+        "高原諏訪城"
+      ],
+      [
+        9999,
+        "神岡城"
+      ]
+    ],
+    "totomi_joto": [
+      [
+        1467,
+        "横地城"
+      ],
+      [
+        1581,
+        "高天神城"
+      ],
+      [
+        9999,
+        "横須賀城"
+      ]
+    ],
+    "mino_iwamura": [
+      [
+        9999,
+        "岩村城"
+      ]
+    ],
+    "shinano_saku_komoro": [
+      [
+        1546,
+        "大井城"
+      ],
+      [
+        1579,
+        "内山城"
+      ],
+      [
+        9999,
+        "小諸城"
+      ]
+    ],
+    "shinano_suwa": [
+      [
+        1548,
+        "上原城"
+      ],
+      [
+        1582,
+        "高島城（茶臼山）"
+      ],
+      [
+        1590,
+        "金子城"
+      ],
+      [
+        9999,
+        "高島城"
+      ]
+    ],
+    "musashi_kawagoe": [
+      [
+        1457,
+        "河越館"
+      ],
+      [
+        9999,
+        "河越城"
+      ]
+    ],
+    "musashi_oshi": [
+      [
+        1478,
+        "成田館"
+      ],
+      [
+        9999,
+        "忍城"
+      ]
+    ],
+    "musashi_iwatsuki": [
+      [
+        9999,
+        "岩付城"
+      ]
+    ],
+    "musashi_hachigata": [
+      [
+        1476,
+        "五十子陣"
+      ],
+      [
+        1520,
+        "鉢形城"
+      ],
+      [
+        1564,
+        "天神山城"
+      ],
+      [
+        9999,
+        "鉢形城"
+      ]
+    ],
+    "hitachi_mito": [
+      [
+        1426,
+        "馬場城"
+      ],
+      [
+        9999,
+        "水戸城"
+      ]
+    ],
+    "hitachi_makabe": [
+      [
+        1606,
+        "真壁城"
+      ],
+      [
+        9999,
+        "笠間城"
+      ]
+    ],
+    "hitachi_kashima": [
+      [
+        9999,
+        "鹿島城"
+      ]
+    ],
+    "shimotsuke_oyama": [
+      [
+        1592,
+        "祇園城"
+      ],
+      [
+        1608,
+        "皆川城"
+      ],
+      [
+        1619,
+        "小山城"
+      ],
+      [
+        9999,
+        "壬生城"
+      ]
+    ],
+    "kazusa_isumi": [
+      [
+        1590,
+        "万喜城"
+      ],
+      [
+        9999,
+        "大多喜城"
+      ]
+    ],
+    "sagami_miura": [
+      [
+        1513,
+        "新井城"
+      ],
+      [
+        9999,
+        "玉縄城"
+      ]
+    ],
+    "settsu_osaka": [
+      [
+        1180,
+        "渡辺津館"
+      ],
+      [
+        1496,
+        "中嶋城"
+      ],
+      [
+        1533,
+        "大坂御坊"
+      ],
+      [
+        1580,
+        "石山本願寺"
+      ],
+      [
+        1583,
+        "大坂（石山本願寺跡）"
+      ],
+      [
+        9999,
+        "大坂城"
+      ]
+    ],
+    "tamba_west": [
+      [
+        1579,
+        "黒井城"
+      ],
+      [
+        9999,
+        "福知山城"
+      ]
+    ],
+    "ise_suzuka": [
+      [
+        1572,
+        "亀山城"
+      ],
+      [
+        1582,
+        "神戸城"
+      ],
+      [
+        9999,
+        "亀山城"
+      ]
+    ],
+    "yamato_koriyama": [
+      [
+        1559,
+        "筒井城"
+      ],
+      [
+        1576,
+        "多聞山城"
+      ],
+      [
+        1577,
+        "信貴山城"
+      ],
+      [
+        1580,
+        "筒井城"
+      ],
+      [
+        9999,
+        "郡山城"
+      ]
+    ],
+    "yamato_takatori": [
+      [
+        1575,
+        "貝吹山城"
+      ],
+      [
+        9999,
+        "高取城"
+      ]
+    ],
+    "yamato_yoshino": [
+      [
+        1578,
+        "飯貝本善寺"
+      ],
+      [
+        9999,
+        "吉野城"
+      ]
+    ],
+    "yamato_eastyamauchi": [
+      [
+        1569,
+        "福住城"
+      ],
+      [
+        1577,
+        "椿尾上城"
+      ],
+      [
+        1600,
+        "秋山城"
+      ],
+      [
+        1615,
+        "宇陀松山城"
+      ],
+      [
+        9999,
+        "宇陀松山陣屋"
+      ]
+    ],
+    "buzen_nakatsu": [
+      [
+        1557,
+        "城井谷城"
+      ],
+      [
+        1587,
+        "妙見岳城"
+      ],
+      [
+        9999,
+        "中津城"
+      ]
+    ],
+    "higo_aso": [
+      [
+        1585,
+        "浜の館"
+      ],
+      [
+        1587,
+        "御船城"
+      ]
+    ],
+    "hizen_tsukushi": [
+      [
+        1587,
+        "勝尾城"
+      ]
+    ],
+    "hizen_karatsu": [
+      [
+        1593,
+        "岸岳城"
+      ],
+      [
+        9999,
+        "唐津城"
+      ]
+    ],
+    "uzen_mogami": [
+      [
+        1622,
+        "鮭延城"
+      ],
+      [
+        9999,
+        "新庄城"
       ]
     ]
   },

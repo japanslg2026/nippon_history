@@ -562,9 +562,9 @@ export const MapRendererMethods = {
               path.setAttribute('stroke-dasharray', '3,3');
               path.setAttribute('fill', 'none');
               roadsGroup.appendChild(path);
-            } else if ((p.id === 'ugo' && nId === 'ezo') || (p.id === 'ezo' && nId === 'ugo')) {
+            } else if ((p.id === 'ugo_minato' && nId === 'ezo') || (p.id === 'ezo' && nId === 'ugo_minato')) {
               // 羽後 - 蝦夷間の航路は日本海側を優美に周回する曲線航路（陸地と重ならないよう実際の日本海航路に沿って描画）
-              const ugoP = p.id === 'ugo' ? p : target;
+              const ugoP = p.id === 'ugo_minato' ? p : target;
               const ezoP = p.id === 'ezo' ? p : target;
               const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
               path.setAttribute('d', `M ${ugoP.cx} ${ugoP.cy} C 805.3 216.6, 857.6 84.8, ${ezoP.cx} ${ezoP.cy}`);
