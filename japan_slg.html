@@ -2092,4 +2092,16 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
 </script>
+<style id="spGameMapBox43">
+/* スマホ：地図の背景ボックスは画面の横幅いっぱい・高さは横幅の75%の横長（2026-11-14） */
+@media (max-width: 768px) {
+  html body #mapWrapper.map-wrapper {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: 4 / 3 !important;
+  }
+}
+</style>
 </body></html>

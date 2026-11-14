@@ -10,7 +10,7 @@
  */
 
 import { GameState, GameStateMethods } from './core/GameState.js?v=20261113_v17map';
-import { UIManager, UIManagerMethods } from './ui/UIManager.js?v=20261114_offlist5';
+import { UIManager, UIManagerMethods } from './ui/UIManager.js?v=20261114_shu';
 import { MapRenderer, MapRendererMethods } from './render/MapRenderer.js?v=20261110_shikoku';
 import { ComputerLogic, ComputerLogicMethods } from './ai/ComputerLogic.js?v=20261110_shikoku';
 import { DataLoader } from './core/DataLoader.js?v=20261114_mimasaka';

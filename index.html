@@ -5852,7 +5852,7 @@
 
           var tacticName = (playD && playD.tactic) || clanMaster.tactic || '';
           var tacticDesc = (playD && playD.tacticDesc) || clanMaster.tacticDesc || '';
-          var clanDesc = (scen.clanDescs && scen.clanDescs[ownerId]) || (playD && playD.desc) || clanMaster.desc || (famName + 'は' + cEntry.provIds.length + 'カ国を領有する勢力です。');
+          var clanDesc = (scen.clanDescs && scen.clanDescs[ownerId]) || (playD && playD.desc) || clanMaster.desc || (famName + 'は' + cEntry.provIds.length + '州を領有する勢力です。');
 
           daimyoBox.innerHTML =
             '<div class="daimyo-top-row">' +
@@ -5861,10 +5861,10 @@
                 '<span style="width:12px;height:12px;border-radius:50%;background:' + color + ';border:1px solid #fff;display:inline-block;"></span>' +
                 '<strong class="daimyo-family-name" style="font-size:13.5pt; color:#fff;">' + esc(famName) + '</strong>' +
                 '<span class="daimyo-leader" style="color:var(--gold-pale);">当主：<b style="color:var(--gold-bright);">' + esc(cEntry.leaderName) + '</b></span>' +
-                '<button type="button" class="sp-more-btn daimyo-more-btn" aria-expanded="false" aria-label="大名家の詳細を表示／非表示" title="支配国数・石高・兵力と大名家の説明を表示／非表示"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7 10l5 5 5-5"/></svg></button>' +
+                '<button type="button" class="sp-more-btn daimyo-more-btn" aria-expanded="false" aria-label="大名家の詳細を表示／非表示" title="支配州数・石高・兵力と大名家の説明を表示／非表示"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7 10l5 5 5-5"/></svg></button>' +
               '</div>' +
               '<div class="daimyo-metrics-group">' +
-                '<span class="metric-chip"><b>' + cEntry.provIds.length + '</b>国</span>' +
+                '<span class="metric-chip"><b>' + cEntry.provIds.length + '</b>州</span>' +
                 '<span class="metric-chip">石高 <b>' + Math.round(cEntry.totalKoku / 10000).toLocaleString() + '</b>万石</span>' +
                 '<span class="metric-chip">兵力 <b>' + fmtTroopsInThousands(cEntry.totalTroops) + '</b></span>' +
               '</div>' +
@@ -6484,7 +6484,7 @@
         var provTheadHtml = theadEl.innerHTML;
         var CLAN_TH_STYLE = 'padding:10px; color:var(--gold-bright); cursor:pointer; white-space:nowrap; font-size:12pt;';
         var clanTheadHtml = '<tr style="position:sticky; top:0; background:#261a12; border-bottom:2px solid var(--border-gold);">' +
-          [['familyName','大名家'],['leaderName','当主'],['capital','本拠'],['provCount','領国数'],['totalKoku','総石高'],['totalTroops','総兵力'],['military','武'],['politics','政'],['stratagem','知']].map(function (c) {
+          [['familyName','大名家'],['leaderName','当主'],['capital','本拠'],['provCount','支配州数'],['totalKoku','総石高'],['totalTroops','総兵力'],['military','武'],['politics','政'],['stratagem','知']].map(function (c) {
             return '<th data-sort="' + c[0] + '" style="' + CLAN_TH_STYLE + '">' + c[1] + ' <span data-sort-ic="' + c[0] + '"></span></th>';
           }).join('') + '</tr>';
         var CLAN_SORT_ITEMS = [
@@ -6631,7 +6631,7 @@
               '<td style="padding:9px; font-weight:bold; color:var(--gold-bright);">' + esc(r.familyName) + '</td>' +
               '<td style="padding:9px; color:#fff;">' + esc(r.leaderName) + '</td>' +
               '<td style="padding:9px; color:var(--gold-pale);">' + esc(r.capital) + '</td>' +
-              '<td style="padding:9px; text-align:right; color:#fff;">' + r.provCount + '国</td>' +
+              '<td style="padding:9px; text-align:right; color:#fff;">' + r.provCount + '州</td>' +
               '<td style="padding:9px; text-align:right; font-weight:bold; color:var(--gold-bright);">' + (r.totalKoku / 10000).toFixed(1) + '万石</td>' +
               '<td style="padding:9px; text-align:right; color:#fff;">' + r.totalTroops.toLocaleString() + '人</td>' +
               '<td style="padding:9px; text-align:right; color:#ff9999;">' + nz(r.military) + '</td>' +
@@ -6652,7 +6652,7 @@
                 '<div class="card-info-row">' +
                   '<div class="card-info-item"><span class="card-lbl">本拠:</span> <span class="card-val">' + esc(r.capCastle) + (r.capName ? '<span class="clan-card-sub">（' + esc(r.capName) + '）</span>' : '') + '</span></div>' +
                   '<div class="card-stats-row">' +
-                    '<span class="card-stat-pill"><strong>' + r.provCount + '国</strong></span>' +
+                    '<span class="card-stat-pill"><strong>' + r.provCount + '州</strong></span>' +
                     '<span class="card-stat-pill highlight-gold"><strong>' + Math.round(r.totalKoku / 10000) + '万石</strong></span>' +
                     '<span class="card-stat-pill"><strong>兵' + Math.max(1, Math.round(r.totalTroops / 1000)) + '千</strong></span>' +
                     '<span class="stat-tag mil">武' + nz(r.military) + '</span>' +
@@ -7762,8 +7762,8 @@
         var info = k === 'year' ? ['登場', f ? fmtYear(Number(f.sc.year)) : '—', f ? '年' : '']
           : k === 'offs' ? ['武将', c.offCount, '名']
           : k === 'count' ? ['登場', c.sc.length, '回']
-          : k === 'name' ? ['版図', c.maxProv, '国']
-          : ['最大版図', c.maxProv, '国'];
+          : k === 'name' ? ['版図', c.maxProv, '州']
+          : ['最大版図', c.maxProv, '州'];
         return '<span class="mk-row-total"><small class="mk-vl">' + info[0] + '</small>' + esc(info[1]) + '<small class="mk-unit">' + info[2] + '</small></span>';
       };
       ClanMeikanView.prototype.pick = function (c) {
@@ -7789,7 +7789,7 @@
               '<div class="mk-dname">' + esc(c.c.family) +
                 '<div class="mk-dmeta">' +
                 (L.default ? '<span class="mk-pill gold">当主 ' + esc(L.default) + '</span>' : '') +
-                '<span class="mk-pill ghost">' + c.sc.length + 'シナリオ登場</span><span class="mk-pill ghost">最大 ' + c.maxProv + '国</span></div></div>' +
+                '<span class="mk-pill ghost">' + c.sc.length + 'シナリオ登場</span><span class="mk-pill ghost">最大 ' + c.maxProv + '州</span></div></div>' +
             '</div>' +
             (c.sc.length ? (
               '<div class="mk-panel mk-mappanel"><h4>支配域の変遷</h4>' +
@@ -8742,17 +8742,284 @@
   }
 }
 
-/* 地図背景の縦幅を従来の80%にする（最小220px→176pxも同じ比率）。 */
+/* スマホ：地図背景ボックスを画面の横幅いっぱい・高さは横幅の75%の横長にする（2026-11-14）。 */
 @media (max-width: 768px) {
   .map-stage { flex: 0 0 auto !important; }
   .map-viewport-wrap {
     flex: 0 0 auto !important;
-    height: max(176px, min(43.7vw, 41.6vh)) !important;
+    width: 100% !important;
+    height: auto !important;
     min-height: 0 !important;
     max-height: none !important;
-    aspect-ratio: auto !important;
+    aspect-ratio: 4 / 3 !important;
   }
 }
 </style>
+<style id="spBoxNoBorderTapExpand">
+/* スマホ：シナリオ説明・大名説明・城と国の説明・この国の武将一覧のボックスは枠線なし（2026-11-14） */
+@media (max-width: 768px) {
+  html body #mapScenBox,
+  html body #mapScenBox:not(.is-expanded),
+  html body #mapScenBox.is-expanded,
+  html body #mapDaimyoBox,
+  html body #mapDaimyoBox:not(.is-expanded),
+  html body #mapDaimyoBox.is-expanded,
+  html body #castleSection,
+  html body #castleSection:not(.is-expanded),
+  html body #castleSection.is-expanded,
+  html body #officersSection,
+  html body #officersSection:not(.is-expanded),
+  html body #officersSection.is-expanded {
+    border: none !important;
+    box-shadow: none !important;
+  }
+}
+</style>
+<script>
+// スマホ：展開ボタンだけでなく、ボックスのどこをタップしても展開・折りたたみ（2026-11-14）
+(function () {
+  var BOXES = [
+    { box: 'mapScenBox', btn: '#scenMoreBtn' },
+    { box: 'officersSection', btn: '#btnSpProvOfficers' }
+  ];
+  var SKIP = 'a, button, input, select, textarea, label, summary, [role="button"], .officer-item-card';
+  var mq = window.matchMedia('(max-width: 768px)');
+  document.addEventListener('click', function (e) {
+    if (!mq.matches || !e.target || !e.target.closest) return;
+    if (e.target.closest(SKIP)) return; // ボタン・リンク・武将カードなどは本来の動作のまま
+    if (window.getSelection && String(window.getSelection()).length > 0) return; // 文字選択中は開閉しない
+    for (var i = 0; i < BOXES.length; i++) {
+      var box = e.target.closest('#' + BOXES[i].box);
+      if (!box) continue;
+      var btn = box.querySelector(BOXES[i].btn);
+      if (btn && btn.offsetParent !== null) btn.click(); // 展開ボタンが見えている時だけ
+      return;
+    }
+  });
+})();
+</script>
+<style id="spDaimyoCastleMerge">
+/* スマホ：大名説明と国・城の説明を1つのボックスに統合（省略表示はそのまま、展開は一括）（2026-11-14） */
+@media (max-width: 768px) {
+  html body #mapDaimyoBox, html body #mapDaimyoBox.is-expanded, html body #mapDaimyoBox:not(.is-expanded) {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    padding-bottom: 2px !important;
+  }
+  html body #castleSection, html body #castleSection.is-expanded, html body #castleSection:not(.is-expanded) {
+    margin-top: -8px !important; /* 縦並びの間隔(8px)を詰めて1つのボックスに見せる */
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    padding-top: 2px !important;
+  }
+  /* 展開時は、家の説明と城の説明の間を少しあけ、区切り線を入れる */
+  html body #mapDaimyoBox.is-expanded .daimyo-extra {
+    margin-bottom: 6px !important;
+    padding-bottom: 8px !important;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.45) !important;
+  }
+  /* 展開時は、城の名前の行と城の説明の間を詰める */
+  html body #castleSection #castleExpandedContent.is-expanded { margin-top: 2px !important; }
+  html body #castleSection #castleExpandedContent.is-expanded #castleLoreBox { margin-top: 0 !important; }
+  /* 展開時の支配国数・総石高・兵力は、3つまとめて1つのボックスに表示 */
+  html body #mapDaimyoBox.is-expanded .daimyo-metrics-group {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    border: none !important; /* 枠線なし */
+    border-radius: 4px !important;
+    background: rgba(0, 0, 0, 0.55) !important;
+    padding: 3px 0 !important;
+  }
+  html body #mapDaimyoBox.is-expanded .daimyo-metrics-group .metric-chip {
+    flex: 1 1 auto !important;
+    text-align: center !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: none !important;
+    padding: 0 6px !important;
+    margin: 0 !important;
+  }
+  html body #mapDaimyoBox.is-expanded .daimyo-metrics-group .metric-chip + .metric-chip {
+    border-left: 1px solid rgba(212, 175, 55, 0.35) !important; /* 項目の間は細い仕切り */
+  }
+  /* 国名の後ろの「／ 居城：」は省略（国名のすぐ後に城名） */
+  html body #castleSection .castle-title-wrap > .castle-prov-name + span:not(.castle-name-sub) { display: none !important; }
+  html body #castleSection .castle-title-wrap > .castle-name-sub { margin-left: 6px !important; }
+  /* 展開時の石高・駐留兵力は、城の名前の次の行（城の説明より上）に表示 */
+  html body #castleSection #castleExpandedContent.is-expanded { display: flex !important; flex-direction: column !important; }
+  html body #castleSection #castleExpandedContent.is-expanded > .stat-pills-in-exp { order: -1 !important; margin: 0 0 6px 0 !important; }
+  /* 展開時の石高・駐留兵力は1つの帯にまとめ、枠線なし（大名側の帯とそろえる） */
+  html body #castleSection #castleExpandedContent.is-expanded > .stat-pills-in-exp {
+    gap: 0 !important;
+    border: none !important;
+    border-radius: 4px !important;
+    background: rgba(0, 0, 0, 0.55) !important;
+    padding: 3px 0 !important;
+  }
+  html body #castleSection #castleExpandedContent.is-expanded > .stat-pills-in-exp > .stat-pill {
+    border: none !important;
+    border-radius: 0 !important;
+    background: none !important;
+    box-shadow: none !important;
+    padding: 0 10px !important;
+  }
+  html body #castleSection #castleExpandedContent.is-expanded > .stat-pills-in-exp > .stat-pill + .stat-pill {
+    border-left: 1px solid rgba(212, 175, 55, 0.35) !important; /* 項目の間は細い仕切り */
+  }
+  /* 大名家の名前の左の、国の色を表す小さな丸は省略 */
+  html body #mapDaimyoBox .daimyo-identity-group > span:has(+ .daimyo-family-name) { display: none !important; }
+  /* 展開ボタンは大名側の1つにまとめる */
+  html body #castleSection .btn-toggle-lore { display: none !important; }
+}
+</style>
+<script>
+// スマホ：大名説明と国・城の説明は、どこをタップしても一括で展開・折りたたみ（2026-11-14）
+(function () {
+  var SKIP = 'a, input, select, textarea, label, summary, .officer-item-card';
+  var mq = window.matchMedia('(max-width: 768px)');
+  function setOpen(open) {
+    var d = document.getElementById('mapDaimyoBox');
+    if (d) {
+      d.classList.toggle('is-expanded', open);
+      var db = d.querySelector('.daimyo-more-btn');
+      if (db) db.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    var exp = document.getElementById('castleExpandedContent');
+    if (exp) exp.classList.toggle('is-expanded', open);
+    var lb = document.getElementById('btnToggleCastleLore');
+    if (lb) {
+      lb.setAttribute('aria-expanded', open ? 'true' : 'false');
+      var icon = lb.querySelector('.lore-toggle-icon');
+      if (icon) icon.textContent = open ? '\u25B2' : '\u25BC';
+    }
+  }
+  document.addEventListener('click', function (e) {
+    if (!mq.matches || !e.target || !e.target.closest) return;
+    var inBox = e.target.closest('#mapDaimyoBox, #castleSection');
+    if (!inBox) return;
+    var toggleBtn = e.target.closest('.daimyo-more-btn, #btnToggleCastleLore');
+    if (!toggleBtn) {
+      if (e.target.closest('button, [role="button"]')) return; // ほかのボタンは本来の動作
+      if (e.target.closest(SKIP)) return;
+      if (window.getSelection && String(window.getSelection()).length > 0) return;
+    }
+    e.preventDefault();
+    e.stopPropagation(); // 個別の開閉処理は動かさない
+    var d = document.getElementById('mapDaimyoBox');
+    var exp = document.getElementById('castleExpandedContent');
+    var open = (d && d.classList.contains('is-expanded')) || (exp && exp.classList.contains('is-expanded'));
+    spOpen = !open;
+    setOpen(spOpen);
+  }, true);
+  // 他の国をタップして中身が描き直されても、展開状態を引き継ぐ（2026-11-14）
+  var spOpen = false, pending = false;
+  function reapply() {
+    pending = false;
+    if (!mq.matches) return;
+    var d = document.getElementById('mapDaimyoBox');
+    var exp = document.getElementById('castleExpandedContent');
+    var dOk = !d || d.classList.contains('is-expanded') === spOpen;
+    var cOk = !exp || exp.classList.contains('is-expanded') === spOpen;
+    if (!dOk || !cOk) setOpen(spOpen);
+  }
+  function schedule() { if (!pending) { pending = true; Promise.resolve().then(reapply); } }
+  function watch() {
+    var d = document.getElementById('mapDaimyoBox');
+    var c = document.getElementById('castleSection');
+    var mo = new MutationObserver(schedule);
+    if (d) mo.observe(d, { attributes: true, attributeFilter: ['class'], childList: true, subtree: true });
+    if (c) mo.observe(c, { childList: true, subtree: true });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', watch); else watch();
+})();
+</script>
+<style id="spYearBelowNav">
+/* スマホ：年号表示は、ゲームへ進むなどのピクトグラムの行の下に表示（2026-11-14） */
+@media (max-width: 768px) {
+  html body .top-header > .brand-box { order: 1 !important; }
+  html body .top-header > .top-nav { order: 2 !important; }
+  html body .top-header > .header-scenario-indicator { order: 3 !important; border: none !important; box-shadow: none !important; outline: none !important; } /* 年号ボックスは枠線なし */
+}
+</style>
+<style id="spMergedCollapsedGap">
+/* スマホ：展開前の大名と国の説明は、大名の行と国の行の間を少しあける（2026-11-14） */
+@media (max-width: 768px) {
+  html body #mapDaimyoBox:not(.is-expanded) { padding-bottom: 6px !important; }
+}
+</style>
+<style id="spOfficersInline">
+/* スマホ：この国の武将一覧は、別のモーダルではなく同じ画面の下に展開（2026-11-14） */
+@media (max-width: 768px) {
+  html body #officersSection.is-expanded > #provOfficersList {
+    display: flex !important;
+    flex-direction: column !important;
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    margin-top: 6px !important;
+  }
+  html body #officersSection #btnSpProvOfficers[aria-expanded="true"]::before { transform: rotate(225deg) !important; }
+}
+</style>
+<script>
+(function () {
+  var mq = window.matchMedia('(max-width: 768px)');
+  document.addEventListener('click', function (e) {
+    if (!mq.matches || !e.target || !e.target.closest) return;
+    var btn = e.target.closest('#btnSpProvOfficers');
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation(); // モーダルを開く処理は動かさない
+    var sec = document.getElementById('officersSection');
+    var list = document.getElementById('provOfficersList');
+    if (!sec || !list) return;
+    if (list.parentNode !== sec) sec.appendChild(list); // 以前モーダルへ移っていた場合は戻す
+    var open = sec.classList.toggle('is-expanded');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.setAttribute('aria-label', open ? 'この国の武将一覧を閉じる' : 'この国の武将一覧を表示');
+  }, true);
+})();
+</script>
+<style id="spYearBelowScen">
+/* スマホ：年号表示はシナリオ説明のボックスの下に表示（2026-11-14） */
+@media (max-width: 768px) {
+  html body #headerScenarioBadge.sp-moved {
+    border: none !important;
+    box-shadow: none !important;
+    margin-top: 4px !important;
+    margin-bottom: 6px !important; /* 下の区切り線との間を少しあける */
+    order: 99 !important; /* シナリオ説明の行より後ろ */
+    justify-content: flex-start !important; /* 左端寄せ */
+    padding-left: 10px !important; /* シナリオ名の文字の左端にそろえる */
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
+</style>
+<script>
+(function () {
+  var mq = window.matchMedia('(max-width: 768px)');
+  var badge, home, homeNext;
+  function place() {
+    badge = badge || document.getElementById('headerScenarioBadge');
+    if (!badge) return;
+    if (!home) { home = badge.parentNode; homeNext = badge.nextSibling; } // 元の場所（ヘッダー）を覚えておく
+    var row = document.querySelector('.map-left-overlay-stack > .map-scen-row');
+    if (mq.matches && row) {
+      if (badge.previousElementSibling !== row) row.parentNode.insertBefore(badge, row.nextSibling);
+      badge.classList.add('sp-moved');
+    } else if (badge.parentNode !== home) {
+      home.insertBefore(badge, homeNext && homeNext.parentNode === home ? homeNext : null);
+      badge.classList.remove('sp-moved');
+    }
+  }
+  if (mq.addEventListener) mq.addEventListener('change', place); else if (mq.addListener) mq.addListener(place);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', place); else place();
+})();
+</script>
 </body>
 </html>

@@ -909,7 +909,7 @@ export const UIManagerMethods = {
 
 
 
-      card.title = `${d.clan} 当主: ${d.name}\n支配: ${provCount}国\n(クリックで戦略解説・出陣)`;
+      card.title = `${d.clan} 当主: ${d.name}\n支配: ${provCount}州\n(クリックで戦略解説・出陣)`;
 
       card.innerHTML = `
 
@@ -927,7 +927,7 @@ export const UIManagerMethods = {
 
           </div>
 
-          <span class="daimyo-prov-badge">${provCount}国</span>
+          <span class="daimyo-prov-badge">${provCount}州</span>
 
         </div>
 
@@ -979,7 +979,7 @@ export const UIManagerMethods = {
 
         if (badge) {
 
-          badge.textContent = `選択中: ${d.name} (${d.clan}・支配${provCount}国)`;
+          badge.textContent = `選択中: ${d.name} (${d.clan}・支配${provCount}州)`;
 
         }
 
@@ -1038,7 +1038,7 @@ export const UIManagerMethods = {
 
         if (badge) {
 
-          badge.textContent = `選択中: ${dData.name} (${dData.clan}・支配${provCount}国)`;
+          badge.textContent = `選択中: ${dData.name} (${dData.clan}・支配${provCount}州)`;
 
         }
 
@@ -1166,7 +1166,7 @@ export const UIManagerMethods = {
 
     const provEl = document.getElementById('popupProvCount');
 
-    if (provEl) provEl.textContent = `支配: ${provCount}国 (天下統一まで${Math.max(0, totalProvs - provCount)}国)`;
+    if (provEl) provEl.textContent = `支配: ${provCount}州 (天下統一まで${Math.max(0, totalProvs - provCount)}州)`;
 
 
 
@@ -4739,7 +4739,7 @@ export const UIManagerMethods = {
 
             <button class="mobile-sort-btn ${sortKey === 'base' ? 'active' : ''}" data-key="base">本拠${sortKey === 'base' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}</button>
 
-            <button class="mobile-sort-btn ${sortKey === 'provCount' ? 'active' : ''}" data-key="provCount">領国数${sortKey === 'provCount' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}</button>
+            <button class="mobile-sort-btn ${sortKey === 'provCount' ? 'active' : ''}" data-key="provCount">支配州数${sortKey === 'provCount' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}</button>
 
             <button class="mobile-sort-btn ${sortKey === 'totalRice' ? 'active' : ''}" data-key="totalRice">石高${sortKey === 'totalRice' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}</button>
 
@@ -4767,7 +4767,7 @@ export const UIManagerMethods = {
 
                   <th class="sortable-fac-th fac-th-base" data-key="base" style="padding:11px 12px; color:var(--gold); cursor:pointer; user-select:none; width:360px; min-width:360px; white-space:nowrap; font-size:12pt;">本拠地 (居城) ${getSortIcon('base')}</th>
 
-                  <th class="sortable-fac-th fac-th-provs" data-key="provCount" style="padding:11px 10px; color:var(--gold); cursor:pointer; user-select:none; width:120px; text-align:center; font-size:12pt;">領国数 ${getSortIcon('provCount')}</th>
+                  <th class="sortable-fac-th fac-th-provs" data-key="provCount" style="padding:11px 10px; color:var(--gold); cursor:pointer; user-select:none; width:120px; text-align:center; font-size:12pt;">支配州数 ${getSortIcon('provCount')}</th>
 
                   <th class="sortable-fac-th fac-th-rice" data-key="totalRice" style="padding:11px 10px; color:var(--gold); cursor:pointer; user-select:none; width:150px; text-align:right; font-size:12pt;">総石高 ${getSortIcon('totalRice')}</th>
 
@@ -4920,7 +4920,7 @@ export const UIManagerMethods = {
 
                       <td class="fac-td-provs" style="padding:10px 10px; text-align:center;" title="支配領国: ${provNames}">
 
-                        <span style="font-weight:bold; color:${f.provCount >= 5 ? '#e74c3c' : (f.provCount >= 3 ? '#e67e22' : '#fff')};">${f.provCount}</span> ヶ国
+                        <span style="font-weight:bold; color:${f.provCount >= 5 ? '#e74c3c' : (f.provCount >= 3 ? '#e67e22' : '#fff')};">${f.provCount}</span> 州
 
                       </td>
 
@@ -5422,7 +5422,7 @@ export const UIManagerMethods = {
 
                       <div style="font-size:10pt; color:#aaa; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
 
-                        <span class="ally-ruler-pc">当主: <span style="color:#ddd;">${a.daimyoName}</span> ｜ </span>領国: <strong style="color:#fff;">${a.provCount}</strong>ヶ国 ｜ 兵力: <strong style="color:#f39c12;">${a.totalTroops.toLocaleString()}</strong>人
+                        <span class="ally-ruler-pc">当主: <span style="color:#ddd;">${a.daimyoName}</span> ｜ </span>支配: <strong style="color:#fff;">${a.provCount}</strong>州 ｜ 兵力: <strong style="color:#f39c12;">${a.totalTroops.toLocaleString()}</strong>人
 
                       </div>
 
@@ -10391,7 +10391,7 @@ export const UIManagerMethods = {
 
           <div style="font-size:10pt; color:#ddd; margin-top:1px;">
 
-            支配: <strong style="color:#ffd700;">${meta.provCount} / ${meta.totalProvs} 国</strong> ｜ 総兵力: <strong style="color:#ff8888;">${meta.totalTroops.toLocaleString()}人</strong> ｜ 金: ${meta.gold.toLocaleString()} ｜ 兵糧: ${meta.rice.toLocaleString()}
+            支配: <strong style="color:#ffd700;">${meta.provCount} / ${meta.totalProvs} 州</strong> ｜ 総兵力: <strong style="color:#ff8888;">${meta.totalTroops.toLocaleString()}人</strong> ｜ 金: ${meta.gold.toLocaleString()} ｜ 兵糧: ${meta.rice.toLocaleString()}
 
           </div>
 
@@ -11243,7 +11243,7 @@ export const UIManagerMethods = {
 
                     <span style="font-size:10.5pt; color:#e67e22; font-weight:bold;">${opt.title}</span>
 
-                    <span style="font-size:10pt; color:#aaa;">支配領国: ${provCount}カ国</span>
+                    <span style="font-size:10pt; color:#aaa;">支配: ${provCount}州</span>
 
                   </div>
 
