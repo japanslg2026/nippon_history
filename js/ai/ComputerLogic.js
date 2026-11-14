@@ -1850,7 +1850,7 @@ export const ComputerLogicMethods = {
     const capitalRegion = capitalProv?.region || null;
 
     // 上洛・畿内志向（天下を睨む大名）
-    const KINAI_PROV_IDS = new Set(['yamashiro', 'south_omi', 'north_omi', 'settsu', 'settsu_osaka', 'kawachi', 'yamato', 'yamato_koriyama', 'yamato_takatori', 'yamato_yoshino', 'yamato_eastyamauchi', 'tamba', 'tamba_west', 'tamba_east', 'izumi', 'harima', 'higashi_harima', 'iga', 'ise', 'ise_suzuka']);
+    const KINAI_PROV_IDS = new Set(['yamashiro', 'omi_south', 'omi_north', 'settsu', 'settsu_shimakami', 'settsu_osaka', 'kawachi', 'yamato', 'yamato_koriyama', 'yamato_takatori', 'yamato_yoshino', 'yamato_higashiyamauchi', 'tamba', 'tamba_west', 'tamba_east', 'izumi', 'harima_west', 'harima_east', 'iga', 'ise', 'ise_suzuka']);
     // 天下志向の家は上洛を目指す。地方統一を目指す家は上洛せず地方に専念（2026-11-07）
     const pursuingRegion = this.isPursuingRegionalUnification ? this.isPursuingRegionalUnification(clanId) : false;
     const regionTargets = pursuingRegion ? this.getAmbitionTargetRegions(clanId) : [];

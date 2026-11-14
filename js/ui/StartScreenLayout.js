@@ -642,7 +642,7 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
       }
     });
 
-    // Step 2: 難易度セレクターの下に説明バーを挿入
+    // Step 1〜3: 難易度はステップ切替の直下に常時表示する。
     const diffWrap = $('.sl-diff', root);
     if (diffWrap) {
       const diffDesc = document.createElement('div');
@@ -651,6 +651,10 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
       diffWrap.addEventListener('click', (e) => {
         if (e.target.closest('.diff-option-btn')) setTimeout(() => updateDiffDesc(), 50);
       });
+      const mobileDifficulty = document.createElement('div');
+      mobileDifficulty.className = 'sl-mobile-difficulty';
+      root.before(mobileDifficulty);
+      mobileDifficulty.appendChild(diffWrap);
     }
 
     // Step 2: スマホでは大名を一覧で直接選ぶ。検索欄と地方フィルターは表示しない。
@@ -839,7 +843,7 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     svg = document.createElementNS(NS, 'svg'); svg.setAttribute('class', 'sl-svgmap');
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
     const provs = window.PROVINCES_DATA || [];
-    const SHIKOKU_IDS = new Set(['iyo_matsuyama', 'nii_saijo', 'oshu', 'uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_aki', 'tosa_gun', 'tosa_nakamura']);
+    const SHIKOKU_IDS = new Set(['iyo_matsuyama', 'iyo_nii', 'iyo_ohzu', 'iyo_uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_aki', 'tosa_gun', 'tosa_nakamura']);
     const provById = new Map(provs.map(p => [p.id, p]));
     const getProvTransform = (pid) => {
       const tr = [];

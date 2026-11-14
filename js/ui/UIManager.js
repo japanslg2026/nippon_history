@@ -3140,7 +3140,7 @@ export const UIManagerMethods = {
 
       modal.innerHTML = `
 
-        <div class="custom-modal-content officer-modal-content" style="background:#1b140e; border:2px solid var(--gold); border-radius:8px; width:95vw; max-width:1180px; height:88vh; display:flex; flex-direction:column; box-shadow:0 0 45px rgba(0,0,0,0.95); color:#f5eedc; font-family:'Noto Serif JP',serif;">
+        <div class="custom-modal-content officer-modal-content" style="background:#1b140e; border:2px solid var(--gold); border-radius:8px; width:95vw; max-width:1400px; height:88vh; display:flex; flex-direction:column; box-shadow:0 0 45px rgba(0,0,0,0.95); color:#f5eedc; font-family:'Noto Serif JP',serif;">
 
           <!-- ヘッダー -->
 
@@ -3238,7 +3238,7 @@ export const UIManagerMethods = {
 
                   <th class="sortable-off-th off-th-name" data-key="name" style="padding:11px 12px; color:var(--gold); cursor:pointer; user-select:none; width:140px; font-size:12pt;">名前 ${getSortIcon('name')}</th>
 
-                  <th class="sortable-off-th off-th-role" data-key="role" style="padding:11px 12px; color:var(--gold); cursor:pointer; user-select:none; width:110px; text-align:center; font-size:12pt;">身分・配置 ${getSortIcon('role')}</th>
+                  <th class="sortable-off-th off-th-role" data-key="role" style="padding:11px 12px; color:var(--gold); cursor:pointer; user-select:none; width:110px; text-align:center; font-size:12pt;">配置 ${getSortIcon('role')}</th>
 
                   <th class="sortable-off-th off-th-base" data-key="base" style="padding:11px 12px; color:var(--gold); cursor:pointer; user-select:none; width:135px; text-align:center; font-size:12pt;">拠点 ${getSortIcon('base')}</th>
 
@@ -3246,11 +3246,11 @@ export const UIManagerMethods = {
 
                   <th class="sortable-off-th off-th-age" data-key="age" style="padding:11px 12px; color:var(--gold); cursor:pointer; user-select:none; width:150px; text-align:center; font-size:12pt;">年齢・生没年 ${getSortIcon('age')}</th>
 
-                  <th class="sortable-off-th off-th-mil" data-key="military" style="padding:11px 10px; color:var(--gold); cursor:pointer; user-select:none; width:80px; text-align:center; font-size:12pt;">武勇 ${getSortIcon('military')}</th>
+                  <th class="sortable-off-th off-th-mil" data-key="military" style="padding:11px 10px; color:var(--gold); cursor:pointer; user-select:none; width:90px; text-align:center; font-size:12pt;">武勇 ${getSortIcon('military')}</th>
 
-                  <th class="sortable-off-th off-th-pol" data-key="politic" style="padding:11px 10px; color:var(--gold); cursor:pointer; user-select:none; width:80px; text-align:center; font-size:12pt;">内政 ${getSortIcon('politic')}</th>
+                  <th class="sortable-off-th off-th-pol" data-key="politic" style="padding:11px 10px; color:var(--gold); cursor:pointer; user-select:none; width:90px; text-align:center; font-size:12pt;">内政 ${getSortIcon('politic')}</th>
 
-                  <th class="sortable-off-th off-th-int" data-key="intel" style="padding:11px 10px; color:var(--gold); cursor:pointer; user-select:none; width:80px; text-align:center; font-size:12pt;">知略 ${getSortIcon('intel')}</th>
+                  <th class="sortable-off-th off-th-int" data-key="intel" style="padding:11px 10px; color:var(--gold); cursor:pointer; user-select:none; width:90px; text-align:center; font-size:12pt;">知略 ${getSortIcon('intel')}</th>
 
                   <th class="off-th-action" style="padding:11px 10px; color:var(--gold); width:100px; text-align:center; font-size:12pt;">登用</th>
 
@@ -4767,13 +4767,13 @@ export const UIManagerMethods = {
 
                   <th class="sortable-fac-th fac-th-base" data-key="base" style="padding:11px 12px; color:var(--gold); cursor:pointer; user-select:none; width:360px; min-width:360px; white-space:nowrap; font-size:12pt;">本拠地 (居城) ${getSortIcon('base')}</th>
 
-                  <th class="sortable-fac-th fac-th-provs" data-key="provCount" style="padding:11px 10px; color:var(--gold); cursor:pointer; user-select:none; width:95px; text-align:center; font-size:12pt;">領国数 ${getSortIcon('provCount')}</th>
+                  <th class="sortable-fac-th fac-th-provs" data-key="provCount" style="padding:11px 10px; color:var(--gold); cursor:pointer; user-select:none; width:120px; text-align:center; font-size:12pt;">領国数 ${getSortIcon('provCount')}</th>
 
-                  <th class="sortable-fac-th fac-th-rice" data-key="totalRice" style="padding:11px 10px; color:var(--gold); cursor:pointer; user-select:none; width:110px; text-align:right; font-size:12pt;">総石高 ${getSortIcon('totalRice')}</th>
+                  <th class="sortable-fac-th fac-th-rice" data-key="totalRice" style="padding:11px 10px; color:var(--gold); cursor:pointer; user-select:none; width:150px; text-align:right; font-size:12pt;">総石高 ${getSortIcon('totalRice')}</th>
 
                   <th class="sortable-fac-th fac-th-troops" data-key="totalTroops" style="padding:11px 10px; color:var(--gold); cursor:pointer; user-select:none; width:110px; text-align:right; font-size:12pt;">総兵力 ${getSortIcon('totalTroops')}</th>
 
-                  <th class="sortable-fac-th fac-th-officers" data-key="officerCount" style="padding:11px 10px; color:var(--gold); cursor:pointer; user-select:none; width:85px; text-align:center; font-size:12pt;">武将数 ${getSortIcon('officerCount')}</th>
+                  <th class="sortable-fac-th fac-th-officers" data-key="officerCount" style="padding:11px 10px; color:var(--gold); cursor:pointer; user-select:none; width:120px; text-align:center; font-size:12pt;">武将数 ${getSortIcon('officerCount')}</th>
 
                   <th class="sortable-fac-th fac-th-allies" data-key="allies" style="padding:11px 12px; color:var(--gold); cursor:pointer; user-select:none; width:200px; font-size:12pt;">同盟国 ${getSortIcon('allies')}</th>
 

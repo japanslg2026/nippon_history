@@ -8,7 +8,7 @@
 
 // モジュール間安全参照ヘルパー
 var SCENARIOS = (typeof window !== 'undefined' && (window.SCENARIOS || window.SCENARIOS_DATA)) || [];
-const SHIKOKU_PROVINCE_IDS = new Set(['iyo_matsuyama', 'nii_saijo', 'oshu', 'uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_aki', 'tosa_gun', 'tosa_nakamura']);
+const SHIKOKU_PROVINCE_IDS = new Set(['iyo_matsuyama', 'iyo_nii', 'iyo_ohzu', 'iyo_uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_aki', 'tosa_gun', 'tosa_nakamura']);
 const SHIKOKU_MAP_TRANSFORM = 'rotate(4 280 450)';
 // 地図枠と列島全体の傾きは変えず、五島以外だけを右へ寄せる。
 const NON_GOTO_MAP_TRANSFORM = 'translate(16 0)';
@@ -520,16 +520,16 @@ export const MapRendererMethods = {
     // 街道・航路ラインの描画（ユーザー指定の13航路ペアのみ点線を表示し、それ以外は非表示）
     const allowedRoutes = new Set([
       'ezo-ugo',              // 蝦夷と羽後
-      'ezo-higashi_tsugaru',  // 蝦夷と東津軽
+      'ezo-mutsu_namioka',  // 蝦夷と東津軽
       'awa_shikoku-awaji',    // 阿波と淡路
-      'awaji-harima',         // 淡路と播磨
+      'awaji-harima_east',         // 淡路と播磨
       'awaji-settsu',         // 淡路と摂津
       'awaji-izumi',          // 淡路と和泉
       'bizen-sanuki',         // 讃岐と備前
       'iyo-suo',              // 伊予と周防
       'bungo-iyo',            // 伊予と豊後
-      'chikuzen-tsushima',    // 対馬と筑前
-      'hirado-tsushima',      // 対馬と平戸
+      'chikuzen_fukuoka-tsushima',    // 対馬と筑前
+      'hizen_hirado-tsushima',      // 対馬と平戸
       'ryukyu-satsuma',       // 薩摩と琉球
       'echigo-sado',          // 越後と佐渡
       'izumo-oki'             // 出雲と隠岐

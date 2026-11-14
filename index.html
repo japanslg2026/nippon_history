@@ -3917,9 +3917,9 @@
         <!-- ② この国の武将一覧 -->
         <div class="side-section-officers" id="officersSection">
           <div class="section-header">
-            <h2 class="section-title">⚔️ この国の武将一覧</h2>
+            <h2 class="section-title"><span class="officer-list-title-pc">⚔️ この国の武将一覧</span><span class="officer-list-title-sp" id="provOfficersSummary">城主：—　ほか 0名</span></h2>
             <span class="section-badge" id="provOfficerCountBadge">0 名</span>
-            <button type="button" class="sp-prov-officers-btn" id="btnSpProvOfficers" title="この国の武将一覧を表示">一覧 ▸</button>
+            <button type="button" class="sp-prov-officers-btn" id="btnSpProvOfficers" title="この国の武将一覧を表示" aria-label="この国の武将一覧を表示">›</button>
           </div>
           <div class="prov-officers-hint" style="font-size:12pt; color:var(--text-sub); margin-bottom:6px;">
             ※ 武将をクリックすると人物列伝と登場シナリオ履歴が開きます。
@@ -3966,7 +3966,7 @@
       <div class="modal-body" id="aboutModalBody" style="line-height: 1.75; font-size: 12pt;"></div>
     </div>
   </div>
-  <script src="js/data/map_borders.js?v=20261112_v15map"></script>
+  <script src="js/data/map_borders.js?v=20261113_v17map"></script>
 
   <script>
     (function () {
@@ -4038,41 +4038,41 @@
 
       var PROV_NORTH_LAT = {
         'ezo': 41.43,
-        'higashi_tsugaru': 40.72,
-        'nishi_tsugaru': 40.61,
-        'mutsu': 40.38,
+        'mutsu_namioka': 40.72,
+        'mutsu_tsugaru': 40.61,
+        'mutsu_nanbu': 40.38,
         'ugo': 39.75, 'ugo_minato': 39.75, 'ugo_hinai': 39.75, 'ugo_yuri': 39.75,
-        'kakunodate': 39.59,
+        'ugo_kakunodate': 39.59,
         'rikuchu': 39.56, 'rikuchu_morioka': 39.56, 'rikuchu_kamiheii': 39.56, 'rikuchu_shimoheii': 39.56, 'rikuchu_hienuki': 39.56, 'rikuchu_waga': 39.56,
-        'yokote': 39.31,
-        'shonai': 38.72,
-        'kasai': 38.69,
-        'osaki': 38.58,
+        'ugo_yokote': 39.31,
+        'uzen_shonai': 38.72,
+        'rikuchu_kasai': 38.69,
+        'rikuzen_osaki': 38.58,
         'uzen': 38.25, 'uzen_mogami': 38.25, 'uzen_kitamurayama': 38.25, 'uzen_nishimurayama': 38.25, 'uzen_higashimurayama': 38.25,
         'rikuzen': 38.25,
         'sado': 38.00,
-        'yonezawa_date': 37.91,
-        'soma': 37.80,
-        'nihonmatsu': 37.59,
+        'uzen_yonezawa_date': 37.91,
+        'iwaki_soma': 37.80,
+        'iwashiro_nihonmatsu': 37.59,
         'iwashiro': 37.49, 'iwashiro_sukagawa': 37.49, 'iwashiro_ishikawa': 37.49,
-        'tamura': 37.44,
+        'iwashiro_tamura': 37.44,
         'echigo': 37.15, 'echigo_murakami': 37.15,
-        'shirakawa': 37.13,
+        'iwaki_shirakawa': 37.13,
         'iwaki': 37.04,
         'noto': 37.03,
-        'etchu': 36.69, 'higashi_etchu': 36.80,
-        'nasu': 36.65,
-        'north_shinano': 36.56, 'ueda': 36.40,
+        'etchu_west': 36.69, 'etchu_east': 36.80,
+        'shimotsuke_nasu': 36.65,
+        'shinano_kawanakajima': 36.56, 'shinano_ueda': 36.40,
         'kaga': 36.56,
         'shimotsuke': 36.55, 'sano_oyama': 36.33, 'shimotsuke_oyama': 36.33, 'shimotsuke_sano': 36.33,
         'hitachi': 36.54, 'hitachi_ohta': 36.54, 'hitachi_mito': 36.54, 'hitachi_makabe': 36.54, 'hitachi_kashima': 36.54,
-        'kozuke': 36.41, 'agatsuma': 36.58, 'numata': 36.65, 'maebashi_tatebayashi': 36.36,
+        'kozuke_takasaki': 36.41, 'kozuke_agatsuma': 36.58, 'kozuke_numata': 36.65, 'kozuke_maebashi': 36.36, 'kozuke_nitta_kanayama': 36.30,
         'suwa_komoro': 36.20, 'shinano_saku_komoro': 36.20, 'shinano_suwa': 36.20,
-        'south_shinano': 36.24, 'takato_iida': 35.70,
-        'koga': 36.19,
+        'shinano_chikuma_kiso': 36.24, 'shinano_takato_iida': 35.70,
+        'shimousa_koga': 36.19,
         'oki': 36.13,
         'hida': 36.13, 'hida_takayama': 36.13, 'hida_kiun': 36.13, 'hida_kamioka': 36.13,
-        'tsuchiura': 36.08,
+        'hitachi_tsuchiura': 36.08,
         'echizen': 35.99,
         'shimousa': 35.72,
         'musashi': 35.68, 'musashi_oshi': 35.68, 'musashi_hachigata': 35.68, 'musashi_iwatsuki': 35.68, 'musashi_kawagoe': 35.68, 'musashi_edo_tama': 35.68,
@@ -4081,66 +4081,66 @@
         'inaba': 35.50,
         'wakasa': 35.49,
         'tajima': 35.46,
-        'north_omi': 35.46,
+        'omi_north': 35.46,
         'mino': 35.43, 'mino_iwamura': 35.43,
-        'hoki': 35.43, 'higashi_hoki': 35.43,
+        'hoki_west': 35.43, 'hoki_east': 35.43,
         'izumo': 35.36,
         'kazusa': 35.28, 'kazusa_isumi': 35.28,
         'sagami': 35.25, 'sagami_miura': 35.25,
         'owari': 35.22,
-        'south_omi': 35.15,
-        'kuwana': 35.06,
+        'omi_south': 35.15,
+        'ise_kuwana': 35.06, 'ise_nagashima': 35.10,
         'tamba': 35.07, 'tamba_west': 35.07, 'tamba_east': 35.07,
-        'nishi_mimasaka': 35.08, 'higashi_mimasaka': 35.05,
+        'mimasaka_west': 35.08, 'mimasaka_east': 35.05,
         'izu': 35.05,
         'yamashiro': 35.01,
-        'awa_boshu': 34.99,
+        'awa': 34.99,
         'suruga': 34.98,
         'mikawa': 34.96,
         'iwami': 34.90,
-        'harima': 34.84, 'higashi_harima': 34.80,
+        'harima_west': 34.84, 'harima_east': 34.80,
         'iga': 34.77,
         'ise': 34.72, 'ise_suzuka': 34.72,
-        'totomi': 34.71, 'totomi_joto': 34.71,
-        'settsu': 34.69, 'settsu_osaka': 34.69,
-        'yamato': 34.69, 'yamato_koriyama': 34.69, 'yamato_takatori': 34.69, 'yamato_yoshino': 34.69, 'yamato_eastyamauchi': 34.69,
-        'bicchu': 34.69,
+        'totomi_hamamatsu_kakegawa': 34.71, 'totomi_futamata_haibara': 34.87, 'totomi_joto': 34.71,
+        'settsu': 34.69, 'settsu_shimakami': 34.85, 'settsu_osaka': 34.69,
+        'yamato': 34.69, 'yamato_koriyama': 34.69, 'yamato_takatori': 34.69, 'yamato_yoshino': 34.69, 'yamato_higashiyamauchi': 34.69,
+        'bitchu_matsuyama': 34.69, 'bitchu_takamatsu': 34.66,
         'aki_koriyama': 34.67,
         'bizen': 34.66,
         'kawachi': 34.56,
         'bingo': 34.49,
-        'aki': 34.48,
+        'aki_hiroshima': 34.48,
         'shima': 34.48,
         'izumi': 34.46,
         'nagato': 34.42,
         'sanuki': 34.35,
         'awaji': 34.34,
-        'saika_wakayama': 34.23,
+        'kii_saika_wakayama': 34.23,
         'tsushima': 34.20,
         'noshima': 34.19,
         'suo': 34.18,
         'kii_kichu': 34.08,
         'awa_shikoku': 34.07,
         'buzen': 33.88, 'buzen_ogura': 33.88, 'buzen_nakatsu': 33.88,
-        'iyo_matsuyama': 33.85, 'nii_saijo': 33.92,
-        'kinan_kumano': 33.72,
-        'chikuzen': 33.68, 'chikuzen_akizuki': 33.47,
+        'iyo_matsuyama': 33.85, 'iyo_nii': 33.92,
+        'kii_kumano': 33.72,
+        'chikuzen_fukuoka': 33.68, 'chikuzen_akizuki': 33.47,
         'tosa_kochi': 33.58, 'tosa_aki': 33.50, 'tosa_gun': 33.60,
-        'oshu': 33.51,
-        'hirado': 33.37,
+        'iyo_ohzu': 33.51,
+        'hizen_hirado': 33.37,
         'chikugo': 33.32,
         'hizen': 33.25, 'hizen_saga': 33.25, 'hizen_tsukushi': 33.25, 'hizen_karatsu': 33.25,
-        'bungo': 33.24, 'saiki_usuki': 33.12, 'bungo_oka': 32.97,
-        'uwajima': 33.22,
+        'bungo_funai': 33.24, 'bungo_saiki_usuki': 33.12, 'bungo_oka': 32.97,
+        'iyo_uwajima': 33.22,
         'tosa_nakamura': 32.99,
-        'omura': 32.90,
-        'higo_kumamoto': 32.80, 'higo_aso': 32.80, 'uto_yatsushiro': 32.60,
-        'shimabara': 32.79,
+        'hizen_omura': 32.90,
+        'higo_kumamoto': 32.80, 'higo_aso': 32.80, 'higo_yatsushiro': 32.60,
+        'hizen_shimabara': 32.79,
         'goto': 32.69,
-        'nobeoka': 32.58,
+        'hyuga_nobeoka': 32.58,
         'higo_hitoyoshi': 32.21,
         'osumi': 31.74,
-        'takanabe': 32.13, 'sadowara': 32.05, 'hyuga_obi': 31.63,
+        'hyuga_takanabe': 32.13, 'hyuga_sadowara': 32.05, 'hyuga_obi': 31.63,
         'satsuma': 31.60,
         'ryukyu': 26.22
       };
@@ -4168,23 +4168,23 @@
       }
 
       var PROV_JP_MAP = {
-        'iwashiro': '岩代', 'iwashiro_sukagawa': '岩代', 'iwashiro_ishikawa': '岩代', 'rikuchu': '陸中', 'rikuchu_morioka': '陸中', 'rikuchu_kamiheii': '陸中', 'rikuchu_shimoheii': '陸中', 'rikuchu_hienuki': '陸中', 'rikuchu_waga': '陸中', 'rikuzen': '陸前', 'iwaki': '磐城', 'mutsu': '陸奥',
-        'ugo': '羽後', 'ugo_minato': '羽後', 'ugo_hinai': '羽後', 'ugo_yuri': '羽後', 'uzen': '羽前', 'uzen_mogami': '羽前', 'uzen_kitamurayama': '羽前', 'uzen_nishimurayama': '羽前', 'uzen_higashimurayama': '羽前', 'dewa': '出羽', 'echigo': '越後', 'echigo_murakami': '越後', 'ecchu': '越中', 'etchu': '西越中', 'higashi_etchu': '東越中',
+        'iwashiro': '岩代', 'iwashiro_sukagawa': '岩代', 'iwashiro_ishikawa': '岩代', 'rikuchu': '陸中', 'rikuchu_morioka': '陸中', 'rikuchu_kamiheii': '陸中', 'rikuchu_shimoheii': '陸中', 'rikuchu_hienuki': '陸中', 'rikuchu_waga': '陸中', 'rikuzen': '陸前', 'iwaki': '磐城', 'mutsu_nanbu': '陸奥',
+        'ugo': '羽後', 'ugo_minato': '羽後', 'ugo_hinai': '羽後', 'ugo_yuri': '羽後', 'uzen': '羽前', 'uzen_mogami': '羽前', 'uzen_kitamurayama': '羽前', 'uzen_nishimurayama': '羽前', 'uzen_higashimurayama': '羽前', 'dewa': '出羽', 'echigo': '越後', 'echigo_murakami': '越後', 'ecchu': '越中', 'etchu_west': '西越中', 'etchu_east': '東越中',
         'noto': '能登', 'kaga': '加賀', 'echizen': '越前', 'sado': '佐渡', 'kai': '甲斐', 'shinano': '信濃',
-        'north_shinano': '川中島・松代', 'ueda': '上田', 'south_shinano': '筑摩・木曽谷', 'takato_iida': '高遠・飯田', 'hida': '飛騨', 'hida_takayama': '飛騨', 'hida_kiun': '飛騨', 'hida_kamioka': '飛騨', 'mino': '美濃', 'mino_iwamura': '美濃', 'owari': '尾張',
-        'mikawa': '三河', 'totomi': '遠江', 'totomi_joto': '遠江', 'suruga': '駿河', 'izu': '伊豆', 'sagami': '相模', 'sagami_miura': '相模', 'musashi': '武蔵', 'musashi_oshi': '武蔵', 'musashi_hachigata': '武蔵', 'musashi_iwatsuki': '武蔵', 'musashi_kawagoe': '武蔵', 'musashi_edo_tama': '武蔵',
-        'kazusa': '上総', 'kazusa_isumi': '上総', 'shimousa': '下総', 'hitachi': '常陸', 'hitachi_ohta': '常陸', 'hitachi_mito': '常陸', 'hitachi_makabe': '常陸', 'hitachi_kashima': '常陸', 'shimotsuke': '下野', 'sano_oyama': '佐野・小山', 'shimotsuke_oyama': '佐野・小山', 'shimotsuke_sano': '佐野・小山', 'kozuke': '高崎・箕輪', 'agatsuma': '吾妻郡', 'numata': '沼田', 'maebashi_tatebayashi': '前橋・館林',
-        'awa_boshu': '安房', 'north_omi': '北近江', 'south_omi': '南近江', 'yamashiro': '山城', 'yamato': '大和', 'yamato_koriyama': '大和', 'yamato_takatori': '大和', 'yamato_yoshino': '大和', 'yamato_eastyamauchi': '大和',
-        'kawachi': '河内', 'izumi': '和泉', 'settsu': '摂津', 'settsu_osaka': '摂津', 'iga': '伊賀', 'ise': '伊勢', 'ise_suzuka': '伊勢', 'shima': '志摩',
-        'kii': '紀伊', 'saika_wakayama': '雑賀・和歌山', 'kii_kichu': '紀中', 'kinan_kumano': '紀南・熊野',
-        'tamba': '丹波', 'tamba_west': '丹波', 'tamba_east': '丹波', 'tango': '丹後', 'tajima': '但馬', 'inaba': '因幡', 'hoki': '西伯耆', 'higashi_hoki': '東伯耆', 'izumo': '出雲',
-        'iwami': '石見', 'oki': '隠岐', 'harima': '西播磨', 'higashi_harima': '東播磨', 'nishi_mimasaka': '西美作', 'higashi_mimasaka': '東美作', 'bizen': '備前', 'bicchu': '備中',
-        'bingo': '備後', 'aki': '安芸', 'aki_koriyama': '安芸郡山', 'suo': '周防', 'nagato': '長門',
-        'awa_shikoku': '阿波', 'sanuki': '讃岐', 'iyo_matsuyama': '伊予松山', 'nii_saijo': '新居・西条', 'tosa_kochi': '土佐長岡郡', 'tosa_aki': '土佐安芸', 'tosa_gun': '土佐郡', 'tosa_nakamura': '土佐中村',
-        'tosa': '土佐', 'chikuzen': '筑前福岡', 'chikuzen_akizuki': '夜須郡秋月', 'chikugo': '筑後', 'buzen': '豊前', 'buzen_ogura': '豊前', 'buzen_nakatsu': '豊前', 'bungo': '豊後府内', 'bungo_oka': '豊後岡', 'saiki_usuki': '佐伯・臼杵', 'hizen': '肥前', 'hizen_saga': '肥前', 'hizen_tsukushi': '肥前', 'hizen_karatsu': '肥前',
-        'higo_kumamoto': '熊本・阿蘇', 'higo_aso': '熊本・阿蘇', 'uto_yatsushiro': '宇土・八代', 'higo_hitoyoshi': '肥後人吉', 'nobeoka': '延岡', 'takanabe': '高鍋', 'sadowara': '佐土原', 'hyuga_obi': '飫肥',
+        'shinano_kawanakajima': '川中島・松代', 'shinano_ueda': '上田', 'shinano_chikuma_kiso': '筑摩・木曽谷', 'shinano_takato_iida': '高遠・飯田', 'hida': '飛騨', 'hida_takayama': '飛騨', 'hida_kiun': '飛騨', 'hida_kamioka': '飛騨', 'mino': '美濃', 'mino_iwamura': '美濃', 'owari': '尾張',
+        'mikawa': '三河', 'totomi_hamamatsu_kakegawa': '遠江', 'totomi_futamata_haibara': '遠江', 'totomi_joto': '遠江', 'suruga': '駿河', 'izu': '伊豆', 'sagami': '相模', 'sagami_miura': '相模', 'musashi': '武蔵', 'musashi_oshi': '武蔵', 'musashi_hachigata': '武蔵', 'musashi_iwatsuki': '武蔵', 'musashi_kawagoe': '武蔵', 'musashi_edo_tama': '武蔵',
+        'kazusa': '上総', 'kazusa_isumi': '上総', 'shimousa': '下総', 'hitachi': '常陸', 'hitachi_ohta': '常陸', 'hitachi_mito': '常陸', 'hitachi_makabe': '常陸', 'hitachi_kashima': '常陸', 'shimotsuke': '下野', 'sano_oyama': '佐野・小山', 'shimotsuke_oyama': '佐野・小山', 'shimotsuke_sano': '佐野・小山', 'kozuke_takasaki': '高崎・箕輪', 'kozuke_agatsuma': '吾妻郡', 'kozuke_numata': '沼田', 'kozuke_maebashi': '厩橋', 'kozuke_nitta_kanayama': '新田・館林',
+        'awa': '安房', 'omi_north': '北近江', 'omi_south': '南近江', 'yamashiro': '山城', 'yamato': '大和', 'yamato_koriyama': '大和', 'yamato_takatori': '大和', 'yamato_yoshino': '大和', 'yamato_higashiyamauchi': '大和',
+        'kawachi': '河内', 'izumi': '和泉', 'settsu': '摂津', 'settsu_shimakami': '摂津', 'settsu_osaka': '摂津', 'iga': '伊賀', 'ise': '伊勢', 'ise_suzuka': '伊勢', 'shima': '志摩',
+        'kii': '紀伊', 'kii_saika_wakayama': '雑賀・和歌山', 'kii_kichu': '紀中', 'kii_kumano': '紀南・熊野',
+        'tamba': '丹波', 'tamba_west': '丹波', 'tamba_east': '丹波', 'tango': '丹後', 'tajima': '但馬', 'inaba': '因幡', 'hoki_west': '西伯耆', 'hoki_east': '東伯耆', 'izumo': '出雲',
+        'iwami': '石見', 'oki': '隠岐', 'harima_west': '西播磨', 'harima_east': '東播磨', 'mimasaka_west': '西美作', 'mimasaka_east': '東美作', 'bizen': '備前', 'bitchu_matsuyama': '備中', 'bitchu_takamatsu': '備中',
+        'bingo': '備後', 'aki_hiroshima': '安芸', 'aki_koriyama': '安芸郡山', 'suo': '周防', 'nagato': '長門',
+        'awa_shikoku': '阿波', 'sanuki': '讃岐', 'iyo_matsuyama': '伊予松山', 'iyo_nii': '新居・西条', 'tosa_kochi': '土佐長岡郡', 'tosa_aki': '土佐安芸', 'tosa_gun': '土佐郡', 'tosa_nakamura': '土佐中村',
+        'tosa': '土佐', 'chikuzen_fukuoka': '筑前福岡', 'chikuzen_akizuki': '夜須郡秋月', 'chikugo': '筑後', 'buzen': '豊前', 'buzen_ogura': '豊前', 'buzen_nakatsu': '豊前', 'bungo_funai': '豊後府内', 'bungo_oka': '豊後岡', 'bungo_saiki_usuki': '佐伯・臼杵', 'hizen': '肥前', 'hizen_saga': '肥前', 'hizen_tsukushi': '肥前', 'hizen_karatsu': '肥前',
+        'higo_kumamoto': '熊本・阿蘇', 'higo_aso': '熊本・阿蘇', 'higo_yatsushiro': '宇土・八代', 'higo_hitoyoshi': '肥後人吉', 'hyuga_nobeoka': '延岡', 'hyuga_takanabe': '高鍋', 'hyuga_sadowara': '佐土原', 'hyuga_obi': '飫肥',
         'osumi': '大隅', 'satsuma': '薩摩', 'tsushima': '対馬', 'ezo': '蝦夷', 'tsugaru': '津軽',
-        'nishi_tsugaru': '西津軽', 'higashi_tsugaru': '東津軽', 'ryukyu': '琉球', 'wakasa': '若狭', 'awaji': '淡路'
+        'mutsu_tsugaru': '西津軽', 'mutsu_namioka': '東津軽', 'ryukyu': '琉球', 'wakasa': '若狭', 'awaji': '淡路'
       };
 
       function cleanLoreText(lore) {
@@ -4360,18 +4360,18 @@
           if (typeof window.loadKamonSymbols === 'function') {
             window.loadKamonSymbols();
           }
-          await loadExternalScript(['js/kamonOverrides.js?v=20261112_v15e']);
+          await loadExternalScript(['js/kamonOverrides.js?v=20261114_mimasaka']);
 
           statusEl.textContent = '歴史配置ルールとシナリオ・領国・大名・武将データを読み込み中…';
           var rulesPromise = loadAffiliationRulesSafe();
 
           var results = await Promise.all([
-            fetchJsonSmart('scenarios.json?v=20261112_v15e'),
-            fetchJsonSmart('provinces.json?v=20261112_v15e'),
-            fetchJsonSmart('clans.json?v=20261112_v15e'),
-            fetchJsonSmart('officers.json?v=20261112_v15e'),
-            fetchJsonSmart('governors.json?v=20261112_v15e').catch(function () { return {}; }),
-            fetchJsonSmart('events.json?v=20261112_v15e').catch(function () { return {}; }),
+            fetchJsonSmart('scenarios.json?v=20261114_mimasaka'),
+            fetchJsonSmart('provinces.json?v=20261114_mimasaka'),
+            fetchJsonSmart('clans.json?v=20261114_mimasaka'),
+            fetchJsonSmart('officers.json?v=20261114_mimasaka'),
+            fetchJsonSmart('governors.json?v=20261114_mimasaka').catch(function () { return {}; }),
+            fetchJsonSmart('events.json?v=20261114_mimasaka').catch(function () { return {}; }),
             rulesPromise
           ]);
 
@@ -5068,7 +5068,7 @@
         if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bind); else bind();
       })();
       // 四国だけを既存の全国地図とは別に時計回りへ4度回転する。
-      var SHIKOKU_PROVINCE_IDS = new Set(['iyo_matsuyama', 'nii_saijo', 'oshu', 'uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_aki', 'tosa_gun', 'tosa_nakamura']);
+      var SHIKOKU_PROVINCE_IDS = new Set(['iyo_matsuyama', 'iyo_nii', 'iyo_ohzu', 'iyo_uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_aki', 'tosa_gun', 'tosa_nakamura']);
       var SHIKOKU_MAP_TRANSFORM = 'rotate(4 280 450)';
       // 地図枠と列島全体の傾きは変えず、五島以外だけを右へ寄せる。
       var NON_GOTO_MAP_TRANSFORM = 'translate(16 0)';
@@ -5816,6 +5816,8 @@
         document.getElementById('castleRegionBadge').textContent = '未選択';
         document.getElementById('castleDetailContent').innerHTML = '<div class="unselected-castle-hint" style="color:var(--text-sub); font-size:12pt; padding:14px 6px;">地図上の領国をクリックすると、その国の城郭・特産物・合戦史・武将が表示されます。</div>';
         document.getElementById('provOfficerCountBadge').textContent = '0 名';
+        var officerSummary = document.getElementById('provOfficersSummary');
+        if (officerSummary) officerSummary.textContent = '城主：—　ほか 0名';
         document.getElementById('provOfficersList').innerHTML = '';
       }
 
@@ -5857,18 +5859,18 @@
               '<div class="daimyo-identity-group">' +
                 '<span style="display:inline-block;width:26px;height:26px;">' + renderKamonSvgHtml(ownerId, 26) + '</span>' +
                 '<span style="width:12px;height:12px;border-radius:50%;background:' + color + ';border:1px solid #fff;display:inline-block;"></span>' +
-                '<strong style="font-size:13.5pt; color:#fff;">' + esc(famName) + '</strong>' +
-                '<span style="color:var(--gold-pale);">当主：<b style="color:var(--gold-bright);">' + esc(cEntry.leaderName) + '</b></span>' +
+                '<strong class="daimyo-family-name" style="font-size:13.5pt; color:#fff;">' + esc(famName) + '</strong>' +
+                '<span class="daimyo-leader" style="color:var(--gold-pale);">当主：<b style="color:var(--gold-bright);">' + esc(cEntry.leaderName) + '</b></span>' +
+                '<button type="button" class="sp-more-btn daimyo-more-btn" aria-expanded="false" aria-label="大名家の詳細を表示／非表示" title="支配国数・石高・兵力と大名家の説明を表示／非表示"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7 10l5 5 5-5"/></svg></button>' +
               '</div>' +
               '<div class="daimyo-metrics-group">' +
                 '<span class="metric-chip"><b>' + cEntry.provIds.length + '</b>国</span>' +
                 '<span class="metric-chip">石高 <b>' + Math.round(cEntry.totalKoku / 10000).toLocaleString() + '</b>万石</span>' +
                 '<span class="metric-chip">兵力 <b>' + fmtTroopsInThousands(cEntry.totalTroops) + '</b></span>' +
-                '<button type="button" class="sp-more-btn daimyo-more-btn" aria-expanded="false" aria-label="大名家の説明の全文を表示／非表示" title="大名家の説明を表示／非表示"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7 10l5 5 5-5"/></svg></button>' +
               '</div>' +
             '</div>' +
             '<div class="daimyo-extra">' +
-              (tacticName ? '<div style="color:#ffdf80; font-size:12pt; margin-bottom:2px;">⚡ <b>【' + esc(tacticName) + '】</b> <span style="color:var(--text-sub);">' + esc(tacticDesc) + '</span></div>' : '') +
+              (tacticName ? '<div style="color:#ffdf80; font-size:12pt; margin-bottom:2px;"><b>【' + esc(tacticName) + '】</b> <span style="color:var(--text-sub);">' + esc(tacticDesc) + '</span></div>' : '') +
               '<div style="color:#ece2ce; font-size:12pt;">' + esc(cleanLoreText(clanDesc)) + '</div>' +
             '</div>';
         }
@@ -5881,6 +5883,12 @@
         var isCapProv = !!(cEntry && cEntry.capitalProvId === pEntry.id);
         var govName = pEntry.governor ? pEntry.governor.name : (ownerId ? '城代統治' : '国人自治');
         var cLore = pEntry.castleLore || (pEntry.name + 'の要衝・' + pEntry.castle + '。古来より交通と軍事の拠点として栄えた名城。');
+        var officerSummary = document.getElementById('provOfficersSummary');
+        var isGovernorListed = pEntry.officers.some(function (item) {
+          return item && item.officer && item.officer.name === govName;
+        });
+        var otherOfficerCount = Math.max(0, pEntry.officers.length - (isGovernorListed ? 1 : 0));
+        if (officerSummary) officerSummary.textContent = '城主：' + govName + '　ほか ' + otherOfficerCount + '名';
 
         var hasSpecialty = !!(base.specialty || base.goldMine || base.silverMine);
         var specialtyHtml = hasSpecialty ? (
@@ -5902,7 +5910,7 @@
               (isCapProv ? ' <span class="role-badge role-daimyo" style="margin-left:4px;">👑本国</span>' : '') +
               '<button type="button" class="btn-toggle-lore" id="btnToggleCastleLore" aria-expanded="false" title="城郭解説・特産物を展開／折りたたみ"><span class="lore-toggle-icon">▼</span></button>' +
             '</div>' +
-            '<span style="font-size:12pt; color:var(--gold-pale);">' +
+            '<span class="castle-governor" style="font-size:12pt; color:var(--gold-pale);">' +
               (ownerId ? '<span class="castle-owner-fam" style="color:#fff; font-weight:bold; margin-right:6px;">' + esc(getClanFamilyName(ownerId, year)) + '</span>' : '') +
               '城主：<b>' + esc(govName) + '</b></span>' +
           '</div>' +
@@ -8384,14 +8392,79 @@
     padding: 2px 6px !important;
   }
 
-  /* 城郭解説ボックスの不要な右パディング解除とグリッドはみ出し修正 */
+  /* 城郭解説ボックスは、上下の情報ボックスと同じ内側余白にそろえる。 */
   #castleSection {
-    padding: 4px 2px !important;
+    padding: 6px 8px !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
   }
+  #officersSection {
+    padding: 6px 8px !important;
+  }
   #castleSection .castle-header-box {
     padding-right: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  /* 3つの詳細ボタンは、各ボックスの内容領域の右端を共通の基準にする。 */
+  #mapDaimyoBox .daimyo-more-btn,
+  #castleSection .btn-toggle-lore,
+  #officersSection .sp-prov-officers-btn {
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
+  }
+  #castleSection .castle-title-wrap {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+  }
+  #officersSection > .section-header {
+    width: 100% !important;
+    justify-content: space-between !important;
+  }
+  /* 各説明ボックスの詳細操作は、同じ小型の丸形チェvronボタンで統一する。 */
+  #mapScenBox .sp-more-btn,
+  #mapDaimyoBox .daimyo-more-btn,
+  #castleSection .btn-toggle-lore,
+  #officersSection .sp-prov-officers-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 26px !important;
+    min-width: 26px !important;
+    height: 26px !important;
+    min-height: 26px !important;
+    padding: 0 !important;
+    border: 1px solid var(--border-gold) !important;
+    border-radius: 50% !important;
+    background: rgba(212, 175, 55, 0.10) !important;
+    color: var(--gold-bright) !important;
+    box-shadow: none !important;
+    font-size: 0 !important;
+    font-weight: normal !important;
+    line-height: 1 !important;
+  }
+  #mapScenBox .sp-more-btn svg,
+  #mapDaimyoBox .daimyo-more-btn svg,
+  #castleSection .lore-toggle-icon {
+    display: none !important;
+  }
+  #mapScenBox .sp-more-btn::before,
+  #mapDaimyoBox .daimyo-more-btn::before,
+  #castleSection .btn-toggle-lore::before,
+  #officersSection .sp-prov-officers-btn::before {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    box-sizing: border-box;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.2s ease;
+  }
+  #mapScenBox .sp-more-btn[aria-expanded="true"]::before,
+  #mapDaimyoBox .daimyo-more-btn[aria-expanded="true"]::before,
+  #castleSection .btn-toggle-lore[aria-expanded="true"]::before {
+    transform: rotate(225deg);
   }
   .stat-pills-grid-2 {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
@@ -8585,6 +8658,100 @@
     backdrop-filter: blur(2px);
   }
   .mobile-clear-highlight-btn.is-cleared { border-color: rgba(255, 255, 255, 0.12) !important; }
+}
+</style>
+<style id="spCompactSelectionDetails">
+/* スマホ: 選択した領国の要約を1行にし、詳細は必要な時だけ開く。 */
+.officer-list-title-sp { display: none; }
+@media (max-width: 1100px) {
+  /* 年代選択・スライダーの直後から大名概要を始め、間の余白をなくす。 */
+  .workspace {
+    align-content: start !important;
+    grid-auto-rows: max-content !important;
+  }
+  .right-sidebar {
+    padding-top: 0 !important;
+    border-top: 0 !important;
+  }
+  /* シナリオ説明も、下の3つの詳細ボックスと同じカード寸法・装飾にそろえる。 */
+  #mapScenBox,
+  #mapScenBox:not(.is-expanded) {
+    width: calc(100% - 4px) !important;
+    max-width: calc(100% - 4px) !important;
+    margin: 0 2px !important;
+    padding: 6px 8px !important;
+    background: rgba(32, 22, 14, 0.92) !important;
+    border: 1px solid var(--border-gold) !important;
+    border-left: 1px solid var(--border-gold) !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+  }
+  .right-sidebar #mapDaimyoBox {
+    margin-top: 0 !important;
+    padding: 6px 8px !important;
+    background: rgba(32, 22, 14, 0.92) !important;
+    border: 1px solid var(--border-gold) !important;
+    border-radius: 8px !important;
+  }
+
+  #mapDaimyoBox .daimyo-top-row {
+    flex-direction: row !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  #mapDaimyoBox .daimyo-identity-group {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    flex-wrap: nowrap !important;
+  }
+  #mapDaimyoBox .daimyo-family-name,
+  #mapDaimyoBox .daimyo-leader {
+    flex: 0 1 auto;
+    min-width: 0;
+    white-space: nowrap;
+  }
+  #mapDaimyoBox .daimyo-more-btn {
+    margin-left: auto !important;
+  }
+  /* 支配国数・石高・兵力は下矢印を押した時だけ、当主名の下に展開する。 */
+  #mapDaimyoBox .daimyo-metrics-group {
+    display: none !important;
+    order: 2 !important;
+    flex: 1 0 100% !important;
+    width: 100% !important;
+    margin-top: 4px !important;
+  }
+  #mapDaimyoBox.is-expanded .daimyo-metrics-group {
+    display: flex !important;
+  }
+  /* 展開時は、国力の要約と大名家の説明を視覚的に区切る。 */
+  #mapDaimyoBox.is-expanded .daimyo-extra {
+    margin-top: 8px !important;
+    line-height: 1.5 !important;
+  }
+  #castleDetailContent .castle-governor { display: none !important; }
+
+  #officersSection .officer-list-title-pc,
+  #provOfficerCountBadge { display: none !important; }
+  #officersSection .officer-list-title-sp {
+    display: inline !important;
+    white-space: nowrap;
+  }
+}
+
+/* 地図背景の縦幅を従来の80%にする（最小220px→176pxも同じ比率）。 */
+@media (max-width: 768px) {
+  .map-stage { flex: 0 0 auto !important; }
+  .map-viewport-wrap {
+    flex: 0 0 auto !important;
+    height: max(176px, min(43.7vw, 41.6vh)) !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+  }
 }
 </style>
 </body>

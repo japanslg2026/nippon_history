@@ -1213,6 +1213,24 @@ html.sl-phone #startModal.sl-active .start-game-title {
   text-overflow: clip !important;
 }
 
+/* スマホ: 難易度は各ステップ共通で切替タブの直下に置く。 */
+.sl-mobile-difficulty { display: none; }
+html.sl-phone #startModal.sl-active .sl-mobile-difficulty {
+  flex: 0 0 auto;
+  display: block;
+  margin: 0 2px 5px;
+}
+html.sl-phone #startModal.sl-active .sl-mobile-difficulty .sl-diff {
+  padding: 3px 8px !important;
+  border: 1px solid var(--sl-line);
+  border-radius: 7px;
+  background: rgba(18, 14, 10, 0.92);
+}
+/* ①シナリオでは、難易度の直後に同じ意味の見出しを重ねない。 */
+html.sl-phone #startModal.sl-active .sl-root[data-step="1"] .sl-scen > .sl-head {
+  display: none !important;
+}
+
 /* ① シナリオ：シナリオボタン押下時にシナリオ解説を全面表示し、説明の下に「このシナリオ選択に戻る」「大名選択に進む」を配置 */
 html.sl-phone #startModal.sl-active .sl-scen.is-scen-detail-open > .sl-head,
 html.sl-phone #startModal.sl-active .sl-scen.is-scen-detail-open > #scenarioEraTabs,

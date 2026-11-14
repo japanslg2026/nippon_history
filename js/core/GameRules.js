@@ -407,7 +407,7 @@ export const HISTORICAL_CHOICE_EVENTS = [
             isHistorical: true,
             action: (g) => {
               g.gold += 800;
-              const provIds = ['kai', 'takato_iida', 'suruga', 'suwa_komoro', 'shinano_saku_komoro', 'shinano_suwa', 'south_shinano', 'north_shinano'];
+              const provIds = ['kai', 'shinano_takato_iida', 'suruga', 'suwa_komoro', 'shinano_saku_komoro', 'shinano_suwa', 'shinano_chikuma_kiso', 'shinano_kawanakajima'];
               provIds.forEach(pid => {
                 const pr = g.provinces.find(p => p.id === pid);
                 if (pr) {
@@ -415,12 +415,14 @@ export const HISTORICAL_CHOICE_EVENTS = [
                   pr.troops = Math.max(3000, pr.troops || 3000);
                 }
               });
-              const totomi = g.provinces.find(p => p.id === 'totomi');
-              if (totomi && totomi.ownerId === 'imagawa') {
-                const tokuId = g.isClanExtant('tokugawa') ? 'tokugawa' : (g.isClanExtant('matsudaira') ? 'matsudaira' : 'takeda');
-                totomi.ownerId = tokuId;
-                totomi.troops = Math.max(3000, totomi.troops || 3000);
-              }
+              ['totomi_hamamatsu_kakegawa', 'totomi_futamata_haibara', 'totomi_joto'].forEach(tid => {
+                const totomi = g.provinces.find(p => p.id === tid);
+                if (totomi && totomi.ownerId === 'imagawa') {
+                  const tokuId = g.isClanExtant('tokugawa') ? 'tokugawa' : (g.isClanExtant('matsudaira') ? 'matsudaira' : 'takeda');
+                  totomi.ownerId = tokuId;
+                  totomi.troops = Math.max(3000, totomi.troops || 3000);
+                }
+              });
               g.alliances = (g.alliances || []).filter(al => {
                 const m = al.members || [];
                 return !(m.includes('takeda') && m.includes('imagawa'));
@@ -463,7 +465,7 @@ export const HISTORICAL_CHOICE_EVENTS = [
             desc: '武田軍の猛攻により今川館が陥落。今川氏は戦国大名として滅亡する。',
             isHistorical: true,
             action: (g) => {
-              const provIds = ['kai', 'takato_iida', 'suruga', 'suwa_komoro', 'shinano_saku_komoro', 'shinano_suwa', 'south_shinano', 'north_shinano'];
+              const provIds = ['kai', 'shinano_takato_iida', 'suruga', 'suwa_komoro', 'shinano_saku_komoro', 'shinano_suwa', 'shinano_chikuma_kiso', 'shinano_kawanakajima'];
               provIds.forEach(pid => {
                 const pr = g.provinces.find(p => p.id === pid);
                 if (pr) {
@@ -471,12 +473,14 @@ export const HISTORICAL_CHOICE_EVENTS = [
                   pr.troops = Math.max(3000, pr.troops || 3000);
                 }
               });
-              const totomi = g.provinces.find(p => p.id === 'totomi');
-              if (totomi && totomi.ownerId === 'imagawa') {
-                const tokuId = g.isClanExtant('tokugawa') ? 'tokugawa' : (g.isClanExtant('matsudaira') ? 'matsudaira' : 'takeda');
-                totomi.ownerId = tokuId;
-                totomi.troops = Math.max(3000, totomi.troops || 3000);
-              }
+              ['totomi_hamamatsu_kakegawa', 'totomi_futamata_haibara', 'totomi_joto'].forEach(tid => {
+                const totomi = g.provinces.find(p => p.id === tid);
+                if (totomi && totomi.ownerId === 'imagawa') {
+                  const tokuId = g.isClanExtant('tokugawa') ? 'tokugawa' : (g.isClanExtant('matsudaira') ? 'matsudaira' : 'takeda');
+                  totomi.ownerId = tokuId;
+                  totomi.troops = Math.max(3000, totomi.troops || 3000);
+                }
+              });
               g.syncDaimyoStatus();
               g.updateActiveOfficers();
               if (g.currentScenario) g.resolveOfficerAffiliations(g.currentScenario);
@@ -556,23 +560,25 @@ export const HISTORICAL_CHOICE_EVENTS = [
         narrative: () => '三方ヶ原。武田信玄は浜松城を素通りし、打って出た徳川軍を魚鱗の陣で迎え撃つ。史実どおり武田が勝って遠江を奪うか、徳川が遠江を守り切るか。',
         choices: (game) => [
           {
-            text: '【史実】武田が勝つ。遠江は武田領になる。',
-            desc: '魚鱗の陣で徳川軍は敗れ、遠江が武田領になる。',
+            text: '【史実】武田が勝つ。北遠江（二俣）は武田領になる。',
+            desc: '魚鱗の陣で徳川軍は敗れ、二俣城を含む北遠江（二俣・榛原）が武田領になる。',
             isHistorical: true,
             action: (g) => {
-              const totomi = g.provinces.find(pr => pr.id === 'totomi');
-              if (totomi) { totomi.ownerId = 'takeda'; totomi.troops = Math.max(totomi.troops || 0, 4500); }
+              ['totomi_futamata_haibara'].forEach(tid => {
+                const totomi = g.provinces.find(pr => pr.id === tid);
+                if (totomi) { totomi.ownerId = 'takeda'; totomi.troops = Math.max(totomi.troops || 0, 4500); }
+              });
               const ieyasu = (pr) => pr.ownerId === 'tokugawa' || pr.ownerId === 'matsudaira';
               if (g.playerClanId === 'takeda') {
                 g.gold += 800;
-                const p = g.provinces.find(pr => pr.ownerId === 'takeda' && pr.id !== 'totomi') || g.provinces.find(pr => pr.ownerId === 'takeda');
+                const p = g.provinces.find(pr => pr.ownerId === 'takeda' && pr.id !== 'totomi_futamata_haibara') || g.provinces.find(pr => pr.ownerId === 'takeda');
                 if (p) p.troops += 4500;
                 g.provinces.filter(ieyasu).forEach(pr => pr.troops = Math.round(pr.troops * 0.5));
               } else {
                 g.provinces.filter(ieyasu).forEach(pr => pr.order = 100);
               }
-              g.log('【三方ヶ原】武田軍が勝利し、遠江は武田領となりました。', 'important');
-              return '史実どおり武田が勝ち、遠江は武田領となりました。';
+              g.log('【三方ヶ原】武田軍が勝利し、北遠江（二俣・榛原）は武田領となりました。', 'important');
+              return '史実どおり武田が勝ち、北遠江（二俣・榛原）は武田領となりました。';
             }
           },
           {
@@ -755,13 +761,13 @@ export const HISTORICAL_CHOICE_EVENTS = [
             isHistorical: false,
             action: (g) => {
               g.gold += 2500;
-              const hizen = g.provinces.find(pr => pr.id === 'shimabara');
+              const hizen = g.provinces.find(pr => pr.id === 'hizen_shimabara');
               if (hizen) {
                 hizen.troops += 7000;
                 hizen.defense = 100;
                 hizen.order = 100;
               }
-              const higo = g.provinces.find(pr => pr.id === 'uto_yatsushiro');
+              const higo = g.provinces.find(pr => pr.id === 'higo_yatsushiro');
               if (higo) {
                 higo.ownerId = 'amakusa';
                 higo.troops = 4000;
@@ -778,7 +784,7 @@ export const HISTORICAL_CHOICE_EVENTS = [
             desc: '驚異の団結力で籠城防衛！自軍兵力+5,000、防御度+40！敵軍に痛烈な打撃を与える！',
             isHistorical: true,
             action: (g) => {
-              const hizen = g.provinces.find(pr => pr.id === 'shimabara');
+              const hizen = g.provinces.find(pr => pr.id === 'hizen_shimabara');
               if (hizen) {
                 hizen.troops += 5000;
                 hizen.defense = Math.min(100, (hizen.defense || 50) + 40);
@@ -797,7 +803,7 @@ export const HISTORICAL_CHOICE_EVENTS = [
             isHistorical: true,
             action: (g) => {
               g.gold += 1500;
-              const hizen = g.provinces.find(pr => pr.id === 'shimabara');
+              const hizen = g.provinces.find(pr => pr.id === 'hizen_shimabara');
               if (hizen) {
                 hizen.ownerId = g.playerClanId;
                 hizen.troops = Math.max(hizen.troops, 5000);
@@ -816,7 +822,7 @@ export const HISTORICAL_CHOICE_EVENTS = [
             isHistorical: false,
             action: (g) => {
               g.rice += 3000;
-              const hizen = g.provinces.find(pr => pr.id === 'shimabara');
+              const hizen = g.provinces.find(pr => pr.id === 'hizen_shimabara');
               if (hizen) {
                 hizen.ownerId = g.playerClanId;
                 hizen.order = 90;
@@ -976,8 +982,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_shima_sakon'],
     scenarioIds: ['1600'],
     setClanId: 'ishida',
-    setDefaultProv: 'north_omi',
-    setAssignedProv: 'north_omi',
+    setDefaultProv: 'omi_north',
+    setAssignedProv: 'omi_north',
     setDaimyo: false
   },
 
@@ -1030,8 +1036,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_jd_053'],
     scenarioIds: ['1637'],
     setClanId: 'arima',
-    setDefaultProv: 'nobeoka',
-    setAssignedProv: 'nobeoka',
+    setDefaultProv: 'hyuga_nobeoka',
+    setAssignedProv: 'hyuga_nobeoka',
     setDaimyo: true
   },
 
@@ -1064,8 +1070,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_tsuneharu'],
     scenarioIds: ['1028'],
     setClanId: 'taira_tadatsune',
-    setDefaultProv: 'awa_boshu',
-    setAssignedProv: 'awa_boshu',
+    setDefaultProv: 'awa',
+    setAssignedProv: 'awa',
     setDaimyo: false
   },
   {
@@ -1122,8 +1128,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_yohiko_hidetake'],
     scenarioIds: ['1087'],
     setClanId: 'minamoto_tsunemoto',
-    setDefaultProv: 'yokote',
-    setAssignedProv: 'yokote',
+    setDefaultProv: 'ugo_yokote',
+    setAssignedProv: 'ugo_yokote',
     setDaimyo: false
   },
   {
@@ -1207,8 +1213,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_fujiwara_tadahira_ou'],
     scenarioIds: ['1183', '1184', '1185', '1189'],
     setClanId: 'fujiwara_hiraizumi',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu',
     setDaimyo: false
   },
   {
@@ -1216,8 +1222,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_nasu_no_yoichi'],
     scenarioIds: ['1184'],
     setClanId: 'genji_yoritomo',
-    setDefaultProv: 'nasu',
-    setAssignedProv: 'nasu',
+    setDefaultProv: 'shimotsuke_nasu',
+    setAssignedProv: 'shimotsuke_nasu',
     setDaimyo: false
   },
   {
@@ -1236,8 +1242,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yoshitsune'],
     scenarioIds: ['1185'],
     setClanId: 'genji_yoritomo',
-    setDefaultProv: 'aki',
-    setAssignedProv: 'aki',
+    setDefaultProv: 'aki_hiroshima',
+    setAssignedProv: 'aki_hiroshima',
     setDaimyo: false
   },
   {
@@ -1245,8 +1251,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_musashibo_benkei'],
     scenarioIds: ['1185'],
     setClanId: 'genji_yoritomo',
-    setDefaultProv: 'aki',
-    setAssignedProv: 'aki',
+    setDefaultProv: 'aki_hiroshima',
+    setAssignedProv: 'aki_hiroshima',
     setDaimyo: false
   },
   {
@@ -1386,8 +1392,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yorimasa'],
     scenarioIds: ['1156'],
     setClanId: 'goshirakawa_in',
-    setDefaultProv: 'south_omi',
-    setAssignedProv: 'south_omi',
+    setDefaultProv: 'omi_south',
+    setAssignedProv: 'omi_south',
     setDaimyo: false
   },
 
@@ -1406,8 +1412,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_motomori'],
     scenarioIds: ['1156'],
     setClanId: 'taira',
-    setDefaultProv: 'aki',
-    setAssignedProv: 'aki',
+    setDefaultProv: 'aki_hiroshima',
+    setAssignedProv: 'aki_hiroshima',
     setDaimyo: false
   },
   {
@@ -1415,8 +1421,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_motomori'],
     scenarioIds: ['1159'],
     setClanId: 'taira',
-    setDefaultProv: 'chikuzen',
-    setAssignedProv: 'chikuzen',
+    setDefaultProv: 'chikuzen_fukuoka',
+    setAssignedProv: 'chikuzen_fukuoka',
     setDaimyo: false
   },
   {
@@ -1424,8 +1430,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_munemori'],
     scenarioIds: ['1159'],
     setClanId: 'taira',
-    setDefaultProv: 'harima',
-    setAssignedProv: 'harima',
+    setDefaultProv: 'harima_west',
+    setAssignedProv: 'harima_west',
     setDaimyo: false
   },
   {
@@ -1507,8 +1513,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yoshitaka'],
     scenarioIds: ['1159'],
     setClanId: 'minamoto_yoshitomo',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: false
   },
 
@@ -1635,8 +1641,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yorimasa'],
     scenarioIds: ['1156'],
     setClanId: 'goshirakawa_in',
-    setDefaultProv: 'south_omi',
-    setAssignedProv: 'south_omi',
+    setDefaultProv: 'omi_south',
+    setAssignedProv: 'omi_south',
     setDaimyo: false
   },
 
@@ -1655,8 +1661,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_motomori'],
     scenarioIds: ['1156'],
     setClanId: 'taira',
-    setDefaultProv: 'aki',
-    setAssignedProv: 'aki',
+    setDefaultProv: 'aki_hiroshima',
+    setAssignedProv: 'aki_hiroshima',
     setDaimyo: false
   },
   {
@@ -1664,8 +1670,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_motomori'],
     scenarioIds: ['1159'],
     setClanId: 'taira',
-    setDefaultProv: 'chikuzen',
-    setAssignedProv: 'chikuzen',
+    setDefaultProv: 'chikuzen_fukuoka',
+    setAssignedProv: 'chikuzen_fukuoka',
     setDaimyo: false
   },
   {
@@ -1673,8 +1679,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_munemori'],
     scenarioIds: ['1159'],
     setClanId: 'taira',
-    setDefaultProv: 'harima',
-    setAssignedProv: 'harima',
+    setDefaultProv: 'harima_west',
+    setAssignedProv: 'harima_west',
     setDaimyo: false
   },
   {
@@ -1756,8 +1762,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yoshitaka'],
     scenarioIds: ['1159'],
     setClanId: 'minamoto_yoshitomo',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: false
   },
 
@@ -1874,8 +1880,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yorimasa'],
     scenarioIds: ['1156'],
     setClanId: 'goshirakawa_in',
-    setDefaultProv: 'south_omi',
-    setAssignedProv: 'south_omi',
+    setDefaultProv: 'omi_south',
+    setAssignedProv: 'omi_south',
     setDaimyo: false
   },
 
@@ -1894,8 +1900,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_motomori'],
     scenarioIds: ['1156'],
     setClanId: 'taira',
-    setDefaultProv: 'aki',
-    setAssignedProv: 'aki',
+    setDefaultProv: 'aki_hiroshima',
+    setAssignedProv: 'aki_hiroshima',
     setDaimyo: false
   },
   {
@@ -1903,8 +1909,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_motomori'],
     scenarioIds: ['1159'],
     setClanId: 'taira',
-    setDefaultProv: 'chikuzen',
-    setAssignedProv: 'chikuzen',
+    setDefaultProv: 'chikuzen_fukuoka',
+    setAssignedProv: 'chikuzen_fukuoka',
     setDaimyo: false
   },
   {
@@ -1912,8 +1918,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_munemori'],
     scenarioIds: ['1159'],
     setClanId: 'taira',
-    setDefaultProv: 'harima',
-    setAssignedProv: 'harima',
+    setDefaultProv: 'harima_west',
+    setAssignedProv: 'harima_west',
     setDaimyo: false
   },
   {
@@ -1995,8 +2001,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yoshitaka'],
     scenarioIds: ['1159'],
     setClanId: 'minamoto_yoshitomo',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: false
   },
 
@@ -2113,8 +2119,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yorimasa'],
     scenarioIds: ['1156'],
     setClanId: 'goshirakawa_in',
-    setDefaultProv: 'south_omi',
-    setAssignedProv: 'south_omi',
+    setDefaultProv: 'omi_south',
+    setAssignedProv: 'omi_south',
     setDaimyo: false
   },
 
@@ -2133,8 +2139,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_motomori'],
     scenarioIds: ['1156'],
     setClanId: 'taira',
-    setDefaultProv: 'aki',
-    setAssignedProv: 'aki',
+    setDefaultProv: 'aki_hiroshima',
+    setAssignedProv: 'aki_hiroshima',
     setDaimyo: false
   },
   {
@@ -2142,8 +2148,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_motomori'],
     scenarioIds: ['1159'],
     setClanId: 'taira',
-    setDefaultProv: 'chikuzen',
-    setAssignedProv: 'chikuzen',
+    setDefaultProv: 'chikuzen_fukuoka',
+    setAssignedProv: 'chikuzen_fukuoka',
     setDaimyo: false
   },
   {
@@ -2151,8 +2157,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_munemori'],
     scenarioIds: ['1159'],
     setClanId: 'taira',
-    setDefaultProv: 'harima',
-    setAssignedProv: 'harima',
+    setDefaultProv: 'harima_west',
+    setAssignedProv: 'harima_west',
     setDaimyo: false
   },
   {
@@ -2234,8 +2240,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yoshitaka'],
     scenarioIds: ['1159'],
     setClanId: 'minamoto_yoshitomo',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: false
   },
 
@@ -2352,8 +2358,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yorimasa'],
     scenarioIds: ['1156'],
     setClanId: 'goshirakawa_in',
-    setDefaultProv: 'south_omi',
-    setAssignedProv: 'south_omi',
+    setDefaultProv: 'omi_south',
+    setAssignedProv: 'omi_south',
     setDaimyo: false
   },
 
@@ -2372,8 +2378,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_motomori'],
     scenarioIds: ['1156'],
     setClanId: 'taira',
-    setDefaultProv: 'aki',
-    setAssignedProv: 'aki',
+    setDefaultProv: 'aki_hiroshima',
+    setAssignedProv: 'aki_hiroshima',
     setDaimyo: false
   },
   {
@@ -2381,8 +2387,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_motomori'],
     scenarioIds: ['1159'],
     setClanId: 'taira',
-    setDefaultProv: 'chikuzen',
-    setAssignedProv: 'chikuzen',
+    setDefaultProv: 'chikuzen_fukuoka',
+    setAssignedProv: 'chikuzen_fukuoka',
     setDaimyo: false
   },
   {
@@ -2390,8 +2396,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_munemori'],
     scenarioIds: ['1159'],
     setClanId: 'taira',
-    setDefaultProv: 'harima',
-    setAssignedProv: 'harima',
+    setDefaultProv: 'harima_west',
+    setAssignedProv: 'harima_west',
     setDaimyo: false
   },
   {
@@ -2473,8 +2479,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yoshitaka'],
     scenarioIds: ['1159'],
     setClanId: 'minamoto_yoshitomo',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: false
   },
 
@@ -2591,8 +2597,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yorimasa'],
     scenarioIds: ['1156'],
     setClanId: 'goshirakawa_in',
-    setDefaultProv: 'south_omi',
-    setAssignedProv: 'south_omi',
+    setDefaultProv: 'omi_south',
+    setAssignedProv: 'omi_south',
     setDaimyo: false
   },
 
@@ -2611,8 +2617,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_motomori'],
     scenarioIds: ['1156'],
     setClanId: 'taira',
-    setDefaultProv: 'aki',
-    setAssignedProv: 'aki',
+    setDefaultProv: 'aki_hiroshima',
+    setAssignedProv: 'aki_hiroshima',
     setDaimyo: false
   },
   {
@@ -2620,8 +2626,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_motomori'],
     scenarioIds: ['1159'],
     setClanId: 'taira',
-    setDefaultProv: 'chikuzen',
-    setAssignedProv: 'chikuzen',
+    setDefaultProv: 'chikuzen_fukuoka',
+    setAssignedProv: 'chikuzen_fukuoka',
     setDaimyo: false
   },
   {
@@ -2629,8 +2635,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_munemori'],
     scenarioIds: ['1159'],
     setClanId: 'taira',
-    setDefaultProv: 'harima',
-    setAssignedProv: 'harima',
+    setDefaultProv: 'harima_west',
+    setAssignedProv: 'harima_west',
     setDaimyo: false
   },
   {
@@ -2712,8 +2718,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yoshitaka'],
     scenarioIds: ['1159'],
     setClanId: 'minamoto_yoshitomo',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: false
   },
 
@@ -2754,8 +2760,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_kiso_yoshinaka'],
     scenarioIds: ['1180'],
     setClanId: 'kiso',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: true
   },
   // 1183 平宗盛（平氏当主・摂津配置）
@@ -2880,8 +2886,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_ogasawara_sadamune', 'off_succ_ogasawara_1275_111'],
     scenarioIds: ['1333'],
     setClanId: 'ogasawara',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: false
   },
   // 1333 小笠原貞宗（南信濃当主）
@@ -2890,8 +2896,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_ogasawara_sadamune'],
     scenarioIds: ['1333'],
     setClanId: 'ogasawara',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: true
   },
   // 1331 諏訪頼重（諏訪氏惣領・大祝家、南信濃）
@@ -2900,8 +2906,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_suwa_yorishige_kama'],
     scenarioIds: ['1331'],
     setClanId: 'suwa',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: true
   },
   // 1333 村上国清（北信濃独立大名）
@@ -2910,8 +2916,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_succ_murakami_1300_98'],
     scenarioIds: ['1333'],
     setClanId: 'murakami',
-    setDefaultProv: 'north_shinano',
-    setAssignedProv: 'north_shinano',
+    setDefaultProv: 'shinano_kawanakajima',
+    setAssignedProv: 'shinano_kawanakajima',
     setDaimyo: true
   },
 
@@ -2921,8 +2927,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_ogasawara_sadamune', 'off_ogasawara_naganori'],
     scenarioIds: ['1336'],
     setClanId: 'ogasawara',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: false
   },
   // 1336 小笠原貞宗（南信濃当主）
@@ -2931,8 +2937,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_ogasawara_sadamune'],
     scenarioIds: ['1336'],
     setClanId: 'ogasawara',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: true
   },
   // 1336 村上国清（北信濃独立大名）
@@ -2941,8 +2947,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_succ_murakami_1300_98'],
     scenarioIds: ['1336'],
     setClanId: 'murakami',
-    setDefaultProv: 'north_shinano',
-    setAssignedProv: 'north_shinano',
+    setDefaultProv: 'shinano_kawanakajima',
+    setAssignedProv: 'shinano_kawanakajima',
     setDaimyo: true
   },
   // 1336 村上信貞（北信濃・村上氏配下）
@@ -2951,8 +2957,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_murakami_nobusada'],
     scenarioIds: ['1336'],
     setClanId: 'murakami',
-    setDefaultProv: 'north_shinano',
-    setAssignedProv: 'north_shinano',
+    setDefaultProv: 'shinano_kawanakajima',
+    setAssignedProv: 'shinano_kawanakajima',
     setDaimyo: false
   },
   // 1336 斯波家長（陸中・奥州斯波家当主として独立）
@@ -3046,8 +3052,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yorimasa'],
     scenarioIds: ['1156'],
     setClanId: 'goshirakawa_in',
-    setDefaultProv: 'south_omi',
-    setAssignedProv: 'south_omi',
+    setDefaultProv: 'omi_south',
+    setAssignedProv: 'omi_south',
     setDaimyo: false
   },
 
@@ -3066,8 +3072,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_motomori'],
     scenarioIds: ['1156'],
     setClanId: 'taira',
-    setDefaultProv: 'aki',
-    setAssignedProv: 'aki',
+    setDefaultProv: 'aki_hiroshima',
+    setAssignedProv: 'aki_hiroshima',
     setDaimyo: false
   },
   {
@@ -3075,8 +3081,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_motomori'],
     scenarioIds: ['1159'],
     setClanId: 'taira',
-    setDefaultProv: 'chikuzen',
-    setAssignedProv: 'chikuzen',
+    setDefaultProv: 'chikuzen_fukuoka',
+    setAssignedProv: 'chikuzen_fukuoka',
     setDaimyo: false
   },
   {
@@ -3084,8 +3090,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_munemori'],
     scenarioIds: ['1159'],
     setClanId: 'taira',
-    setDefaultProv: 'harima',
-    setAssignedProv: 'harima',
+    setDefaultProv: 'harima_west',
+    setAssignedProv: 'harima_west',
     setDaimyo: false
   },
   {
@@ -3167,8 +3173,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yoshitaka'],
     scenarioIds: ['1159'],
     setClanId: 'minamoto_yoshitomo',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: false
   },
 
@@ -3285,8 +3291,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yorimasa'],
     scenarioIds: ['1156'],
     setClanId: 'goshirakawa_in',
-    setDefaultProv: 'south_omi',
-    setAssignedProv: 'south_omi',
+    setDefaultProv: 'omi_south',
+    setAssignedProv: 'omi_south',
     setDaimyo: false
   },
 
@@ -3305,8 +3311,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_motomori'],
     scenarioIds: ['1156'],
     setClanId: 'taira',
-    setDefaultProv: 'aki',
-    setAssignedProv: 'aki',
+    setDefaultProv: 'aki_hiroshima',
+    setAssignedProv: 'aki_hiroshima',
     setDaimyo: false
   },
   {
@@ -3314,8 +3320,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_motomori'],
     scenarioIds: ['1159'],
     setClanId: 'taira',
-    setDefaultProv: 'chikuzen',
-    setAssignedProv: 'chikuzen',
+    setDefaultProv: 'chikuzen_fukuoka',
+    setAssignedProv: 'chikuzen_fukuoka',
     setDaimyo: false
   },
   {
@@ -3323,8 +3329,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_munemori'],
     scenarioIds: ['1159'],
     setClanId: 'taira',
-    setDefaultProv: 'harima',
-    setAssignedProv: 'harima',
+    setDefaultProv: 'harima_west',
+    setAssignedProv: 'harima_west',
     setDaimyo: false
   },
   {
@@ -3406,8 +3412,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yoshitaka'],
     scenarioIds: ['1159'],
     setClanId: 'minamoto_yoshitomo',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: false
   },
 
@@ -3524,8 +3530,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yorimasa'],
     scenarioIds: ['1156'],
     setClanId: 'goshirakawa_in',
-    setDefaultProv: 'south_omi',
-    setAssignedProv: 'south_omi',
+    setDefaultProv: 'omi_south',
+    setAssignedProv: 'omi_south',
     setDaimyo: false
   },
 
@@ -3544,8 +3550,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_motomori'],
     scenarioIds: ['1156'],
     setClanId: 'taira',
-    setDefaultProv: 'aki',
-    setAssignedProv: 'aki',
+    setDefaultProv: 'aki_hiroshima',
+    setAssignedProv: 'aki_hiroshima',
     setDaimyo: false
   },
   {
@@ -3553,8 +3559,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_motomori'],
     scenarioIds: ['1159'],
     setClanId: 'taira',
-    setDefaultProv: 'chikuzen',
-    setAssignedProv: 'chikuzen',
+    setDefaultProv: 'chikuzen_fukuoka',
+    setAssignedProv: 'chikuzen_fukuoka',
     setDaimyo: false
   },
   {
@@ -3562,8 +3568,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_taira_munemori'],
     scenarioIds: ['1159'],
     setClanId: 'taira',
-    setDefaultProv: 'harima',
-    setAssignedProv: 'harima',
+    setDefaultProv: 'harima_west',
+    setAssignedProv: 'harima_west',
     setDaimyo: false
   },
   {
@@ -3645,8 +3651,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yoshitaka'],
     scenarioIds: ['1159'],
     setClanId: 'minamoto_yoshitomo',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: false
   },
   // 1400 相馬胤弘（相馬=行方郡小高城主）
@@ -3655,8 +3661,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_dm_soma_1400'],
     scenarioIds: ['1400'],
     setClanId: 'soma',
-    setDefaultProv: 'soma',
-    setAssignedProv: 'soma',
+    setDefaultProv: 'iwaki_soma',
+    setAssignedProv: 'iwaki_soma',
     setDaimyo: true
   },
   // 1400 相馬憲胤（相馬・一門長老）
@@ -3665,8 +3671,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_soma_noritane'],
     scenarioIds: ['1400'],
     setClanId: 'soma',
-    setDefaultProv: 'soma',
-    setAssignedProv: 'soma',
+    setDefaultProv: 'iwaki_soma',
+    setAssignedProv: 'iwaki_soma',
     setDaimyo: false
   },
   // 1400 岡田胤久（相馬・一門筆頭重臣）
@@ -3675,8 +3681,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_okada_tanehisa'],
     scenarioIds: ['1400'],
     setClanId: 'soma',
-    setDefaultProv: 'soma',
-    setAssignedProv: 'soma',
+    setDefaultProv: 'iwaki_soma',
+    setAssignedProv: 'iwaki_soma',
     setDaimyo: false
   },
   // 1400 相馬重胤（磐城・相馬家臣・嫡男）
@@ -3685,8 +3691,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_dm_soma_1438'],
     scenarioIds: ['1400'],
     setClanId: 'soma',
-    setDefaultProv: 'soma',
-    setAssignedProv: 'soma',
+    setDefaultProv: 'iwaki_soma',
+    setAssignedProv: 'iwaki_soma',
     setDaimyo: false
   },
 
@@ -3788,8 +3794,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_minamoto_yoshitaka'],
     scenarioIds: ['1159'],
     setClanId: 'minamoto_yoshitomo',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: false
   },
 
@@ -3828,8 +3834,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_dm_uesugi_1495'],
     scenarioIds: ['1495', '1493'],
     setClanId: 'uesugi',
-    setDefaultProv: 'kozuke',
-    setAssignedProv: 'kozuke',
+    setDefaultProv: 'kozuke_takasaki',
+    setAssignedProv: 'kozuke_takasaki',
     setDaimyo: true
   },
   // 1495 武田元信（若狭大名）
@@ -3848,8 +3854,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_succ_satomi_1445_153'],
     scenarioIds: ['1495', '1493'],
     setClanId: 'satomi',
-    setDefaultProv: 'awa_boshu',
-    setAssignedProv: 'awa_boshu',
+    setDefaultProv: 'awa',
+    setAssignedProv: 'awa',
     setDaimyo: true
   },
   // 1495 土岐政房（美濃大名）、斎藤妙純（土岐配下）
@@ -3877,8 +3883,8 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_succ_kyogoku_1480_80'],
     scenarioIds: ['1495', '1493'],
     setClanId: 'kyogoku',
-    setDefaultProv: 'north_omi',
-    setAssignedProv: 'north_omi',
+    setDefaultProv: 'omi_north',
+    setAssignedProv: 'omi_north',
     setDaimyo: false
   },
 
@@ -3913,8 +3919,8 @@ export const OFFICER_AFFILIATION_RULES = [
     fromYear: 1585,
     toYear: 1599,
     setClanId: 'toyotomi',
-    setDefaultProv: 'north_omi',
-    setAssignedProv: 'north_omi',
+    setDefaultProv: 'omi_north',
+    setAssignedProv: 'omi_north',
     requireOwners: ['toyotomi'],
     setDaimyo: false
   },
@@ -3939,8 +3945,8 @@ export const OFFICER_AFFILIATION_RULES = [
     fromYear: 1180,
     toYear: 1184,
     setClanId: 'kiso',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     requireOwners: ['kiso'],
     setDaimyo: false
   },
@@ -3953,8 +3959,8 @@ export const OFFICER_AFFILIATION_RULES = [
     fromYear: 1587,
     toYear: 1587,
     setDaimyo: false,
-    setDefaultProv: 'north_omi',
-    setAssignedProv: 'north_omi',
+    setDefaultProv: 'omi_north',
+    setAssignedProv: 'omi_north',
   },
   {
     id: 'mizuno_katsunari_suruga_1587',
@@ -4031,8 +4037,8 @@ export const OFFICER_AFFILIATION_RULES = [
     fromYear: 1274,
     toYear: 1274,
     setDaimyo: true,
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
   },
   {
     id: 'kono_michiari_1274',
@@ -4064,8 +4070,8 @@ export const OFFICER_AFFILIATION_RULES = [
     fromYear: 1274,
     toYear: 1274,
     setDaimyo: false,
-    setDefaultProv: 'yonezawa_date',
-    setAssignedProv: 'yonezawa_date',
+    setDefaultProv: 'uzen_yonezawa_date',
+    setAssignedProv: 'uzen_yonezawa_date',
   },
   {
     id: 'hindu_yuan_1274',
@@ -4097,8 +4103,8 @@ export const OFFICER_AFFILIATION_RULES = [
     fromYear: 1185,
     toYear: 1185,
     setDaimyo: false,
-    setDefaultProv: 'aki',
-    setAssignedProv: 'aki',
+    setDefaultProv: 'aki_hiroshima',
+    setAssignedProv: 'aki_hiroshima',
   },
   {
     id: 'ezo_leader_aterui_801',
@@ -4133,8 +4139,8 @@ export const OFFICER_AFFILIATION_RULES = [
     requireOwners: ['otomo'],
     unlessOwner: 'tachibana',
     setDaimyo: false,
-    setDefaultProv: 'chikuzen',
-    setAssignedProv: 'chikuzen',
+    setDefaultProv: 'chikuzen_fukuoka',
+    setAssignedProv: 'chikuzen_fukuoka',
   },
 
   {
@@ -4142,7 +4148,7 @@ export const OFFICER_AFFILIATION_RULES = [
     officerIds: ['off_dm_otomo_1600'],
     setClanId: 'otomo',
     setDaimyo: true,
-    setDefaultProv: 'bungo',
+    setDefaultProv: 'bungo_funai',
     fromYear: 1587,
     toYear: 1593,
     requireOwners: ['otomo'],
@@ -5506,25 +5512,25 @@ export const OFFICER_AFFILIATION_RULES = [
     // === 1184年（寿永3年）シナリオ専用史実配置ルール ===
     { id: 'custom_1184_kajiwara_yamashiro', officerIds: ['off_kajiwara_kagetoki'], scenarioIds: ['1184'], setClanId: 'genji_yoritomo', setDefaultProv: 'yamashiro', setAssignedProv: 'yamashiro', setDaimyo: false },
     { id: 'custom_1184_watanabe_kawachi', officerIds: ['off_genpei_later_7210'], scenarioIds: ['1184'], setClanId: 'genji_yoritomo', setDefaultProv: 'kawachi', setAssignedProv: 'kawachi', setDaimyo: false },
-    { id: 'custom_1180_1185_taira_sadanou_chikuzen', officerIds: ['off_taira_sadanou'], scenarioIds: ['1180', '1183', '1184', '1185'], setClanId: 'taira', setDefaultProv: 'chikuzen', setAssignedProv: 'chikuzen', setDaimyo: false },
+    { id: 'custom_1180_1185_taira_sadanou_chikuzen', officerIds: ['off_taira_sadanou'], scenarioIds: ['1180', '1183', '1184', '1185'], setClanId: 'taira', setDefaultProv: 'chikuzen_fukuoka', setAssignedProv: 'chikuzen_fukuoka', setDaimyo: false },
     { id: 'custom_1184_masuda_iwami', officerIds: ['off_genpei_later_7217'], scenarioIds: ['1184'], setClanId: 'taira', setDefaultProv: 'iwami', setAssignedProv: 'iwami', setDaimyo: false },
     { id: 'custom_1184_hojo_tokimasa_izu', officerIds: ['off_hojo_tokimasa'], scenarioIds: ['1184'], setClanId: 'genji_yoritomo', setDefaultProv: 'izu', setAssignedProv: 'izu', setDaimyo: false },
-    { id: 'custom_1184_taira_sukemori_harima', officerIds: ['off_taira_sukemori'], scenarioIds: ['1184'], setClanId: 'taira', setDefaultProv: 'harima', setAssignedProv: 'harima', setDaimyo: false },
+    { id: 'custom_1184_taira_sukemori_harima', officerIds: ['off_taira_sukemori'], scenarioIds: ['1184'], setClanId: 'taira', setDefaultProv: 'harima_west', setAssignedProv: 'harima_west', setDaimyo: false },
     { id: 'custom_1184_saeki_izumi', officerIds: ['off_genpei_later_7212'], scenarioIds: ['1184'], setClanId: 'taira', setDefaultProv: 'izumi', setAssignedProv: 'izumi', setDaimyo: false },
     { id: 'custom_1184_kakuken_yamato', officerIds: ['off_genpei_later_7209'], scenarioIds: ['1184'], setClanId: 'kofukuji', setDefaultProv: 'yamato_koriyama', setAssignedProv: 'yamato_koriyama', setDaimyo: true },
-    { id: 'custom_1184_tamura_tamura', officerIds: ['off_hist_1189_tamura_kaneaki'], scenarioIds: ['1184'], setClanId: 'fujiwara_hiraizumi', setDefaultProv: 'tamura', setAssignedProv: 'tamura', setDaimyo: false },
+    { id: 'custom_1184_tamura_tamura', officerIds: ['off_hist_1189_tamura_kaneaki'], scenarioIds: ['1184'], setClanId: 'fujiwara_hiraizumi', setDefaultProv: 'iwashiro_tamura', setAssignedProv: 'iwashiro_tamura', setDaimyo: false },
     { id: 'custom_1184_iwaki_iwaki', officerIds: ['off_hist_1189_iwaki_chikataka'], scenarioIds: ['1184'], setClanId: 'fujiwara_hiraizumi', setDefaultProv: 'iwaki', setAssignedProv: 'iwaki', setDaimyo: false },
-    { id: 'custom_1184_shirakawa_yuki', officerIds: ['off_hist_1189_shirakawa_tomomitsu'], scenarioIds: ['1184'], setClanId: 'genji_yoritomo', setDefaultProv: 'shirakawa', setAssignedProv: 'shirakawa', setDaimyo: false },
+    { id: 'custom_1184_shirakawa_yuki', officerIds: ['off_hist_1189_shirakawa_tomomitsu'], scenarioIds: ['1184'], setClanId: 'genji_yoritomo', setDefaultProv: 'iwaki_shirakawa', setAssignedProv: 'iwaki_shirakawa', setDaimyo: false },
     { id: 'custom_1184_honma_sado', officerIds: ['off_dm_honma_1180'], scenarioIds: ['1184'], setClanId: 'honma', setDefaultProv: 'sado', setAssignedProv: 'sado', setDaimyo: true },
     { id: 'custom_1184_shimazu_satsuma', officerIds: ['off_shimazu_proto_tadahisa'], scenarioIds: ['1184'], setClanId: 'shimazu', setDefaultProv: 'satsuma', setAssignedProv: 'satsuma', setDaimyo: true },
     { id: 'custom_1184_kimotsuki_osumi', officerIds: ['off_genpei_later_7227'], scenarioIds: ['1184'], setClanId: 'kimotsuki', setDefaultProv: 'osumi', setAssignedProv: 'osumi', setDaimyo: true },
         { id: 'custom_1180_aso_kumamoto', officerIds: ['off_pl1180_122'], scenarioIds: ['1180'], setClanId: 'kikuchi', setDefaultProv: 'higo_kumamoto', setAssignedProv: 'higo_kumamoto', setDaimyo: false },
-    { id: 'custom_1180_tsuchimochi_nobeoka', officerIds: ['off_genpei_later_7225'], scenarioIds: ['1180'], setClanId: 'tsuchimochi', setDefaultProv: 'nobeoka', setAssignedProv: 'nobeoka', setDaimyo: false },
-    { id: 'custom_1184_tsuchimochi_hyuga', officerIds: ['off_genpei_later_7225'], scenarioIds: ['1184'], setClanId: 'tsuchimochi', setDefaultProv: 'nobeoka', setAssignedProv: 'nobeoka', setDaimyo: false },
-    { id: 'custom_1184_tsuchimochi_nobeoka', officerIds: ['off_genpei_chr_130'], scenarioIds: ['1184'], setClanId: 'tsuchimochi', setDefaultProv: 'nobeoka', setAssignedProv: 'nobeoka', setDaimyo: true },
+    { id: 'custom_1180_tsuchimochi_nobeoka', officerIds: ['off_genpei_later_7225'], scenarioIds: ['1180'], setClanId: 'tsuchimochi', setDefaultProv: 'hyuga_nobeoka', setAssignedProv: 'hyuga_nobeoka', setDaimyo: false },
+    { id: 'custom_1184_tsuchimochi_hyuga', officerIds: ['off_genpei_later_7225'], scenarioIds: ['1184'], setClanId: 'tsuchimochi', setDefaultProv: 'hyuga_nobeoka', setAssignedProv: 'hyuga_nobeoka', setDaimyo: false },
+    { id: 'custom_1184_tsuchimochi_nobeoka', officerIds: ['off_genpei_chr_130'], scenarioIds: ['1184'], setClanId: 'tsuchimochi', setDefaultProv: 'hyuga_nobeoka', setAssignedProv: 'hyuga_nobeoka', setDaimyo: true },
     { id: 'custom_1184_kikuchi_kumamoto', officerIds: ['off_kikuchi_takenao'], scenarioIds: ['1184'], setClanId: 'kikuchi', setDefaultProv: 'higo_kumamoto', setAssignedProv: 'higo_kumamoto', setDaimyo: true },
     { id: 'custom_1184_kikuchi_hitoyoshi', officerIds: ['off_kikuchi_norinao'], scenarioIds: ['1184'], setClanId: 'kikuchi', setDefaultProv: 'higo_hitoyoshi', setAssignedProv: 'higo_hitoyoshi', setDaimyo: false },
-    { id: 'custom_1184_matsura_hirado', officerIds: ['off_dm_matsura_1180', 'off_matsura_hisa'], scenarioIds: ['1184'], setClanId: 'matsura', setDefaultProv: 'hirado', setAssignedProv: 'hirado', setDaimyo: true },
+    { id: 'custom_1184_matsura_hirado', officerIds: ['off_dm_matsura_1180', 'off_matsura_hisa'], scenarioIds: ['1184'], setClanId: 'matsura', setDefaultProv: 'hizen_hirado', setAssignedProv: 'hizen_hirado', setDaimyo: true },
 ];;
 if (typeof window !== "undefined") window.OFFICER_AFFILIATION_RULES = OFFICER_AFFILIATION_RULES;
 
@@ -5667,32 +5673,32 @@ if (typeof window !== "undefined") window.HIDEYOSHI_HEIR_ORDER_IDS = HIDEYOSHI_H
 
 export const PROVINCE_NORTH_TO_SOUTH = [
   'ezo',
-  'nishi_tsugaru', 'higashi_tsugaru', 'mutsu', 'ugo', 'ugo_minato', 'ugo_hinai', 'ugo_yuri', 'rikuchu', 'rikuchu_morioka', 'rikuchu_kamiheii', 'rikuchu_shimoheii', 'rikuchu_hienuki', 'rikuchu_waga', 'uzen', 'uzen_mogami', 'uzen_kitamurayama', 'uzen_nishimurayama', 'uzen_higashimurayama', 'rikuzen', 'nihonmatsu', 'iwashiro', 'iwashiro_sukagawa', 'iwashiro_ishikawa', 'iwaki',
-  'sado', 'echigo', 'echigo_murakami', 'noto', 'etchu', 'higashi_etchu', 'kaga', 'echizen', 'wakasa',
-  'shimotsuke', 'sano_oyama', 'shimotsuke_oyama', 'shimotsuke_sano', 'hitachi', 'hitachi_ohta', 'hitachi_mito', 'hitachi_makabe', 'hitachi_kashima', 'kozuke', 'agatsuma', 'numata', 'maebashi_tatebayashi', 'shimousa', 'musashi', 'musashi_oshi', 'musashi_hachigata', 'musashi_iwatsuki', 'musashi_kawagoe', 'musashi_edo_tama', 'kazusa', 'kazusa_isumi', 'sagami', 'sagami_miura', 'awa_boshu',
-  'north_shinano', 'ueda', 'suwa_komoro', 'shinano_saku_komoro', 'shinano_suwa', 'south_shinano', 'takato_iida', 'hida', 'hida_takayama', 'hida_kiun', 'hida_kamioka', 'kai', 'mino', 'mino_iwamura', 'owari', 'izu', 'suruga', 'mikawa', 'totomi', 'totomi_joto',
-  'tango', 'north_omi', 'kuwana', 'south_omi', 'tamba', 'tamba_west', 'tamba_east', 'yamashiro', 'iga', 'ise', 'ise_suzuka', 'settsu', 'settsu_osaka', 'yamato', 'yamato_koriyama', 'yamato_takatori', 'yamato_yoshino', 'yamato_eastyamauchi', 'kawachi', 'shima', 'izumi', 'awaji', 'saika_wakayama', 'kii_kichu', 'kinan_kumano',
-  'oki', 'inaba', 'tajima', 'hoki', 'higashi_hoki', 'izumo', 'nishi_mimasaka', 'higashi_mimasaka', 'iwami', 'harima', 'higashi_harima', 'bicchu', 'aki', 'aki_koriyama', 'bizen', 'bingo', 'nagato', 'suo',
-  'sanuki', 'nii_saijo', 'awa_shikoku', 'iyo_matsuyama', 'tosa_kochi', 'tosa_aki', 'tosa_gun', 'tosa_nakamura', 'tosa',
-  'tsushima', 'buzen', 'buzen_ogura', 'buzen_nakatsu', 'chikuzen', 'chikuzen_akizuki', 'chikugo', 'hizen', 'hizen_saga', 'hizen_tsukushi', 'hizen_karatsu', 'goto', 'bungo', 'saiki_usuki', 'bungo_oka', 'higo_kumamoto', 'higo_aso', 'uto_yatsushiro', 'higo_hitoyoshi', 'nobeoka', 'takanabe', 'sadowara', 'osumi', 'hyuga_obi', 'satsuma', 'ryukyu'
+  'mutsu_tsugaru', 'mutsu_namioka', 'mutsu_nanbu', 'ugo', 'ugo_minato', 'ugo_hinai', 'ugo_yuri', 'rikuchu', 'rikuchu_morioka', 'rikuchu_kamiheii', 'rikuchu_shimoheii', 'rikuchu_hienuki', 'rikuchu_waga', 'uzen', 'uzen_mogami', 'uzen_kitamurayama', 'uzen_nishimurayama', 'uzen_higashimurayama', 'rikuzen', 'iwashiro_nihonmatsu', 'iwashiro', 'iwashiro_sukagawa', 'iwashiro_ishikawa', 'iwaki',
+  'sado', 'echigo', 'echigo_murakami', 'noto', 'etchu_west', 'etchu_east', 'kaga', 'echizen', 'wakasa',
+  'shimotsuke', 'sano_oyama', 'shimotsuke_oyama', 'shimotsuke_sano', 'hitachi', 'hitachi_ohta', 'hitachi_mito', 'hitachi_makabe', 'hitachi_kashima', 'kozuke_takasaki', 'kozuke_agatsuma', 'kozuke_numata', 'kozuke_maebashi', 'kozuke_nitta_kanayama', 'shimousa', 'musashi', 'musashi_oshi', 'musashi_hachigata', 'musashi_iwatsuki', 'musashi_kawagoe', 'musashi_edo_tama', 'kazusa', 'kazusa_isumi', 'sagami', 'sagami_miura', 'awa',
+  'shinano_kawanakajima', 'shinano_ueda', 'suwa_komoro', 'shinano_saku_komoro', 'shinano_suwa', 'shinano_chikuma_kiso', 'shinano_takato_iida', 'hida', 'hida_takayama', 'hida_kiun', 'hida_kamioka', 'kai', 'mino', 'mino_iwamura', 'owari', 'izu', 'suruga', 'mikawa', 'totomi_hamamatsu_kakegawa', 'totomi_futamata_haibara', 'totomi_joto',
+  'tango', 'omi_north', 'ise_kuwana', 'ise_nagashima', 'omi_south', 'tamba', 'tamba_west', 'tamba_east', 'yamashiro', 'iga', 'ise', 'ise_suzuka', 'settsu', 'settsu_shimakami', 'settsu_osaka', 'yamato', 'yamato_koriyama', 'yamato_takatori', 'yamato_yoshino', 'yamato_higashiyamauchi', 'kawachi', 'shima', 'izumi', 'awaji', 'kii_saika_wakayama', 'kii_kichu', 'kii_kumano',
+  'oki', 'inaba', 'tajima', 'hoki_west', 'hoki_east', 'izumo', 'mimasaka_west', 'mimasaka_east', 'iwami', 'harima_west', 'harima_east', 'bitchu_matsuyama', 'bitchu_takamatsu', 'aki_hiroshima', 'aki_koriyama', 'bizen', 'bingo', 'nagato', 'suo',
+  'sanuki', 'iyo_nii', 'awa_shikoku', 'iyo_matsuyama', 'tosa_kochi', 'tosa_aki', 'tosa_gun', 'tosa_nakamura', 'tosa',
+  'tsushima', 'buzen', 'buzen_ogura', 'buzen_nakatsu', 'chikuzen_fukuoka', 'chikuzen_akizuki', 'chikugo', 'hizen', 'hizen_saga', 'hizen_tsukushi', 'hizen_karatsu', 'goto', 'bungo_funai', 'bungo_saiki_usuki', 'bungo_oka', 'higo_kumamoto', 'higo_aso', 'higo_yatsushiro', 'higo_hitoyoshi', 'hyuga_nobeoka', 'hyuga_takanabe', 'hyuga_sadowara', 'osumi', 'hyuga_obi', 'satsuma', 'ryukyu'
 ];
 
 // 各国の中心（国府・主城）のおおよその北緯。勢力選択画面を北から並べる鍵（地図SVGは傾いているので y 座標は使わない）;
 if (typeof window !== "undefined") window.PROVINCE_NORTH_TO_SOUTH = PROVINCE_NORTH_TO_SOUTH;
 
 export const PROVINCE_LATITUDE = {
-  ezo: 41.43, nishi_tsugaru: 40.60, higashi_tsugaru: 40.70, mutsu: 40.40, rikuchu: 39.70, ugo: 39.72, rikuzen: 38.27, uzen: 38.25,
-  nihonmatsu: 37.45, iwashiro: 37.49, iwaki: 37.05, sado: 38.02, echigo: 37.14, noto: 37.05, etchu: 36.70, higashi_etchu: 36.80, kaga: 36.56,
-  echizen: 36.06, wakasa: 35.50, hitachi: 36.37, shimotsuke: 36.56, sano_oyama: 36.33, kozuke: 36.39, agatsuma: 36.58, numata: 36.65, maebashi_tatebayashi: 36.36, musashi: 35.75,
-  shimousa: 35.72, kazusa: 35.40, awa_boshu: 35.00, sagami: 35.25, izu: 34.97, suruga: 34.98, kai: 35.66,
-  north_shinano: 36.64, ueda: 36.40, suwa_komoro: 36.10, south_shinano: 36.00, takato_iida: 35.70, hida: 36.14, mino: 35.43, totomi: 34.71, mikawa: 34.95,
-  owari: 35.18, kuwana: 35.07, ise: 34.73, shima: 34.48, iga: 34.77, north_omi: 35.38, south_omi: 35.12, yamashiro: 35.01,
-  yamato: 34.68, saika_wakayama: 34.23, kii_kichu: 34.05, kinan_kumano: 33.72, kii: 34.23, kawachi: 34.50, izumi: 34.46, settsu: 34.69, tamba: 35.05, tango: 35.53,
-  tajima: 35.46, harima: 34.83, higashi_harima: 34.80, inaba: 35.50, hoki: 35.43, higashi_hoki: 35.43, izumo: 35.35, iwami: 34.80, nishi_mimasaka: 35.08, higashi_mimasaka: 35.05,
-  bizen: 34.66, bicchu: 34.75, bingo: 34.49, aki: 34.45, aki_koriyama: 34.65, suo: 34.18, nagato: 34.30, oki: 36.20,
-  sanuki: 34.34, awa_shikoku: 34.07, iyo_matsuyama: 33.84, nii_saijo: 33.92, tosa_kochi: 33.56, tosa_aki: 33.50, tosa_gun: 33.60, tosa_nakamura: 32.99, tosa: 33.56, awaji: 34.35, tsushima: 34.20,
-  buzen: 33.75, chikuzen: 33.59, chikuzen_akizuki: 33.47, chikugo: 33.30, hizen: 33.25, goto: 32.80, bungo: 33.24, saiki_usuki: 33.12, bungo_oka: 32.97, higo_kumamoto: 32.80, uto_yatsushiro: 32.60, higo_hitoyoshi: 32.22,
-  takanabe: 32.13, sadowara: 32.05, hyuga_obi: 31.63, nobeoka: 32.58, satsuma: 31.60, osumi: 31.40, ryukyu: 26.21
+  ezo: 41.43, mutsu_tsugaru: 40.60, mutsu_namioka: 40.70, mutsu_nanbu: 40.40, rikuchu: 39.70, ugo: 39.72, rikuzen: 38.27, uzen: 38.25,
+  iwashiro_nihonmatsu: 37.45, iwashiro: 37.49, iwaki: 37.05, sado: 38.02, echigo: 37.14, noto: 37.05, etchu_west: 36.70, etchu_east: 36.80, kaga: 36.56,
+  echizen: 36.06, wakasa: 35.50, hitachi: 36.37, shimotsuke: 36.56, sano_oyama: 36.33, kozuke_takasaki: 36.39, kozuke_agatsuma: 36.58, kozuke_numata: 36.65, kozuke_maebashi: 36.36, kozuke_nitta_kanayama: 36.30, musashi: 35.75,
+  shimousa: 35.72, kazusa: 35.40, awa: 35.00, sagami: 35.25, izu: 34.97, suruga: 34.98, kai: 35.66,
+  shinano_kawanakajima: 36.64, shinano_ueda: 36.40, suwa_komoro: 36.10, shinano_chikuma_kiso: 36.00, shinano_takato_iida: 35.70, hida: 36.14, mino: 35.43, totomi_hamamatsu_kakegawa: 34.71, totomi_futamata_haibara: 34.87, mikawa: 34.95,
+  owari: 35.18, ise_kuwana: 35.07, ise_nagashima: 35.10, ise: 34.73, shima: 34.48, iga: 34.77, omi_north: 35.38, omi_south: 35.12, yamashiro: 35.01,
+  yamato: 34.68, kii_saika_wakayama: 34.23, kii_kichu: 34.05, kii_kumano: 33.72, kii: 34.23, kawachi: 34.50, izumi: 34.46, settsu: 34.69, settsu_shimakami: 34.85, tamba: 35.05, tango: 35.53,
+  tajima: 35.46, harima_west: 34.83, harima_east: 34.80, inaba: 35.50, hoki_west: 35.43, hoki_east: 35.43, izumo: 35.35, iwami: 34.80, mimasaka_west: 35.08, mimasaka_east: 35.05,
+  bizen: 34.66, bitchu_matsuyama: 34.75, bitchu_takamatsu: 34.66, bingo: 34.49, aki_hiroshima: 34.45, aki_koriyama: 34.65, suo: 34.18, nagato: 34.30, oki: 36.20,
+  sanuki: 34.34, awa_shikoku: 34.07, iyo_matsuyama: 33.84, iyo_nii: 33.92, tosa_kochi: 33.56, tosa_aki: 33.50, tosa_gun: 33.60, tosa_nakamura: 32.99, tosa: 33.56, awaji: 34.35, tsushima: 34.20,
+  buzen: 33.75, chikuzen_fukuoka: 33.59, chikuzen_akizuki: 33.47, chikugo: 33.30, hizen: 33.25, goto: 32.80, bungo_funai: 33.24, bungo_saiki_usuki: 33.12, bungo_oka: 32.97, higo_kumamoto: 32.80, higo_yatsushiro: 32.60, higo_hitoyoshi: 32.22,
+  hyuga_takanabe: 32.13, hyuga_sadowara: 32.05, hyuga_obi: 31.63, hyuga_nobeoka: 32.58, satsuma: 31.60, osumi: 31.40, ryukyu: 26.21
 };
 
 // 時代で本拠が移った家（その年以降の本拠）。領内にあるものを新しい順に採り、無ければ CLAN_CAPITAL_PROVINCES へ;
@@ -5701,16 +5707,17 @@ if (typeof window !== "undefined") window.PROVINCE_LATITUDE = PROVINCE_LATITUDE;
 export const CLAN_CAPITAL_ERAS = {
   taira: [[1100, 'ise'], [1168, 'settsu']],
   ashikaga: [[1333, 'shimotsuke_sano'], [1336, 'yamashiro']],
-  sanada: [[1583, 'ueda'], [1622, 'north_shinano']],
+  sanada: [[1583, 'shinano_ueda'], [1622, 'shinano_kawanakajima']],
   godaiho: [[1331, 'yamato_yoshino']],
-  oda: [[1555, 'owari'], [1567, 'mino'], [1576, 'south_omi'], [1583, 'owari']],
-  tokugawa: [[1560, 'mikawa'], [1570, 'totomi'], [1586, 'suruga'], [1590, 'musashi_edo_tama']],
+  oda: [[1555, 'owari'], [1567, 'mino'], [1576, 'omi_south'], [1583, 'owari'], [1584, 'ise_nagashima'], [1586, 'owari']],
+  takigawa: [[1583, 'ise_nagashima']],
+  tokugawa: [[1560, 'mikawa'], [1570, 'totomi_hamamatsu_kakegawa'], [1586, 'suruga'], [1590, 'musashi_edo_tama']],
   date: [[1591, 'rikuzen']],
-  uesugi: [[1598, 'iwashiro'], [1601, 'yonezawa_date']],
+  uesugi: [[1598, 'iwashiro'], [1601, 'uzen_yonezawa_date']],
   mori: [[1601, 'nagato']],
-  ito: [[1189, 'takanabe'], [1588, 'hyuga_obi']],
-  akizuki: [[1203, 'chikuzen_akizuki'], [1587, 'takanabe']],
-  konishi: [[1588, 'uto_yatsushiro']],
+  ito: [[1189, 'hyuga_takanabe'], [1588, 'hyuga_obi']],
+  akizuki: [[1203, 'chikuzen_akizuki'], [1587, 'hyuga_takanabe']],
+  konishi: [[1588, 'higo_yatsushiro']],
   nakagawa: [[1594, 'bungo_oka']]
 };
 
@@ -5788,14 +5795,14 @@ export const SPECIALTY_SYNERGY = [
     id: 'horse',
     label: '名馬産地',
     keywords: /南部馬|木曽馬|甲州馬|馬|牧|名馬/,
-    provinceIds: ['mutsu', 'kai', 'north_shinano', 'ueda', 'south_shinano', 'takato_iida'],
+    provinceIds: ['mutsu_nanbu', 'kai', 'shinano_kawanakajima', 'shinano_ueda', 'shinano_chikuma_kiso', 'shinano_takato_iida'],
     effects: { assaultBonus: 0.25 } // 突撃系攻撃力底上げ +25%
   },
   {
     id: 'gunsmith',
     label: '鉄砲鍛冶・南蛮港町',
     keywords: /堺|国友|種子島|長崎|鉄砲|砲術|火縄/,
-    provinceIds: ['osumi', 'izumi', 'north_omi', 'south_omi', 'hizen', 'hizen_saga', 'hizen_tsukushi', 'hizen_karatsu'],
+    provinceIds: ['osumi', 'izumi', 'omi_north', 'omi_south', 'hizen', 'hizen_saga', 'hizen_tsukushi', 'hizen_karatsu'],
     effects: { shootBonus: 0.30, commerceGoldBonus: 80 } // 射撃強化+30%・商業金収入ボーナス
   }
 ];;
@@ -5923,8 +5930,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_tachibana_dosetsu'],
     scenarioIds: ['1560'],
     setClanId: 'otomo',
-    setDefaultProv: 'chikuzen',
-    setAssignedProv: 'chikuzen',
+    setDefaultProv: 'chikuzen_fukuoka',
+    setAssignedProv: 'chikuzen_fukuoka',
     setDaimyo: false
   },
   {
@@ -5959,8 +5966,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_rokkaku_mitsutsuna'],
     scenarioIds: ['1438'],
     setClanId: 'rokkaku',
-    setDefaultProv: 'south_omi',
-    setAssignedProv: 'south_omi',
+    setDefaultProv: 'omi_south',
+    setAssignedProv: 'omi_south',
     setDaimyo: true
   },
   {
@@ -6020,8 +6027,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_uesugi_noriaki_first'],
     scenarioIds: ['1359'],
     setClanId: 'uesugi',
-    setDefaultProv: 'kozuke',
-    setAssignedProv: 'kozuke',
+    setDefaultProv: 'kozuke_takasaki',
+    setAssignedProv: 'kozuke_takasaki',
     setDaimyo: true
   },
   {
@@ -6038,8 +6045,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_momoi_tadatsune'],
     scenarioIds: ['1359'],
     setClanId: 'ashikaga',
-    setDefaultProv: 'etchu',
-    setAssignedProv: 'etchu',
+    setDefaultProv: 'etchu_west',
+    setAssignedProv: 'etchu_west',
     setDaimyo: false
   },
   {
@@ -6126,7 +6133,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_nagano_narimasa', 'off_jd_251'],
     scenarioIds: ['1546'],
     setClanId: 'yamanouchi',
-    setDefaultProv: 'kozuke',
+    setDefaultProv: 'kozuke_takasaki',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -6136,8 +6143,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_succ_akamatsu_1440_0'],
     scenarioIds: ['1495', '1493'],
     setClanId: 'akamatsu',
-    setDefaultProv: 'harima',
-    setAssignedProv: 'harima',
+    setDefaultProv: 'harima_west',
+    setAssignedProv: 'harima_west',
     setDaimyo: false
   },
   {
@@ -6145,8 +6152,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_iwamatsu_iezumi'],
     scenarioIds: ['1495', '1493'],
     setClanId: 'uesugi',
-    setDefaultProv: 'kozuke',
-    setAssignedProv: 'kozuke',
+    setDefaultProv: 'kozuke_takasaki',
+    setAssignedProv: 'kozuke_takasaki',
     setDaimyo: false
   },
   {
@@ -6217,8 +6224,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_succ_satomi_1340_151'],
     scenarioIds: ['1467'],
     setClanId: 'satomi',
-    setDefaultProv: 'awa_boshu',
-    setAssignedProv: 'awa_boshu',
+    setDefaultProv: 'awa',
+    setAssignedProv: 'awa',
     setDaimyo: true
   },
   {
@@ -6226,8 +6233,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_dm_kyogoku_1331'],
     scenarioIds: ['1467'],
     setClanId: 'kyogoku',
-    setDefaultProv: 'north_omi',
-    setAssignedProv: 'north_omi',
+    setDefaultProv: 'omi_north',
+    setAssignedProv: 'omi_north',
     setDaimyo: true
   },
   {
@@ -6298,8 +6305,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_succ_satomi_1340_151'],
     scenarioIds: ['1438'],
     setClanId: 'satomi',
-    setDefaultProv: 'awa_boshu',
-    setAssignedProv: 'awa_boshu',
+    setDefaultProv: 'awa',
+    setAssignedProv: 'awa',
     setDaimyo: true
   },
   {
@@ -6361,8 +6368,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_kyogoku_takakiyo_1'],
     scenarioIds: ['1391'],
     setClanId: 'kyogoku',
-    setDefaultProv: 'north_omi',
-    setAssignedProv: 'north_omi',
+    setDefaultProv: 'omi_north',
+    setAssignedProv: 'omi_north',
     setDaimyo: true
   },
   {
@@ -6397,8 +6404,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_ogasawara_nagamoto'],
     scenarioIds: ['1391'],
     setClanId: 'ogasawara',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: true
   },
   {
@@ -6406,7 +6413,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_succ_ogasawara_1365_112'],
     scenarioIds: ['1391'],
     setClanId: 'ogasawara',
-    setDefaultProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -6416,8 +6423,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_succ2_mori_1360'],
     scenarioIds: ['1391'],
     setClanId: 'mori',
-    setDefaultProv: 'aki',
-    setAssignedProv: 'aki',
+    setDefaultProv: 'aki_hiroshima',
+    setAssignedProv: 'aki_hiroshima',
     setDaimyo: true
   },
   {
@@ -6479,8 +6486,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_nanbu_nobunaga'],
     scenarioIds: ['1391'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu',
     setDaimyo: true
   },
   {
@@ -6488,8 +6495,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_succ2_nanbu_1345'],
     scenarioIds: ['1391'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu',
     setDaimyo: false
   },
   {
@@ -6497,8 +6504,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_succ_suwa_1365_185'],
     scenarioIds: ['1391'],
     setClanId: 'ogasawara',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: false
   },
   {
@@ -6506,8 +6513,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_ando_norisue'],
     scenarioIds: ['1391'],
     setClanId: 'ando',
-    setDefaultProv: 'nishi_tsugaru',
-    setAssignedProv: 'nishi_tsugaru',
+    setDefaultProv: 'mutsu_tsugaru',
+    setAssignedProv: 'mutsu_tsugaru',
     setDaimyo: true
   },
   {
@@ -6551,8 +6558,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_uesugi_zenshu'],
     scenarioIds: ['1391'],
     setClanId: 'uesugi',
-    setDefaultProv: 'kozuke',
-    setAssignedProv: 'kozuke',
+    setDefaultProv: 'kozuke_takasaki',
+    setAssignedProv: 'kozuke_takasaki',
     setDaimyo: false
   },
   {
@@ -6650,8 +6657,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_jd_418'],
     scenarioIds: ['1359'],
     setClanId: 'akamatsu',
-    setDefaultProv: 'bicchu',
-    setAssignedProv: 'bicchu',
+    setDefaultProv: 'bitchu_matsuyama',
+    setAssignedProv: 'bitchu_matsuyama',
     setDaimyo: false
   },
   {
@@ -6677,8 +6684,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_nanbu_namioka_akiyasu'],
     scenarioIds: ['1495', '1493'],
     setClanId: 'namioka',
-    setDefaultProv: 'nishi_tsugaru',
-    setAssignedProv: 'nishi_tsugaru',
+    setDefaultProv: 'mutsu_tsugaru',
+    setAssignedProv: 'mutsu_tsugaru',
     setDaimyo: true
   },
   {
@@ -6686,8 +6693,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_dm_nanbu_1495'],
     scenarioIds: ['1495', '1493'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu',
     setDaimyo: true
   },
   {
@@ -6731,8 +6738,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_jd_418'],
     scenarioIds: ['1331'],
     setClanId: 'akamatsu',
-    setDefaultProv: 'bicchu',
-    setAssignedProv: 'bicchu',
+    setDefaultProv: 'bitchu_matsuyama',
+    setAssignedProv: 'bitchu_matsuyama',
     setDaimyo: false
   },
   {
@@ -6757,8 +6764,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_hojo_hidetoki'],
     scenarioIds: ['1331'],
     setClanId: 'hojo_kamakura',
-    setDefaultProv: 'chikuzen',
-    setAssignedProv: 'chikuzen',
+    setDefaultProv: 'chikuzen_fukuoka',
+    setAssignedProv: 'chikuzen_fukuoka',
     setDaimyo: false
   },
   {
@@ -6783,24 +6790,24 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_otomo_sadamune', 'off_jd_219'],
     scenarioIds: ['1331'],
     setClanId: 'otomo',
-    setDefaultProv: 'bungo',
-    setAssignedProv: 'bungo'
+    setDefaultProv: 'bungo_funai',
+    setAssignedProv: 'bungo_funai'
   },
   {
     id: 'nanbu_officers_mutsu_1531',
     officerIds: ['off_nanbu_harumasa', 'off_succ2_nanbu_1495'],
     scenarioIds: ['1531'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu'
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu'
   },
   {
     id: 'ando_kiyosue_tsugaru_1531',
     officerIds: ['off_succ_ando_1495_4'],
     scenarioIds: ['1531'],
     setClanId: 'ando',
-    setDefaultProv: 'nishi_tsugaru',
-    setAssignedProv: 'nishi_tsugaru'
+    setDefaultProv: 'mutsu_tsugaru',
+    setAssignedProv: 'mutsu_tsugaru'
   },
   {
     id: 'amago_kunihisa_izumo_1538',
@@ -6815,8 +6822,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_namioka_tomonaga'],
     scenarioIds: ['1531', '1538'],
     setClanId: 'namioka',
-    setDefaultProv: 'nishi_tsugaru',
-    setAssignedProv: 'nishi_tsugaru',
+    setDefaultProv: 'mutsu_tsugaru',
+    setAssignedProv: 'mutsu_tsugaru',
     setDaimyo: true
   },
   {
@@ -6824,8 +6831,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_namioka_tomofusa'],
     scenarioIds: ['1546', '1555'],
     setClanId: 'namioka',
-    setDefaultProv: 'nishi_tsugaru',
-    setAssignedProv: 'nishi_tsugaru',
+    setDefaultProv: 'mutsu_tsugaru',
+    setAssignedProv: 'mutsu_tsugaru',
     setDaimyo: true
   },
   {
@@ -6833,8 +6840,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_namioka_tomoun'],
     scenarioIds: ['1560'],
     setClanId: 'namioka',
-    setDefaultProv: 'nishi_tsugaru',
-    setAssignedProv: 'nishi_tsugaru',
+    setDefaultProv: 'mutsu_tsugaru',
+    setAssignedProv: 'mutsu_tsugaru',
     setDaimyo: true
   },
   {
@@ -6842,8 +6849,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_namioka_akimura'],
     scenarioIds: ['1570'],
     setClanId: 'namioka',
-    setDefaultProv: 'nishi_tsugaru',
-    setAssignedProv: 'nishi_tsugaru',
+    setDefaultProv: 'mutsu_tsugaru',
+    setAssignedProv: 'mutsu_tsugaru',
     setDaimyo: true
   },
   {
@@ -6851,8 +6858,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_jd_013'],
     scenarioIds: ['1538', '1546', '1555', '1560'],
     setClanId: 'namioka',
-    setDefaultProv: 'nishi_tsugaru',
-    setAssignedProv: 'nishi_tsugaru',
+    setDefaultProv: 'mutsu_tsugaru',
+    setAssignedProv: 'mutsu_tsugaru',
     setDaimyo: false
   },
   {
@@ -6860,8 +6867,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_tsugaru_tamenobu'],
     scenarioIds: ['1570'],
     setClanId: 'namioka',
-    setDefaultProv: 'nishi_tsugaru',
-    setAssignedProv: 'nishi_tsugaru',
+    setDefaultProv: 'mutsu_tsugaru',
+    setAssignedProv: 'mutsu_tsugaru',
     setDaimyo: false
   },
   {
@@ -6869,8 +6876,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_tsugaru_tamenobu'],
     scenarioIds: ['1573', '1576', '1577', '1578', '1582'],
     setClanId: 'tsugaru',
-    setDefaultProv: 'nishi_tsugaru',
-    setAssignedProv: 'nishi_tsugaru',
+    setDefaultProv: 'mutsu_tsugaru',
+    setAssignedProv: 'mutsu_tsugaru',
     setDaimyo: true
   },
   {
@@ -6912,8 +6919,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_nanbu_masanaga'],
     scenarioIds: ['1359'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu',
     setDaimyo: false
   },
   {
@@ -6921,8 +6928,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_jd_241'],
     scenarioIds: ['1359'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu',
     setDaimyo: true
   },
   {
@@ -6930,8 +6937,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_jd_402'],
     scenarioIds: ['1391'],
     setClanId: 'hatakeyama',
-    setDefaultProv: 'etchu',
-    setAssignedProv: 'etchu',
+    setDefaultProv: 'etchu_west',
+    setAssignedProv: 'etchu_west',
     setDaimyo: false
   },
   // 1391 Sho Bicchu
@@ -6940,8 +6947,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_jd_412'],
     scenarioIds: ['1391'],
     setClanId: 'sho',
-    setDefaultProv: 'bicchu',
-    setAssignedProv: 'bicchu',
+    setDefaultProv: 'bitchu_matsuyama',
+    setAssignedProv: 'bitchu_matsuyama',
     setDaimyo: true
   },
   // 1391 Kitabatake Ise & Shima
@@ -6969,8 +6976,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_rokkaku_mitsutaka'],
     scenarioIds: ['1391'],
     setClanId: 'rokkaku',
-    setDefaultProv: 'south_omi',
-    setAssignedProv: 'south_omi',
+    setDefaultProv: 'omi_south',
+    setAssignedProv: 'omi_south',
     setDaimyo: true
   },
   // 1391 Kamakura-fu Ashikaga
@@ -7017,7 +7024,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_jd_403'],
     scenarioIds: ['1391'],
     setClanId: 'satomi',
-    setDefaultProv: 'awa_boshu',
+    setDefaultProv: 'awa',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -7028,7 +7035,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_succ_suwa_1365_185'],
     scenarioIds: ['1400'],
     setClanId: 'ogasawara',
-    setDefaultProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -7039,8 +7046,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_satomi_yoshinori'],
     scenarioIds: ['1391'],
     setClanId: 'satomi',
-    setDefaultProv: 'awa_boshu',
-    setAssignedProv: 'awa_boshu',
+    setDefaultProv: 'awa',
+    setAssignedProv: 'awa',
     setDaimyo: true
   },
   // 1400 里見義則（安房・鎌倉公方足利氏配下）
@@ -7049,8 +7056,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_satomi_yoshinori'],
     scenarioIds: ['1400'],
     setClanId: 'kamakura_fu',
-    setDefaultProv: 'awa_boshu',
-    setAssignedProv: 'awa_boshu',
+    setDefaultProv: 'awa',
+    setAssignedProv: 'awa',
     setDaimyo: false
   },
   // 1438 安東盛季（羽後配置・安東氏当主）
@@ -7089,8 +7096,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_jd_370'],
     scenarioIds: ['1467'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu',
     setDaimyo: false
   },
   // 1467 安東政季（羽後配置・安東氏当主）
@@ -7159,8 +7166,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_soma_noritane'],
     scenarioIds: ['1391'],
     setClanId: 'soma',
-    setDefaultProv: 'soma',
-    setAssignedProv: 'soma',
+    setDefaultProv: 'iwaki_soma',
+    setAssignedProv: 'iwaki_soma',
     setDaimyo: true
   },
   {
@@ -7168,8 +7175,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_okada_tanehisa'],
     scenarioIds: ['1391'],
     setClanId: 'soma',
-    setDefaultProv: 'soma',
-    setAssignedProv: 'soma',
+    setDefaultProv: 'iwaki_soma',
+    setAssignedProv: 'iwaki_soma',
     setDaimyo: false
   },
   // 1391 Ashina Iwashiro
@@ -7206,8 +7213,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_satomi_yoshitane'],
     scenarioIds: ['1350'],
     setClanId: 'satomi',
-    setDefaultProv: 'awa_boshu',
-    setAssignedProv: 'awa_boshu',
+    setDefaultProv: 'awa',
+    setAssignedProv: 'awa',
     setDaimyo: true
   },
   {
@@ -7305,8 +7312,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_mori_motoharu'],
     scenarioIds: ['1350'],
     setClanId: 'mori',
-    setDefaultProv: 'aki',
-    setAssignedProv: 'aki',
+    setDefaultProv: 'aki_hiroshima',
+    setAssignedProv: 'aki_hiroshima',
     setDaimyo: true
   },
   {
@@ -7342,8 +7349,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_jd_418'],
     scenarioIds: ['1333'],
     setClanId: 'akamatsu',
-    setDefaultProv: 'bicchu',
-    setAssignedProv: 'bicchu',
+    setDefaultProv: 'bitchu_matsuyama',
+    setAssignedProv: 'bitchu_matsuyama',
     setDaimyo: false
   },
   {
@@ -7369,8 +7376,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_dm_nanbu_1331', 'off_nanbu_masanaga', 'off_succ2_nanbu_1285'],
     scenarioIds: ['1333'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu',
     setDaimyo: false
   },
   {
@@ -7452,7 +7459,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_ko_no_moroyasu'],
     scenarioIds: ['1333'],
     setClanId: 'ashikaga',
-    setDefaultProv: 'bicchu',
+    setDefaultProv: 'bitchu_matsuyama',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -7601,8 +7608,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_dm_nanbu_1331'],
     scenarioIds: ['1350'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu',
     setDaimyo: true
   },
   {
@@ -7610,8 +7617,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_nanbu_masanaga', 'off_jd_241', 'off_nanbu_nobumitsu'],
     scenarioIds: ['1350'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu',
     setDaimyo: false
   },
   {
@@ -7629,8 +7636,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_ogasawara_naganori'],
     scenarioIds: ['1350'],
     setClanId: 'ogasawara',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: true
   },
   {
@@ -7638,7 +7645,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_hojo_tokiyuki'],
     scenarioIds: ['1350'],
     setClanId: 'ogasawara',
-    setDefaultProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -7648,8 +7655,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_murakami_nobusada'],
     scenarioIds: ['1350'],
     setClanId: 'murakami',
-    setDefaultProv: 'north_shinano',
-    setAssignedProv: 'north_shinano',
+    setDefaultProv: 'shinano_kawanakajima',
+    setAssignedProv: 'shinano_kawanakajima',
     setDaimyo: true
   },
   {
@@ -7657,7 +7664,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_succ_murakami_1300_98'],
     scenarioIds: ['1350'],
     setClanId: 'murakami',
-    setDefaultProv: 'north_shinano',
+    setDefaultProv: 'shinano_kawanakajima',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -7733,8 +7740,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_satomi_yoshitane'],
     scenarioIds: ['1350'],
     setClanId: 'satomi',
-    setDefaultProv: 'awa_boshu',
-    setAssignedProv: 'awa_boshu',
+    setDefaultProv: 'awa',
+    setAssignedProv: 'awa',
     setDaimyo: true
   },
   {
@@ -7798,8 +7805,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_dm_shoni_1336'],
     scenarioIds: ['1350'],
     setClanId: 'shoni',
-    setDefaultProv: 'chikuzen',
-    setAssignedProv: 'chikuzen',
+    setDefaultProv: 'chikuzen_fukuoka',
+    setAssignedProv: 'chikuzen_fukuoka',
     setDaimyo: true
   },
   {
@@ -7816,8 +7823,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_nawa_yoshitaka'],
     scenarioIds: ['1350'],
     setClanId: 'nawa',
-    setDefaultProv: 'hoki',
-    setAssignedProv: 'hoki',
+    setDefaultProv: 'hoki_west',
+    setAssignedProv: 'hoki_west',
     setDaimyo: true
   },
   {
@@ -7825,8 +7832,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_kitabatake_akinobu'],
     scenarioIds: ['1350'],
     setClanId: 'kitabatake',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu',
     setDaimyo: false
   },
   {
@@ -7834,8 +7841,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_dm_ando_1331'],
     scenarioIds: ['1350'],
     setClanId: 'ando',
-    setDefaultProv: 'nishi_tsugaru',
-    setAssignedProv: 'nishi_tsugaru',
+    setDefaultProv: 'mutsu_tsugaru',
+    setAssignedProv: 'mutsu_tsugaru',
     setDaimyo: false
   },
   {
@@ -7870,8 +7877,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_kitabatake_akiie'],
     scenarioIds: ['1336'],
     setClanId: 'kitabatake',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu',
     setDaimyo: false
   },
   {
@@ -7879,7 +7886,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_dm_nanbu_1331', 'off_nanbu_masanaga', 'off_nanbu_nobumitsu', 'off_succ2_nanbu_1285', 'off_jd_241', 'off_succ2_nanbu_1345'],
     scenarioIds: ['1336'],
     setClanId: 'kitabatake',
-    setDefaultProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -7934,8 +7941,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_satomi_yoshitane'],
     scenarioIds: ['1336'],
     setClanId: 'ashikaga',
-    setDefaultProv: 'awa_boshu',
-    setAssignedProv: 'awa_boshu',
+    setDefaultProv: 'awa',
+    setAssignedProv: 'awa',
     setDaimyo: false
   },
   {
@@ -7943,7 +7950,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_utsunomiya_kintsuna', 'off_utsunomiya_ujitsuna', 'off_jd_236'],
     scenarioIds: ['1336'],
     setClanId: 'ashikaga',
-    setDefaultProv: 'awa_boshu',
+    setDefaultProv: 'awa',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -8049,8 +8056,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_ogasawara_sadamune'],
     scenarioIds: ['1331'],
     setClanId: 'ogasawara',
-    setDefaultProv: 'south_shinano',
-    setAssignedProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
+    setAssignedProv: 'shinano_chikuma_kiso',
     setDaimyo: true
   },
   {
@@ -8058,7 +8065,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_succ_ogasawara_1275_111'],
     scenarioIds: ['1331'],
     setClanId: 'ogasawara',
-    setDefaultProv: 'south_shinano',
+    setDefaultProv: 'shinano_chikuma_kiso',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -8068,8 +8075,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_succ_murakami_1300_98'],
     scenarioIds: ['1331'],
     setClanId: 'murakami',
-    setDefaultProv: 'north_shinano',
-    setAssignedProv: 'north_shinano',
+    setDefaultProv: 'shinano_kawanakajima',
+    setAssignedProv: 'shinano_kawanakajima',
     setDaimyo: true
   },
   {
@@ -8097,8 +8104,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_kitabatake_akiie'],
     scenarioIds: ['1331'],
     setClanId: 'kitabatake',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu',
     setDaimyo: false
   },
   {
@@ -8106,8 +8113,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_dm_nanbu_1331', 'off_nanbu_masanaga', 'off_succ2_nanbu_1285', 'off_nanbu_masamitsu'],
     scenarioIds: ['1331'],
     setClanId: 'kitabatake',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu',
     setDaimyo: false
   },
   {
@@ -8189,7 +8196,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_utsunomiya_ujitsuna'],
     scenarioIds: ['1359'],
     setClanId: 'satomi',
-    setDefaultProv: 'awa_boshu',
+    setDefaultProv: 'awa',
     clearAssignment: true,
     setDaimyo: false
   },
@@ -8198,7 +8205,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_shoni_fuyusuke'],
     scenarioIds: ['1359'],
     setClanId: 'shoni',
-    setDefaultProv: 'chikuzen',
+    setDefaultProv: 'chikuzen_fukuoka',
     clearAssignment: true,
     setDaimyo: false
   },
@@ -8207,7 +8214,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_jd_365'],
     scenarioIds: ['1359'],
     setClanId: 'shoni',
-    setDefaultProv: 'chikuzen',
+    setDefaultProv: 'chikuzen_fukuoka',
     clearAssignment: true,
     setDaimyo: false
   },
@@ -8225,8 +8232,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_nawa_yoshitaka'],
     scenarioIds: ['1359'],
     setClanId: 'nawa',
-    setDefaultProv: 'hoki',
-    setAssignedProv: 'hoki',
+    setDefaultProv: 'hoki_west',
+    setAssignedProv: 'hoki_west',
     setDaimyo: true
   },
   // 1391 Scenario Updates
@@ -8244,7 +8251,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_utsunomiya_ujitsuna'],
     scenarioIds: ['1391'],
     setClanId: 'satomi',
-    setDefaultProv: 'awa_boshu',
+    setDefaultProv: 'awa',
     clearAssignment: true,
     setDaimyo: false
   },
@@ -8262,7 +8269,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_jd_365'],
     scenarioIds: ['1391'],
     setClanId: 'ashikaga',
-    setDefaultProv: 'chikuzen',
+    setDefaultProv: 'chikuzen_fukuoka',
     clearAssignment: true,
     setDaimyo: false
   },
@@ -8280,8 +8287,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_nawa_yoshitaka'],
     scenarioIds: ['1391'],
     setClanId: 'nawa',
-    setDefaultProv: 'hoki',
-    setAssignedProv: 'hoki',
+    setDefaultProv: 'hoki_west',
+    setAssignedProv: 'hoki_west',
     setDaimyo: true
   },
   {
@@ -8289,7 +8296,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_nawa_akioki', 'off_nawa_norinaga'],
     scenarioIds: ['1391'],
     setClanId: 'kikuchi',
-    setDefaultProv: 'uto_yatsushiro',
+    setDefaultProv: 'higo_yatsushiro',
     clearAssignment: true,
     setDaimyo: false
   },
@@ -8299,7 +8306,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_nanbu_nobunaga'],
     scenarioIds: ['1400'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
     clearAssignment: true,
     setDaimyo: false
   },
@@ -8335,8 +8342,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_imagawa_sadayo'],
     scenarioIds: ['1400'],
     setClanId: 'ashikaga',
-    setDefaultProv: 'chikuzen',
-    setAssignedProv: 'chikuzen',
+    setDefaultProv: 'chikuzen_fukuoka',
+    setAssignedProv: 'chikuzen_fukuoka',
     setDaimyo: false
   },
   {
@@ -8371,7 +8378,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_nawa_yoshitaka', 'off_nawa_akioki', 'off_nawa_norinaga'],
     scenarioIds: ['1400'],
     setClanId: 'kikuchi',
-    setDefaultProv: 'uto_yatsushiro',
+    setDefaultProv: 'higo_yatsushiro',
     clearAssignment: true,
     setDaimyo: false
   },
@@ -8408,7 +8415,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_ouchi_sugi_shigeaki'],
     scenarioIds: ['1438'],
     setClanId: 'ouchi',
-    setDefaultProv: 'chikuzen',
+    setDefaultProv: 'chikuzen_fukuoka',
     clearAssignment: true,
     setDaimyo: false
   },
@@ -8417,7 +8424,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_succ2_otomo_1390'],
     scenarioIds: ['1438'],
     setClanId: 'otomo',
-    setDefaultProv: 'bungo',
+    setDefaultProv: 'bungo_funai',
     clearAssignment: true,
     setDaimyo: false
   },
@@ -8428,8 +8435,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_nagao_kagenobu'],
     scenarioIds: ['1467'],
     setClanId: 'uesugi',
-    setDefaultProv: 'kozuke',
-    setAssignedProv: 'kozuke',
+    setDefaultProv: 'kozuke_takasaki',
+    setAssignedProv: 'kozuke_takasaki',
     setDaimyo: false
   },
   {
@@ -8509,7 +8516,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_nawa_shigeyuki', 'off_nawa_akitada', 'off_nawa_norinaga'],
     scenarioIds: ['1467'],
     setClanId: 'kikuchi',
-    setDefaultProv: 'uto_yatsushiro',
+    setDefaultProv: 'higo_yatsushiro',
     clearAssignment: true,
     setDaimyo: false
   },
@@ -8536,8 +8543,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_nanbu_namioka_akiyasu'],
     scenarioIds: ['1467'],
     setClanId: 'namioka',
-    setDefaultProv: 'nishi_tsugaru',
-    setAssignedProv: 'nishi_tsugaru',
+    setDefaultProv: 'mutsu_tsugaru',
+    setAssignedProv: 'mutsu_tsugaru',
     setDaimyo: true
   },
   {
@@ -8564,8 +8571,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_rokkaku_takayori'],
     scenarioIds: ['1495', '1493'],
     setClanId: 'rokkaku',
-    setDefaultProv: 'south_omi',
-    setAssignedProv: 'south_omi',
+    setDefaultProv: 'omi_south',
+    setAssignedProv: 'omi_south',
     setDaimyo: true
   },
   {
@@ -8649,7 +8656,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_jd_303'],
     scenarioIds: ['1495', '1493'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -8678,8 +8685,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_ashikaga_haruuji', 'off_hist_1535_ashikaga_haruuji'],
     scenarioIds: ['1531'],
     setClanId: 'ashikaga_koga',
-    setDefaultProv: 'koga',
-    setAssignedProv: 'koga',
+    setDefaultProv: 'shimousa_koga',
+    setAssignedProv: 'shimousa_koga',
     setDaimyo: true
   },
   {
@@ -8687,8 +8694,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_takeda_mitsukazu'],
     scenarioIds: ['1531'],
     setClanId: 'takeda_aki',
-    setDefaultProv: 'aki',
-    setAssignedProv: 'aki',
+    setDefaultProv: 'aki_hiroshima',
+    setAssignedProv: 'aki_hiroshima',
     setDaimyo: true
   },
   {
@@ -8696,8 +8703,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_ashikaga_takamoto', 'off_ashikaga_masauji', 'off_hist_1512_ashikaga_takamotoki', 'off_yuki_masakatsu'],
     scenarioIds: ['1531'],
     setClanId: 'ashikaga_koga',
-    setDefaultProv: 'koga',
-    setAssignedProv: 'koga',
+    setDefaultProv: 'shimousa_koga',
+    setAssignedProv: 'shimousa_koga',
     setDaimyo: false
   },
   {
@@ -8714,8 +8721,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_dm_uesugi_1546'],
     scenarioIds: ['1531'],
     setClanId: 'uesugi',
-    setDefaultProv: 'kozuke',
-    setAssignedProv: 'kozuke',
+    setDefaultProv: 'kozuke_takasaki',
+    setAssignedProv: 'kozuke_takasaki',
     setDaimyo: true
   },
   {
@@ -8771,8 +8778,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_nanbu_harumasa'],
     scenarioIds: ['1538'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu',
     setDaimyo: true
   },
   {
@@ -8780,7 +8787,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_succ2_nanbu_1495', 'off_kita_nobuchika'],
     scenarioIds: ['1538'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -8847,7 +8854,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_masaki_tokishige'],
     scenarioIds: ['1538'],
     setClanId: 'satomi',
-    setDefaultProv: 'awa_boshu',
+    setDefaultProv: 'awa',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -8858,8 +8865,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_nanbu_harumasa'],
     scenarioIds: ['1546'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu',
     setDaimyo: true
   },
   {
@@ -8867,7 +8874,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_succ2_nanbu_1495', 'off_kita_nobuchika'],
     scenarioIds: ['1546'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -8935,8 +8942,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_dm_uesugi_1546'],
     scenarioIds: ['1546'],
     setClanId: 'yamanouchi',
-    setDefaultProv: 'kozuke',
-    setAssignedProv: 'kozuke',
+    setDefaultProv: 'kozuke_takasaki',
+    setAssignedProv: 'kozuke_takasaki',
     setDaimyo: true
   },
   {
@@ -8966,8 +8973,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_nanbu_harumasa'],
     scenarioIds: ['1555'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu',
     setDaimyo: true
   },
   {
@@ -8975,7 +8982,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_succ2_nanbu_1495', 'off_kita_nobuchika'],
     scenarioIds: ['1555'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -8995,8 +9002,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_dm_uesugi_1546'],
     scenarioIds: ['1555'],
     setClanId: 'yamanouchi',
-    setDefaultProv: 'kozuke',
-    setAssignedProv: 'kozuke',
+    setDefaultProv: 'kozuke_takasaki',
+    setAssignedProv: 'kozuke_takasaki',
     setDaimyo: true
   },
   {
@@ -9013,7 +9020,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_kunohe_masazane'],
     scenarioIds: ['1555'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -9033,7 +9040,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_nagano_narimasa'],
     scenarioIds: ['1555'],
     setClanId: 'yamanouchi',
-    setDefaultProv: 'kozuke',
+    setDefaultProv: 'kozuke_takasaki',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -9054,7 +9061,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_kunohe_masazane', 'off_kunohe_sanechika', 'off_succ2_nanbu_1495'],
     scenarioIds: ['1560'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -9065,7 +9072,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_saika_magoichi'],
     scenarioIds: ['1570'],
     setClanId: 'saika',
-    setDefaultProv: 'saika_wakayama',
+    setDefaultProv: 'kii_saika_wakayama',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -9076,8 +9083,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_saika_magoichi'],
     scenarioIds: ['1582', '1584'],
     setClanId: 'saika',
-    setDefaultProv: 'saika_wakayama',
-    setAssignedProv: 'saika_wakayama',
+    setDefaultProv: 'kii_saika_wakayama',
+    setAssignedProv: 'kii_saika_wakayama',
     setDaimyo: true
   },
   {
@@ -9085,7 +9092,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_suzuki_shigetomo'],
     scenarioIds: ['1582', '1584'],
     setClanId: 'saika',
-    setDefaultProv: 'saika_wakayama',
+    setDefaultProv: 'kii_saika_wakayama',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -9118,8 +9125,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_tsugaru_tamenobu'],
     scenarioIds: ['1587'],
     setClanId: 'tsugaru',
-    setDefaultProv: 'nishi_tsugaru',
-    setAssignedProv: 'nishi_tsugaru',
+    setDefaultProv: 'mutsu_tsugaru',
+    setAssignedProv: 'mutsu_tsugaru',
     setDaimyo: true
   },
   // 1590 Scenario Updates: 伊達政宗（岩代・伊達大名）
@@ -9233,7 +9240,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_shima_sakon'],
     scenarioIds: ['1592'],
     setClanId: 'toyotomi',
-    setDefaultProv: 'north_omi',
+    setDefaultProv: 'omi_north',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -9255,8 +9262,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_kobayakawa_takakage'],
     scenarioIds: ['1592'],
     setClanId: 'kobayakawa',
-    setDefaultProv: 'chikuzen',
-    setAssignedProv: 'chikuzen',
+    setDefaultProv: 'chikuzen_fukuoka',
+    setAssignedProv: 'chikuzen_fukuoka',
     setDaimyo: true
   },
   // 11. 南部信直と南部利直は陸中から陸奥に移動
@@ -9265,7 +9272,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_dm_nanbu_1582', 'off_nanbu_toshinao'],
     scenarioIds: ['1592'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -9297,8 +9304,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_succ_okayama_1584_117'],
     scenarioIds: ['1600'],
     setClanId: 'toyotomi',
-    setDefaultProv: 'harima',
-    setAssignedProv: 'harima',
+    setDefaultProv: 'harima_west',
+    setAssignedProv: 'harima_west',
     setDaimyo: false
   },
   // 4. 丹後の細川忠興: 大名として独立
@@ -9317,8 +9324,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_kyogoku_takatsugu'],
     scenarioIds: ['1600'],
     setClanId: 'kyogoku',
-    setDefaultProv: 'south_omi',
-    setAssignedProv: 'south_omi',
+    setDefaultProv: 'omi_south',
+    setAssignedProv: 'omi_south',
     setDaimyo: true
   },
   // 6. 蜂須賀至鎮: 淡路から阿波へ移動（蜂須賀配下）
@@ -9475,8 +9482,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_fukushima_masanori'],
     scenarioIds: ['1614'],
     setClanId: 'fukushima',
-    setDefaultProv: 'aki',
-    setAssignedProv: 'aki',
+    setDefaultProv: 'aki_hiroshima',
+    setAssignedProv: 'aki_hiroshima',
     setDaimyo: true
   },
   // 1702, 1721, 1789 Scenario Updates (江戸時代):
@@ -9516,8 +9523,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_matsudaira_nobuakira'],
     scenarioIds: ['1789'],
     setClanId: 'tokugawa',
-    setDefaultProv: 'totomi',
-    setAssignedProv: 'totomi',
+    setDefaultProv: 'totomi_hamamatsu_kakegawa',
+    setAssignedProv: 'totomi_hamamatsu_kakegawa',
     setDaimyo: false
   },
   // 上杉鷹山（羽前米沢）
@@ -9526,8 +9533,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_uesugi_yozan'],
     scenarioIds: ['1789'],
     setClanId: 'uesugi',
-    setDefaultProv: 'yonezawa_date',
-    setAssignedProv: 'yonezawa_date',
+    setDefaultProv: 'uzen_yonezawa_date',
+    setAssignedProv: 'uzen_yonezawa_date',
     setDaimyo: true
   },
   // 1570 & 1573 Scenario Updates: 宇喜多秀家・花房正成（備前・浦上配下）
@@ -9548,7 +9555,7 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     scenarioIds: ['1573', '1576', '1577', '1578', '1582', '1584', '1587', '1590', '1600'],
     fromYear: 1573,
     setClanId: 'ronin',
-    setDefaultProv: 'harima',
+    setDefaultProv: 'harima_west',
     clearAssignment: true,
     isStandby: true,
     setDaimyo: false
@@ -9716,8 +9723,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_nanbu_masamitsu'],
     scenarioIds: ['1274'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu',
     setDaimyo: true
   },
   {
@@ -9753,8 +9760,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_succ_murakami_1260_97'],
     scenarioIds: ['1274'],
     setClanId: 'murakami',
-    setDefaultProv: 'north_shinano',
-    setAssignedProv: 'north_shinano',
+    setDefaultProv: 'shinano_kawanakajima',
+    setAssignedProv: 'shinano_kawanakajima',
     setDaimyo: false
   },
   // 1221 Scenario Updates
@@ -9763,8 +9770,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_dm_nanbu_1221'],
     scenarioIds: ['1221'],
     setClanId: 'nanbu',
-    setDefaultProv: 'mutsu',
-    setAssignedProv: 'mutsu',
+    setDefaultProv: 'mutsu_nanbu',
+    setAssignedProv: 'mutsu_nanbu',
     setDaimyo: true
   },
   {
@@ -9781,8 +9788,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     officerIds: ['off_dm_date_1221'],
     scenarioIds: ['1221'],
     setClanId: 'date',
-    setDefaultProv: 'yonezawa_date',
-    setAssignedProv: 'yonezawa_date',
+    setDefaultProv: 'uzen_yonezawa_date',
+    setAssignedProv: 'uzen_yonezawa_date',
     setDaimyo: true
   },
   {
@@ -10190,8 +10197,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     fromYear: 1570,
     toYear: 1582,
     setClanId: 'oda',
-    setDefaultProv: 'south_omi',
-    setAssignedProv: 'south_omi',
+    setDefaultProv: 'omi_south',
+    setAssignedProv: 'omi_south',
     setDaimyo: false
   },
   {
@@ -10201,8 +10208,8 @@ if (typeof window !== "undefined") window.CLAN_SERVICE_FALLBACKS = CLAN_SERVICE_
     fromYear: 1584,
     toYear: 1590,
     setClanId: 'toyotomi',
-    setDefaultProv: 'south_omi',
-    setAssignedProv: 'south_omi',
+    setDefaultProv: 'omi_south',
+    setAssignedProv: 'omi_south',
     setDaimyo: false
   },
 
@@ -10359,7 +10366,7 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
     // 長尾景広・長尾景利：会津（岩代）の上杉家臣
     { id: 'nagao_kagehiro_kagetoshi_uesugi_iwashiro_1600', officerIds: ['off_nagao_kagehiro', 'off_nagao_kagetoshi'], scenarioIds: ['1600'], setClanId: 'uesugi', requireOwners: ['uesugi'], setDefaultProv: 'iwashiro', setDaimyo: false },
     // 島左近：佐和山（北近江）の石田家臣
-    { id: 'shima_sakon_ishida_north_omi_1600', officerIds: ['off_shima_sakon'], scenarioIds: ['1600'], setClanId: 'ishida', requireOwners: ['ishida'], setDefaultProv: 'north_omi', setDaimyo: false },
+    { id: 'shima_sakon_ishida_north_omi_1600', officerIds: ['off_shima_sakon'], scenarioIds: ['1600'], setClanId: 'ishida', requireOwners: ['ishida'], setDefaultProv: 'omi_north', setDaimyo: false },
     // 丹羽長重：越前（石田領）の石田家臣
     { id: 'niwa_nagashige_ishida_echizen_1600', officerIds: ['off_niwa_nagashige'], scenarioIds: ['1600'], setClanId: 'ishida', requireOwners: ['ishida'], setDefaultProv: 'echizen', setDaimyo: false },
     // 石川貞清：美濃の石田家臣
@@ -10387,7 +10394,7 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
 if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
   window.OFFICER_AFFILIATION_RULES.unshift(
     // 有馬直純：延岡の大名
-    { id: 'arima_naozumi_daimyo_nobeoka_1614_1637', officerIds: ['off_jd_053'], scenarioIds: ['1614', '1637'], setClanId: 'arima_nobeoka', setDefaultProv: 'nobeoka', setAssignedProv: 'nobeoka', setDaimyo: true },
+    { id: 'arima_naozumi_daimyo_nobeoka_1614_1637', officerIds: ['off_jd_053'], scenarioIds: ['1614', '1637'], setClanId: 'arima_nobeoka', setDefaultProv: 'hyuga_nobeoka', setAssignedProv: 'hyuga_nobeoka', setDaimyo: true },
     // 喜連川尊氏：山城の徳川家臣
     { id: 'kitsuregawa_takauji_tokugawa_yamashiro_1637', officerIds: ['off_kitsuregawa_takauji'], scenarioIds: ['1637'], requireOwners: ['tokugawa'], setClanId: 'tokugawa', setDefaultProv: 'yamashiro', setDaimyo: false },
     // 町野繁仍：下野の徳川家臣（1600 と同様）。1614 は岩代の蒲生家臣（gamo_retainers_iwashiro_1614）とするため 1637 のみ
@@ -10399,13 +10406,13 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
 if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
   window.OFFICER_AFFILIATION_RULES.unshift(
     // 木下俊治：豊後の浪人
-    { id: 'kinoshita_toshiharu_ronin_bungo_1637_1651', officerIds: ['off_kinoshita_toshiharu'], scenarioIds: ['1637', '1651'], setClanId: 'ronin', setDefaultProv: 'bungo', clearAssignment: true, setDaimyo: false },
+    { id: 'kinoshita_toshiharu_ronin_bungo_1637_1651', officerIds: ['off_kinoshita_toshiharu'], scenarioIds: ['1637', '1651'], setClanId: 'ronin', setDefaultProv: 'bungo_funai', clearAssignment: true, setDaimyo: false },
     // 加藤重正：羽前の浪人
     { id: 'kato_shigemasa_ronin_uzen_1637_1651', officerIds: ['off_kato_shigemasa'], scenarioIds: ['1637', '1651'], setClanId: 'ronin', setDefaultProv: 'uzen_higashimurayama', clearAssignment: true, setDaimyo: false },
     // 今川直房：下野の徳川家臣
     { id: 'imagawa_naofusa_tokugawa_shimotsuke_1637_1651', officerIds: ['off_imagawa_naofusa'], scenarioIds: ['1637', '1651'], requireOwners: ['tokugawa'], setClanId: 'tokugawa', setDefaultProv: 'shimotsuke', setDaimyo: false },
     // 杉山吉成：津軽家臣
-    { id: 'sugiyama_yoshinari_tsugaru_1637_1651', officerIds: ['off_ishida_yoshinari'], scenarioIds: ['1637', '1651'], requireOwners: ['tsugaru'], setClanId: 'tsugaru', setDefaultProv: 'nishi_tsugaru', setDaimyo: false },
+    { id: 'sugiyama_yoshinari_tsugaru_1637_1651', officerIds: ['off_ishida_yoshinari'], scenarioIds: ['1637', '1651'], requireOwners: ['tsugaru'], setClanId: 'tsugaru', setDefaultProv: 'mutsu_tsugaru', setDaimyo: false },
     // 河野通房：長門の毛利家臣
     { id: 'kono_michifusa_mori_nagato_1637_1651', officerIds: ['off_kono_michifusa'], scenarioIds: ['1637', '1651'], requireOwners: ['mori'], setClanId: 'mori', setDefaultProv: 'nagato', setDaimyo: false },
     // 織田長政：大和の徳川家臣
@@ -10427,9 +10434,9 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
     // 藤堂高敏：独立した藤堂家の当主（伊勢・津）
     { id: 'todo_takatoshi_daimyo_ise_1721', officerIds: ['off_jd_272'], scenarioIds: ['1721'], requireOwners: ['todo'], setClanId: 'todo', setDefaultProv: 'ise', setAssignedProv: 'ise', setDaimyo: true },
     // 榊原政邦：播磨姫路の徳川家臣
-    { id: 'sakakibara_masakuni_tokugawa_harima_1721', officerIds: ['off_sakakibara_masakuni'], scenarioIds: ['1721'], requireOwners: ['tokugawa'], setClanId: 'tokugawa', setDefaultProv: 'harima', setDaimyo: false },
+    { id: 'sakakibara_masakuni_tokugawa_harima_1721', officerIds: ['off_sakakibara_masakuni'], scenarioIds: ['1721'], requireOwners: ['tokugawa'], setClanId: 'tokugawa', setDefaultProv: 'harima_west', setDaimyo: false },
     // 赤松則弘（前播磨城主）：徳川家臣のまま播磨に待機
-    { id: 'akamatsu_norihisa_tokugawa_harima_1721', officerIds: ['off_akamatsu_norihisa'], scenarioIds: ['1721'], requireOwners: ['tokugawa'], setClanId: 'tokugawa', setDefaultProv: 'harima', setDaimyo: false },
+    { id: 'akamatsu_norihisa_tokugawa_harima_1721', officerIds: ['off_akamatsu_norihisa'], scenarioIds: ['1721'], requireOwners: ['tokugawa'], setClanId: 'tokugawa', setDefaultProv: 'harima_west', setDaimyo: false },
     // 北畠具長（前伊勢城主）：徳川家臣のまま（伊勢が藤堂領となったため徳川本拠に所在）
     { id: 'kitabatake_tomonaga_tokugawa_1721', officerIds: ['off_kitabatake_tomenaga'], scenarioIds: ['1721'], requireOwners: ['tokugawa'], setClanId: 'tokugawa', setDaimyo: false }
   );
@@ -10452,20 +10459,20 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
 if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
   window.OFFICER_AFFILIATION_RULES.unshift(
     // tsugaru：津軽信明 が当主、津軽寧親 は家臣として残す
-    { id: 'tsugaru_daimyo_1789_hist', officerIds: ['off_tsugaru_nobuaki'], scenarioIds: ['1789'], requireOwners: ['tsugaru'], setClanId: 'tsugaru', setDefaultProv: 'nishi_tsugaru', setAssignedProv: 'nishi_tsugaru', setDaimyo: true },
-    { id: 'tsugaru_former_leader_1789_hist', officerIds: ['off_succ_tsugaru_1765_205'], scenarioIds: ['1789'], requireOwners: ['tsugaru'], setClanId: 'tsugaru', setDefaultProv: 'nishi_tsugaru', setDaimyo: false },
+    { id: 'tsugaru_daimyo_1789_hist', officerIds: ['off_tsugaru_nobuaki'], scenarioIds: ['1789'], requireOwners: ['tsugaru'], setClanId: 'tsugaru', setDefaultProv: 'mutsu_tsugaru', setAssignedProv: 'mutsu_tsugaru', setDaimyo: true },
+    { id: 'tsugaru_former_leader_1789_hist', officerIds: ['off_succ_tsugaru_1765_205'], scenarioIds: ['1789'], requireOwners: ['tsugaru'], setClanId: 'tsugaru', setDefaultProv: 'mutsu_tsugaru', setDaimyo: false },
     // date：伊達重村 が当主、石川宗光 は家臣として残す
     { id: 'date_daimyo_1789_hist', officerIds: ['off_date_shigemura'], scenarioIds: ['1789'], requireOwners: ['date'], setClanId: 'date', setDefaultProv: 'rikuzen', setAssignedProv: 'rikuzen', setDaimyo: true },
     { id: 'date_former_leader_1789_hist', officerIds: ['off_edo_date_1760_172'], scenarioIds: ['1789'], requireOwners: ['date'], setClanId: 'date', setDefaultProv: 'rikuzen', setDaimyo: false },
     // uesugi：上杉治広 が当主、上杉鷹山 は家臣として残す
-    { id: 'uesugi_daimyo_1789_hist', officerIds: ['off_uesugi_haruhiro'], scenarioIds: ['1789'], requireOwners: ['uesugi'], setClanId: 'uesugi', setDefaultProv: 'yonezawa_date', setAssignedProv: 'yonezawa_date', setDaimyo: true },
-    { id: 'uesugi_former_leader_1789_hist', officerIds: ['off_uesugi_yozan'], scenarioIds: ['1789'], requireOwners: ['uesugi'], setClanId: 'uesugi', setDefaultProv: 'yonezawa_date', setDaimyo: false },
+    { id: 'uesugi_daimyo_1789_hist', officerIds: ['off_uesugi_haruhiro'], scenarioIds: ['1789'], requireOwners: ['uesugi'], setClanId: 'uesugi', setDefaultProv: 'uzen_yonezawa_date', setAssignedProv: 'uzen_yonezawa_date', setDaimyo: true },
+    { id: 'uesugi_former_leader_1789_hist', officerIds: ['off_uesugi_yozan'], scenarioIds: ['1789'], requireOwners: ['uesugi'], setClanId: 'uesugi', setDefaultProv: 'uzen_yonezawa_date', setDaimyo: false },
     // ii：井伊直中 が当主、井伊直幸 は家臣として残す
-    { id: 'ii_daimyo_1789_hist', officerIds: ['off_edo_ii_1766_141'], scenarioIds: ['1789'], requireOwners: ['ii'], setClanId: 'ii', setDefaultProv: 'north_omi', setAssignedProv: 'north_omi', setDaimyo: true },
-    { id: 'ii_former_leader_1789_hist', officerIds: ['off_ii_naoyuki'], scenarioIds: ['1789'], requireOwners: ['ii'], setClanId: 'ii', setDefaultProv: 'north_omi', setDaimyo: false },
+    { id: 'ii_daimyo_1789_hist', officerIds: ['off_edo_ii_1766_141'], scenarioIds: ['1789'], requireOwners: ['ii'], setClanId: 'ii', setDefaultProv: 'omi_north', setAssignedProv: 'omi_north', setDaimyo: true },
+    { id: 'ii_former_leader_1789_hist', officerIds: ['off_ii_naoyuki'], scenarioIds: ['1789'], requireOwners: ['ii'], setClanId: 'ii', setDefaultProv: 'omi_north', setDaimyo: false },
     // kishu：徳川治貞 が当主、徳川治宝 は家臣として残す
-    { id: 'kishu_daimyo_1789_hist', officerIds: ['off_succ_kishu_1728_68'], scenarioIds: ['1789'], requireOwners: ['kishu'], setClanId: 'kishu', setDefaultProv: 'saika_wakayama', setAssignedProv: 'saika_wakayama', setDaimyo: true },
-    { id: 'kishu_former_leader_1789_hist', officerIds: ['off_edo_kishu_1771_112'], scenarioIds: ['1789'], requireOwners: ['kishu'], setClanId: 'kishu', setDefaultProv: 'saika_wakayama', setDaimyo: false },
+    { id: 'kishu_daimyo_1789_hist', officerIds: ['off_succ_kishu_1728_68'], scenarioIds: ['1789'], requireOwners: ['kishu'], setClanId: 'kishu', setDefaultProv: 'kii_saika_wakayama', setAssignedProv: 'kii_saika_wakayama', setDaimyo: true },
+    { id: 'kishu_former_leader_1789_hist', officerIds: ['off_edo_kishu_1771_112'], scenarioIds: ['1789'], requireOwners: ['kishu'], setClanId: 'kishu', setDefaultProv: 'kii_saika_wakayama', setDaimyo: false },
     // okayama：池田治政 が当主、池田斉政 は家臣として残す
     { id: 'okayama_daimyo_1789_hist', officerIds: ['off_succ_okayama_1768_120'], scenarioIds: ['1789'], requireOwners: ['okayama'], setClanId: 'okayama', setDefaultProv: 'bizen', setAssignedProv: 'bizen', setDaimyo: true },
     { id: 'okayama_former_leader_1789_hist', officerIds: ['off_edo_okayama_1773_203'], scenarioIds: ['1789'], requireOwners: ['okayama'], setClanId: 'okayama', setDefaultProv: 'bizen', setDaimyo: false },
@@ -10476,8 +10483,8 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
     { id: 'hachisuka_daimyo_1789_hist', officerIds: ['off_edo_hachisuka_1773_195'], scenarioIds: ['1789'], requireOwners: ['hachisuka'], setClanId: 'hachisuka', setDefaultProv: 'awa_shikoku', setAssignedProv: 'awa_shikoku', setDaimyo: true },
     { id: 'hachisuka_former_leader_1789_hist', officerIds: ['off_hachisuka_shigeyoshi'], scenarioIds: ['1789'], requireOwners: ['hachisuka'], setClanId: 'hachisuka', setDefaultProv: 'awa_shikoku', setDaimyo: false },
     // kuroda：黒田斉隆 が当主、黒田清定 は家臣として残す
-    { id: 'kuroda_daimyo_1789_hist', officerIds: ['off_succ_kuroda_1777_78'], scenarioIds: ['1789'], requireOwners: ['kuroda'], setClanId: 'kuroda', setDefaultProv: 'chikuzen', setAssignedProv: 'chikuzen', setDaimyo: true },
-    { id: 'kuroda_former_leader_1789_hist', officerIds: ['off_edo_kuroda_1750_209'], scenarioIds: ['1789'], requireOwners: ['kuroda'], setClanId: 'kuroda', setDefaultProv: 'chikuzen', setDaimyo: false },
+    { id: 'kuroda_daimyo_1789_hist', officerIds: ['off_succ_kuroda_1777_78'], scenarioIds: ['1789'], requireOwners: ['kuroda'], setClanId: 'kuroda', setDefaultProv: 'chikuzen_fukuoka', setAssignedProv: 'chikuzen_fukuoka', setDaimyo: true },
+    { id: 'kuroda_former_leader_1789_hist', officerIds: ['off_edo_kuroda_1750_209'], scenarioIds: ['1789'], requireOwners: ['kuroda'], setClanId: 'kuroda', setDefaultProv: 'chikuzen_fukuoka', setDaimyo: false },
     // shimazu：島津斉宣 が当主、島津重豪 は家臣として残す
     { id: 'shimazu_daimyo_1789_hist', officerIds: ['off_shimazu_narinobu'], scenarioIds: ['1789'], requireOwners: ['shimazu'], setClanId: 'shimazu', setDefaultProv: 'satsuma', setAssignedProv: 'satsuma', setDaimyo: true },
     { id: 'shimazu_former_leader_1789_hist', officerIds: ['off_shimazu_shigehide'], scenarioIds: ['1789'], requireOwners: ['shimazu'], setClanId: 'shimazu', setDefaultProv: 'satsuma', setDaimyo: false },
@@ -10524,7 +10531,7 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
     // 楢山佐渡：全シナリオで南部家臣・陸中（ユーザー指定 20261025）
     { id: 'narayama_sado_date_rikuzen_1853plus', officerIds: ['off_narayama_sado'], scenarioIds: ['1853', '1860', '1866', '1868'], setClanId: 'nanbu', setDefaultProv: 'rikuchu_morioka', setDaimyo: false },
     // 八戸隆吉：陸中→陸奥（南部家臣のまま）
-    { id: 'hachinohe_takayoshi_nanbu_mutsu_1853plus', officerIds: ['off_edo_nanbu_1805_189'], scenarioIds: ['1853', '1860'], requireOwners: ['nanbu'], setClanId: 'nanbu', setDefaultProv: 'mutsu', setDaimyo: false },
+    { id: 'hachinohe_takayoshi_nanbu_mutsu_1853plus', officerIds: ['off_edo_nanbu_1805_189'], scenarioIds: ['1853', '1860'], requireOwners: ['nanbu'], setClanId: 'nanbu', setDefaultProv: 'mutsu_nanbu', setDaimyo: false },
     // 南部利済：陸奥→陸中（南部家臣のまま・隠居）
     { id: 'nanbu_toshitada_nanbu_rikuchu_1853', officerIds: ['off_edo_nanbu_1797_187'], scenarioIds: ['1853'], requireOwners: ['nanbu'], setClanId: 'nanbu', setDefaultProv: 'rikuchu_morioka', setDaimyo: false },
     // 北小路随光：陸奥→山城（公家。山城に朝廷勢力が無いため浪人として京に）
@@ -10554,7 +10561,7 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
 if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
   window.OFFICER_AFFILIATION_RULES.unshift(
     // 長尾景広・長尾景利：米沢（羽前）の上杉家臣
-    { id: 'nagao_kagehiro_kagetoshi_uesugi_uzen_1614plus', officerIds: ['off_nagao_kagehiro', 'off_nagao_kagetoshi'], setClanId: 'uesugi', fromYear: 1614, requireOwners: ['uesugi'], setDefaultProv: 'yonezawa_date', setDaimyo: false },
+    { id: 'nagao_kagehiro_kagetoshi_uesugi_uzen_1614plus', officerIds: ['off_nagao_kagehiro', 'off_nagao_kagetoshi'], setClanId: 'uesugi', fromYear: 1614, requireOwners: ['uesugi'], setDefaultProv: 'uzen_yonezawa_date', setDaimyo: false },
     // 尼子元知：長門の毛利家臣
     { id: 'amago_mototomo_mori_nagato_1614plus', officerIds: ['off_amago_mototomo'], setClanId: 'mori', fromYear: 1614, requireOwners: ['mori'], setDefaultProv: 'nagato', setDaimyo: false },
     // 赤松則英：阿波の浪人
@@ -10568,8 +10575,8 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
 if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
   window.OFFICER_AFFILIATION_RULES.unshift(
     { id: 'daidoji_hojo_musashi_1570_1577', officerIds: ['off_daidoji_masashige'], scenarioIds: ['1570', '1573', '1576', '1577'], requireOwners: ['hojo'], setClanId: 'hojo', setDefaultProv: 'musashi_edo_tama', clearAssignment: true, setDaimyo: false },
-    { id: 'uesugi_norimasa_kozuke_1570', officerIds: ['off_dm_uesugi_1546'], scenarioIds: ['1570'], requireOwners: ['uesugi'], setClanId: 'uesugi', setDefaultProv: 'numata', setDaimyo: false },
-    { id: 'amakasu_kagemochi_kozuke_1573_1577', officerIds: ['off_amakasu_kagemochi'], scenarioIds: ['1573', '1576', '1577'], requireOwners: ['uesugi'], setClanId: 'uesugi', setDefaultProv: 'numata', setDaimyo: false }
+    { id: 'uesugi_norimasa_kozuke_1570', officerIds: ['off_dm_uesugi_1546'], scenarioIds: ['1570'], requireOwners: ['uesugi'], setClanId: 'uesugi', setDefaultProv: 'kozuke_numata', setDaimyo: false },
+    { id: 'amakasu_kagemochi_kozuke_1573_1577', officerIds: ['off_amakasu_kagemochi'], scenarioIds: ['1573', '1576', '1577'], requireOwners: ['uesugi'], setClanId: 'uesugi', setDefaultProv: 'kozuke_numata', setDaimyo: false }
   );
 }
 
@@ -10586,8 +10593,8 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
 if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
   window.OFFICER_AFFILIATION_RULES.unshift(
     { id: 'hojo_ujikuni_musashi_retainer_1587', officerIds: ['off_hojo_ujikuni'], scenarioIds: ['1587'], requireOwners: ['hojo'], setClanId: 'hojo', setDefaultProv: 'musashi_edo_tama', setDaimyo: false },
-    { id: 'daidoji_kozuke_lord_1587', officerIds: ['off_daidoji_masashige'], scenarioIds: ['1587'], requireOwners: ['hojo'], setClanId: 'hojo', setDefaultProv: 'kozuke', setDaimyo: false },
-    { id: 'masaki_yoritada_satomi_awa_1587', officerIds: ['off_masaki_yoritada'], scenarioIds: ['1587'], requireOwners: ['satomi'], setClanId: 'satomi', setDefaultProv: 'awa_boshu', setDaimyo: false },
+    { id: 'daidoji_kozuke_lord_1587', officerIds: ['off_daidoji_masashige'], scenarioIds: ['1587'], requireOwners: ['hojo'], setClanId: 'hojo', setDefaultProv: 'kozuke_takasaki', setDaimyo: false },
+    { id: 'masaki_yoritada_satomi_awa_1587', officerIds: ['off_masaki_yoritada'], scenarioIds: ['1587'], requireOwners: ['satomi'], setClanId: 'satomi', setDefaultProv: 'awa', setDaimyo: false },
     { id: 'hojo_ujinori_izu_lord_1587', officerIds: ['off_hojo_ujinori'], scenarioIds: ['1587'], requireOwners: ['hojo'], setClanId: 'hojo', setDefaultProv: 'izu', setDaimyo: false }
   );
 }
@@ -10617,7 +10624,7 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
 // --- arima_hyuga_1637_20261011as: 有馬直純を日向の独立大名に、伊東祐久は日向の浪人、尼子就知→長門の毛利家臣、北畠雅教・昌教→加賀の前田家臣 ---
 if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
   window.OFFICER_AFFILIATION_RULES.unshift(
-    { id: 'arima_naozumi_daimyo_nobeoka_1637', officerIds: ['off_jd_053'], scenarioIds: ['1637'], requireOwners: ['arima_nobeoka'], setClanId: 'arima_nobeoka', setDefaultProv: 'nobeoka', setAssignedProv: 'nobeoka', setDaimyo: true },
+    { id: 'arima_naozumi_daimyo_nobeoka_1637', officerIds: ['off_jd_053'], scenarioIds: ['1637'], requireOwners: ['arima_nobeoka'], setClanId: 'arima_nobeoka', setDefaultProv: 'hyuga_nobeoka', setAssignedProv: 'hyuga_nobeoka', setDaimyo: true },
     { id: 'ito_ronin_hyuga_1637', officerIds: ['off_ito_sukeisa', 'off_succ2_ito_1630'], scenarioIds: ['1637'], setClanId: 'ronin', setDefaultProv: 'hyuga_obi', clearAssignment: true, setDaimyo: false },
     { id: 'amago_naritomo_mori_nagato_1637', officerIds: ['off_amago_naritomo'], scenarioIds: ['1637'], requireOwners: ['mori'], setClanId: 'mori', setDefaultProv: 'nagato', setDaimyo: false },
     { id: 'kitabatake_maeda_kaga_1637', officerIds: ['off_kitabatake_masanori_2', 'off_kitabatake_masanori'], scenarioIds: ['1637'], requireOwners: ['maeda'], setClanId: 'maeda', setDefaultProv: 'kaga', setDaimyo: false }
@@ -10627,7 +10634,7 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
 // --- sakakibara_ronin_1702_20261011au: 榊原政邦を 1702 では播磨の浪人に ---
 if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
   window.OFFICER_AFFILIATION_RULES.unshift(
-    { id: 'sakakibara_masakuni_ronin_harima_1702', officerIds: ['off_sakakibara_masakuni'], scenarioIds: ['1702'], setClanId: 'ronin', setDefaultProv: 'harima', clearAssignment: true, setDaimyo: false }
+    { id: 'sakakibara_masakuni_ronin_harima_1702', officerIds: ['off_sakakibara_masakuni'], scenarioIds: ['1702'], setClanId: 'ronin', setDefaultProv: 'harima_west', clearAssignment: true, setDaimyo: false }
   );
 }
 
@@ -10646,20 +10653,20 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
     { id: 'user_scenario_updates_20261015_shinsengumi_1866', officerIds: ['off_kondo_isami', 'off_hijikata_toshizo', 'off_okita_soji', 'off_nagakura_shinpachi', 'off_saito_hajime', 'off_shimada_kai', 'off_nakajima_nobori'], scenarioIds: ['1866'], setClanId: 'tokugawa', setDefaultProv: 'yamashiro', setDaimyo: false },
     { id: 'user_scenario_updates_20261015_kasuga_1866', officerIds: ['off_kasuga_saemon'], scenarioIds: ['1866'], setClanId: 'tokugawa', setDefaultProv: 'musashi_edo_tama', setDaimyo: false },
     { id: 'user_scenario_updates_20261015_chiba_hara_1555', officerIds: ['off_chiba_toshitane', 'off_hara_tanesada_1546'], scenarioIds: ['1555'], setClanId: 'hojo', setDefaultProv: 'shimousa', setDaimyo: false },
-    { id: 'user_scenario_updates_20261015_mimura_1555', officerIds: ['off_mimura_iechika'], scenarioIds: ['1555'], setClanId: 'mimura', setDefaultProv: 'bicchu', setDaimyo: true },
+    { id: 'user_scenario_updates_20261015_mimura_1555', officerIds: ['off_mimura_iechika'], scenarioIds: ['1555'], setClanId: 'mimura', setDefaultProv: 'bitchu_matsuyama', setDaimyo: true },
     { id: 'user_scenario_updates_20261015_matsudaira_1438', officerIds: ['off_dm_matsudaira_1467'], scenarioIds: ['1438'], setClanId: 'matsudaira', setDefaultProv: 'mikawa', setDaimyo: true },
 { id: 'user_scenario_updates_20261015_matsue_1637', officerIds: ['off_edo_matsue_1601_161'], scenarioIds: ['1637'], setClanId: 'tokugawa', setDefaultProv: 'izumo', setDaimyo: false },
-    { id: 'user_scenario_updates_20261015_kuroda_1853_1860', officerIds: ['off_kuroda_nagashige'], scenarioIds: ['1853', '1860'], setClanId: 'fukuoka_kuroda', setDefaultProv: 'chikuzen', setDaimyo: false },
+    { id: 'user_scenario_updates_20261015_kuroda_1853_1860', officerIds: ['off_kuroda_nagashige'], scenarioIds: ['1853', '1860'], setClanId: 'fukuoka_kuroda', setDefaultProv: 'chikuzen_fukuoka', setDaimyo: false },
     { id: 'user_scenario_updates_20261015_shinsengumi_1853_1860', officerIds: ['off_shimada_kai', 'off_nakajima_nobori'], scenarioIds: ['1853', '1860'], setClanId: 'tokugawa', setDefaultProv: 'musashi_edo_tama', setDaimyo: false },
-    { id: 'user_scenario_updates_20261015_nagao_uzen', officerIds: ['off_nagao_kagehiro', 'off_nagao_kagetoshi', 'off_nagao_kagefusa'], setClanId: 'uesugi', setDefaultProv: 'yonezawa_date', setDaimyo: false },
+    { id: 'user_scenario_updates_20261015_nagao_uzen', officerIds: ['off_nagao_kagehiro', 'off_nagao_kagetoshi', 'off_nagao_kagefusa'], setClanId: 'uesugi', setDefaultProv: 'uzen_yonezawa_date', setDaimyo: false },
 { id: 'user_scenario_updates_20261015_kasai_rikuchu', officerIds: ['off_kasai_harunobu'], scenarioIds: ['1555', '1560', '1570', '1573', '1576', '1577', '1578', '1582', '1584', '1587', '1590'], setClanId: 'kasai', setDefaultProv: 'rikuchu_morioka', setDaimyo: true },
-    { id: 'user_scenario_updates_20261015_kita_mutsu', officerIds: ['off_kita_nobuchika'], scenarioIds: ['1555', '1560', '1570', '1573', '1576', '1577', '1578', '1582', '1584', '1587', '1590'], setClanId: 'nanbu', setDefaultProv: 'mutsu', setDaimyo: false },
-    { id: 'user_scenario_updates_20261015_nanbu_nobunao_mutsu_retainer', officerIds: ['off_dm_nanbu_1582'], scenarioIds: ['1555', '1560', '1570', '1573', '1576', '1577', '1578'], setClanId: 'nanbu', setDefaultProv: 'mutsu', setDaimyo: false },
-    { id: 'user_scenario_updates_20261015_nanbu_nobunao_mutsu_daimyo', officerIds: ['off_dm_nanbu_1582'], scenarioIds: ['1582', '1584', '1587', '1590'], setClanId: 'nanbu', setDefaultProv: 'mutsu', setDaimyo: true },
+    { id: 'user_scenario_updates_20261015_kita_mutsu', officerIds: ['off_kita_nobuchika'], scenarioIds: ['1555', '1560', '1570', '1573', '1576', '1577', '1578', '1582', '1584', '1587', '1590'], setClanId: 'nanbu', setDefaultProv: 'mutsu_nanbu', setDaimyo: false },
+    { id: 'user_scenario_updates_20261015_nanbu_nobunao_mutsu_retainer', officerIds: ['off_dm_nanbu_1582'], scenarioIds: ['1555', '1560', '1570', '1573', '1576', '1577', '1578'], setClanId: 'nanbu', setDefaultProv: 'mutsu_nanbu', setDaimyo: false },
+    { id: 'user_scenario_updates_20261015_nanbu_nobunao_mutsu_daimyo', officerIds: ['off_dm_nanbu_1582'], scenarioIds: ['1582', '1584', '1587', '1590'], setClanId: 'nanbu', setDefaultProv: 'mutsu_nanbu', setDaimyo: true },
     { id: 'user_scenario_updates_20261015_shiba_akinao_rikuchu', officerIds: ['off_shiba_akinao'], scenarioIds: ['1555', '1560', '1570', '1573', '1576', '1577', '1578', '1582', '1584', '1587', '1590'], setClanId: 'ronin', setDefaultProv: 'rikuchu_morioka', setDaimyo: false },
     { id: 'user_scenario_updates_20261015_chiba_hara_1573', officerIds: ['off_chiba_toshitane', 'off_hara_tanesada_1546'], scenarioIds: ['1573'], setClanId: 'hojo', setDefaultProv: 'shimousa', setDaimyo: false },
-    { id: 'user_scenario_updates_20261015_satomi_yoshiyori_1576', officerIds: ['off_dm_satomi_1582'], scenarioIds: ['1576'], setClanId: 'satomi', setDefaultProv: 'awa_boshu', setDaimyo: true },
-    { id: 'user_scenario_updates_20261015_satomi_yoshihiro_1576', officerIds: ['off_satomi_yoshihiro'], scenarioIds: ['1576'], setClanId: 'satomi', setDefaultProv: 'awa_boshu', setDaimyo: false },
+    { id: 'user_scenario_updates_20261015_satomi_yoshiyori_1576', officerIds: ['off_dm_satomi_1582'], scenarioIds: ['1576'], setClanId: 'satomi', setDefaultProv: 'awa', setDaimyo: true },
+    { id: 'user_scenario_updates_20261015_satomi_yoshihiro_1576', officerIds: ['off_satomi_yoshihiro'], scenarioIds: ['1576'], setClanId: 'satomi', setDefaultProv: 'awa', setDaimyo: false },
     { id: 'user_scenario_updates_20261015_masaki_yoritada_1576', officerIds: ['off_masaki_yoritada'], scenarioIds: ['1576'], setClanId: 'satomi', setDefaultProv: 'kazusa', setDaimyo: false },
     { id: 'user_scenario_updates_20261015_hojo_ujikuni_musashi_1576_1582', officerIds: ['off_hojo_ujikuni'], scenarioIds: ['1576', '1577', '1578', '1582'], setClanId: 'hojo', setDefaultProv: 'musashi_edo_tama', setDaimyo: false },
     { id: 'user_scenario_updates_20261015_hojo_ujinori_izu_1576_1582', officerIds: ['off_hojo_ujinori'], scenarioIds: ['1576', '1577', '1578', '1582'], setClanId: 'hojo', setDefaultProv: 'izu', setDaimyo: false },
@@ -10683,13 +10690,13 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
 // --- user_1590_updates_20261015: 1590酒井忠世駿河・千葉氏下総北条配下・北条氏邦成田氏長武蔵・里見義頼安房独立・正木頼忠安房・浅野氏北近江・徳川家康駿河 ---
 if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
   window.OFFICER_AFFILIATION_RULES.unshift(
-    { id: 'user_1590_updates_20261015_satomi_yoshiyori_1590', officerIds: ['off_dm_satomi_1582'], scenarioIds: ['1590'], setClanId: 'satomi', setDefaultProv: 'awa_boshu', setDaimyo: true },
-    { id: 'user_1590_updates_20261015_masaki_yoritada_1590', officerIds: ['off_masaki_yoritada'], scenarioIds: ['1590'], setClanId: 'satomi', setDefaultProv: 'awa_boshu', setDaimyo: false },
+    { id: 'user_1590_updates_20261015_satomi_yoshiyori_1590', officerIds: ['off_dm_satomi_1582'], scenarioIds: ['1590'], setClanId: 'satomi', setDefaultProv: 'awa', setDaimyo: true },
+    { id: 'user_1590_updates_20261015_masaki_yoritada_1590', officerIds: ['off_masaki_yoritada'], scenarioIds: ['1590'], setClanId: 'satomi', setDefaultProv: 'awa', setDaimyo: false },
     { id: 'user_1590_updates_20261015_tokugawa_ieyasu_1590', officerIds: ['off_tokugawa_ieyasu'], scenarioIds: ['1590'], setClanId: 'tokugawa', setDefaultProv: 'suruga', setDaimyo: true },
     { id: 'user_1590_updates_20261015_sakai_tadayo_1590', officerIds: ['off_sakai_tadayo'], scenarioIds: ['1590'], setClanId: 'tokugawa', setDefaultProv: 'suruga', setDaimyo: false },
     { id: 'user_1590_updates_20261015_chiba_shimousa_1590', officerIds: ['off_chiba_naoshige_bridge', 'off_chiba_shigetane'], scenarioIds: ['1590'], setClanId: 'hojo', setDefaultProv: 'shimousa', setDaimyo: false },
     { id: 'user_1590_updates_20261015_hojo_ujikuni_narita_1590', officerIds: ['off_hojo_ujikuni', 'off_narita_ujinaga'], scenarioIds: ['1590'], setClanId: 'hojo', setDefaultProv: 'musashi_edo_tama', setDaimyo: false },
-    { id: 'user_1590_updates_20261015_asano_north_omi_1590', officerIds: ['off_asano_nagamasa', 'off_dm_asano_1600', 'off_jd_337'], scenarioIds: ['1590'], setClanId: 'toyotomi', setDefaultProv: 'north_omi', setDaimyo: false }
+    { id: 'user_1590_updates_20261015_asano_north_omi_1590', officerIds: ['off_asano_nagamasa', 'off_dm_asano_1600', 'off_jd_337'], scenarioIds: ['1590'], setClanId: 'toyotomi', setDefaultProv: 'omi_north', setDaimyo: false }
   );
 }
 
@@ -10698,18 +10705,18 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
   window.OFFICER_AFFILIATION_RULES.unshift(
     // 801
     { id: 'pre13th_scenario_historical_fixes_20261015_801_aterui', officerIds: ['off_aterui'], scenarioIds: ['801'], setClanId: 'aterui', setDefaultProv: 'rikuchu_morioka', setDaimyo: true },
-    { id: 'pre13th_scenario_historical_fixes_20261015_801_more', officerIds: ['off_more'], scenarioIds: ['801'], setClanId: 'aterui', setDefaultProv: 'mutsu', setDaimyo: false },
+    { id: 'pre13th_scenario_historical_fixes_20261015_801_more', officerIds: ['off_more'], scenarioIds: ['801'], setClanId: 'aterui', setDefaultProv: 'mutsu_nanbu', setDaimyo: false },
     { id: 'pre13th_scenario_historical_fixes_20261015_801_kanmu', officerIds: ['off_kanmu_tenno'], scenarioIds: ['801'], setClanId: 'heian_court', setDefaultProv: 'yamashiro', setDaimyo: true },
     { id: 'pre13th_scenario_historical_fixes_20261015_801_tamuramaro', officerIds: ['off_sakanoue_tamuramaro'], scenarioIds: ['801'], setClanId: 'heian_court', setDefaultProv: 'yamashiro', setDaimyo: false },
     
     // 1019 & 1028
     { id: 'pre13th_scenario_historical_fixes_20261015_1028_tadatsune', officerIds: ['off_taira_tadanetsune'], scenarioIds: ['1028'], setClanId: 'taira_tadatsune', setDefaultProv: 'kazusa', setDaimyo: true },
     { id: 'pre13th_scenario_historical_fixes_20261015_1019_tadatsune', officerIds: ['off_taira_tadanetsune'], scenarioIds: ['1019'], setClanId: 'taira_tadatsune', setDefaultProv: 'shimousa', setDaimyo: true },
-    { id: 'pre13th_scenario_historical_fixes_20261015_1019_1028_tsuneharu', officerIds: ['off_taira_tsuneharu'], scenarioIds: ['1019', '1028'], setClanId: 'taira_tadatsune', setDefaultProv: 'awa_boshu', setDaimyo: false },
+    { id: 'pre13th_scenario_historical_fixes_20261015_1019_1028_tsuneharu', officerIds: ['off_taira_tsuneharu'], scenarioIds: ['1019', '1028'], setClanId: 'taira_tadatsune', setDefaultProv: 'awa', setDaimyo: false },
     { id: 'pre13th_scenario_historical_fixes_20261015_1028_tsunemasa', officerIds: ['off_taira_tsunemasa'], scenarioIds: ['1028'], setClanId: 'taira_tadatsune', setDefaultProv: 'shimousa', setDaimyo: false },
     { id: 'pre13th_scenario_historical_fixes_20261015_1019_1028_yorinobu', officerIds: ['off_minamoto_yorinobu_1028'], scenarioIds: ['1019', '1028'], setClanId: 'minamoto_tsunemoto', setDefaultProv: 'kawachi', setDaimyo: true },
     { id: 'pre13th_scenario_historical_fixes_20261015_1019_1028_naokata', officerIds: ['off_taira_naokata'], scenarioIds: ['1019', '1028'], setClanId: 'taira_sadamori', setDefaultProv: 'hitachi_ohta', setDaimyo: true },
-    { id: 'pre13th_scenario_historical_fixes_20261015_1019_takaie', officerIds: ['off_fujiwara_takaie_daimyo'], scenarioIds: ['1019'], setClanId: 'heian_court', setDefaultProv: 'chikuzen', setDaimyo: false },
+    { id: 'pre13th_scenario_historical_fixes_20261015_1019_takaie', officerIds: ['off_fujiwara_takaie_daimyo'], scenarioIds: ['1019'], setClanId: 'heian_court', setDefaultProv: 'chikuzen_fukuoka', setDaimyo: false },
     { id: 'pre13th_scenario_historical_fixes_20261015_1028_yorimichi', officerIds: ['off_fujiwara_yorimichi_1028'], scenarioIds: ['1028'], setClanId: 'heian_court', setDefaultProv: 'yamashiro', setDaimyo: true },
 
     // 1056 前九年
@@ -10719,9 +10726,9 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
 
     // 1087 後三年
     { id: 'pre13th_scenario_historical_fixes_20261015_1087_yoshiie', officerIds: ['off_minamoto_yoshiie'], scenarioIds: ['1087'], setClanId: 'minamoto_tsunemoto', setDefaultProv: 'rikuzen', setDaimyo: true },
-    { id: 'pre13th_scenario_historical_fixes_20261015_1087_kiyohira', officerIds: ['off_fujiwara_kiyohira'], scenarioIds: ['1087'], setClanId: 'kiyohara', setDefaultProv: 'kasai', setDaimyo: true },
-    { id: 'pre13th_scenario_historical_fixes_20261015_1087_yohiko', officerIds: ['off_yohiko_hidetake'], scenarioIds: ['1087'], setClanId: 'minamoto_tsunemoto', setDefaultProv: 'yokote', setDaimyo: false },
-    { id: 'pre13th_scenario_historical_fixes_20261015_1087_iehira', officerIds: ['off_kiyohara_iehira'], scenarioIds: ['1087'], setClanId: 'kiyohara_iehira', setDefaultProv: 'yokote', setDaimyo: true },
+    { id: 'pre13th_scenario_historical_fixes_20261015_1087_kiyohira', officerIds: ['off_fujiwara_kiyohira'], scenarioIds: ['1087'], setClanId: 'kiyohara', setDefaultProv: 'rikuchu_kasai', setDaimyo: true },
+    { id: 'pre13th_scenario_historical_fixes_20261015_1087_yohiko', officerIds: ['off_yohiko_hidetake'], scenarioIds: ['1087'], setClanId: 'minamoto_tsunemoto', setDefaultProv: 'ugo_yokote', setDaimyo: false },
+    { id: 'pre13th_scenario_historical_fixes_20261015_1087_iehira', officerIds: ['off_kiyohara_iehira'], scenarioIds: ['1087'], setClanId: 'kiyohara_iehira', setDefaultProv: 'ugo_yokote', setDaimyo: true },
 
     // 1156 保元
     { id: 'pre13th_scenario_historical_fixes_20261015_1156_tametomo', officerIds: ['off_minamoto_tametomo'], scenarioIds: ['1156'], setClanId: 'sutoku_in', setDefaultProv: 'yamato_koriyama', setDaimyo: false },
@@ -10730,11 +10737,11 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
     { id: 'pre13th_scenario_historical_fixes_20261015_1180_1184_bando', officerIds: ['off_hojo_tokimasa', 'off_chiba_tsunetane', 'off_chiba_tanemasa', 'off_chiba_shigeta', 'off_kajiwara_kagetoki', 'off_kumagai_naozane', 'off_koyama_tomomasa'], scenarioIds: ['1180', '1183', '1184'], setClanId: 'genji_yoritomo', setDaimyo: false },
     { id: 'pre13th_scenario_historical_fixes_20261015_1180_1183_kazusa', officerIds: ['off_kazusa_hirotsune'], scenarioIds: ['1180', '1183'], setClanId: 'genji_yoritomo', setDefaultProv: 'kazusa', setDaimyo: false },
     { id: 'pre13th_scenario_historical_fixes_20261015_1180_miura_aki', officerIds: ['off_miura_yoshiaki'], scenarioIds: ['1180'], setClanId: 'genji_yoritomo', setDefaultProv: 'sagami', setDaimyo: false },
-    { id: 'pre13th_scenario_historical_fixes_20261015_1184_nasu', officerIds: ['off_nasu_no_yoichi'], scenarioIds: ['1184'], setClanId: 'genji_yoritomo', setDefaultProv: 'nasu', setDaimyo: false },
+    { id: 'pre13th_scenario_historical_fixes_20261015_1184_nasu', officerIds: ['off_nasu_no_yoichi'], scenarioIds: ['1184'], setClanId: 'genji_yoritomo', setDefaultProv: 'shimotsuke_nasu', setDaimyo: false },
 
     // 1185 壇ノ浦 義経軍（頼朝配下）
-    { id: 'pre13th_scenario_historical_fixes_20261015_1185_yoshitsune', officerIds: ['off_minamoto_yoshitsune'], scenarioIds: ['1185'], setClanId: 'genji_yoritomo', setDefaultProv: 'aki', setDaimyo: false },
-    { id: 'pre13th_scenario_historical_fixes_20261015_1185_benkei', officerIds: ['off_musashibo_benkei', 'off_sato_tadanobu'], scenarioIds: ['1185'], setClanId: 'genji_yoritomo', setDefaultProv: 'aki', setDaimyo: false },
+    { id: 'pre13th_scenario_historical_fixes_20261015_1185_yoshitsune', officerIds: ['off_minamoto_yoshitsune'], scenarioIds: ['1185'], setClanId: 'genji_yoritomo', setDefaultProv: 'aki_hiroshima', setDaimyo: false },
+    { id: 'pre13th_scenario_historical_fixes_20261015_1185_benkei', officerIds: ['off_musashibo_benkei', 'off_sato_tadanobu'], scenarioIds: ['1185'], setClanId: 'genji_yoritomo', setDefaultProv: 'aki_hiroshima', setDaimyo: false },
     { id: 'pre13th_scenario_historical_fixes_20261015_1185_tsugunobu', officerIds: ['off_sato_tsugunobu'], scenarioIds: ['1185'], setClanId: 'genji_yoritomo', setDefaultProv: 'sanuki', setDaimyo: false },
     { id: 'pre13th_scenario_historical_fixes_20261015_1185_taguchi', officerIds: ['off_taguchi_shigeyoshi'], scenarioIds: ['1185'], setClanId: 'genji_yoritomo', setDefaultProv: 'awa_shikoku', setDaimyo: false },
     { id: 'pre13th_scenario_historical_fixes_20261015_1185_yoritomo_vassals', officerIds: ['off_hojo_tokimasa', 'off_chiba_tsunetane', 'off_kajiwara_kagetoki', 'off_kumagai_naozane', 'off_nasu_no_yoichi', 'off_koyama_tomomasa', 'off_miura_yoshimura'], scenarioIds: ['1185'], setClanId: 'genji_yoritomo', setDaimyo: false },
@@ -10750,7 +10757,7 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
     // 1274 元寇 足利家時 & 九州防衛軍
     { id: 'pre13th_scenario_historical_fixes_20261015_1274_ashikaga_ietoki', officerIds: ['off_ashikaga_ietoki'], scenarioIds: ['1274'], setClanId: 'ashikaga', setDefaultProv: 'shimotsuke_sano', setDaimyo: true },
     { id: 'pre13th_scenario_historical_fixes_20261015_1274_takezaki_kikuchi', officerIds: ['off_takezaki_suenaga', 'off_kikuchi_takefusa', 'off_pl1274_079', 'off_pl1274_090'], scenarioIds: ['1274'], setClanId: 'kikuchi', setDefaultProv: 'higo_kumamoto', setAssignedProv: 'higo_kumamoto', setDaimyo: false },
-    { id: 'pre13th_scenario_historical_fixes_20261015_1274_so_sukekuni', officerIds: ['off_so_sukekuni'], scenarioIds: ['1274'], setClanId: 'shoni', setDefaultProv: 'chikuzen', setDaimyo: false },
+    { id: 'pre13th_scenario_historical_fixes_20261015_1274_so_sukekuni', officerIds: ['off_so_sukekuni'], scenarioIds: ['1274'], setClanId: 'shoni', setDefaultProv: 'chikuzen_fukuoka', setDaimyo: false },
     { id: 'pre13th_scenario_historical_fixes_20261015_1274_shimazu_hisaune', officerIds: ['off_shimazu_hisaune'], scenarioIds: ['1274'], setClanId: 'shimazu', setDefaultProv: 'satsuma', setDaimyo: false }
   );
 }
@@ -10775,10 +10782,10 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
 // --- scenario_14_15_corrections_20261015: 14世紀・15世紀シナリオ史実配置修正（1331南部師行・結城宗広、1391山名満幸・氏清） ---
 if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
   window.OFFICER_AFFILIATION_RULES.unshift(
-    { id: 'scenario_14_15_corrections_20261015_nanbu_1331_daimyo', officerIds: ['off_dm_nanbu_1331'], scenarioIds: ['1331'], setClanId: 'nanbu', setDefaultProv: 'mutsu', setAssignedProv: 'mutsu', setDaimyo: true },
-    { id: 'scenario_14_15_corrections_20261015_nanbu_1331_vassals', officerIds: ['off_succ2_nanbu_1285', 'off_nanbu_masanaga'], scenarioIds: ['1331'], setClanId: 'nanbu', setDefaultProv: 'mutsu', setAssignedProv: 'mutsu', setDaimyo: false },
+    { id: 'scenario_14_15_corrections_20261015_nanbu_1331_daimyo', officerIds: ['off_dm_nanbu_1331'], scenarioIds: ['1331'], setClanId: 'nanbu', setDefaultProv: 'mutsu_nanbu', setAssignedProv: 'mutsu_nanbu', setDaimyo: true },
+    { id: 'scenario_14_15_corrections_20261015_nanbu_1331_vassals', officerIds: ['off_succ2_nanbu_1285', 'off_nanbu_masanaga'], scenarioIds: ['1331'], setClanId: 'nanbu', setDefaultProv: 'mutsu_nanbu', setAssignedProv: 'mutsu_nanbu', setDaimyo: false },
     { id: 'scenario_14_15_corrections_20261015_yuki_munehiro_1331_1336', officerIds: ['off_yuki_munehiro'], scenarioIds: ['1331', '1336'], setClanId: 'yuki', setDefaultProv: 'iwaki', setAssignedProv: 'iwaki', setDaimyo: true },
-    { id: 'scenario_14_15_corrections_20261015_yamana_mitsuyuki_1391', officerIds: ['off_yamana_mitsuyuki'], scenarioIds: ['1391'], setClanId: 'yamana', setDefaultProv: 'hoki', setAssignedProv: 'hoki', setDaimyo: false },
+    { id: 'scenario_14_15_corrections_20261015_yamana_mitsuyuki_1391', officerIds: ['off_yamana_mitsuyuki'], scenarioIds: ['1391'], setClanId: 'yamana', setDefaultProv: 'hoki_west', setAssignedProv: 'hoki_west', setDaimyo: false },
     { id: 'scenario_14_15_corrections_20261015_yamana_ujikiyo_1391', officerIds: ['off_yamana_ujikiyo'], scenarioIds: ['1391'], setClanId: 'yamana', setDefaultProv: 'tamba_east', setAssignedProv: 'tamba_east', setDaimyo: true }
   );
 }
@@ -10835,7 +10842,7 @@ if (typeof window !== 'undefined' && Array.isArray(window.OFFICER_AFFILIATION_RU
     { id: 'uesugi_tomoyoshi_heir_1493', officerIds: ['off_uesugi_tomoyoshi_1495'], scenarioIds: ['1493'], setClanId: 'ogigayatsu', setDefaultProv: 'musashi_kawagoe', setDaimyo: false },
     // 明応の政変：細川政元が擁立した足利義澄が将軍家当主。廃された義材は越中へ逃れる
     { id: 'ashikaga_yoshizumi_yamashiro_1493', officerIds: ['off_ashikaga_yoshizumi'], scenarioIds: ['1493'], setClanId: 'ashikaga', setDefaultProv: 'yamashiro', setAssignedProv: 'yamashiro', setDaimyo: true },
-    { id: 'ashikaga_yoshiki_etchu_jinbo_1493', officerIds: ['off_ashikaga_yoshitane'], scenarioIds: ['1493', '1495'], setClanId: 'jinbo', setDefaultProv: 'etchu', setDaimyo: false },
+    { id: 'ashikaga_yoshiki_etchu_jinbo_1493', officerIds: ['off_ashikaga_yoshitane'], scenarioIds: ['1493', '1495'], setClanId: 'jinbo', setDefaultProv: 'etchu_west', setDaimyo: false },
     // 伊豆を逐われた足利茶々丸は浪人
     { id: 'chachamaru_ronin_1493', officerIds: ['off_hist_1495_ashikaga_chachamaru'], scenarioIds: ['1493'], setClanId: 'ronin', setDefaultProv: 'izu', setDaimyo: false },
     // 小田原の大森藤頼・氏頼は扇谷上杉方として相模を守る
@@ -10850,7 +10857,7 @@ if (typeof window !== "undefined" && window.OFFICER_AFFILIATION_RULES) {
     {"id": "audit13_off_onin2_062_1438", "officerIds": ["off_onin2_062"], "scenarioIds": ["1438"], "setClanId": "ashikaga", "setDefaultProv": "mikawa", "setDaimyo": false, "placeInOwnedProv": "mikawa"},
     {"id": "audit13_off_onin2_038_1438", "officerIds": ["off_onin2_038"], "scenarioIds": ["1438"], "setClanId": "kamakura_fu", "setDefaultProv": "shimousa", "setDaimyo": false, "placeInOwnedProv": "shimousa"},
     {"id": "audit13_off_saito_myochin_1438", "officerIds": ["off_saito_myochin"], "scenarioIds": ["1438"], "setClanId": "toki", "setDefaultProv": "mino", "setDaimyo": false, "placeInOwnedProv": "mino"},
-    {"id": "audit13_off_nagao_kagenobu_1438", "officerIds": ["off_nagao_kagenobu"], "scenarioIds": ["1438"], "setClanId": "uesugi", "setDefaultProv": "kozuke", "setDaimyo": false, "placeInOwnedProv": "kozuke"},
+    {"id": "audit13_off_nagao_kagenobu_1438", "officerIds": ["off_nagao_kagenobu"], "scenarioIds": ["1438"], "setClanId": "uesugi", "setDefaultProv": "kozuke_takasaki", "setDaimyo": false, "placeInOwnedProv": "kozuke_takasaki"},
     {"id": "audit13_off_asakura_norikage_1438", "officerIds": ["off_asakura_norikage"], "scenarioIds": ["1438"], "setClanId": "shiba", "setDefaultProv": "echizen", "setDaimyo": false, "placeInOwnedProv": "echizen"},
     {"id": "audit13_off_uesugi_mochitomo_1438", "officerIds": ["off_uesugi_mochitomo"], "scenarioIds": ["1438"], "setClanId": "uesugi", "setDefaultProv": "sagami", "setDaimyo": false, "placeInOwnedProv": "sagami"},
     {"id": "audit13_off_onin2_035_1438", "officerIds": ["off_onin2_035"], "scenarioIds": ["1438"], "setClanId": "uesugi", "setDefaultProv": "sagami", "setDaimyo": false, "placeInOwnedProv": "sagami"},
@@ -10860,41 +10867,41 @@ if (typeof window !== "undefined" && window.OFFICER_AFFILIATION_RULES) {
     {"id": "audit13_off_saito_myochin_1467", "officerIds": ["off_saito_myochin"], "scenarioIds": ["1467"], "setClanId": "toki", "setDefaultProv": "mino", "setDaimyo": false, "placeInOwnedProv": "mino"},
     {"id": "audit13_off_hosokawa_shigeyuki_1467", "officerIds": ["off_hosokawa_shigeyuki"], "scenarioIds": ["1467"], "setClanId": "hosokawa", "setDefaultProv": "awa_shikoku", "setDaimyo": false, "placeInOwnedProv": "awa_shikoku"},
     {"id": "audit13_off_jd_245_1467", "officerIds": ["off_jd_245"], "scenarioIds": ["1467"], "setClanId": "hosokawa", "setDefaultProv": "tamba_east", "setDaimyo": false, "placeInOwnedProv": "tamba_east"},
-    {"id": "audit13_off_hist_1495_nagao_kageharu_1467", "officerIds": ["off_hist_1495_nagao_kageharu"], "scenarioIds": ["1467"], "setClanId": "uesugi", "setDefaultProv": "kozuke", "setDaimyo": false, "placeInOwnedProv": "kozuke"},
+    {"id": "audit13_off_hist_1495_nagao_kageharu_1467", "officerIds": ["off_hist_1495_nagao_kageharu"], "scenarioIds": ["1467"], "setClanId": "uesugi", "setDefaultProv": "kozuke_takasaki", "setDaimyo": false, "placeInOwnedProv": "kozuke_takasaki"},
     {"id": "audit13_off_hist_1495_kujo_masamoto_1467", "officerIds": ["off_hist_1495_kujo_masamoto"], "scenarioIds": ["1467"], "setClanId": "ronin", "setDefaultProv": "yamashiro", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_hist_1495_ochi_iehide_1493", "officerIds": ["off_hist_1495_ochi_iehide"], "scenarioIds": ["1493"], "setClanId": "ronin", "setDefaultProv": "yamato_koriyama", "setDaimyo": false, "clearAssignment": true},
-    {"id": "audit13_off_hist_1495_takeda_motoshige_1493", "officerIds": ["off_hist_1495_takeda_motoshige"], "scenarioIds": ["1493"], "setClanId": "ronin", "setDefaultProv": "aki", "setDaimyo": false, "clearAssignment": true},
-    {"id": "audit13_off_hist_1495_kobayakawa_takahira_1493", "officerIds": ["off_hist_1495_kobayakawa_takahira"], "scenarioIds": ["1493"], "setClanId": "ronin", "setDefaultProv": "aki", "setDaimyo": false, "clearAssignment": true},
+    {"id": "audit13_off_hist_1495_takeda_motoshige_1493", "officerIds": ["off_hist_1495_takeda_motoshige"], "scenarioIds": ["1493"], "setClanId": "ronin", "setDefaultProv": "aki_hiroshima", "setDaimyo": false, "clearAssignment": true},
+    {"id": "audit13_off_hist_1495_kobayakawa_takahira_1493", "officerIds": ["off_hist_1495_kobayakawa_takahira"], "scenarioIds": ["1493"], "setClanId": "ronin", "setDefaultProv": "aki_hiroshima", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_hist_1495_motoyama_yoi_1493", "officerIds": ["off_hist_1495_motoyama_yoi"], "scenarioIds": ["1493"], "setClanId": "ronin", "setDefaultProv": "tosa_gun", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_hist_1495_sagara_tametsugu_1493", "officerIds": ["off_hist_1495_sagara_tametsugu"], "scenarioIds": ["1493"], "setClanId": "ronin", "setDefaultProv": "higo", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_succ_hosokawa_1450_38_1493", "officerIds": ["off_succ_hosokawa_1450_38"], "scenarioIds": ["1493"], "setClanId": "hosokawa", "setDefaultProv": "settsu", "setDaimyo": false, "placeInOwnedProv": "settsu"},
-    {"id": "audit13_off_jd_246_1493", "officerIds": ["off_jd_246"], "scenarioIds": ["1493"], "setClanId": "hosokawa", "setDefaultProv": "bicchu", "setDaimyo": false, "placeInOwnedProv": "bicchu"},
+    {"id": "audit13_off_jd_246_1493", "officerIds": ["off_jd_246"], "scenarioIds": ["1493"], "setClanId": "hosokawa", "setDefaultProv": "bitchu_matsuyama", "setDaimyo": false, "placeInOwnedProv": "bitchu_matsuyama"},
     {"id": "audit13_off_ichijo_fusaie_1493", "officerIds": ["off_ichijo_fusaie"], "scenarioIds": ["1493"], "setClanId": "ichijo", "setDefaultProv": "tosa_nakamura", "setDaimyo": true},
-    {"id": "audit13_off_onin2_139_1493", "officerIds": ["off_onin2_139"], "scenarioIds": ["1493"], "setClanId": "ronin", "setDefaultProv": "aki", "setDaimyo": false, "clearAssignment": true},
+    {"id": "audit13_off_onin2_139_1493", "officerIds": ["off_onin2_139"], "scenarioIds": ["1493"], "setClanId": "ronin", "setDefaultProv": "aki_hiroshima", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_dm_chiba_1495_1493", "officerIds": ["off_dm_chiba_1495"], "scenarioIds": ["1493"], "setClanId": "ronin", "setDefaultProv": "shimousa", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_osaki_yoshikane_1495_1493", "officerIds": ["off_osaki_yoshikane_1495"], "scenarioIds": ["1493"], "setClanId": "ronin", "setDefaultProv": "rikuzen", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_uesugi_fusasada_1493", "officerIds": ["off_uesugi_fusasada"], "scenarioIds": ["1493"], "setClanId": "uesugi", "setDefaultProv": "echigo", "setDaimyo": false, "placeInOwnedProv": "echigo"},
     {"id": "audit13_off_hist_1495_ise_sadamune_1495", "officerIds": ["off_hist_1495_ise_sadamune"], "scenarioIds": ["1495"], "setClanId": "ashikaga", "setDefaultProv": "yamashiro", "setDaimyo": true},
     {"id": "audit13_off_hist_1495_ochi_iehide_1495", "officerIds": ["off_hist_1495_ochi_iehide"], "scenarioIds": ["1495"], "setClanId": "ronin", "setDefaultProv": "yamato_koriyama", "setDaimyo": false, "clearAssignment": true},
-    {"id": "audit13_off_hist_1495_takeda_motoshige_1495", "officerIds": ["off_hist_1495_takeda_motoshige"], "scenarioIds": ["1495"], "setClanId": "ronin", "setDefaultProv": "aki", "setDaimyo": false, "clearAssignment": true},
-    {"id": "audit13_off_hist_1495_kobayakawa_takahira_1495", "officerIds": ["off_hist_1495_kobayakawa_takahira"], "scenarioIds": ["1495"], "setClanId": "ronin", "setDefaultProv": "aki", "setDaimyo": false, "clearAssignment": true},
+    {"id": "audit13_off_hist_1495_takeda_motoshige_1495", "officerIds": ["off_hist_1495_takeda_motoshige"], "scenarioIds": ["1495"], "setClanId": "ronin", "setDefaultProv": "aki_hiroshima", "setDaimyo": false, "clearAssignment": true},
+    {"id": "audit13_off_hist_1495_kobayakawa_takahira_1495", "officerIds": ["off_hist_1495_kobayakawa_takahira"], "scenarioIds": ["1495"], "setClanId": "ronin", "setDefaultProv": "aki_hiroshima", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_hist_1495_motoyama_yoi_1495", "officerIds": ["off_hist_1495_motoyama_yoi"], "scenarioIds": ["1495"], "setClanId": "ronin", "setDefaultProv": "tosa_gun", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_hist_1495_sagara_tametsugu_1495", "officerIds": ["off_hist_1495_sagara_tametsugu"], "scenarioIds": ["1495"], "setClanId": "ronin", "setDefaultProv": "higo", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_hatakeyama_yoshitoyo_1495", "officerIds": ["off_hatakeyama_yoshitoyo"], "scenarioIds": ["1495"], "setClanId": "hatakeyama_soshu", "setDefaultProv": "kawachi", "setDaimyo": true},
     {"id": "audit13_off_succ_hosokawa_1450_38_1495", "officerIds": ["off_succ_hosokawa_1450_38"], "scenarioIds": ["1495"], "setClanId": "hosokawa", "setDefaultProv": "settsu", "setDaimyo": false, "placeInOwnedProv": "settsu"},
-    {"id": "audit13_off_jd_246_1495", "officerIds": ["off_jd_246"], "scenarioIds": ["1495"], "setClanId": "hosokawa", "setDefaultProv": "bicchu", "setDaimyo": false, "placeInOwnedProv": "bicchu"},
+    {"id": "audit13_off_jd_246_1495", "officerIds": ["off_jd_246"], "scenarioIds": ["1495"], "setClanId": "hosokawa", "setDefaultProv": "bitchu_matsuyama", "setDaimyo": false, "placeInOwnedProv": "bitchu_matsuyama"},
     {"id": "audit13_off_ichijo_fusaie_1495", "officerIds": ["off_ichijo_fusaie"], "scenarioIds": ["1495"], "setClanId": "ichijo", "setDefaultProv": "tosa_nakamura", "setDaimyo": true},
-    {"id": "audit13_off_onin2_139_1495", "officerIds": ["off_onin2_139"], "scenarioIds": ["1495"], "setClanId": "ronin", "setDefaultProv": "aki", "setDaimyo": false, "clearAssignment": true},
+    {"id": "audit13_off_onin2_139_1495", "officerIds": ["off_onin2_139"], "scenarioIds": ["1495"], "setClanId": "ronin", "setDefaultProv": "aki_hiroshima", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_dm_chiba_1495_1495", "officerIds": ["off_dm_chiba_1495"], "scenarioIds": ["1495"], "setClanId": "ronin", "setDefaultProv": "shimousa", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_osaki_yoshikane_1495_1495", "officerIds": ["off_osaki_yoshikane_1495"], "scenarioIds": ["1495"], "setClanId": "ronin", "setDefaultProv": "rikuzen", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_onin2_059_1495", "officerIds": ["off_onin2_059"], "scenarioIds": ["1495"], "setClanId": "uesugi", "setDefaultProv": "echigo", "setDaimyo": false, "placeInOwnedProv": "echigo"},
     {"id": "audit13_off_arima_haruzumi_1531", "officerIds": ["off_arima_haruzumi"], "scenarioIds": ["1531"], "setClanId": "ronin", "setDefaultProv": "hizen_saga", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_omura_sumisaki_1531", "officerIds": ["off_omura_sumisaki"], "scenarioIds": ["1531"], "setClanId": "ronin", "setDefaultProv": "hizen_saga", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_hosokawa_takakuni_1531", "officerIds": ["off_hosokawa_takakuni"], "scenarioIds": ["1531"], "setClanId": "ronin", "setDefaultProv": "settsu", "setDaimyo": false, "clearAssignment": true},
-    {"id": "audit13_off_sanada_yukitaka_1531", "officerIds": ["off_sanada_yukitaka"], "scenarioIds": ["1531"], "setClanId": "ronin", "setDefaultProv": "ueda", "setDaimyo": false, "clearAssignment": true},
+    {"id": "audit13_off_sanada_yukitaka_1531", "officerIds": ["off_sanada_yukitaka"], "scenarioIds": ["1531"], "setClanId": "ronin", "setDefaultProv": "shinano_ueda", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_yamamoto_kansuke_1531", "officerIds": ["off_yamamoto_kansuke"], "scenarioIds": ["1531"], "setClanId": "ronin", "setDefaultProv": "kai", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_itagaki_nobukata_1531", "officerIds": ["off_itagaki_nobukata"], "scenarioIds": ["1531"], "setClanId": "takeda", "setDefaultProv": "kai", "setDaimyo": false, "placeInOwnedProv": "kai"},
-    {"id": "audit13_off_tachibana_dosetsu_1531", "officerIds": ["off_tachibana_dosetsu"], "scenarioIds": ["1531"], "setClanId": "otomo", "setDefaultProv": "bungo", "setDaimyo": false, "placeInOwnedProv": "bungo"},
+    {"id": "audit13_off_tachibana_dosetsu_1531", "officerIds": ["off_tachibana_dosetsu"], "scenarioIds": ["1531"], "setClanId": "otomo", "setDefaultProv": "bungo_funai", "setDaimyo": false, "placeInOwnedProv": "bungo_funai"},
     {"id": "audit13_off_ichijo_fusafuyu_1531", "officerIds": ["off_ichijo_fusafuyu"], "scenarioIds": ["1531"], "setClanId": "ichijo", "setDefaultProv": "tosa_nakamura", "setDaimyo": true},
     {"id": "audit13_off_motoyama_shigemune_1531", "officerIds": ["off_motoyama_shigemune"], "scenarioIds": ["1531"], "setClanId": "ronin", "setDefaultProv": "tosa_gun", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_aki_kunitayasu_1531", "officerIds": ["off_aki_kunitayasu"], "scenarioIds": ["1531"], "setClanId": "ronin", "setDefaultProv": "tosa_aki", "setDaimyo": false, "clearAssignment": true},
@@ -10903,8 +10910,8 @@ if (typeof window !== "undefined" && window.OFFICER_AFFILIATION_RULES) {
     {"id": "audit13_off_iwaki_shigetaka_1531", "officerIds": ["off_iwaki_shigetaka"], "scenarioIds": ["1531"], "setClanId": "ronin", "setDefaultProv": "iwaki", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_aso_koretoyo_1531", "officerIds": ["off_aso_koretoyo"], "scenarioIds": ["1531"], "setClanId": "ronin", "setDefaultProv": "higo", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_kai_soun_1531", "officerIds": ["off_kai_soun"], "scenarioIds": ["1531"], "setClanId": "ronin", "setDefaultProv": "higo", "setDaimyo": false, "clearAssignment": true},
-    {"id": "audit13_off_jd_250_1531", "officerIds": ["off_jd_250"], "scenarioIds": ["1531"], "setClanId": "ronin", "setDefaultProv": "higashi_hoki", "setDaimyo": false, "clearAssignment": true},
-    {"id": "audit13_off_jd_421_1531", "officerIds": ["off_jd_421"], "scenarioIds": ["1531"], "setClanId": "ouchi", "setDefaultProv": "aki", "setDaimyo": false, "placeInOwnedProv": "aki"},
+    {"id": "audit13_off_jd_250_1531", "officerIds": ["off_jd_250"], "scenarioIds": ["1531"], "setClanId": "ronin", "setDefaultProv": "hoki_east", "setDaimyo": false, "clearAssignment": true},
+    {"id": "audit13_off_jd_421_1531", "officerIds": ["off_jd_421"], "scenarioIds": ["1531"], "setClanId": "ouchi", "setDefaultProv": "aki_hiroshima", "setDaimyo": false, "placeInOwnedProv": "aki_hiroshima"},
     {"id": "audit13_off_toki_yorinari_1531", "officerIds": ["off_toki_yorinari"], "scenarioIds": ["1531"], "setClanId": "ronin", "setDefaultProv": "mino", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_osaki_yoshinao_1538_1531", "officerIds": ["off_osaki_yoshinao_1538"], "scenarioIds": ["1531"], "setClanId": "ronin", "setDefaultProv": "rikuzen", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_hist_1495_nasu_sukefusa_1531", "officerIds": ["off_hist_1495_nasu_sukefusa"], "scenarioIds": ["1531"], "setClanId": "ronin", "setDefaultProv": "shimotsuke", "setDaimyo": false, "clearAssignment": true},
@@ -10913,10 +10920,10 @@ if (typeof window !== "undefined" && window.OFFICER_AFFILIATION_RULES) {
     {"id": "audit13_off_dm_date_1546_1531", "officerIds": ["off_dm_date_1546"], "scenarioIds": ["1531"], "setClanId": "date", "setDefaultProv": "iwashiro", "setDaimyo": false, "placeInOwnedProv": "iwashiro"},
     {"id": "audit13_off_arima_haruzumi_1538", "officerIds": ["off_arima_haruzumi"], "scenarioIds": ["1538"], "setClanId": "ronin", "setDefaultProv": "hizen_saga", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_omura_sumisaki_1538", "officerIds": ["off_omura_sumisaki"], "scenarioIds": ["1538"], "setClanId": "ronin", "setDefaultProv": "hizen_saga", "setDaimyo": false, "clearAssignment": true},
-    {"id": "audit13_off_sanada_yukitaka_1538", "officerIds": ["off_sanada_yukitaka"], "scenarioIds": ["1538"], "setClanId": "ronin", "setDefaultProv": "kozuke", "setDaimyo": false, "clearAssignment": true},
+    {"id": "audit13_off_sanada_yukitaka_1538", "officerIds": ["off_sanada_yukitaka"], "scenarioIds": ["1538"], "setClanId": "ronin", "setDefaultProv": "kozuke_takasaki", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_yamamoto_kansuke_1538", "officerIds": ["off_yamamoto_kansuke"], "scenarioIds": ["1538"], "setClanId": "ronin", "setDefaultProv": "kai", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_itagaki_nobukata_1538", "officerIds": ["off_itagaki_nobukata"], "scenarioIds": ["1538"], "setClanId": "takeda", "setDefaultProv": "kai", "setDaimyo": false, "placeInOwnedProv": "kai"},
-    {"id": "audit13_off_tachibana_dosetsu_1538", "officerIds": ["off_tachibana_dosetsu"], "scenarioIds": ["1538"], "setClanId": "otomo", "setDefaultProv": "bungo", "setDaimyo": false, "placeInOwnedProv": "bungo"},
+    {"id": "audit13_off_tachibana_dosetsu_1538", "officerIds": ["off_tachibana_dosetsu"], "scenarioIds": ["1538"], "setClanId": "otomo", "setDefaultProv": "bungo_funai", "setDaimyo": false, "placeInOwnedProv": "bungo_funai"},
     {"id": "audit13_off_ichijo_fusafuyu_1538", "officerIds": ["off_ichijo_fusafuyu"], "scenarioIds": ["1538"], "setClanId": "ichijo", "setDefaultProv": "tosa_nakamura", "setDaimyo": true},
     {"id": "audit13_off_motoyama_shigemune_1538", "officerIds": ["off_motoyama_shigemune"], "scenarioIds": ["1538"], "setClanId": "ronin", "setDefaultProv": "tosa_gun", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_aki_kunitayasu_1538", "officerIds": ["off_aki_kunitayasu"], "scenarioIds": ["1538"], "setClanId": "ronin", "setDefaultProv": "tosa_aki", "setDaimyo": false, "clearAssignment": true},
@@ -10925,8 +10932,8 @@ if (typeof window !== "undefined" && window.OFFICER_AFFILIATION_RULES) {
     {"id": "audit13_off_iwaki_shigetaka_1538", "officerIds": ["off_iwaki_shigetaka"], "scenarioIds": ["1538"], "setClanId": "ronin", "setDefaultProv": "iwaki", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_aso_koretoyo_1538", "officerIds": ["off_aso_koretoyo"], "scenarioIds": ["1538"], "setClanId": "ronin", "setDefaultProv": "higo", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_kai_soun_1538", "officerIds": ["off_kai_soun"], "scenarioIds": ["1538"], "setClanId": "ronin", "setDefaultProv": "higo", "setDaimyo": false, "clearAssignment": true},
-    {"id": "audit13_off_jd_250_1538", "officerIds": ["off_jd_250"], "scenarioIds": ["1538"], "setClanId": "ronin", "setDefaultProv": "higashi_hoki", "setDaimyo": false, "clearAssignment": true},
-    {"id": "audit13_off_jd_421_1538", "officerIds": ["off_jd_421"], "scenarioIds": ["1538"], "setClanId": "ouchi", "setDefaultProv": "aki", "setDaimyo": false, "placeInOwnedProv": "aki"},
+    {"id": "audit13_off_jd_250_1538", "officerIds": ["off_jd_250"], "scenarioIds": ["1538"], "setClanId": "ronin", "setDefaultProv": "hoki_east", "setDaimyo": false, "clearAssignment": true},
+    {"id": "audit13_off_jd_421_1538", "officerIds": ["off_jd_421"], "scenarioIds": ["1538"], "setClanId": "ouchi", "setDefaultProv": "aki_hiroshima", "setDaimyo": false, "placeInOwnedProv": "aki_hiroshima"},
     {"id": "audit13_off_toki_yorinari_1538", "officerIds": ["off_toki_yorinari"], "scenarioIds": ["1538"], "setClanId": "ronin", "setDefaultProv": "mino", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_osaki_yoshinao_1538_1538", "officerIds": ["off_osaki_yoshinao_1538"], "scenarioIds": ["1538"], "setClanId": "ronin", "setDefaultProv": "rikuzen", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_jd_254_1538", "officerIds": ["off_jd_254"], "scenarioIds": ["1538"], "setClanId": "ronin", "setDefaultProv": "kawachi", "setDaimyo": false, "clearAssignment": true},
@@ -10943,7 +10950,7 @@ if (typeof window !== "undefined" && window.OFFICER_AFFILIATION_RULES) {
     {"id": "audit13_off_uesugi_tomosada_1546", "officerIds": ["off_uesugi_tomosada"], "scenarioIds": ["1546"], "setClanId": "ronin", "setDefaultProv": "musashi_edo_tama", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_nanbata_noritsugu_1546", "officerIds": ["off_nanbata_noritsugu"], "scenarioIds": ["1546"], "setClanId": "ronin", "setDefaultProv": "musashi_edo_tama", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_kawajiri_hidetaka_1546", "officerIds": ["off_kawajiri_hidetaka"], "scenarioIds": ["1546"], "setClanId": "oda", "setDefaultProv": "owari", "setDaimyo": false, "placeInOwnedProv": "owari"},
-    {"id": "audit13_off_miyabe_keijun_1546", "officerIds": ["off_miyabe_keijun"], "scenarioIds": ["1546"], "setClanId": "ronin", "setDefaultProv": "north_omi", "setDaimyo": false, "clearAssignment": true},
+    {"id": "audit13_off_miyabe_keijun_1546", "officerIds": ["off_miyabe_keijun"], "scenarioIds": ["1546"], "setClanId": "ronin", "setDefaultProv": "omi_north", "setDaimyo": false, "clearAssignment": true},
     {"id": "audit13_off_kanamori_nagachika_1546", "officerIds": ["off_kanamori_nagachika"], "scenarioIds": ["1546"], "setClanId": "oda", "setDefaultProv": "owari", "setDaimyo": false, "placeInOwnedProv": "owari"},
     {"id": "audit13_off_jd_027_1546", "officerIds": ["off_jd_027"], "scenarioIds": ["1546"], "setClanId": "oda", "setDefaultProv": "owari", "setDaimyo": false, "placeInOwnedProv": "owari"},
     {"id": "audit13_off_ikoma_chikamasa_1546", "officerIds": ["off_ikoma_chikamasa"], "scenarioIds": ["1546"], "setClanId": "oda", "setDefaultProv": "owari", "setDaimyo": false, "placeInOwnedProv": "owari"},
@@ -10951,7 +10958,7 @@ if (typeof window !== "undefined" && window.OFFICER_AFFILIATION_RULES) {
     {"id": "audit13_off_kosaka_masanobu_1546", "officerIds": ["off_kosaka_masanobu"], "scenarioIds": ["1546"], "setClanId": "takeda", "setDefaultProv": "kai", "setDaimyo": false, "placeInOwnedProv": "kai"},
     {"id": "audit13_off_jd_334_1546", "officerIds": ["off_jd_334"], "scenarioIds": ["1546"], "setClanId": "shimazu", "setDefaultProv": "satsuma", "setDaimyo": false, "placeInOwnedProv": "satsuma"},
     {"id": "audit13_off_jd_259_1546", "officerIds": ["off_jd_259"], "scenarioIds": ["1546"], "setClanId": "sagara", "setDefaultProv": "higo", "setDaimyo": false, "placeInOwnedProv": "higo"},
-    {"id": "audit13_off_sugi_okiyoshi_1546", "officerIds": ["off_sugi_okiyoshi"], "scenarioIds": ["1546"], "setClanId": "ouchi", "setDefaultProv": "chikuzen", "setDaimyo": false, "placeInOwnedProv": "chikuzen"},
+    {"id": "audit13_off_sugi_okiyoshi_1546", "officerIds": ["off_sugi_okiyoshi"], "scenarioIds": ["1546"], "setClanId": "ouchi", "setDefaultProv": "chikuzen_fukuoka", "setDaimyo": false, "placeInOwnedProv": "chikuzen_fukuoka"},
     {"id": "audit13_off_masuda_fujikane_1546", "officerIds": ["off_masuda_fujikane"], "scenarioIds": ["1546"], "setClanId": "ouchi", "setDefaultProv": "iwami", "setDaimyo": false, "placeInOwnedProv": "iwami"}
   );
 }
@@ -10967,6 +10974,6 @@ if (typeof window !== 'undefined' && window.OFFICER_AFFILIATION_RULES) {
     // 本庄繁長：1560年は長尾景虎配下の本庄城主（越後）／1598年以降は上杉家の福島城代（信夫郡＝岩代）／1614年は米沢上杉家
     { id: 'fx3_honjo_shigenaga_nagao_1560', officerIds: ['off_honjo_shigenaga'], scenarioIds: ['1560'], requireOwners: ['nagao'], setClanId: 'nagao', setDefaultProv: 'echigo', clearAssignment: true, setDaimyo: false },
     { id: 'fx3_honjo_shigenaga_uesugi_fukushima_1600', officerIds: ['off_honjo_shigenaga'], scenarioIds: ['1600'], requireOwners: ['uesugi'], setClanId: 'uesugi', setDefaultProv: 'iwashiro', clearAssignment: true, setDaimyo: false },
-    { id: 'fx3_honjo_shigenaga_uesugi_yonezawa_1614', officerIds: ['off_honjo_shigenaga'], scenarioIds: ['1614'], requireOwners: ['uesugi'], setClanId: 'uesugi', setDefaultProv: 'yonezawa_date', clearAssignment: true, setDaimyo: false }
+    { id: 'fx3_honjo_shigenaga_uesugi_yonezawa_1614', officerIds: ['off_honjo_shigenaga'], scenarioIds: ['1614'], requireOwners: ['uesugi'], setClanId: 'uesugi', setDefaultProv: 'uzen_yonezawa_date', clearAssignment: true, setDaimyo: false }
   );
 }
