@@ -56,11 +56,11 @@
   }
 
   #game-container {
-    width: 100vw;
-    max-width: 1920px;
+    width: 100%;
+    max-width: none;
     height: 100vh;
-    margin: 0 auto;
-    padding: 4px 6px;
+    margin: 0;
+    padding: 4px 0;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
