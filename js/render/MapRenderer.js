@@ -12,7 +12,6 @@ const SHIKOKU_PROVINCE_IDS = new Set(['iyo_matsuyama', 'iyo_nii', 'iyo_ohzu', 'i
 const SHIKOKU_MAP_TRANSFORM = 'rotate(4 280 450)';
 // 地図枠と列島全体の傾きは変えず、五島以外だけを右へ寄せる。
 const NON_GOTO_MAP_TRANSFORM = 'translate(16 0)';
-const TERRITORY_COLOR_KAMON_CLANS = new Set(['saito', 'takigawa', 'saionji_iyo', 'kato', 'murakami_noshima', 'akita', 'gamo', 'gamou', 'todo', 'tosa', 'clan_8849', 'kumamoto_hosokawa', 'ako_ronin', 'sakai', 'fukui_matsudaira', 'okayama', 'tottori', 'matsue', 'uwajima_date', 'makino', 'kuwana', 'ando', 'niwa', 'goto', 'suwa', 'sengoku', 'bessho', 'shiina', 'sano', 'nanjo', 'aki_tosa', 'motoyama', 'ichijo', 'chosokabe', 'takato', 'oyama']);
 
 export class MapRenderer {
   constructor(game) {
@@ -294,8 +293,6 @@ export const MapRendererMethods = {
   /** 領国群の重心に最も近い国 */
 
   provinceLatitude(provId) {
-    const lat = (window.PROVINCE_LATITUDE || {})[provId];
-    if (Number.isFinite(Number(lat))) return Number(lat);
     const rank = this.provinceGeoRank(provId);
     return rank >= 10000 ? 0 : 42 - rank * 0.14;
   },
@@ -528,7 +525,7 @@ export const MapRendererMethods = {
       'bizen-sanuki',         // 讃岐と備前
       'iyo-suo',              // 伊予と周防
       'bungo-iyo',            // 伊予と豊後
-      'chikuzen_fukuoka-tsushima',    // 対馬と筑前
+      'chikuzen_hakata-tsushima',    // 対馬と筑前
       'hizen_hirado-tsushima',      // 対馬と平戸
       'ryukyu-satsuma',       // 薩摩と琉球
       'echigo-sado',          // 越後と佐渡

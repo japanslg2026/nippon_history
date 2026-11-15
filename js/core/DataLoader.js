@@ -15,15 +15,16 @@ export class DataLoader {
    */
   static async loadAllData() {
     try {
-      const v = '20261114_mimasaka'; // japan_slg.html の preload と同じ値にすること
-      const [scenarios, officers, provinces, clansData, governorsData, eventsData, mapBordersData] = await Promise.all([
+      const v = '20261115_v23'; // japan_slg.html の preload と同じ値にすること
+      const [scenarios, officers, provinces, clansData, governorsData, eventsData, mapBordersData, rulesData] = await Promise.all([
         DataLoader.fetchJson(`data/scenarios.json?v=${v}`),
         DataLoader.fetchJson(`data/officers.json?v=${v}`),
         DataLoader.fetchJson(`data/provinces.json?v=${v}`),
         DataLoader.fetchJson(`data/clans.json?v=${v}`),
         DataLoader.fetchJson(`data/governors.json?v=${v}`),
         DataLoader.fetchJson(`data/events.json?v=${v}`),
-        (typeof window !== 'undefined' && window.MAP_BORDERS_DATA) ? Promise.resolve(null) : DataLoader.fetchJson(`data/map_borders.json?v=${v}`).catch(() => null)
+        (typeof window !== 'undefined' && window.MAP_BORDERS_DATA) ? Promise.resolve(null) : DataLoader.fetchJson(`data/map_borders.json?v=${v}`).catch(() => null),
+        DataLoader.fetchJson(`data/rules.json?v=${v}`)
       ]);
 
       if (mapBordersData && typeof window !== 'undefined') {
@@ -48,7 +49,7 @@ export class DataLoader {
 
       // 対馬につながる経路は筑前と平戸のみに限定する（2026-11-09）
       if (Array.isArray(provinces)) {
-        const TSUSHIMA_LINKS = ['chikuzen_fukuoka', 'hizen_hirado'];
+        const TSUSHIMA_LINKS = ['chikuzen_hakata', 'hizen_hirado'];
         provinces.forEach(p => {
           if (!p || !Array.isArray(p.neighbors)) return;
           if (p.id === 'tsushima') {
@@ -74,7 +75,8 @@ export class DataLoader {
         historicalEvents: eventsData?.historicalEvents || {},
         castleChanges: eventsData?.castleChanges || {},
         daimyoLifespans: eventsData?.daimyoLifespans || {},
-        choiceEventRules: eventsData?.choiceEventRules || {}
+        choiceEventRules: eventsData?.choiceEventRules || {},
+        rules: rulesData || {}
       };
 
       // 既存のコードとの100%完全な互換性を確保するためのグローバル参照同期
@@ -141,5 +143,31 @@ export class DataLoader {
     window.HISTORICAL_CASTLE_CHANGES = data.castleChanges;
     window.DAIMYO_LIFESPAN_DATA = data.daimyoLifespans;
     window.HISTORICAL_CHOICE_EVENT_RULES = data.choiceEventRules || {};
+    DataLoader.syncRuleTables(data.rules);
+  }
+
+  /**
+   * data/rules.json（武将配属ルール・一門名簿・家名の変遷など）を、従来の window.* 名で配る
+   * @param {Object} r
+   */
+  static syncRuleTables(r) {
+    if (typeof window === 'undefined' || !r) return;
+    window.RULES_DATA = r;
+    window.OFFICER_AFFILIATION_RULES = r.officerAffiliationRules || [];
+    window.OFFICER_FAMILY_ROSTERS = r.officerFamilyRosters || {};
+    window.CLAN_SERVICE_FALLBACKS = r.clanServiceFallbacks || [];
+    window.LEADER_NAME_ALIASES = r.leaderNameAliases || [];
+    window.CLAN_NAME_ERAS = r.clanNameEras || {};
+    window.CLAN_CAPITAL_ERAS = r.clanCapitalEras || {};
+    window.TOYOTOMI_SURNAME_OFFICERS = r.toyotomiSurnameOfficers || {};
+    window.KIYOHIRA_OFFICER_IDS = r.kiyohiraOfficerIds || [];
+    window.HIDEYOSHI_HEIR_ORDER_IDS = r.hideyoshiHeirOrderIds || [];
+    window.AI_CLAN_STRENGTH_BOOSTS = r.aiClanStrengthBoosts || {};
+    window.FORCED_MEDIOCRE_UNLESS_HEAD = r.forcedMediocreUnlessHead || {};
+    window.NON_ABSORBABLE_CLANS = r.nonAbsorbableClans || [];
+    window.OFFICER_ID_ALIASES = r.officerIdAliases || {};
+    window.DISTINCT_HOMONYM_OFFICER_IDS = Array.isArray(r.distinctHomonymOfficerIds) ? r.distinctHomonymOfficerIds : [];
+    window.ALLSTAR_OFFICER_AFFILIATIONS = r.allstarAffiliations || {};
+    window.FACTION_ROSTER_MAPPINGS = r.factionRosters || {};
   }
 }

@@ -37,7 +37,7 @@
       "kamon": "kamon-mongol",
       "capital_pref": [
         "tsushima",
-        "chikuzen_fukuoka"
+        "chikuzen_hakata"
       ],
       "tactic": "てつはう波状攻撃",
       "tacticDesc": "炸裂弾てつはうの爆音と毒矢の一斉射撃により、敵全部隊の士気と防御力を激減させる。",
@@ -341,7 +341,9 @@
         "1592": "秋田実季",
         "1600": "秋田実季",
         "default": "安東愛季"
-      }
+      },
+      "mapColor": "#2f7a78",
+      "kamonFixed": true
     },
     "arima": {
       "family": "有馬家",
@@ -598,7 +600,10 @@
         "1592": "長宗我部元親",
         "1600": "長宗我部盛親",
         "default": "長宗我部元親"
-      }
+      },
+      "mapColor": "#5dade2",
+      "kamonFixed": true,
+      "kamonFollowsMapColor": true
     },
     "date": {
       "family": "伊達家",
@@ -699,6 +704,8 @@
       "color": "#943126",
       "kamon": "kamon-hatakeyama",
       "capital_pref": [
+        "kawachi_south",
+        "kawachi",
         "osaka",
         "wakayama",
         "ishikawa"
@@ -1307,6 +1314,7 @@
         "1577": "三好長治",
         "1578": "三好長治",
         "1580": "十河存保",
+        "1582": "十河存保",
         "default": "三好長慶"
       }
     },
@@ -1504,7 +1512,7 @@
       "color": "#6e5d29",
       "kamon": "kamon-murakami",
       "capital_pref": [
-        "nagano_n"
+        "shinano_sarashina_hanishina"
       ],
       "tactic": "信濃坂木の猛威",
       "tacticDesc": "信濃武士の剛勇で突撃し、敵本陣を恐慌に陥れる。",
@@ -1668,9 +1676,11 @@
       "color": "#d2271f",
       "kamon": "kamon-oda",
       "capital_pref": [
-        "aichi_w",
-        "gifu",
-        "shiga_s"
+        "owari_south",
+        "owari",
+        "mino",
+        "omi_south",
+        "kyoto"
       ],
       "tactic": "天下布武・三段撃ち",
       "tacticDesc": "革新的な兵農分離軍団と大量の火縄銃による怒涛の三段連射。",
@@ -2045,15 +2055,18 @@
         "1561": "斎藤義龍",
         "default": "斎藤道三",
         "allstar_feudal": "斎藤利宗"
-      }
+      },
+      "mapColor": "#73787c",
+      "kamonFollowsMapColor": true
     },
     "sanada": {
       "family": "真田家",
       "color": "#922b21",
       "kamon": "kamon-sanada",
       "capital_pref": [
-        "nagano_s",
-        "gunma"
+        "shinano_ueda",
+        "shinano_sarashina_hanishina",
+        "kozuke_numata"
       ],
       "tactic": "表裏比興の神謀",
       "tacticDesc": "神算鬼謀の計略で大軍を狭隘な隘路に誘い込み、完全に殲滅する。",
@@ -2197,9 +2210,9 @@
       "color": "#4a47af",
       "kamon": "kamon-shiba",
       "capital_pref": [
-        "fukui",
-        "aichi_w",
-        "iwate"
+        "owari_south",
+        "owari",
+        "echizen"
       ],
       "tactic": "足利筆頭三管領",
       "tacticDesc": "足利一門最高格式の威厳により、朝廷・幕府との外交信頼を獲得。",
@@ -2454,7 +2467,8 @@
         "1542": "諏訪頼重",
         "1637": "諏訪頼水",
         "default": "諏訪頼重"
-      }
+      },
+      "kamonFollowsMapColor": true
     },
     "tachibana": {
       "family": "立花家",
@@ -2537,7 +2551,8 @@
         "1580": "武田勝頼",
         "1582": "武田勝頼",
         "default": "武田信玄"
-      }
+      },
+      "mapColor": "#ea5424"
     },
     "togashi": {
       "family": "富樫家",
@@ -2900,6 +2915,8 @@
       "color": "#3d4c1f",
       "kamon": "kamon-kusunoki",
       "capital_pref": [
+        "kawachi_south",
+        "kawachi",
         "osaka",
         "nara"
       ],
@@ -2911,6 +2928,7 @@
         "1333": "楠木正成",
         "1336": "楠木正行",
         "1350": "楠木正儀",
+        "1359": "楠木正儀",
         "default": "楠木正成"
       }
     },
@@ -3009,7 +3027,8 @@
         "1866": "池田茂政",
         "1868": "池田茂政",
         "default": "池田光政"
-      }
+      },
+      "mapColor": "#3f5c9a"
     },
     "mito": {
       "family": "水戸徳川家",
@@ -3122,7 +3141,8 @@
       "leaders": {
         "1868": "榎本武揚",
         "default": "榎本武揚"
-      }
+      },
+      "kamonFixed": true
     },
     "meiji": {
       "family": "明治新政府",
@@ -3163,14 +3183,16 @@
         "1866": "山内容堂",
         "1868": "山内容堂",
         "default": "山内容堂"
-      }
+      },
+      "mapColor": "#365a9c"
     },
     "owari": {
       "family": "尾張徳川家",
       "color": "#c0392b",
       "kamon": "kamon-owari",
       "capital_pref": [
-        "aichi_w"
+        "owari_south",
+        "owari"
       ],
       "tactic": "御三家筆頭の威光",
       "tacticDesc": "徳川御三家筆頭の絶大なる権威で味方の士気を鼓舞する。",
@@ -3254,7 +3276,8 @@
         "1866": "松平茂昭",
         "1868": "松平茂昭",
         "default": "松平慶永"
-      }
+      },
+      "mapColor": "#8a4a36"
     },
     "matsue": {
       "family": "松江藩松平家",
@@ -3277,7 +3300,8 @@
         "1866": "松平定安",
         "1868": "松平定安",
         "default": "松平直政"
-      }
+      },
+      "mapColor": "#2f6f68"
     },
     "tottori": {
       "family": "鳥取藩池田家",
@@ -3300,7 +3324,8 @@
         "1866": "池田慶徳",
         "1868": "池田慶徳",
         "default": "池田光仲"
-      }
+      },
+      "mapColor": "#7a5a90"
     },
     "kumamoto_hosokawa": {
       "family": "熊本藩細川家",
@@ -3323,7 +3348,9 @@
         "1866": "細川慶順",
         "1868": "細川韶邦",
         "default": "細川護久"
-      }
+      },
+      "mapColor": "#596146",
+      "kamonFixed": true
     },
     "kobayakawa": {
       "family": "小早川家",
@@ -3594,7 +3621,9 @@
         "1438": "コシャマイン",
         "1467": "タニコシャ",
         "default": "蝦夷アイヌ首長"
-      }
+      },
+      "mapColor": "#1f5f8b",
+      "kamonFollowsMapColor": true
     },
     "shimazu_proto": {
       "family": "伴家",
@@ -3654,7 +3683,7 @@
       "kamon": "kamon-genji",
       "capital_pref": [
         "sagami",
-        "musashi_edo_tama"
+        "musashi_edo"
       ],
       "tactic": "坂東武者の突進",
       "tacticDesc": "坂東武士の剛勇をもって敵の本陣へ直線的に突撃する。",
@@ -3744,7 +3773,7 @@
       "kamon": "kamon-genji",
       "capital_pref": [
         "sagami",
-        "musashi_edo_tama",
+        "musashi_edo",
         "izu"
       ],
       "tactic": "鎌倉殿の下知",
@@ -3765,7 +3794,7 @@
       "color": "#935116",
       "kamon": "kamon-kiso",
       "capital_pref": [
-        "shinano_chikuma_kiso",
+        "shinano_kiso",
         "shinano_kawanakajima"
       ],
       "tactic": "火牛の計",
@@ -3775,6 +3804,39 @@
         "1156": "中原兼遠",
         "1180": "木曽義仲",
         "1183": "源義仲",
+        "1333": "木曽家村",
+        "1336": "木曽家村",
+        "1350": "木曽家頼",
+        "1359": "木曽家頼",
+        "1391": "木曽家親",
+        "1400": "木曽親豊",
+        "1438": "木曽信道",
+        "1457": "木曽家賢",
+        "1467": "木曽家豊",
+        "1493": "木曽義元",
+        "1495": "木曽義元",
+        "1517": "木曽義在",
+        "1531": "木曽義在",
+        "1538": "木曽義在",
+        "1542": "木曽義康",
+        "1546": "木曽義康",
+        "1550": "木曽義康",
+        "1555": "木曽義康",
+        "1560": "木曽義昌",
+        "1561": "木曽義昌",
+        "1567": "木曽義昌",
+        "1570": "木曽義昌",
+        "1573": "木曽義昌",
+        "1576": "木曽義昌",
+        "1577": "木曽義昌",
+        "1578": "木曽義昌",
+        "1580": "木曽義昌",
+        "1582": "木曽義昌",
+        "1583": "木曽義昌",
+        "1584": "木曽義昌",
+        "1585": "木曽義昌",
+        "1587": "木曽義昌",
+        "1590": "木曽義昌",
         "default": "源義仲"
       }
     },
@@ -3800,7 +3862,7 @@
       "kamon": "kamon-hojo",
       "capital_pref": [
         "sagami",
-        "musashi_edo_tama"
+        "musashi_edo"
       ],
       "tactic": "尼将軍の激文",
       "tacticDesc": "政子の名演説の如く御家人の結束を極限まで高め、防御と士気を増強。",
@@ -4184,7 +4246,8 @@
         "default": "松永久秀"
       },
       "crest": "蔦紋（つたもん）",
-      "kamonName": "蔦紋（つたもん）"
+      "kamonName": "蔦紋（つたもん）",
+      "mapColor": "#2d7a46"
     },
     "aso": {
       "family": "阿蘇家",
@@ -4197,6 +4260,8 @@
       "tacticDesc": "阿蘇神社の神威と山岳武士団の団結で防衛する。",
       "desc": "肥後国阿蘇神社の神官・大宮司を世襲した大名家。山岳地形を活かし勢力を維持した。",
       "leaders": {
+        "1156": "阿蘇忠国",
+        "1159": "阿蘇忠国",
         "1550": "阿蘇惟豊",
         "1555": "阿蘇惟豊",
         "1560": "阿蘇惟将",
@@ -4319,7 +4384,9 @@
         "1570": "一条兼定",
         "1573": "一条兼定",
         "default": "一条兼定"
-      }
+      },
+      "kamonFixed": true,
+      "kamonFollowsMapColor": true
     },
     "isshiki": {
       "family": "一色家",
@@ -4571,7 +4638,8 @@
         "1573": "三村元親",
         "default": "三村元親"
       },
-      "capital": "bitchu_matsuyama"
+      "capital": "bitchu_matsuyama",
+      "kamonFixed": true
     },
     "takeda_wakasa": {
       "family": "若狭武田家",
@@ -4696,7 +4764,8 @@
         "1592": "蒲生氏郷",
         "1600": "蒲生秀行",
         "default": "蒲生氏郷"
-      }
+      },
+      "mapColor": "#2f5f9e"
     },
     "sakai": {
       "family": "酒井家",
@@ -4711,7 +4780,9 @@
       },
       "tactic": "",
       "tacticDesc": "",
-      "desc": ""
+      "desc": "",
+      "mapColor": "#8a6b3f",
+      "kamonFixed": true
     },
     "gamou": {
       "family": "蒲生家",
@@ -4727,7 +4798,8 @@
         "1600": "蒲生秀行",
         "1614": "蒲生忠郷",
         "default": "蒲生忠郷"
-      }
+      },
+      "mapColor": "#2f5f9e"
     },
     "fukushima": {
       "family": "福島家",
@@ -4799,7 +4871,8 @@
         "1866": "藤堂高猷",
         "1868": "藤堂高猷",
         "default": "藤堂高虎"
-      }
+      },
+      "mapColor": "#7b8791"
     },
     "ryukyu": {
       "family": "琉球王家",
@@ -4872,7 +4945,7 @@
       "color": "#800000",
       "kamon": "kamon-yamatai",
       "capital_pref": [
-        "chikuzen_fukuoka",
+        "chikuzen_hakata",
         "hizen_saga",
         "yamato_koriyama"
       ],
@@ -5054,7 +5127,7 @@
       "color": "#6e2c00",
       "kamon": "kamon-tsukushi",
       "capital_pref": [
-        "chikuzen_fukuoka",
+        "chikuzen_hakata",
         "chikugo"
       ],
       "tactic": "玄界灘の潮汐陣",
@@ -5099,7 +5172,7 @@
       "kamon": "kamon-sagami",
       "capital_pref": [
         "sagami",
-        "musashi_edo_tama"
+        "musashi_edo"
       ],
       "tactic": "原野の野火計",
       "tacticDesc": "草原に火を放ち、敵軍を火煙で包み込んで大混乱に陥れる。",
@@ -5117,7 +5190,7 @@
       "kamon": "kamon-shinano",
       "capital_pref": [
         "shinano_kawanakajima",
-        "shinano_chikuma_kiso"
+        "shinano_chikuma_azumi"
       ],
       "tactic": "信濃の天険陣",
       "tacticDesc": "山岳要害を利用して敵軍の補給を断ち疲弊させる。",
@@ -5262,6 +5335,8 @@
       "color": "#a93226",
       "kamon": "kamon-hatakeyama_bishu",
       "capital_pref": [
+        "kawachi_south",
+        "kii_kichu",
         "wakayama",
         "osaka"
       ],
@@ -5273,6 +5348,7 @@
         "1467": "畠山政長",
         "1493": "畠山尚順",
         "1495": "畠山尚順",
+        "1517": "畠山尚順",
         "1531": "畠山稙長",
         "1538": "畠山稙長",
         "1542": "畠山稙長",
@@ -5280,6 +5356,8 @@
         "1550": "畠山政国",
         "1555": "畠山高政",
         "1560": "畠山高政",
+        "1561": "畠山高政",
+        "1567": "畠山昭高",
         "1570": "畠山昭高",
         "1573": "畠山昭高",
         "1576": "畠山高政",
@@ -5292,6 +5370,8 @@
       "color": "#784212",
       "kamon": "kamon-hatakeyama_soshu",
       "capital_pref": [
+        "kawachi_south",
+        "kawachi",
         "osaka"
       ],
       "tactic": "嶽山の猛攻",
@@ -5302,8 +5382,10 @@
         "1467": "畠山義就",
         "1493": "畠山義豊",
         "1495": "畠山義豊",
+        "1517": "畠山義英",
         "1531": "畠山義堯",
         "1538": "畠山在氏",
+        "1542": "畠山在氏",
         "1546": "畠山在氏",
         "default": "畠山義就"
       }
@@ -5954,7 +6036,7 @@
       "capital_pref": [
         "higo_kumamoto",
         "bungo_funai",
-        "chikuzen_fukuoka"
+        "chikuzen_hakata"
       ],
       "tactic": "鎮西八郎の神弓",
       "tacticDesc": "剛勇無双の大弓から放たれる豪快な強矢で敵陣を射竦め、敵軍を壊乱させる。",
@@ -5979,7 +6061,8 @@
         "1614": "加藤嘉明",
         "1637": "加藤明成",
         "default": "加藤喜明"
-      }
+      },
+      "mapColor": "#c65d2e"
     },
     "murakami_noshima": {
       "family": "能島村上水軍",
@@ -6083,7 +6166,9 @@
         "1860": "伊達宗徳",
         "1866": "伊達宗城",
         "default": "伊達秀宗"
-      }
+      },
+      "mapColor": "#5a3d86",
+      "kamonFixed": true
     },
     "goto": {
       "family": "五島家",
@@ -6113,7 +6198,8 @@
         "1866": "五島盛成",
         "1868": "五島盛徳",
         "default": "五島盛安"
-      }
+      },
+      "kamonFollowsMapColor": true
     },
     "sengoku": {
       "family": "仙石家",
@@ -6139,7 +6225,8 @@
         "1860": "仙石久利",
         "1866": "仙石政固",
         "default": "仙石秀久"
-      }
+      },
+      "kamonFollowsMapColor": true
     },
     "nihonmatsu_hatakeyama": {
       "family": "二本松畠山家",
@@ -6194,7 +6281,8 @@
         "1866": "丹羽長国",
         "1868": "丹羽長国",
         "default": "丹羽光重"
-      }
+      },
+      "kamonFollowsMapColor": true
     },
     "adachi": {
       "family": "安達家",
@@ -6248,7 +6336,9 @@
         "1578": "別所長治",
         "allstar_feudal": "別所長治",
         "default": "別所長治"
-      }
+      },
+      "mapColor": "#c69c6d",
+      "kamonFollowsMapColor": true
     },
     "shiina": {
       "family": "椎名家",
@@ -6275,7 +6365,8 @@
         "1570": "椎名康胤",
         "allstar_feudal": "椎名康胤",
         "default": "椎名康胤"
-      }
+      },
+      "kamonFollowsMapColor": true
     },
     "sano": {
       "family": "佐野家",
@@ -6313,7 +6404,8 @@
         "1600": "佐野信吉",
         "allstar_feudal": "佐野昌綱",
         "default": "佐野昌綱"
-      }
+      },
+      "kamonFollowsMapColor": true
     },
     "aki_tosa": {
       "family": "安芸家",
@@ -6336,7 +6428,9 @@
         "1560": "安芸国虎",
         "allstar_feudal": "安芸国虎",
         "default": "安芸国虎"
-      }
+      },
+      "mapColor": "#5b3a1e",
+      "kamonFollowsMapColor": true
     },
     "motoyama": {
       "family": "本山家",
@@ -6358,7 +6452,9 @@
         "1555": "本山茂辰",
         "1560": "本山茂辰",
         "default": "本山茂宗"
-      }
+      },
+      "mapColor": "#7e57c2",
+      "kamonFollowsMapColor": true
     },
     "takato": {
       "family": "高遠家",
@@ -6381,7 +6477,9 @@
         "1531": "高遠頼継",
         "1538": "高遠頼継",
         "default": "高遠頼継"
-      }
+      },
+      "mapColor": "#c77dce",
+      "kamonFollowsMapColor": true
     },
     "oyama": {
       "family": "小山家",
@@ -6418,7 +6516,9 @@
         "1570": "小山秀綱",
         "1573": "小山秀綱",
         "default": "小山持政"
-      }
+      },
+      "mapColor": "#d9822b",
+      "kamonFollowsMapColor": true
     },
     "nanjo": {
       "family": "南条家",
@@ -6433,7 +6533,8 @@
       "leaders": {
         "allstar_feudal": "南条元続",
         "default": "南条元続"
-      }
+      },
+      "kamonFollowsMapColor": true
     },
     "takigawa": {
       "family": "滝川家",
@@ -6449,7 +6550,9 @@
       "leaders": {
         "1583": "滝川一益",
         "default": "滝川一益"
-      }
+      },
+      "mapColor": "#2c5e8a",
+      "kamonFollowsMapColor": true
     },
     "oda_nobutaka": {
       "family": "岐阜織田家",
@@ -6464,7 +6567,8 @@
       "leaders": {
         "1583": "織田信孝",
         "default": "織田信孝"
-      }
+      },
+      "mapColor": "#b03a2e"
     },
     "akizuki": {
       "family": "秋月家",
@@ -6487,7 +6591,7 @@
         "1467": "秋月種照",
         "1493": "秋月種朝",
         "1495": "秋月種朝",
-        "1517": "秋月種朝",
+        "1517": "秋月種時",
         "1531": "秋月文種",
         "1538": "秋月文種",
         "1542": "秋月文種",
@@ -7231,7 +7335,18 @@
       "tacticDesc": "東海道の要衝・鈴鹿の関と亀山城の守りを固め、侵攻してきた敵の進軍を鈍らせる。",
       "desc": "平資盛の末裔と称し、鈴鹿郡関谷を本拠とした北伊勢の雄。亀山城を本城とし、神戸・国府・鹿伏兎・峯の諸氏を一族に従えた。関盛信は蒲生定秀の娘を妻として六角氏と結んだが、1567年に織田信長の北伊勢侵攻に降り、1573年には信長の勘気で蒲生賢秀に預けられた。",
       "leaders": {
-        "1467": "関盛政",
+        "1391": "関盛繁",
+        "1400": "関隆盛",
+        "1438": "関盛雅",
+        "1457": "関盛元",
+        "1467": "関盛元",
+        "1493": "関俊盛",
+        "1495": "関俊盛",
+        "1517": "関盛貞",
+        "1531": "関種盛",
+        "1538": "関種盛",
+        "1542": "関種盛",
+        "1546": "関種盛",
         "1550": "関盛信",
         "1555": "関盛信",
         "1560": "関盛信",
@@ -7305,7 +7420,12 @@
       "tacticDesc": "勝尾城と周囲の支城群に拠り、谷あいに敵を誘い込んで伏兵で叩く。",
       "desc": "少弐氏の支流とされ、肥前養父郡の勝尾城を本拠とした国人大名。1530年に筑紫尚門が田手畷で戦死したのち、筑紫惟門は1557年に毛利氏と結んで大友氏に抗い、1567年に降った。子の筑紫広門は大友・龍造寺・島津の間を渡り歩き、1586年に島津軍に勝尾城を落とされたが、1587年の九州平定後に筑後上妻郡1万8千石を与えられた。1600年に改易された。",
       "leaders": {
+        "1493": "筑紫満門",
+        "1495": "筑紫満門",
         "1517": "筑紫満門",
+        "1531": "筑紫惟門",
+        "1538": "筑紫惟門",
+        "1542": "筑紫惟門",
         "1546": "筑紫惟門",
         "1550": "筑紫惟門",
         "1555": "筑紫惟門",
@@ -7515,6 +7635,350 @@
         "1570": "三浦貞広",
         "1573": "三浦貞広",
         "default": "三浦貞久"
+      }
+    },
+    "hokusei": {
+      "family": "北勢国人衆",
+      "color": "#8a6d3b",
+      "kamon": "kamon-hokusei",
+      "capital_pref": [
+        "ise_kuwana"
+      ],
+      "tactic": "北方一揆",
+      "tacticDesc": "梅戸氏らの北方一揆、朝明郡の十ヶ所人数、桑名衆が結束し、守護や国司の軍勢を国境で防ぐ。",
+      "desc": "北伊勢の桑名・員弁・朝明郡に割拠した国人の連合。幕府奉公衆の梅戸氏らが率いる北方一揆、朝明郡の十ヶ所人数、自治都市桑名の桑名衆などからなり、守護一色氏や国司北畠氏の支配を受け入れず、のちに北勢四十八家と総称された。",
+      "leaders": {
+        "1493": "赤堀景宗",
+        "1495": "赤堀景宗",
+        "default": "赤堀景宗"
+      }
+    },
+    "munakata": {
+      "family": "宗像家",
+      "color": "#0e6655",
+      "kamon": "kamon-munakata",
+      "capital_pref": [
+        "chikuzen_munakata"
+      ],
+      "tactic": "玄界灘の神護",
+      "tacticDesc": "宗像三女神の加護と宗像水軍の働きにより、海に面した領国の防御と兵の士気を高める。",
+      "desc": "筑前宗像郡の宗像大社（宗像三女神）の大宮司を世襲した宗像氏。古代の胸形君の流れをくみ、沖ノ島を経て朝鮮半島へ渡る海の道を掌った。979年に宗像氏能が大宮司となり、中世には社領の領主として武士化した。1336年に宗像氏範が多々良浜の戦いで足利尊氏を助け、室町・戦国期は大内氏に属して蔦ヶ嶽城に拠った。1551年の大寧寺の変で宗像氏男が大内義隆に殉じたのち宗像氏貞が家督を継ぎ、大友・毛利の間で家を保ったが、1586年に氏貞が死去して大宮司家の本流は断絶した。",
+      "leaders": {
+        "1336": "宗像氏範",
+        "1350": "宗像氏範",
+        "1359": "宗像氏範",
+        "1391": "宗像氏範",
+        "1400": "宗像氏経",
+        "1438": "宗像氏俊",
+        "1457": "宗像氏正",
+        "1467": "宗像氏国",
+        "1493": "宗像興氏",
+        "1495": "宗像興氏",
+        "1517": "宗像正氏",
+        "1531": "宗像正氏",
+        "1538": "宗像正氏",
+        "1542": "宗像正氏",
+        "1546": "宗像正氏",
+        "1550": "宗像氏男",
+        "1555": "宗像氏貞",
+        "1560": "宗像氏貞",
+        "1561": "宗像氏貞",
+        "1567": "宗像氏貞",
+        "1570": "宗像氏貞",
+        "1573": "宗像氏貞",
+        "1576": "宗像氏貞",
+        "1577": "宗像氏貞",
+        "1578": "宗像氏貞",
+        "1580": "宗像氏貞",
+        "1582": "宗像氏貞",
+        "1583": "宗像氏貞",
+        "1584": "宗像氏貞",
+        "1585": "宗像氏貞",
+        "default": "宗像氏貞"
+      }
+    },
+    "mibu": {
+      "family": "壬生家",
+      "color": "#1e6f5c",
+      "kamon": "kamon-mibu",
+      "capital_pref": [
+        "shimotsuke_kanitsuga"
+      ],
+      "tactic": "鹿沼城の障子堀",
+      "tacticDesc": "北条流の障子堀と土塁で固めた鹿沼城に拠り、寄せ手の足を止めて討ち取る。",
+      "desc": "1462年に壬生胤業が下野壬生に興した国人。宇都宮氏の重臣から台頭し、壬生綱房は1532年に鹿沼城を築いて日光山を掌握、1549年には宇都宮城を乗っ取った。のち義雄は後北条氏と結んだが、1590年の小田原征伐で滅んだ。",
+      "leaders": {
+        "1550": "壬生綱房",
+        "1555": "壬生綱雄",
+        "1560": "壬生綱雄",
+        "1561": "壬生綱雄",
+        "1580": "壬生義雄",
+        "1582": "壬生義雄",
+        "1583": "壬生義雄",
+        "1584": "壬生義雄",
+        "1585": "壬生義雄",
+        "1587": "壬生義雄",
+        "1590": "壬生義雄",
+        "allstar_feudal": "壬生綱房",
+        "default": "壬生義雄"
+      }
+    },
+    "nagai_okitama": {
+      "family": "長井家",
+      "color": "#2e4a7d",
+      "kamon": "kamon-nagai_okitama",
+      "capital_pref": [
+        "uzen_yonezawa"
+      ],
+      "tactic": "大江の家学",
+      "tacticDesc": "大江広元以来の文筆・法制の家学で長井荘を治め、兵糧と民心を安定させて守りを固める。",
+      "desc": "大江広元の次男・時広を祖とする大江氏流の名門。1189年の奥州合戦後に出羽国置賜郡長井荘の地頭職を得て長井氏を称し、1238年に米沢城を築いたと伝わる。惣領家は鎌倉・室町幕府の評定衆を務め、置賜は一族・代官が治めたが、1380年頃に伊達宗遠に攻略されて置賜の長井氏は滅んだ。",
+      "leaders": {
+        "1221": "長井時広",
+        "1274": "長井時秀",
+        "1331": "長井挙冬",
+        "1333": "長井時春",
+        "1336": "長井時春",
+        "1350": "長井時春",
+        "1359": "長井時春",
+        "default": "長井時広"
+      },
+      "_crest": "大江氏流の定紋「一文字に三つ星」。毛利・寒河江と同系の紋を藍地に白で表す"
+    },
+    "kikkawa": {
+      "family": "吉川家",
+      "color": "#2471a3",
+      "kamon": "kamon-kikkawa-mitsubiki",
+      "capital_pref": [
+        "izumo"
+      ],
+      "tactic": "毛利の両川",
+      "tacticDesc": "元春以来の山陰の武勇と毛利本家との絆で、出雲の要害・月山富田城に拠って守りを固める。",
+      "desc": "安芸の名門で毛利元就の次男・元春が継いだ家。「毛利両川」の一翼として山陰を治め、元春の子・広家は豊臣政権から出雲・隠岐・伯耆三郡約14万石の大名として遇され、月山富田城に入った。関ヶ原では毛利本家の安泰を図って東軍と内通した。",
+      "leaders": {
+        "1592": "吉川広家",
+        "1600": "吉川広家",
+        "default": "吉川広家"
+      }
+    },
+    "shibata_echigo": {
+      "family": "新発田家",
+      "color": "#2874a6",
+      "kamon": "kamon-sasaki",
+      "capital_pref": [
+        "echigo_kanbara"
+      ],
+      "tactic": "揚北の意地",
+      "tacticDesc": "新発田城を拠点に揚北衆の精鋭で上杉軍を翻弄する。",
+      "desc": "越後揚北衆の有力国人・新発田氏。1581年に新発田重家が御館の乱の恩賞不満から上杉景勝に叛旗を翻し、織田・蘆名と結んで約6年間独立勢力として抗戦した。",
+      "leaders": {
+        "1582": "新発田重家",
+        "1583": "新発田重家",
+        "1584": "新発田重家",
+        "1587": "新発田重家",
+        "default": "新発田重家"
+      }
+    },
+    "nagao_ueda": {
+      "family": "上田長尾家",
+      "color": "#2e86c1",
+      "kamon": "kamon-nagao",
+      "capital_pref": [
+        "echigo_uonuma"
+      ],
+      "tactic": "坂戸の堅陣",
+      "tacticDesc": "魚沼の要衝・坂戸城を固め、越後魚沼衆の結束で敵を退ける。",
+      "desc": "越後長尾氏の一門で魚沼郡上田荘・坂戸城に拠った有力領主。1550〜1551年に長尾政景が宗家の長尾景虎（上杉謙信）に対して反乱を起こし独立勢力として対峙した。",
+      "leaders": {
+        "1550": "長尾政景",
+        "default": "長尾政景"
+      }
+    },
+    "uesugi_kagetora": {
+      "family": "上杉景虎",
+      "color": "#5dade2",
+      "kamon": "kamon-uesugi",
+      "capital_pref": [
+        "echigo_uonuma"
+      ],
+      "tactic": "御館の決戦",
+      "tacticDesc": "北条・武田との同盟を背景に、魚沼・関東口から越後府中を脅かす。",
+      "desc": "北条氏康の子で上杉謙信の養子となった上杉景虎の勢力。1578年の御館の乱で上杉景勝と越後国主の座を争い、魚沼（樺沢城・坂戸城）や北条勢の支援を得て対峙した。",
+      "leaders": {
+        "1578": "上杉景虎",
+        "default": "上杉景虎"
+      }
+    },
+    "mizoguchi": {
+      "family": "溝口家",
+      "color": "#1f618d",
+      "kamon": "kamon-genji",
+      "capital_pref": [
+        "echigo_kanbara"
+      ],
+      "tactic": "蒲原の治水",
+      "tacticDesc": "新発田藩祖・溝口秀勝の民政力と北国街道の要衝支配で領国を富ませる。",
+      "desc": "尾張溝口氏出身の溝口秀勝を祖とする新発田藩主家。1598年に越後新発田六万石へ入封し、1600年の関ヶ原の戦いでは東軍として上杉遺民一揆を鎮圧した。",
+      "leaders": {
+        "1600": "溝口秀勝",
+        "default": "溝口秀勝"
+      }
+    },
+    "oyamada": {
+      "family": "小山田家",
+      "color": "#884ea0",
+      "kamon": "kamon-takeda",
+      "capital_pref": [
+        "kai_tsuru"
+      ],
+      "tactic": "郡内衆の機略",
+      "tacticDesc": "岩殿城の険と郡内衆の機動力で甲斐東境を守り抜く。",
+      "desc": "甲斐都留郡（郡内）を支配した国衆・小山田氏。谷村館・岩殿城を拠点に武田氏の譜代家老格として重きをなしたが、1582年の甲州征伐で織田・北条方に転じ、独自勢力として動いた。",
+      "leaders": {
+        "1582": "小山田信茂",
+        "default": "小山田信茂"
+      }
+    },
+    "takanashi": {
+      "family": "高梨家",
+      "color": "#2e6b5e",
+      "kamon": "kamon-genji",
+      "capital_pref": [
+        "shinano_kawanakajima"
+      ],
+      "tactic": "北信濃の疾風",
+      "tacticDesc": "善光寺平と千曲川を知り尽くした北信濃の精鋭騎馬隊が疾風のごとく敵陣を蹂躙する。",
+      "desc": "信濃高井郡（中野・高梨館）および水内郡（飯山城）を本拠とする清和源氏頼季流の名族。高梨政盛・澄頼・政頼らは越後長尾（上杉）氏と婚姻同盟を結んで北信濃に一大勢力を築き、川中島合戦でも上杉方の最前線として武田信玄に抗戦した。",
+      "leaders": {
+        "1180": "高梨高信",
+        "1183": "高梨高信",
+        "1336": "高梨経頼",
+        "1350": "高梨経頼",
+        "1359": "高梨経頼",
+        "1391": "高梨朝高",
+        "1400": "高梨朝高",
+        "1438": "高梨政高",
+        "1457": "高梨政高",
+        "1467": "高梨政高",
+        "1493": "高梨政盛",
+        "1495": "高梨政盛",
+        "1517": "高梨澄頼",
+        "1531": "高梨澄頼",
+        "1538": "高梨澄頼",
+        "1542": "高梨政頼",
+        "1546": "高梨政頼",
+        "1550": "高梨政頼",
+        "1555": "高梨政頼",
+        "1560": "高梨政頼",
+        "1561": "高梨政頼",
+        "default": "高梨政頼"
+      }
+    },
+    "oda_iwakura": {
+      "family": "岩倉織田家",
+      "color": "#b8332a",
+      "kamon": "kamon-oda",
+      "capital_pref": [
+        "owari"
+      ],
+      "tactic": "尾張上四郡の武威",
+      "tacticDesc": "尾張上四郡を統べる織田伊勢守家・犬山衆の精鋭が一斉に槍衾を揃えて突撃する。",
+      "desc": "尾張上四郡（丹羽・葉栗・中島・春日井）を支配した守護代・織田伊勢守家（岩倉城主）および一門の犬山織田家（犬山城主）。清洲の織田大和守家や弾正忠家の織田信秀・信長と尾張の覇権を争い、浮野の戦いや犬山城攻防戦で信長と激突した。",
+      "leaders": {
+        "1457": "織田敏広",
+        "1467": "織田敏広",
+        "1493": "織田寛広",
+        "1495": "織田寛広",
+        "1517": "織田敏信",
+        "1531": "織田寛村",
+        "1538": "織田信安",
+        "1542": "織田信安",
+        "1546": "織田信安",
+        "1550": "織田信安",
+        "1555": "織田信安",
+        "1560": "織田信清",
+        "1561": "織田信清",
+        "default": "織田信安"
+      }
+    },
+    "to_gujo": {
+      "family": "東家",
+      "color": "#3b5998",
+      "kamon": "kamon-chiba",
+      "capital_pref": [
+        "mino_gujo"
+      ],
+      "tactic": "古今伝授の雅風",
+      "tacticDesc": "二条派歌道の宗家としての高い教養と山岳城郭の地の利により、自軍の防御力・士気・知略を高める。",
+      "desc": "千葉常胤の六男・東胤頼を祖とし、1221年の承久の乱の戦功で美濃国郡上郡山田庄を与えられた文武両道の名族。阿千葉城、のち篠脇城・赤谷山城を本拠とし、東常縁の「古今伝授」に代表される歌道の正統を継承しつつ、三百三十余年にわたり奥美濃・郡上に独立勢力として割拠した。",
+      "leaders": {
+        "1221": "東胤行",
+        "1274": "東氏村",
+        "1331": "東常顕",
+        "1333": "東常顕",
+        "1336": "東常顕",
+        "1350": "東常顕",
+        "1359": "東常顕",
+        "1391": "東師氏",
+        "1400": "東師氏",
+        "1438": "東益之",
+        "1457": "東氏数",
+        "1467": "東常縁",
+        "1493": "東元胤",
+        "1495": "東元胤",
+        "1517": "東元胤",
+        "1531": "東常慶",
+        "1538": "東常慶",
+        "1542": "東常慶",
+        "1546": "東常慶",
+        "1550": "東常慶",
+        "1555": "東常慶",
+        "default": "東常縁"
+      }
+    },
+    "endo_gujo": {
+      "family": "遠藤家",
+      "color": "#2e6b4e",
+      "kamon": "kamon-chiba",
+      "capital_pref": [
+        "mino_gujo"
+      ],
+      "tactic": "郡上八幡の険",
+      "tacticDesc": "吉田川と長良川が織りなす天然の要害と山岳鉄砲衆の狙撃により、敵部隊の攻撃力を削ぎ自軍防御を固める。",
+      "desc": "郡上東氏の庶流・木越遠藤氏から台頭した奥美濃の戦国領主。1559年の赤谷山城の戦いで遠藤盛数が宗家・東常慶を倒して郡上郡を掌握し、郡上八幡城を築いた。子の遠藤慶隆は斎藤・織田・武田の狭間で巧みに独立性を保ち、1600年の関ヶ原の戦いでは東軍に属して郡上八幡城を奪還し近世郡上藩の礎を築いた。",
+      "leaders": {
+        "1560": "遠藤盛数",
+        "1561": "遠藤盛数",
+        "1567": "遠藤慶隆",
+        "1570": "遠藤慶隆",
+        "1573": "遠藤慶隆",
+        "1600": "遠藤慶隆",
+        "allstar_feudal": "遠藤慶隆",
+        "default": "遠藤慶隆"
+      }
+    },
+    "sakai_kazusa": {
+      "family": "上総酒井家",
+      "color": "#5d6d7e",
+      "kamon": "kamon-sakai",
+      "capital_pref": [
+        "kazusa_togane_naruto"
+      ],
+      "tactic": "九十九里の堅陣",
+      "tacticDesc": "土気・東金の両城と九十九里浜の富を背景に、粘り強い防戦と機略で敵軍を翻弄する。",
+      "desc": "1488年に土気城、続いて東金城を築いた酒井定隆を祖とする上総北部の国衆。定治・玄治・胤治・敏房・政辰・康治ら一族は、後北条氏と安房里見氏の間で去就を揺れ動かしながらも東上総の独立を保ち、のち北条氏に属して1590年の小田原合戦で没落した。",
+      "leaders": {
+        "1493": "酒井定隆",
+        "1495": "酒井定隆",
+        "1517": "酒井定隆",
+        "1531": "酒井定治",
+        "1538": "酒井定治",
+        "1542": "酒井玄治",
+        "1546": "酒井玄治",
+        "1550": "酒井玄治",
+        "1555": "酒井胤治",
+        "allstar_feudal": "酒井康治",
+        "default": "酒井胤治"
       }
     }
   },
@@ -9175,19 +9639,123 @@
       "personality": "balanced",
       "title": "海の司令官",
       "note": "小西行長・舟奉行から肥後宇土城主へ"
+    },
+    "munakata": {
+      "military": 55,
+      "politics": 64,
+      "stratagem": 60,
+      "personality": "balanced",
+      "title": "宗像の大宮司",
+      "note": "宗像大社の大宮司家。宗像氏貞は大内・大友・毛利の間で家を保った"
+    },
+    "mibu": {
+      "military": 58,
+      "politics": 52,
+      "stratagem": 68,
+      "personality": "balanced",
+      "title": "鹿沼の梟雄",
+      "note": "宇都宮氏の家臣から自立し、日光山を押さえた壬生綱房の家"
+    },
+    "nagai_okitama": {
+      "military": 50,
+      "politics": 62,
+      "stratagem": 56,
+      "personality": "domestic",
+      "title": "置賜の地頭",
+      "note": "大江広元の子孫で、置賜郡長井荘の地頭を世襲した鎌倉御家人"
+    },
+    "tsukushi_katsuo": {
+      "military": 65,
+      "politics": 58,
+      "stratagem": 67,
+      "personality": "cautious",
+      "title": "勝尾城の智将",
+      "note": "少弐庶流。大内・大友・龍造寺の間で勝尾城を守り抜いた国人"
+    },
+    "hata": {
+      "military": 60,
+      "politics": 56,
+      "stratagem": 59,
+      "personality": "balanced",
+      "title": "上松浦の雄",
+      "note": "上松浦党の棟梁・岸岳城主。水軍を擁し肥前北部に勢力を張る"
+    },
+    "kikkawa": {
+      "military": 65,
+      "politics": 71,
+      "stratagem": 70,
+      "personality": "balanced",
+      "title": "毛利両川の山陰の将",
+      "note": "月山富田城主・関ヶ原で毛利家の存続を図る"
+    },
+    "shibata_echigo": {
+      "military": 79,
+      "politics": 58,
+      "stratagem": 66,
+      "personality": "aggressive",
+      "title": "揚北の驍将・新発田重家",
+      "note": "御館の乱の殊勲・新潟津掌握・上杉景勝を七年苦しめた下越の雄"
+    },
+    "nagao_ueda": {
+      "military": 78,
+      "politics": 64,
+      "stratagem": 70,
+      "personality": "aggressive",
+      "title": "越後魚沼・上田衆",
+      "note": "坂戸城主・長尾政景・上杉景勝と直江兼続を育んだ精強魚沼武士団"
+    },
+    "uesugi_kagetora": {
+      "military": 75,
+      "politics": 60,
+      "stratagem": 62,
+      "personality": "balanced",
+      "title": "御館の乱・三郎景虎",
+      "note": "北条氏康七男・上杉謙信養子・御館および樺沢城を拠点に景勝と家督を争う"
+    },
+    "mizoguchi": {
+      "military": 60,
+      "politics": 74,
+      "stratagem": 64,
+      "personality": "domestic",
+      "title": "越後新発田藩・十万石",
+      "note": "蒲原平野の大新田開発・加治川治水・戊辰戦争で領民と城下を守り抜く"
+    },
+    "oyamada": {
+      "military": 73,
+      "politics": 64,
+      "stratagem": 65,
+      "personality": "balanced",
+      "title": "甲斐郡内領主・岩殿城主",
+      "note": "都留郡の国衆・武田家の東境と甲相国境を守った独立性の高い領主"
+    },
+    "takanashi": {
+      "military": 72,
+      "politics": 54,
+      "stratagem": 62,
+      "personality": "balanced",
+      "title": "北信濃の名族・高梨",
+      "note": "越後長尾氏と結ぶ高井・水内の雄"
+    },
+    "oda_iwakura": {
+      "military": 64,
+      "politics": 58,
+      "stratagem": 56,
+      "personality": "balanced",
+      "title": "尾張上四郡守護代",
+      "note": "岩倉城・犬山城を拠点に尾張上四郡を統べる"
     }
   },
   "capitals": {
     "oda": "mino",
-    "tokugawa": "musashi_edo_tama",
+    "tokugawa": "musashi_edo",
     "toyotomi": "settsu",
     "takeda": "kai",
     "uesugi": "echigo",
     "mori": "aki_koriyama",
     "hojo": "sagami",
-    "date": "uzen_yonezawa_date",
+    "date": "uzen_yonezawa",
     "date_harumune": "rikuzen",
-    "date_tanemune": "uzen_yonezawa_date",
+    "date_tanemune": "uzen_yonezawa",
     "shimazu": "satsuma",
     "chosokabe": "tosa_kochi",
     "imagawa": "suruga",
@@ -9218,7 +9786,7 @@
     "shibata": "echizen",
     "maeda": "kaga",
     "nabeshima": "hizen_saga",
-    "kuroda": "chikuzen_fukuoka",
+    "kuroda": "chikuzen_hakata",
     "amago": "izumo",
     "rokkaku": "omi_south",
     "kitabatake": "ise",
@@ -9239,10 +9807,10 @@
     "ogigayatsu": "musashi_kawagoe",
     "yamanouchi": "kozuke_takasaki",
     "jinbo": "etchu_west",
-    "kiso": "shinano_chikuma_kiso",
+    "kiso": "shinano_kiso",
     "suwa": "shinano_suwa",
     "murakami": "shinano_kawanakajima",
-    "ogasawara": "shinano_chikuma_kiso",
+    "ogasawara": "shinano_chikuma_azumi",
     "ichijo": "tosa_nakamura",
     "hosokawa": "awa_shikoku",
     "yamana": "tamba_east",
@@ -9315,7 +9883,7 @@
     "shiba_oshu": "rikuchu_morioka",
     "todo": "iyo_uwajima",
     "ryukyu": "ryukyu",
-    "yamatai": "chikuzen_fukuoka",
+    "yamatai": "chikuzen_hakata",
     "kuna": "higo_kumamoto",
     "yamato_court": "yamato_koriyama",
     "kumaso": "satsuma",
@@ -9324,7 +9892,7 @@
     "keno": "kozuke_takasaki",
     "emishi_east": "mutsu_nanbu",
     "toma": "izumo",
-    "tsukushi": "chikuzen_fukuoka",
+    "tsukushi": "chikuzen_hakata",
     "koshi": "echizen",
     "sagami_clan": "sagami",
     "shinano_gousoku": "shinano_kawanakajima",
@@ -9419,6 +9987,55 @@
     "yuri": "ugo_yuri",
     "yura": "kozuke_nitta_kanayama",
     "daijo": "hitachi_mito",
-    "miura_mimasaka": "mimasaka_west"
+    "miura_mimasaka": "mimasaka_west",
+    "hokusei": "ise_kuwana",
+    "munakata": "chikuzen_munakata",
+    "mibu": "shimotsuke_kanitsuga",
+    "nagai_okitama": "uzen_yonezawa",
+    "kikkawa": "izumo",
+    "shibata_echigo": "echigo_kanbara",
+    "nagao_ueda": "echigo_uonuma",
+    "uesugi_kagetora": "echigo_uonuma",
+    "mizoguchi": "echigo_kanbara",
+    "oyamada": "kai_tsuru",
+    "takanashi": "shinano_kawanakajima",
+    "oda_iwakura": "owari",
+    "aterui": "rikuchu_morioka",
+    "toi": "tsushima",
+    "yuan": "tsushima",
+    "ashikaga_oyumi": "shimousa",
+    "honganji": "osaka",
+    "ishida": "shiga_n",
+    "kato": "higo_kumamoto",
+    "tendo": "uzen_higashimurayama",
+    "sagae": "uzen_nishimurayama",
+    "nagano": "gunma",
+    "nagao": "niigata",
+    "sogo": "kagawa",
+    "sue": "yamaguchi",
+    "kamakura_fu": "kanagawa",
+    "tosa": "kochi",
+    "kobayakawa": "fukuoka",
+    "kiyohara_iehira": "ugo_minato",
+    "kunohe": "mutsu_nanbu",
+    "taira_tadatsune": "kazusa",
+    "mimura": "okayama",
+    "takeda_wakasa": "fukui",
+    "shiba_uzen": "yamagata",
+    "dewa_emishi": "ugo_minato",
+    "akita": "iwashiro_tamura",
+    "oda_hitachi": "hitachi_tsuchiura",
+    "kira_oshu": "rikuzen",
+    "ogata": "bungo_funai",
+    "tsuchimochi": "hyuga_nobeoka",
+    "takahashi_nobeoka": "hyuga_nobeoka",
+    "arima_nobeoka": "hyuga_nobeoka",
+    "miura_nobeoka": "hyuga_nobeoka",
+    "makino_nobeoka": "hyuga_nobeoka",
+    "naito_nobeoka": "hyuga_nobeoka",
+    "mariyatsu": "chiba",
+    "to_gujo": "mino_gujo",
+    "endo_gujo": "mino_gujo",
+    "sakai_kazusa": "kazusa_togane_naruto"
   }
 }

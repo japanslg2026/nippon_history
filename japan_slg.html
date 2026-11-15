@@ -17,18 +17,19 @@
 
   <!-- Google Fonts: 武士の魂が宿る力強い和風・毛筆フォント -->
   <!-- 起動高速化: ゲームデータJSONをHTML解析と並行して先読み -->
-  <link rel="preload" href="data/scenarios.json?v=20261114_mimasaka" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/clans.json?v=20261114_mimasaka" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/provinces.json?v=20261114_mimasaka" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/officers.json?v=20261114_mimasaka" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/governors.json?v=20261114_mimasaka" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/events.json?v=20261114_mimasaka" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/scenarios.json?v=20261115_v23" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/clans.json?v=20261115_v23" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/provinces.json?v=20261115_v23" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/officers.json?v=20261115_v23" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/governors.json?v=20261115_v23" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/events.json?v=20261115_v23" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/rules.json?v=20261115_v23" as="fetch" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&amp;family=Dela+Gothic+One&amp;family=Sawarabi+Mincho&amp;family=Shippori+Mincho:wght@600;700;800&amp;family=Yuji+Boku&amp;display=swap" rel="stylesheet">
 
   <!-- モジュール化されたCSSスタイルシート (1080p最適化・和風デザイン) -->
-  <link rel="stylesheet" href="css/style.css?v=20261109_sp">
+  <link rel="stylesheet" href="css/style.css?v=20261115_fullwidth">
   <link rel="stylesheet" href="css/encyclopedia.css?v=20261109_sp">
   <link rel="stylesheet" href="css/startscreen.css?v=20261113_scenario_headless">
   <script>
@@ -651,7 +652,7 @@
         <button class="scenario-btn" style="display:none;" data-scen-id="1183" data-era="genpei_kamakura">
           <span class="scen-badge">1183年</span>
           <strong class="scen-title">義仲入京</strong>
-          <span class="scen-sub">木曾義仲</span>
+          <span class="scen-sub">木曽義仲</span>
         </button>
         <button class="scenario-btn" style="display:none;" data-scen-id="1184" data-era="genpei_kamakura">
           <span class="scen-badge">1184年</span>
@@ -1926,8 +1927,8 @@
 
   <!-- モジュール化されたJavaScript群 (順序保証ロード) -->
   <!-- 1. 全大名家・全シナリオ・全106領国データベース -->
-  <script defer src="assets/kamons.js?v=20261108_kamon_fix"></script>
-  <script defer src="js/kamonOverrides.js?v=20261114_mimasaka"></script>
+  <script defer src="assets/kamons.js?v=20261115_v19"></script>
+  <script defer src="js/kamonOverrides.js?v=20261115_v19"></script>
   <script defer src="js/data/map_borders.js?v=20261113_v17map"></script>
   
   <!-- 2. 和洋折衷フルオーケストラBGMエンジン (全15曲) -->
@@ -1935,7 +1936,7 @@
   <script defer src="js/MobileAudioKeepAlive.js?v=20261101_mobfix3"></script>
 
   <!-- 3. 戦国天下統一伝 ゲームエンジン本体 -->
-  <script type="module" src="js/app.js?v=20261114_mimasaka"></script>
+  <script type="module" src="js/app.js?v=20261115_v23"></script>
   <script type="module" src="js/ui/Encyclopedia.js?v=20261109_sp"></script>
   <script defer src="js/ui/StartScreenLayout.js?v=20261113_always_difficulty"></script>
   <script defer src="js/ui/TitleBgm.js?v=20261107_horagai_fix"></script>
@@ -1956,6 +1957,13 @@
 <style id="pcGameDrawerDock">
 /* ==== ゲームのパソコン画面（2026-11-07） ==== */
 @media (min-width: 769px) {
+  #game-container {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
   /* 地図左上：＋ − ⟲ 🏠 と 領国・外交・兵力・石高 を1つの箱に水平に並べる */
   .map-controls-group.unified-map-toolbar {
     position: absolute; top: 10px; left: 10px; z-index: 16;
@@ -2092,15 +2100,15 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
 </script>
-<style id="spGameMapBox43">
-/* スマホ：地図の背景ボックスは画面の横幅いっぱい・高さは横幅の75%の横長（2026-11-14） */
+<style id="spGameMapBoxSquare">
+/* スマホ：地図の背景ボックスは画面の横幅いっぱいの正方形（2026-11-15） */
 @media (max-width: 768px) {
   html body #mapWrapper.map-wrapper {
     width: 100% !important;
     height: auto !important;
     min-height: 0 !important;
     max-height: none !important;
-    aspect-ratio: 4 / 3 !important;
+    aspect-ratio: 1 / 1 !important;
   }
 }
 </style>

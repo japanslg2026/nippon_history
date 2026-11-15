@@ -319,15 +319,14 @@
     }
 
     #atlasMapSvg.has-clan-highlight .prov-path.dimmed {
-      fill: #262320 !important;
-      fill-opacity: 0.42;
+      fill-opacity: 0.86;
       stroke: none;
-      filter: grayscale(0.92) brightness(0.62);
+      filter: grayscale(0.38) brightness(0.92);
     }
 
     #atlasMapSvg.has-clan-highlight .prov-path.dimmed:hover {
-      fill-opacity: 0.72;
-      filter: grayscale(0.4) brightness(0.9);
+      fill-opacity: 0.92;
+      filter: grayscale(0.22) brightness(0.96);
     }
 
     #atlasMapSvg.has-clan-highlight .prov-path.clan-highlighted {
@@ -364,8 +363,8 @@
     }
 
     #atlasMapSvg.has-clan-highlight .kamon-badge-group.dimmed {
-      opacity: 0.22;
-      filter: grayscale(1);
+      opacity: 0.65;
+      filter: grayscale(0.35);
     }
 
     #atlasMapSvg.has-clan-highlight .kamon-badge-group.clan-highlighted {
@@ -394,7 +393,7 @@
     }
 
     #atlasMapSvg.has-clan-highlight .prov-label-text.dimmed {
-      opacity: 0.25;
+      opacity: 0.68;
     }
 
     /* ==================== 左上オーバーレイ（シナリオ概要・水平操作ボタン・大名概要） ==================== */
@@ -4036,152 +4035,32 @@
         '九州': 8
       };
 
-      var PROV_NORTH_LAT = {
-        'ezo': 41.43,
-        'mutsu_namioka': 40.72,
-        'mutsu_tsugaru': 40.61,
-        'mutsu_nanbu': 40.38,
-        'ugo': 39.75, 'ugo_minato': 39.75, 'ugo_hinai': 39.75, 'ugo_yuri': 39.75,
-        'ugo_kakunodate': 39.59,
-        'rikuchu': 39.56, 'rikuchu_morioka': 39.56, 'rikuchu_kamiheii': 39.56, 'rikuchu_shimoheii': 39.56, 'rikuchu_hienuki': 39.56, 'rikuchu_waga': 39.56,
-        'ugo_yokote': 39.31,
-        'uzen_shonai': 38.72,
-        'rikuchu_kasai': 38.69,
-        'rikuzen_osaki': 38.58,
-        'uzen': 38.25, 'uzen_mogami': 38.25, 'uzen_kitamurayama': 38.25, 'uzen_nishimurayama': 38.25, 'uzen_higashimurayama': 38.25,
-        'rikuzen': 38.25,
-        'sado': 38.00,
-        'uzen_yonezawa_date': 37.91,
-        'iwaki_soma': 37.80,
-        'iwashiro_nihonmatsu': 37.59,
-        'iwashiro': 37.49, 'iwashiro_sukagawa': 37.49, 'iwashiro_ishikawa': 37.49,
-        'iwashiro_tamura': 37.44,
-        'echigo': 37.15, 'echigo_murakami': 37.15,
-        'iwaki_shirakawa': 37.13,
-        'iwaki': 37.04,
-        'noto': 37.03,
-        'etchu_west': 36.69, 'etchu_east': 36.80,
-        'shimotsuke_nasu': 36.65,
-        'shinano_kawanakajima': 36.56, 'shinano_ueda': 36.40,
-        'kaga': 36.56,
-        'shimotsuke': 36.55, 'sano_oyama': 36.33, 'shimotsuke_oyama': 36.33, 'shimotsuke_sano': 36.33,
-        'hitachi': 36.54, 'hitachi_ohta': 36.54, 'hitachi_mito': 36.54, 'hitachi_makabe': 36.54, 'hitachi_kashima': 36.54,
-        'kozuke_takasaki': 36.41, 'kozuke_agatsuma': 36.58, 'kozuke_numata': 36.65, 'kozuke_maebashi': 36.36, 'kozuke_nitta_kanayama': 36.30,
-        'suwa_komoro': 36.20, 'shinano_saku_komoro': 36.20, 'shinano_suwa': 36.20,
-        'shinano_chikuma_kiso': 36.24, 'shinano_takato_iida': 35.70,
-        'shimousa_koga': 36.19,
-        'oki': 36.13,
-        'hida': 36.13, 'hida_takayama': 36.13, 'hida_kiun': 36.13, 'hida_kamioka': 36.13,
-        'hitachi_tsuchiura': 36.08,
-        'echizen': 35.99,
-        'shimousa': 35.72,
-        'musashi': 35.68, 'musashi_oshi': 35.68, 'musashi_hachigata': 35.68, 'musashi_iwatsuki': 35.68, 'musashi_kawagoe': 35.68, 'musashi_edo_tama': 35.68,
-        'kai': 35.67,
-        'tango': 35.54,
-        'inaba': 35.50,
-        'wakasa': 35.49,
-        'tajima': 35.46,
-        'omi_north': 35.46,
-        'mino': 35.43, 'mino_iwamura': 35.43,
-        'hoki_west': 35.43, 'hoki_east': 35.43,
-        'izumo': 35.36,
-        'kazusa': 35.28, 'kazusa_isumi': 35.28,
-        'sagami': 35.25, 'sagami_miura': 35.25,
-        'owari': 35.22,
-        'omi_south': 35.15,
-        'ise_kuwana': 35.06, 'ise_nagashima': 35.10,
-        'tamba': 35.07, 'tamba_west': 35.07, 'tamba_east': 35.07,
-        'mimasaka_west': 35.08, 'mimasaka_east': 35.05,
-        'izu': 35.05,
-        'yamashiro': 35.01,
-        'awa': 34.99,
-        'suruga': 34.98,
-        'mikawa': 34.96,
-        'iwami': 34.90,
-        'harima_west': 34.84, 'harima_east': 34.80,
-        'iga': 34.77,
-        'ise': 34.72, 'ise_suzuka': 34.72,
-        'totomi_hamamatsu_kakegawa': 34.71, 'totomi_futamata_haibara': 34.87, 'totomi_joto': 34.71,
-        'settsu': 34.69, 'settsu_shimakami': 34.85, 'settsu_osaka': 34.69,
-        'yamato': 34.69, 'yamato_koriyama': 34.69, 'yamato_takatori': 34.69, 'yamato_yoshino': 34.69, 'yamato_higashiyamauchi': 34.69,
-        'bitchu_matsuyama': 34.69, 'bitchu_takamatsu': 34.66,
-        'aki_koriyama': 34.67,
-        'bizen': 34.66,
-        'kawachi': 34.56,
-        'bingo': 34.49,
-        'aki_hiroshima': 34.48,
-        'shima': 34.48,
-        'izumi': 34.46,
-        'nagato': 34.42,
-        'sanuki': 34.35,
-        'awaji': 34.34,
-        'kii_saika_wakayama': 34.23,
-        'tsushima': 34.20,
-        'noshima': 34.19,
-        'suo': 34.18,
-        'kii_kichu': 34.08,
-        'awa_shikoku': 34.07,
-        'buzen': 33.88, 'buzen_ogura': 33.88, 'buzen_nakatsu': 33.88,
-        'iyo_matsuyama': 33.85, 'iyo_nii': 33.92,
-        'kii_kumano': 33.72,
-        'chikuzen_fukuoka': 33.68, 'chikuzen_akizuki': 33.47,
-        'tosa_kochi': 33.58, 'tosa_aki': 33.50, 'tosa_gun': 33.60,
-        'iyo_ohzu': 33.51,
-        'hizen_hirado': 33.37,
-        'chikugo': 33.32,
-        'hizen': 33.25, 'hizen_saga': 33.25, 'hizen_tsukushi': 33.25, 'hizen_karatsu': 33.25,
-        'bungo_funai': 33.24, 'bungo_saiki_usuki': 33.12, 'bungo_oka': 32.97,
-        'iyo_uwajima': 33.22,
-        'tosa_nakamura': 32.99,
-        'hizen_omura': 32.90,
-        'higo_kumamoto': 32.80, 'higo_aso': 32.80, 'higo_yatsushiro': 32.60,
-        'hizen_shimabara': 32.79,
-        'goto': 32.69,
-        'hyuga_nobeoka': 32.58,
-        'higo_hitoyoshi': 32.21,
-        'osumi': 31.74,
-        'hyuga_takanabe': 32.13, 'hyuga_sadowara': 32.05, 'hyuga_obi': 31.63,
-        'satsuma': 31.60,
-        'ryukyu': 26.22
-      };
-
-      var REGION_FALLBACK_LAT = {
-        '北海道': 42.0,
-        '東北': 39.0,
-        '関東': 36.2,
-        '中部': 35.8,
-        '近畿': 34.9,
-        '中国': 34.6,
-        '四国': 33.7,
-        '九州': 32.5
-      };
-
+      // 国の並びは地図データの mapNo（北海道から琉球まで北→南の連番）で決める。
+      // 値が大きいほど北（従来の北緯と同じ向き）になるよう 1000 - mapNo を返す。
       function getProvNorthLat(pid) {
         if (!pid) return 0;
-        if (PROV_NORTH_LAT[pid] != null) return PROV_NORTH_LAT[pid];
         if (typeof State !== 'undefined' && State.provById) {
           var p = State.provById.get(pid);
-          if (p && PROV_NORTH_LAT[p.id] != null) return PROV_NORTH_LAT[p.id];
-          if (p && p.region && REGION_FALLBACK_LAT[p.region] != null) return REGION_FALLBACK_LAT[p.region];
+          if (p && p.mapNo != null && isFinite(Number(p.mapNo))) return 1000 - Number(p.mapNo);
         }
-        return 30.0;
+        return 0;
       }
 
       var PROV_JP_MAP = {
         'iwashiro': '岩代', 'iwashiro_sukagawa': '岩代', 'iwashiro_ishikawa': '岩代', 'rikuchu': '陸中', 'rikuchu_morioka': '陸中', 'rikuchu_kamiheii': '陸中', 'rikuchu_shimoheii': '陸中', 'rikuchu_hienuki': '陸中', 'rikuchu_waga': '陸中', 'rikuzen': '陸前', 'iwaki': '磐城', 'mutsu_nanbu': '陸奥',
-        'ugo': '羽後', 'ugo_minato': '羽後', 'ugo_hinai': '羽後', 'ugo_yuri': '羽後', 'uzen': '羽前', 'uzen_mogami': '羽前', 'uzen_kitamurayama': '羽前', 'uzen_nishimurayama': '羽前', 'uzen_higashimurayama': '羽前', 'dewa': '出羽', 'echigo': '越後', 'echigo_murakami': '越後', 'ecchu': '越中', 'etchu_west': '西越中', 'etchu_east': '東越中',
-        'noto': '能登', 'kaga': '加賀', 'echizen': '越前', 'sado': '佐渡', 'kai': '甲斐', 'shinano': '信濃',
-        'shinano_kawanakajima': '川中島・松代', 'shinano_ueda': '上田', 'shinano_chikuma_kiso': '筑摩・木曽谷', 'shinano_takato_iida': '高遠・飯田', 'hida': '飛騨', 'hida_takayama': '飛騨', 'hida_kiun': '飛騨', 'hida_kamioka': '飛騨', 'mino': '美濃', 'mino_iwamura': '美濃', 'owari': '尾張',
-        'mikawa': '三河', 'totomi_hamamatsu_kakegawa': '遠江', 'totomi_futamata_haibara': '遠江', 'totomi_joto': '遠江', 'suruga': '駿河', 'izu': '伊豆', 'sagami': '相模', 'sagami_miura': '相模', 'musashi': '武蔵', 'musashi_oshi': '武蔵', 'musashi_hachigata': '武蔵', 'musashi_iwatsuki': '武蔵', 'musashi_kawagoe': '武蔵', 'musashi_edo_tama': '武蔵',
-        'kazusa': '上総', 'kazusa_isumi': '上総', 'shimousa': '下総', 'hitachi': '常陸', 'hitachi_ohta': '常陸', 'hitachi_mito': '常陸', 'hitachi_makabe': '常陸', 'hitachi_kashima': '常陸', 'shimotsuke': '下野', 'sano_oyama': '佐野・小山', 'shimotsuke_oyama': '佐野・小山', 'shimotsuke_sano': '佐野・小山', 'kozuke_takasaki': '高崎・箕輪', 'kozuke_agatsuma': '吾妻郡', 'kozuke_numata': '沼田', 'kozuke_maebashi': '厩橋', 'kozuke_nitta_kanayama': '新田・館林',
+        'ugo': '羽後', 'ugo_minato': '羽後', 'ugo_hinai': '羽後', 'ugo_yuri': '羽後', 'uzen': '羽前', 'uzen_mogami': '羽前', 'uzen_kitamurayama': '羽前', 'uzen_nishimurayama': '羽前', 'uzen_higashimurayama': '羽前', 'dewa': '出羽', 'echigo': '越後', 'echigo_murakami': '越後', 'echigo_kanbara': '越後', 'echigo_uonuma': '越後', 'ecchu': '越中', 'etchu_west': '西越中', 'etchu_east': '東越中',
+        'noto': '能登', 'kaga': '加賀', 'echizen': '越前', 'sado': '佐渡', 'kai': '甲斐', 'kai_tsuru': '甲斐', 'shinano': '信濃',
+        'shinano_kawanakajima': '高井・水内', 'shinano_sarashina_hanishina': '更級・埴科', 'shinano_ueda': '上田', 'shinano_chikuma_kiso': '筑摩・木曽谷', 'shinano_chikuma_azumi': '筑摩・安曇', 'shinano_kiso': '木曽谷', 'shinano_takato_iida': '高遠・飯田', 'hida': '飛騨', 'hida_takayama': '飛騨', 'hida_kiun': '飛騨', 'hida_kamioka': '飛騨', 'mino': '美濃', 'mino_gujo': '美濃郡上', 'mino_iwamura': '美濃', 'owari': '尾張北', 'owari_south': '尾張南',
+        'mikawa': '三河', 'totomi_hamamatsu_kakegawa': '遠江', 'totomi_futamata_haibara': '遠江', 'totomi_joto': '遠江', 'suruga': '駿河', 'izu': '伊豆', 'sagami': '相模', 'sagami_miura': '相模', 'musashi': '武蔵', 'musashi_oshi': '武蔵', 'musashi_hachigata': '武蔵', 'musashi_iwatsuki': '武蔵', 'musashi_kawagoe': '武蔵', 'musashi_edo_tama': '武蔵', 'musashi_edo': '武蔵', 'musashi_tama': '武蔵',
+        'kazusa': '上総', 'kazusa_isumi': '上総', 'kazusa_togane_naruto': '上総東金成東', 'shimousa': '下総', 'hitachi': '常陸', 'hitachi_ohta': '常陸', 'hitachi_mito': '常陸', 'hitachi_makabe': '常陸', 'hitachi_kashima': '常陸', 'shimotsuke': '下野', 'shimotsuke_kanitsuga': '下野', 'sano_oyama': '佐野・小山', 'shimotsuke_oyama': '佐野・小山', 'shimotsuke_sano': '佐野・小山', 'kozuke_takasaki': '高崎・箕輪', 'kozuke_agatsuma': '吾妻郡', 'kozuke_numata': '沼田', 'kozuke_maebashi': '厩橋', 'kozuke_nitta_kanayama': '新田・館林',
         'awa': '安房', 'omi_north': '北近江', 'omi_south': '南近江', 'yamashiro': '山城', 'yamato': '大和', 'yamato_koriyama': '大和', 'yamato_takatori': '大和', 'yamato_yoshino': '大和', 'yamato_higashiyamauchi': '大和',
-        'kawachi': '河内', 'izumi': '和泉', 'settsu': '摂津', 'settsu_shimakami': '摂津', 'settsu_osaka': '摂津', 'iga': '伊賀', 'ise': '伊勢', 'ise_suzuka': '伊勢', 'shima': '志摩',
+        'kawachi': '河内北', 'kawachi_south': '河内南', 'izumi': '和泉', 'settsu': '摂津', 'settsu_shimakami': '摂津', 'settsu_osaka': '摂津', 'iga': '伊賀', 'ise': '伊勢', 'ise_suzuka': '伊勢', 'shima': '志摩',
         'kii': '紀伊', 'kii_saika_wakayama': '雑賀・和歌山', 'kii_kichu': '紀中', 'kii_kumano': '紀南・熊野',
         'tamba': '丹波', 'tamba_west': '丹波', 'tamba_east': '丹波', 'tango': '丹後', 'tajima': '但馬', 'inaba': '因幡', 'hoki_west': '西伯耆', 'hoki_east': '東伯耆', 'izumo': '出雲',
         'iwami': '石見', 'oki': '隠岐', 'harima_west': '西播磨', 'harima_east': '東播磨', 'mimasaka_west': '西美作', 'mimasaka_east': '東美作', 'bizen': '備前', 'bitchu_matsuyama': '備中', 'bitchu_takamatsu': '備中',
         'bingo': '備後', 'aki_hiroshima': '安芸', 'aki_koriyama': '安芸郡山', 'suo': '周防', 'nagato': '長門',
         'awa_shikoku': '阿波', 'sanuki': '讃岐', 'iyo_matsuyama': '伊予松山', 'iyo_nii': '新居・西条', 'tosa_kochi': '土佐長岡郡', 'tosa_aki': '土佐安芸', 'tosa_gun': '土佐郡', 'tosa_nakamura': '土佐中村',
-        'tosa': '土佐', 'chikuzen_fukuoka': '筑前福岡', 'chikuzen_akizuki': '夜須郡秋月', 'chikugo': '筑後', 'buzen': '豊前', 'buzen_ogura': '豊前', 'buzen_nakatsu': '豊前', 'bungo_funai': '豊後府内', 'bungo_oka': '豊後岡', 'bungo_saiki_usuki': '佐伯・臼杵', 'hizen': '肥前', 'hizen_saga': '肥前', 'hizen_tsukushi': '肥前', 'hizen_karatsu': '肥前',
+        'tosa': '土佐', 'chikuzen_fukuoka': '筑前福岡', 'chikuzen_hakata': '筑前博多', 'chikuzen_munakata': '筑前宗像', 'chikuzen_kamashi': '筑前嘉麻', 'chikuzen_akizuki': '夜須郡秋月', 'chikugo': '筑後', 'buzen': '豊前', 'buzen_ogura': '豊前', 'buzen_nakatsu': '豊前', 'bungo_funai': '豊後府内', 'bungo_oka': '豊後岡', 'bungo_saiki_usuki': '佐伯・臼杵', 'hizen': '肥前', 'hizen_saga': '肥前', 'hizen_tsukushi': '肥前', 'hizen_karatsu': '肥前',
         'higo_kumamoto': '熊本・阿蘇', 'higo_aso': '熊本・阿蘇', 'higo_yatsushiro': '宇土・八代', 'higo_hitoyoshi': '肥後人吉', 'hyuga_nobeoka': '延岡', 'hyuga_takanabe': '高鍋', 'hyuga_sadowara': '佐土原', 'hyuga_obi': '飫肥',
         'osumi': '大隅', 'satsuma': '薩摩', 'tsushima': '対馬', 'ezo': '蝦夷', 'tsugaru': '津軽',
         'mutsu_tsugaru': '西津軽', 'mutsu_namioka': '東津軽', 'ryukyu': '琉球', 'wakasa': '若狭', 'awaji': '淡路'
@@ -4293,86 +4172,77 @@
         throw new Error(filename + ' を読み込めませんでした');
       }
 
-      // eval / new Function を一切使わずに GameRules.js から OFFICER_AFFILIATION_RULES を安全に抽出するパーサー
+      // 武将配属ルールは data/rules.json（officerAffiliationRules）から読み込む（ゲームと同じデータ。2026-11-14）
       async function loadAffiliationRulesSafe() {
-        if (Array.isArray(window.OFFICER_AFFILIATION_RULES) && window.OFFICER_AFFILIATION_RULES.length > 0) {
-          return window.OFFICER_AFFILIATION_RULES;
+        try {
+          var r = await fetchJsonSmart('rules.json?v=20261115_v23');
+          window.RULES_DATA = r || {};
+          return (r && Array.isArray(r.officerAffiliationRules)) ? r.officerAffiliationRules : [];
+        } catch (_) {
+          return [];
         }
-        var candidates = ['js/core/GameRules.js', 'GameRules.js', './js/core/GameRules.js', './GameRules.js'];
-        for (var i = 0; i < candidates.length; i++) {
-          try {
-            var txt = await fetchTextWithFallback(candidates[i]);
-            if (!txt) continue;
-            var rules = [];
-            var objRegex = /\{[^{}]*?\bofficerIds\s*:\s*\[[^\]]*\][^{}]*?\}/g;
-            var match;
-            while ((match = objRegex.exec(txt)) !== null) {
-              var block = match[0];
-              var rule = {};
-              var idM = block.match(/\bid\s*:\s*['"]([^'"]+)['"]/);
-              if (idM) rule.id = idM[1];
-              var clanM = block.match(/\bsetClanId\s*:\s*['"]([^'"]+)['"]/);
-              if (clanM) rule.setClanId = clanM[1];
-              var defProvM = block.match(/\bsetDefaultProv\s*:\s*['"]([^'"]+)['"]/);
-              if (defProvM) rule.setDefaultProv = defProvM[1];
-              var asgProvM = block.match(/\bsetAssignedProv\s*:\s*['"]([^'"]+)['"]/);
-              if (asgProvM) rule.setAssignedProv = asgProvM[1];
-              var unlessM = block.match(/\bunlessOwner\s*:\s*['"]([^'"]+)['"]/);
-              if (unlessM) rule.unlessOwner = unlessM[1];
-              var fromM = block.match(/\bfromYear\s*:\s*(-?\d+)/);
-              if (fromM) rule.fromYear = Number(fromM[1]);
-              var toM = block.match(/\btoYear\s*:\s*(-?\d+)/);
-              if (toM) rule.toYear = Number(toM[1]);
-              var dmM = block.match(/\bsetDaimyo\s*:\s*(true|false)/);
-              if (dmM) rule.setDaimyo = (dmM[1] === 'true');
+      }
 
-              var offArrM = block.match(/\bofficerIds\s*:\s*\[([^\]]*)\]/);
-              if (offArrM) {
-                rule.officerIds = (offArrM[1].match(/['"]([^'"]+)['"]/g) || []).map(function (s) { return s.slice(1, -1); });
-              }
-              var scenArrM = block.match(/\bscenarioIds\s*:\s*\[([^\]]*)\]/);
-              if (scenArrM) {
-                rule.scenarioIds = (scenArrM[1].match(/['"]([^'"]+)['"]/g) || []).map(function (s) { return s.slice(1, -1); });
-              }
-              var reqArrM = block.match(/\brequireOwners\s*:\s*\[([^\]]*)\]/);
-              if (reqArrM) {
-                rule.requireOwners = (reqArrM[1].match(/['"]([^'"]+)['"]/g) || []).map(function (s) { return s.slice(1, -1); });
-              }
-              var yrArrM = block.match(/\byears\s*:\s*\[([^\]]*)\]/);
-              if (yrArrM) {
-                rule.years = (yrArrM[1].match(/-?\d+/g) || []).map(Number);
-              }
-              if (rule.officerIds && rule.officerIds.length && rule.setClanId) {
-                rules.push(rule);
-              }
-            }
-            window.OFFICER_AFFILIATION_RULES = rules;
-            return rules;
-          } catch (_) {}
+      // ゲーム（GameState.applyOfficerAffiliationRules）と同じ判定で、最初に当てはまる配属ルールを1件適用する
+      function applyFirstAffiliationRule(copy, rules, scen, year, ownersSet) {
+        // ゲーム同様、存命中で領地を持つ家のシナリオ当主はルールで動かさない
+        var isStartHead = (scen.playables || []).some(function (pl) { return pl && pl.officerId === copy.id && pl.id === copy.clanId; });
+        if (isStartHead && ownersSet.has(copy.clanId)) { copy.isDaimyo = true; return true; }
+        for (var i = 0; i < rules.length; i++) {
+          var rule = rules[i];
+          if (!rule || !Array.isArray(rule.officerIds) || rule.officerIds.indexOf(copy.id) === -1) continue;
+          if (rule.unlessOwner && ownersSet.has(rule.unlessOwner)) continue;
+          var scenOk = Array.isArray(rule.scenarioIds) && rule.scenarioIds.some(function (id) { return String(id) === String(scen.id); });
+          if (rule.fromYear != null || rule.toYear != null) {
+            var inRange = (rule.fromYear == null || year >= rule.fromYear) && (rule.toYear == null || year <= rule.toYear);
+            if (!inRange && !scenOk) continue;
+          } else if (Array.isArray(rule.years) && rule.years.length) {
+            if (rule.years.indexOf(year) === -1 && !scenOk) continue;
+          } else if (Array.isArray(rule.scenarioIds) && rule.scenarioIds.length) {
+            if (!scenOk) continue;
+          }
+          if (Array.isArray(rule.requireOwners) && rule.requireOwners.length && !rule.requireOwners.some(function (c) { return ownersSet.has(c); })) continue;
+          var wasLordOfTarget = copy.clanId === rule.setClanId && !!copy.isDaimyo;
+          copy.clanId = rule.setClanId;
+          if (rule.setDaimyo === false && !wasLordOfTarget) copy.isDaimyo = false;
+          if (rule.setDaimyo === true) copy.isDaimyo = true;
+          if (rule.keepDaimyoIfSameClan && wasLordOfTarget) copy.isDaimyo = true;
+          if (rule.setDefaultProv) copy.defaultProv = rule.setDefaultProv;
+          if (rule.setAssignedProv) copy.assignedProvId = rule.setAssignedProv;
+          if (rule.placeInOwnedProv && !copy.isDaimyo) {
+            var owners = scen.owners || {};
+            var owned = Object.keys(owners).filter(function (pid) { return owners[pid] === rule.setClanId; });
+            var cap = (scen.capitals || {})[rule.setClanId];
+            var pick = owned.indexOf(rule.placeInOwnedProv) !== -1 ? rule.placeInOwnedProv : (owned.indexOf(cap) !== -1 ? cap : owned[0]);
+            if (pick) { copy.defaultProv = pick; copy.assignedProvId = null; }
+          }
+          if (rule.clearAssignment) copy.assignedProvId = null;
+          return true;
         }
-        return [];
+        return false;
       }
 
       async function initAllData() {
         var statusEl = document.getElementById('loadingStatusText');
         try {
-          await loadExternalScript(['assets/kamons.js?v=20261108_kamon_fix', 'assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
+          await loadExternalScript(['assets/kamons.js?v=20261115_v19', 'assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
           if (typeof window.loadKamonSymbols === 'function') {
             window.loadKamonSymbols();
           }
-          await loadExternalScript(['js/kamonOverrides.js?v=20261114_mimasaka']);
+          await loadExternalScript(['js/kamonOverrides.js?v=20261115_v19']);
 
           statusEl.textContent = '歴史配置ルールとシナリオ・領国・大名・武将データを読み込み中…';
           var rulesPromise = loadAffiliationRulesSafe();
 
           var results = await Promise.all([
-            fetchJsonSmart('scenarios.json?v=20261114_mimasaka'),
-            fetchJsonSmart('provinces.json?v=20261114_mimasaka'),
-            fetchJsonSmart('clans.json?v=20261114_mimasaka'),
-            fetchJsonSmart('officers.json?v=20261114_mimasaka'),
-            fetchJsonSmart('governors.json?v=20261114_mimasaka').catch(function () { return {}; }),
-            fetchJsonSmart('events.json?v=20261114_mimasaka').catch(function () { return {}; }),
-            rulesPromise
+            fetchJsonSmart('scenarios.json?v=20261115_v23'),
+            fetchJsonSmart('provinces.json?v=20261115_v23'),
+            fetchJsonSmart('clans.json?v=20261115_v23'),
+            fetchJsonSmart('officers.json?v=20261115_v23'),
+            fetchJsonSmart('governors.json?v=20261115_v23').catch(function () { return {}; }),
+            fetchJsonSmart('events.json?v=20261115_v23').catch(function () { return {}; }),
+            rulesPromise,
+            window.MAP_BORDERS_DATA ? Promise.resolve(window.MAP_BORDERS_DATA) : fetchJsonSmart('map_borders.json?v=20261115_v23').catch(function () { return null; })
           ]);
 
           var scenariosRaw = results[0];
@@ -4382,6 +4252,9 @@
           var govData = results[4];
           var eventsData = results[5];
           var rulesData = results[6];
+          if (results[7]) {
+            window.MAP_BORDERS_DATA = results[7];
+          }
 
           window.SCENARIOS_DATA = scenariosRaw || [];
           window.PROVINCES_DATA = provincesRaw || [];
@@ -4521,6 +4394,7 @@
         var affMap = scen.officerAffiliations || {};
         var excludeSet = new Set(Array.isArray(scen.excludeOfficers) ? scen.excludeOfficers : []);
         var histGovs = State.governorsByScen[String(scen.id)] || {};
+        var pinnedGovs = State.pinnedGovernors[String(scen.id)] || {};
 
         var activeOwnersSet = new Set();
         for (var i = 0; i < State.provinces.length; i++) {
@@ -4623,41 +4497,10 @@
             assignedProvId: null
           });
 
-          // 主要大名・武将の年代別自動改名ロジック
-          if (copy.id === 'off_toyotomi_hideyoshi') {
-            copy.name = year >= 1585 ? '豊臣秀吉' : (year >= 1573 ? '羽柴秀吉' : '木下秀吉');
+          // 主要大名・武将の年代別の名前（data/officers.json の eraNames）
+          if (Array.isArray(master.eraNames)) {
+            master.eraNames.forEach(function (en) { if (en && (en.from == null || year >= en.from)) copy.name = en.name; });
           }
-          if (copy.id === 'off_toyotomi_hidenaga') copy.name = year >= 1585 ? '豊臣秀長' : '羽柴秀長';
-          if (copy.id === 'off_toyotomi_hidetsugu') copy.name = year >= 1585 ? '豊臣秀次' : '羽柴秀次';
-          if (copy.id === 'off_tokugawa_ieyasu') copy.name = year >= 1563 ? '徳川家康' : '松平元康';
-          if (copy.id === 'off_tsugaru_tamenobu') copy.name = year >= 1590 ? '津軽為信' : '大浦為信';
-          if (copy.id === 'off_takeda_shingen') copy.name = year >= 1559 ? '武田信玄' : '武田晴信';
-          if (copy.id === 'off_uesugi_kenshin') {
-            copy.name = year >= 1570 ? '上杉謙信' : (year > 1561 ? '上杉輝虎' : (year === 1561 ? '上杉政虎' : '長尾景虎'));
-          }
-          if (copy.id === 'off_otomo_sorin') copy.name = year >= 1562 ? '大友宗麟' : '大友義鎮';
-          if (copy.id === 'off_shimazu_yoshihisa') {
-            copy.name = year >= 1592 ? '島津龍伯' : (year >= 1566 ? '島津義久' : '島津忠良');
-          }
-          if (copy.id === 'off_saito_dosan') {
-            copy.name = year >= 1554 ? '斎藤道三' : (year >= 1538 ? '斎藤利政' : '長井規秀');
-          }
-          if (copy.id === 'off_tachibana_dosetsu') copy.name = year >= 1575 ? '立花道雪' : '戸次鑑連';
-          if (copy.id === 'off_hosokawa_tadaoki') copy.name = year >= 1620 ? '細川三斎' : '細川忠興';
-          if (copy.id === 'off_shimazu_yoshihiro') copy.name = year >= 1602 ? '島津惟新' : '島津義弘';
-          if (copy.id === 'off_mori_terumoto') copy.name = year >= 1625 ? '毛利幻庵' : '毛利輝元';
-          if (copy.id === 'off_kobayakawa_hideaki') {
-            copy.name = year >= 1601 ? '小早川秀詮' : (year >= 1595 ? '小早川秀秋' : '木下秀俊');
-          }
-          if (copy.id === 'off_yamagata_masakage') copy.name = year >= 1565 ? '山県昌景' : '飯富昌景';
-          if (copy.id === 'off_miyoshi_nagayoshi') copy.name = year >= 1548 ? '三好長慶' : '三好利長';
-          if (copy.id === 'off_hist_1522_ota_sukemasa') copy.name = year >= 1565 ? '太田三楽斎' : '太田資正';
-          if (copy.id === 'off_pl1590_027') copy.name = year >= 1570 ? '梶原政景' : '太田政景';
-          if (copy.id === 'off_ashina_moriuji') copy.name = year >= 1561 ? '蘆名止々斎' : '蘆名盛氏';
-          if (copy.id === 'off_tsukahara_bokuden') copy.name = year >= 1540 ? '塚原卜伝' : '塚原高幹';
-          if (copy.id === 'off_miyamoto_musashi') copy.name = year >= 1605 ? '宮本武蔵' : '宮本玄信';
-          if (copy.id === 'off_yagyu_muneyoshi') copy.name = year >= 1565 ? '柳生石舟斎' : '柳生宗厳';
-          if (copy.id === 'off_pl1570_009') copy.name = year >= 1600 ? '織田有楽斎' : '織田長益';
 
           if (affEntry) {
             if (typeof affEntry === 'string') {
@@ -4665,36 +4508,22 @@
             } else {
               if (affEntry.clanId) copy.clanId = affEntry.clanId;
               if (affEntry.defaultProv) copy.defaultProv = affEntry.defaultProv;
+              if (affEntry.location && !affEntry.defaultProv) copy.defaultProv = affEntry.location;
               if (affEntry.assignedProvId) copy.assignedProvId = affEntry.assignedProvId;
               if (typeof affEntry.isDaimyo === 'boolean') copy.isDaimyo = affEntry.isDaimyo;
+              else if (typeof affEntry.isLeader === 'boolean') copy.isDaimyo = affEntry.isLeader;
             }
           } else {
-            for (var rIdx = 0; rIdx < State.affiliationRules.length; rIdx++) {
-              var rule = State.affiliationRules[rIdx];
-              if (!rule || !Array.isArray(rule.officerIds) || rule.officerIds.indexOf(copy.id) === -1) continue;
-              if (rule.unlessOwner && activeOwnersSet.has(rule.unlessOwner)) continue;
-              var scenOk = Array.isArray(rule.scenarioIds) && rule.scenarioIds.some(function (id) { return String(id) === String(scen.id); });
-              var yearOk = (rule.fromYear != null || rule.toYear != null)
-                ? ((rule.fromYear == null || year >= rule.fromYear) && (rule.toYear == null || year <= rule.toYear))
-                : (Array.isArray(rule.years) ? rule.years.indexOf(year) !== -1 : false);
-              if (rule.scenarioIds && !scenOk && !yearOk) continue;
-              if (!rule.scenarioIds && (rule.fromYear != null || rule.toYear != null || rule.years) && !yearOk) continue;
-              if (Array.isArray(rule.requireOwners) && !rule.requireOwners.some(function (c) { return activeOwnersSet.has(c); })) continue;
-
-              copy.clanId = rule.setClanId;
-              if (rule.setDefaultProv) copy.defaultProv = rule.setDefaultProv;
-              if (rule.setAssignedProv) copy.assignedProvId = rule.setAssignedProv;
-              if (typeof rule.setDaimyo === 'boolean') copy.isDaimyo = rule.setDaimyo;
-              break;
-            }
+            applyFirstAffiliationRule(copy, State.affiliationRules, scen, year, activeOwnersSet);
           }
 
-          var govProv = Object.keys(histGovs).find(function (pid) { return histGovs[pid] === copy.id || histGovs[pid] === copy.name || histGovs[pid] === copy.origName; });
-          if (govProv) {
+          var govProv = Object.keys(pinnedGovs).find(function (pid) { return pinnedGovs[pid] === copy.id || pinnedGovs[pid] === copy.name || pinnedGovs[pid] === copy.origName; })
+                     || Object.keys(histGovs).find(function (pid) { return histGovs[pid] === copy.id || histGovs[pid] === copy.name || histGovs[pid] === copy.origName; });
+          if (govProv && !(affEntry && affEntry.clearAssignment)) {
             var pEntry = State.computedProvs.get(govProv);
             if (pEntry && pEntry.ownerId && activeOwnersSet.has(pEntry.ownerId)) {
               var cEnt = State.computedClans.get(pEntry.ownerId);
-              if (cEnt && cEnt.capitalProvId !== govProv && !copy.isDaimyo) {
+              if (cEnt && (cEnt.capitalProvId !== govProv || pinnedGovs[govProv] === copy.id) && !copy.isDaimyo) {
                 copy.clanId = pEntry.ownerId;
                 copy.defaultProv = govProv;
                 copy.assignedProvId = govProv;
@@ -4738,7 +4567,7 @@
             clanOffs.forEach(function (o) { if (o.id !== leader.id) o.isDaimyo = false; });
             cEntry.leaderOfficer = leader;
             cEntry.leaderName = leader.name;
-            if (cEntry.capitalProvId) {
+            if (cEntry.capitalProvId && !pinnedGovs[cEntry.capitalProvId]) {
               leader.assignedProvId = cEntry.capitalProvId;
               var capProv = State.computedProvs.get(cEntry.capitalProvId);
               if (capProv) capProv.governor = leader;
@@ -4750,7 +4579,7 @@
 
         State.computedProvs.forEach(function (pEntry, pid) {
           if (!pEntry.ownerId || pEntry.governor) return;
-          var targetGov = histGovs[pid];
+          var targetGov = pinnedGovs[pid] || histGovs[pid];
           if (targetGov) {
             var gOff = activeOfficers.find(function (o) {
               return (o.id === targetGov || o.name === targetGov || o.origName === targetGov) && o.clanId === pEntry.ownerId && !o.isDaimyo;
@@ -4760,6 +4589,15 @@
               gOff.assignedProvId = pid;
               return;
             }
+          }
+          var explicitCastleLord = activeOfficers.find(function (o) {
+            var af = affMap[o.id];
+            return o.clanId === pEntry.ownerId && !o.isDaimyo && (o.assignedProvId === pid || (af && typeof af === 'object' && af.isCastleLord && (af.defaultProv === pid || af.assignedProvId === pid)));
+          });
+          if (explicitCastleLord) {
+            pEntry.governor = explicitCastleLord;
+            explicitCastleLord.assignedProvId = pid;
+            return;
           }
           var matchOff = activeOfficers.find(function (o) {
             return o.clanId === pEntry.ownerId && !o.isDaimyo && !o.assignedProvId && o.defaultProv === pid;
@@ -4846,34 +4684,8 @@
 
       function getClanColor(clanId) {
         if (!clanId || clanId === 'null') return '#3b322a';
-        var distinctTerritoryColors = {
-          gamo: '#2f5f9e',
-          gamou: '#2f5f9e',
-          todo: '#7b8791',
-          takeda: '#ea5424',
-          matsunaga: '#2d7a46',
-          tosa: '#365a9c',
-          clan_8849: '#c65d2e',
-          sakai: '#8a6b3f',
-          fukui_matsudaira: '#8a4a36',
-          okayama: '#3f5c9a',
-          tottori: '#7a5a90',
-          matsue: '#2f6f68',
-          kumamoto_hosokawa: '#596146',
-          uwajima_date: '#5a3d86',
-          ando: '#2f7a78',
-          chosokabe: '#5dade2',
-          aki_tosa: '#5b3a1e',
-          bessho: '#c69c6d',
-          takato: '#c77dce',
-          oyama: '#d9822b',
-          motoyama: '#7e57c2',
-          saito: '#73787c',
-          takigawa: '#2c5e8a',
-          ezo_native: '#1f5f8b',
-          oda_nobutaka: '#b03a2e'
-        };
-        if (distinctTerritoryColors[clanId]) return distinctTerritoryColors[clanId];
+        var mapColorMaster = State.clans && State.clans[clanId];
+        if (mapColorMaster && mapColorMaster.mapColor) return mapColorMaster.mapColor; // data/clans.json の mapColor
         var playD = (State.currentScenario && State.currentScenario.playables || []).find(function (p) { return p && p.id === clanId; });
         if (playD && playD.color) return playD.color;
         var master = State.clans[clanId];
@@ -4898,7 +4710,8 @@
       }
 
       // 家紋の背景も、その時点の領土色と一致させる必要がある大名家（斎藤道三・滝川一益を含む）。
-      var TERRITORY_COLOR_KAMON_CLANS = new Set(['ezo_native', 'saito', 'takigawa', 'niwa', 'goto', 'suwa', 'sengoku', 'bessho', 'shiina', 'sano', 'nanjo', 'aki_tosa', 'motoyama', 'ichijo', 'chosokabe', 'takato', 'oyama']);
+      // 家紋の背景を領土色にそろえる家は data/clans.json の kamonFollowsMapColor で指定する
+      var TERRITORY_COLOR_KAMON_CLANS = { has: function (cid) { var m = State.clans && State.clans[cid]; return !!(m && m.kamonFollowsMapColor); } };
 
       function getMapKamonSymbolId(clanId, provinceId, fillColor) {
         var baseId = getClanKamonSymbolId(clanId);
@@ -5648,7 +5461,7 @@
             }
 
             if (isSelBorder) {
-              // 【最優先】選んだ国の境界線：同勢力内であろうと他家との境であろうと必ず表示し、白の太枠でくっきりと強調
+              // 【最優先】選んだ国の境界線：同勢力内・他家との境・黄色輪郭のいずれよりも最前面で白の太枠強調
               item.el.style.display = '';
               item.el.style.stroke = '#ffffff';
               item.el.style.strokeWidth = '2.4px';
@@ -5658,15 +5471,14 @@
               // 選ばれていない同一大名領国内の境界線：非表示にして完全一体化
               item.el.style.display = 'none';
             } else if (isHlBorder) {
-              // 領国全体の輪郭（他家との外周境界線）：ゴールド枠線で勢力圏全体をくっきりと縁取る
+              // 大名家領土全体の外周輪郭：黄色い輪郭線で勢力圏全体をくっきりと縁取る
               item.el.style.display = '';
-              item.el.style.stroke = '#ffd700';
-              item.el.style.strokeWidth = '1.8px';
+              item.el.style.stroke = '#ffe033';
+              item.el.style.strokeWidth = '2.2px';
               item.el.style.opacity = '1';
-              item.el.style.filter = 'drop-shadow(0 0 2px rgba(255, 215, 0, 0.6))';
+              item.el.style.filter = 'drop-shadow(0 0 3px rgba(255, 224, 51, 0.8))';
             } else {
               // 異なる家同士の国境は中間グレーで表示する。
-              // 選択・勢力強調時だけ白／金の輪郭を優先する。
               item.el.style.display = '';
               item.el.style.stroke = 'rgba(150, 156, 162, 0.8)';
               item.el.style.strokeWidth = '0.5px';
@@ -5676,7 +5488,7 @@
           });
         }
 
-        // 海岸線の更新（選んだ国の海岸線は領国全体の輪郭よりも最優先表示）
+        // 海岸線の更新（選んだ国の白い強調を最優先し、それ以外の大名家領土の海岸線は黄色で縁取る）
         if (State.coastElements && State.coastElements.length > 0) {
           State.coastElements.forEach(function (cItem) {
             var prov = State.computedProvs.get(cItem.p);
@@ -5686,19 +5498,19 @@
             var isHlCoast = !!hlClan && o === hlClan;
 
             if (isSelCoast) {
-              // 【最優先】選んだ国の海岸線：白の太枠でくっきりと強調
+              // 【最優先】選んだ国の海岸線：白の太枠で最前面強調
               cItem.el.style.display = '';
               cItem.el.style.stroke = '#ffffff';
               cItem.el.style.strokeWidth = '2.4px';
               cItem.el.style.opacity = '1';
               cItem.el.style.filter = 'drop-shadow(0 0 3px rgba(255, 255, 255, 0.9))';
             } else if (isHlCoast) {
-              // 領国全体の海岸線：ゴールド枠線で勢力圏全体をくっきりと縁取る
+              // 領国全体の海岸線：黄色い輪郭で勢力圏全体をくっきりと縁取る
               cItem.el.style.display = '';
-              cItem.el.style.stroke = '#ffd700';
-              cItem.el.style.strokeWidth = '1.8px';
+              cItem.el.style.stroke = '#ffe033';
+              cItem.el.style.strokeWidth = '2.2px';
               cItem.el.style.opacity = '1';
-              cItem.el.style.filter = 'drop-shadow(0 0 2px rgba(255, 215, 0, 0.6))';
+              cItem.el.style.filter = 'drop-shadow(0 0 3px rgba(255, 224, 51, 0.8))';
             } else if (hlClan) {
               cItem.el.style.display = '';
               cItem.el.style.stroke = 'transparent';
@@ -5716,10 +5528,9 @@
         }
 
         // SVG描画レイヤー順の制御：
-        // 領国全体の輪郭線を配置した上で、選んだ国（selPid）の境界線・海岸線を最前面（最後尾）へ移動して最優先表示
+        // 領国全体の黄色い輪郭線を配置した上で、選んだ国（selPid）の白い境界線・海岸線を最前面（最後尾）へ移動して最優先表示
         if (bordersGroup && (hlClan || selPid)) {
           if (hlClan) {
-            // 領国全体の境界線を手前に
             if (State.borderElements) {
               State.borderElements.forEach(function (item) {
                 var p1Entry = State.computedProvs.get(item.p1);
@@ -5727,12 +5538,11 @@
                 var o1 = p1Entry ? p1Entry.ownerId : null;
                 var o2 = p2Entry ? p2Entry.ownerId : null;
                 var isSel = !!selPid && (item.p1 === selPid || item.p2 === selPid);
-                if (!isSel && (o1 === hlClan || o2 === hlClan)) {
+                if (!isSel && (o1 === hlClan || o2 === hlClan) && !(o1 && o2 && o1 === o2)) {
                   bordersGroup.appendChild(item.el);
                 }
               });
             }
-            // 領国全体の海岸線を手前に
             if (State.coastElements) {
               State.coastElements.forEach(function (cItem) {
                 var prov = State.computedProvs.get(cItem.p);
@@ -5744,7 +5554,6 @@
             }
           }
           if (selPid) {
-            // 最前面：選んだ国の境界線
             if (State.borderElements) {
               State.borderElements.forEach(function (item) {
                 if (item.p1 === selPid || item.p2 === selPid) {
@@ -5752,7 +5561,6 @@
                 }
               });
             }
-            // 最前面：選んだ国の海岸線
             if (State.coastElements) {
               State.coastElements.forEach(function (cItem) {
                 if (cItem.p === selPid) {
@@ -6355,9 +6163,6 @@
         var scenBoxForSub = document.getElementById('mapScenBox');
         if (scenBoxForSub) {
           scenBoxForSub.classList.toggle('no-subtitle', !scen.subtitle); // 副題なしの場合はスマホでもタイトルを表示
-          scenBoxForSub.classList.remove('is-expanded'); // シナリオ切替時は折りたたみ状態から開始
-          var smb = document.getElementById('scenMoreBtn');
-          if (smb) smb.setAttribute('aria-expanded', 'false');
         }
 
         computeScenarioState(scen);
@@ -6599,8 +6404,7 @@
             var regA = REGION_NORTH_ORDER[a.capRegion] || 99;
             var regB = REGION_NORTH_ORDER[b.capRegion] || 99;
             if (sortKey === 'capital' || sortKey === 'castle' || sortKey === 'familyName' || sortKey === 'leaderName') {
-              diff = regA - regB;
-              if (diff === 0) diff = latB - latA;
+              diff = latB - latA;
               if (Math.abs(diff) < 0.001) {
                 var tieKey = sortKey === 'castle' ? 'capCastle' : sortKey;
                 diff = String(a[tieKey] || a.familyName).localeCompare(String(b[tieKey] || b.familyName), 'ja');
@@ -6722,8 +6526,7 @@
               return cp ? cp.region : r.p.region;
             }
             if (sortKey === 'name' || sortKey === 'castle') {
-              diff = regA - regB;
-              if (diff === 0) diff = latB - latA;
+              diff = latB - latA;
               if (Math.abs(diff) < 0.001) {
                 var strKey = sortKey === 'name' ? 'name' : 'castle';
                 diff = a.p[strKey].localeCompare(b.p[strKey], 'ja');
@@ -6734,12 +6537,10 @@
             } else if (sortKey === 'owner') {
               var oRegA = REGION_NORTH_ORDER[ownerCapRegion(a)] || 99;
               var oRegB = REGION_NORTH_ORDER[ownerCapRegion(b)] || 99;
-              diff = oRegA - oRegB;
-              if (diff === 0) diff = ownerCapLat(b) - ownerCapLat(a);
+              diff = ownerCapLat(b) - ownerCapLat(a);
               if (Math.abs(diff) < 0.001) diff = a.ownerName.localeCompare(b.ownerName, 'ja');
             } else if (sortKey === 'governor') {
-              diff = regA - regB;
-              if (diff === 0) diff = latB - latA;
+              diff = latB - latA;
               if (Math.abs(diff) < 0.001) diff = a.govName.localeCompare(b.govName, 'ja');
             } else if (sortKey === 'military') {
               diff = (a.military ?? -1) - (b.military ?? -1);
@@ -7016,7 +6817,7 @@
             } else if (sortKey === 'status') {
               diff = a.statusRank - b.statusRank;
             } else if (sortKey === 'prov') {
-              // 所在国：北から順（北緯が高い領国順。同領国・緯度は武将名五十音順）
+              // 所在国：北から順（mapNo 順。同じ国は武将名五十音順）
               var latA = getProvNorthLat(a.provId);
               var latB = getProvNorthLat(b.provId);
               diff = latB - latA;
@@ -8742,7 +8543,7 @@
   }
 }
 
-/* スマホ：地図背景ボックスを画面の横幅いっぱい・高さは横幅の75%の横長にする（2026-11-14）。 */
+/* スマホ：地図背景ボックスを画面の横幅いっぱいの正方形にし、国選択時は現在の4:3の上下幅を保つ（2026-11-15）。 */
 @media (max-width: 768px) {
   .map-stage { flex: 0 0 auto !important; }
   .map-viewport-wrap {
@@ -8751,6 +8552,9 @@
     height: auto !important;
     min-height: 0 !important;
     max-height: none !important;
+    aspect-ratio: 1 / 1 !important;
+  }
+  body.atlas-drawer-open .map-viewport-wrap {
     aspect-ratio: 4 / 3 !important;
   }
 }
@@ -8997,6 +8801,63 @@
     padding-left: 10px !important; /* シナリオ名の文字の左端にそろえる */
     width: 100% !important;
     box-sizing: border-box !important;
+  }
+}
+</style>
+<style id="spScenYearCompact">
+/* スマホ：シナリオ名称と年号のボックスの上下幅を縮める（2026-11-15） */
+@media (max-width: 768px) {
+  html body .map-left-overlay-stack {
+    padding: 2px 6px 1px !important;
+    gap: 1px !important;
+  }
+  html body #mapScenBox,
+  html body #mapScenBox:not(.is-expanded) {
+    padding: 2px 8px !important;
+    line-height: 1.25 !important;
+  }
+  html body #mapScenBox.is-expanded {
+    padding: 4px 8px !important;
+  }
+  html body #mapScenBox.is-expanded .overlay-box-header {
+    row-gap: 1px !important;
+    column-gap: 6px !important;
+  }
+  html body #mapScenBox.is-expanded .overlay-box-title {
+    line-height: 1.2 !important;
+  }
+  html body #mapScenBox.is-expanded .overlay-box-sub {
+    margin-top: 0 !important;
+    line-height: 1.25 !important;
+  }
+  html body #mapScenBox:not(.is-expanded) .overlay-box-title {
+    line-height: 1.2 !important;
+  }
+  html body #mapScenBox .sp-more-btn {
+    width: 22px !important;
+    min-width: 22px !important;
+    height: 22px !important;
+    min-height: 22px !important;
+  }
+  html body #mapScenBox .sp-more-btn::before {
+    width: 7px !important;
+    height: 7px !important;
+  }
+  html body #headerScenarioBadge.sp-moved {
+    margin-top: 1px !important;
+    margin-bottom: 2px !important;
+    padding: 1px 8px 1px 10px !important;
+    min-height: 0 !important;
+    line-height: 1.2 !important;
+  }
+  html body #headerScenarioBadge.sp-moved .header-scen-year {
+    font-size: 11pt !important;
+    line-height: 1.2 !important;
+  }
+  html body #headerScenarioBadge.sp-moved .header-scen-gengo {
+    font-size: 10.5pt !important;
+    padding: 0 6px !important;
+    line-height: 1.2 !important;
   }
 }
 </style>
