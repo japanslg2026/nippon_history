@@ -11,9 +11,9 @@
 
 import { GameState, GameStateMethods } from './core/GameState.js?v=20261115_v23';
 import { UIManager, UIManagerMethods } from './ui/UIManager.js?v=20261114_shu';
-import { MapRenderer, MapRendererMethods } from './render/MapRenderer.js?v=20261115_v19';
+import { MapRenderer, MapRendererMethods } from './render/MapRenderer.js?v=20261115_v20';
 import { ComputerLogic, ComputerLogicMethods } from './ai/ComputerLogic.js?v=20261115_v23';
-import { DataLoader } from './core/DataLoader.js?v=20261115_v23';
+import { DataLoader } from './core/DataLoader.js?v=20261115_v24';
 import * as GameRules from './core/GameRules.js?v=20261115_v23';
 
 // 早期初期化: モジュール評価時点で即座に window.getClanAbility を配備

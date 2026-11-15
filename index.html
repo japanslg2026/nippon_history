@@ -3983,7 +3983,6 @@
       <div class="modal-body" id="aboutModalBody" style="line-height: 1.75; font-size: 12pt;"></div>
     </div>
   </div>
-  <script src="js/data/map_borders.js?v=20261113_v17map"></script>
 
   <script>
     (function () {
@@ -4260,7 +4259,7 @@
             fetchJsonSmart('governors.json?v=20261115_v23').catch(function () { return {}; }),
             fetchJsonSmart('events.json?v=20261115_v23').catch(function () { return {}; }),
             rulesPromise,
-            window.MAP_BORDERS_DATA ? Promise.resolve(window.MAP_BORDERS_DATA) : fetchJsonSmart('map_borders.json?v=20261115_v23').catch(function () { return null; })
+            fetchJsonSmart('map_borders.json?v=20261115_v24').catch(function () { return window.MAP_BORDERS_DATA || null; })
           ]);
 
           var scenariosRaw = results[0];

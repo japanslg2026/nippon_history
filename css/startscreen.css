@@ -97,6 +97,9 @@ body.sl-start-open { overflow: hidden !important; }
 .sl-svgmap.has-sel .sl-prov { fill-opacity: .38; }
 .sl-svgmap.has-sel .sl-prov:hover { fill-opacity: .7; }
 .sl-svgmap.has-sel .sl-prov.sel { fill-opacity: 1; stroke: none; filter: brightness(1.15); }
+.sl-seams { pointer-events: none; }
+.sl-seams .sl-seam-line { vector-effect: non-scaling-stroke; stroke-linejoin: round; stroke-linecap: round; }
+.sl-svgmap.has-sel .sl-seams .sl-seam-line.sel { filter: brightness(1.15); }
 .sl-borders { pointer-events: none; }
 .sl-borders .sl-border-line, .sl-borders .sl-coastline, .sl-borders .sl-coast-line { vector-effect: non-scaling-stroke; stroke-linejoin: round; stroke-linecap: round; }
 .sl-map-info { display: inline-flex; align-items: center; gap: 6px; }

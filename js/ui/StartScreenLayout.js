@@ -9,7 +9,7 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
   const NS = 'http://www.w3.org/2000/svg';
   const $ = (s, r = document) => r.querySelector(s);
   const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  let built = false, svg = null, paths = {}, slBorderEls = [], slCoastEls = [], selected = null, passClick = false;
+  let built = false, svg = null, paths = {}, slBorderEls = [], slSeamEls = [], slCoastEls = [], selected = null, passClick = false;
 
   const game = () => window.game || null;
   const scen = () => game()?.currentScenario || null;
@@ -865,6 +865,7 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     };
     const bData = window.MAP_BORDERS_DATA || null;
     let bordersHtml = '';
+    let seamsHtml = '';
     if (bData) {
       if (Array.isArray(bData.coastlines)) {
         bordersHtml += bData.coastlines.map(c => {
@@ -879,15 +880,20 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
           const bt = getBorderTransform(b.p1, b.p2);
           return `<path class="sl-border-line" data-p1="${esc(b.p1)}" data-p2="${esc(b.p2)}" d="${esc(b.d)}"${bt ? ` transform="${bt}"` : ''} fill="none" stroke="rgba(20, 14, 8, 0.72)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>`;
         }).join('');
+        seamsHtml += bData.borders.map(b => {
+          const bt = getBorderTransform(b.p1, b.p2);
+          return `<path class="sl-seam-line" data-p1="${esc(b.p1)}" data-p2="${esc(b.p2)}" d="${esc(b.d)}"${bt ? ` transform="${bt}"` : ''} fill="none" stroke="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" style="display:none"></path>`;
+        }).join('');
       }
     }
     svg.innerHTML = `<g class="sl-archipelago-wrap"><g class="sl-archipelago" transform="rotate(-3, 500, 340)"><g class="sl-provs">${provs.map(p => {
       const pt = getProvTransform(p.id);
       return `<path class="sl-prov" data-p="${esc(p.id)}" d="${esc(p.svgPath || p.d || '')}"${pt ? ` transform="${pt}"` : ''}><title>${esc(p.name)}</title></path>`;
-    }).join('')}</g>${bordersHtml ? `<g class="sl-borders" style="pointer-events:none;">${bordersHtml}</g>` : ''}</g></g>`;
+    }).join('')}</g>${seamsHtml ? `<g class="sl-seams" style="pointer-events:none;">${seamsHtml}</g>` : ''}${bordersHtml ? `<g class="sl-borders" style="pointer-events:none;">${bordersHtml}</g>` : ''}</g></g>`;
     el.appendChild(svg);
     paths = Object.fromEntries([...svg.querySelectorAll('.sl-prov')].map(p => [p.dataset.p, p]));
     slBorderEls = [...svg.querySelectorAll('.sl-border-line')].map(el => ({ el, p1: el.dataset.p1, p2: el.dataset.p2 }));
+    slSeamEls = [...svg.querySelectorAll('.sl-seam-line')].map(el => ({ el, p1: el.dataset.p1, p2: el.dataset.p2 }));
     slCoastEls = [...svg.querySelectorAll('.sl-coast-line')].map(el => ({ el, p: el.dataset.p }));
     const fit = () => { try { const b = svg.querySelector('g').getBBox(); if (b.width) svg.setAttribute('viewBox', `${b.x - 6} ${b.y - 6} ${b.width + 12} ${b.height + 12}`); } catch (_) {} };
     fit(); if (!svg.getAttribute('viewBox')) { svg.setAttribute('viewBox', '0 0 1000 620'); requestAnimationFrame(fit); }
@@ -1006,6 +1012,22 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
 
   function updateSlBorders(selClanId) {
     const own = owners();
+    if (slSeamEls && slSeamEls.length > 0) {
+      slSeamEls.forEach(({ el, p1, p2 }) => {
+        const o1 = own[p1], o2 = own[p2];
+        if (o1 && o2 && o1 === o2) {
+          const isSel = !!selClanId && o1 === selClanId;
+          el.style.display = '';
+          el.style.stroke = lighten(clanInfo(o1).color);
+          el.style.strokeWidth = isSel ? '1.4px' : '1.0px';
+          el.style.strokeOpacity = (!selClanId || isSel) ? '1' : '0.66';
+          el.classList.toggle('sel', isSel);
+        } else {
+          el.style.display = 'none';
+          el.classList.remove('sel');
+        }
+      });
+    }
     if (slBorderEls && slBorderEls.length > 0) {
       slBorderEls.forEach(({ el, p1, p2 }) => {
         const o1 = own[p1], o2 = own[p2];

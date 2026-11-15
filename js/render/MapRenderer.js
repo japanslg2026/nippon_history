@@ -230,6 +230,12 @@ export const MapRendererMethods = {
         transition: fill-opacity .15s ease, filter .15s ease;
         cursor: pointer;
       }
+      #mapSeamsGroup { pointer-events: none; }
+      #mapSeamsGroup .map-seam-line {
+        vector-effect: non-scaling-stroke;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+      }
       #mapTextureAndGlowGroup { pointer-events: none; }
       #mapBordersGroup { pointer-events: none; }
       #mapBordersGroup .map-border-line, #mapBordersGroup .map-coastline, #mapBordersGroup .map-coast-line {
@@ -336,6 +342,14 @@ export const MapRendererMethods = {
     if (landClip) landClip.innerHTML = '';
     if (innerGlowDefs) innerGlowDefs.innerHTML = '';
 
+    let seamsGroup = document.getElementById('mapSeamsGroup');
+    if (!seamsGroup) {
+      seamsGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      seamsGroup.setAttribute('id', 'mapSeamsGroup');
+      seamsGroup.style.pointerEvents = 'none';
+    }
+    seamsGroup.innerHTML = '';
+
     let texGlowGroup = document.getElementById('mapTextureAndGlowGroup');
     if (!texGlowGroup) {
       texGlowGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
@@ -355,6 +369,7 @@ export const MapRendererMethods = {
       archGroup.setAttribute('transform', 'rotate(-3, 500, 340)');
       if (roadsGroup) archGroup.appendChild(roadsGroup);
       archGroup.appendChild(provGroup);
+      archGroup.appendChild(seamsGroup);
       archGroup.appendChild(texGlowGroup);
       archGroup.appendChild(bordersGroup);
       if (markGroup) archGroup.appendChild(markGroup);
@@ -370,6 +385,9 @@ export const MapRendererMethods = {
       }
       if (texGlowGroup.parentNode !== archGroup) {
         archGroup.insertBefore(texGlowGroup, bordersGroup);
+      }
+      if (seamsGroup.parentNode !== archGroup || seamsGroup.nextSibling !== texGlowGroup) {
+        archGroup.insertBefore(seamsGroup, texGlowGroup);
       }
     }
 
@@ -442,6 +460,23 @@ export const MapRendererMethods = {
           if (borderTransform) bp.setAttribute('transform', borderTransform);
           bordersGroup.appendChild(bp);
 
+          let seamEl = null;
+          if (seamsGroup) {
+            seamEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            seamEl.setAttribute('class', 'map-seam-line');
+            seamEl.setAttribute('data-p1', b.p1);
+            seamEl.setAttribute('data-p2', b.p2);
+            seamEl.setAttribute('d', b.d);
+            seamEl.setAttribute('fill', 'none');
+            seamEl.setAttribute('stroke', 'none');
+            seamEl.setAttribute('stroke-width', '1.4');
+            seamEl.setAttribute('stroke-linecap', 'round');
+            seamEl.setAttribute('stroke-linejoin', 'round');
+            seamEl.style.display = 'none';
+            if (borderTransform) seamEl.setAttribute('transform', borderTransform);
+            seamsGroup.appendChild(seamEl);
+          }
+
           let glowEl = null;
           if (innerGlowDefs) {
             glowEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -451,7 +486,7 @@ export const MapRendererMethods = {
             if (borderTransform) glowEl.setAttribute('transform', borderTransform);
             innerGlowDefs.appendChild(glowEl);
           }
-          this._borderElements.push({ el: bp, glowEl, p1: b.p1, p2: b.p2 });
+          this._borderElements.push({ el: bp, glowEl, seamEl, p1: b.p1, p2: b.p2 });
         });
       }
     }
@@ -1296,7 +1331,7 @@ export const MapRendererMethods = {
     const hlClanId = selProv ? selProv.ownerId : null;
 
     // 1. 各領国間の境界線の更新（勢力外周インナーグローも同一勢力内では非表示にし、勢力外周のみに陰影を与える）
-    this._borderElements.forEach(({ el, glowEl, p1, p2 }) => {
+    this._borderElements.forEach(({ el, glowEl, seamEl, p1, p2 }) => {
       const prov1 = provMap.get(p1);
       const prov2 = provMap.get(p2);
       const o1 = prov1 ? prov1.ownerId : null;
@@ -1304,11 +1339,23 @@ export const MapRendererMethods = {
       const isSelBorder = !!visibleSelectedProvId && (p1 === visibleSelectedProvId || p2 === visibleSelectedProvId);
 
       if (o1 && o2 && o1 === o2) {
-        // 同一大名領国内の境界線：非表示にして完全一体化
+        // 同一大名領国内の境界線：通常の国境線は非表示にし、背景に同色の継ぎ目埋め線を引いて完全一体化
         // （選択領国の外周は provSelectedOutline で最前面に優先描画される）
         el.style.display = 'none';
         if (glowEl) glowEl.style.display = 'none';
+        if (seamEl) {
+          const c1 = this.getProvinceColor(prov1);
+          const c2 = this.getProvinceColor(prov2);
+          if (c1 && c2 && c1 === c2) {
+            seamEl.style.display = '';
+            seamEl.style.stroke = c1;
+            seamEl.style.strokeWidth = '1.4px';
+          } else {
+            seamEl.style.display = 'none';
+          }
+        }
       } else {
+        if (seamEl) seamEl.style.display = 'none';
         el.style.display = '';
         if (glowEl) glowEl.style.display = '';
         const isHlBorder = !!hlClanId && (o1 === hlClanId || o2 === hlClanId);

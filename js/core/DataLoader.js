@@ -23,7 +23,7 @@ export class DataLoader {
         DataLoader.fetchJson(`data/clans.json?v=${v}`),
         DataLoader.fetchJson(`data/governors.json?v=${v}`),
         DataLoader.fetchJson(`data/events.json?v=${v}`),
-        (typeof window !== 'undefined' && window.MAP_BORDERS_DATA) ? Promise.resolve(null) : DataLoader.fetchJson(`data/map_borders.json?v=${v}`).catch(() => null),
+        DataLoader.fetchJson(`data/map_borders.json?v=${v}`).catch(() => null),
         DataLoader.fetchJson(`data/rules.json?v=${v}`)
       ]);
 
