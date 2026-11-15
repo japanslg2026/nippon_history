@@ -345,6 +345,24 @@
       filter: brightness(1.22) drop-shadow(0 0 2.5px rgba(255, 255, 255, 0.8)) !important;
     }
 
+    #mapSeamsGroup {
+      pointer-events: none;
+    }
+
+    #mapSeamsGroup .map-seam-line {
+      vector-effect: non-scaling-stroke;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+
+    #atlasMapSvg.has-clan-highlight #mapSeamsGroup .map-seam-line.dimmed {
+      filter: grayscale(0.38) brightness(0.92);
+    }
+
+    #atlasMapSvg.has-clan-highlight #mapSeamsGroup .map-seam-line.clan-highlighted {
+      filter: brightness(1.08);
+    }
+
     #mapBordersGroup {
       pointer-events: none;
     }
@@ -4941,6 +4959,14 @@
         if (landClip) landClip.innerHTML = '';
         if (innerGlowDefs) innerGlowDefs.innerHTML = '';
 
+        var seamsGroup = document.getElementById('mapSeamsGroup');
+        if (!seamsGroup && provGroup && provGroup.parentNode) {
+          seamsGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+          seamsGroup.setAttribute('id', 'mapSeamsGroup');
+          seamsGroup.style.pointerEvents = 'none';
+          provGroup.parentNode.insertBefore(seamsGroup, bordersGroup || markGroup || labelGroup || null);
+        }
+
         var texGlowGroup = document.getElementById('atlasTextureAndGlowGroup');
         if (!texGlowGroup && provGroup && provGroup.parentNode) {
           texGlowGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
@@ -4948,6 +4974,9 @@
           texGlowGroup.setAttribute('clip-path', 'url(#atlasLandClip)');
           texGlowGroup.style.pointerEvents = 'none';
           provGroup.parentNode.insertBefore(texGlowGroup, bordersGroup || markGroup || labelGroup || null);
+        }
+        if (seamsGroup && texGlowGroup && seamsGroup.parentNode === texGlowGroup.parentNode && seamsGroup.nextSibling !== texGlowGroup) {
+          texGlowGroup.parentNode.insertBefore(seamsGroup, texGlowGroup);
         }
         if (texGlowGroup) {
           texGlowGroup.innerHTML =
@@ -4958,6 +4987,7 @@
         provGroup.innerHTML = '';
         markGroup.innerHTML = '';
         labelGroup.innerHTML = '';
+        if (seamsGroup) seamsGroup.innerHTML = '';
         if (bordersGroup) bordersGroup.innerHTML = '';
         State.borderElements = [];
         State.coastElements = [];
@@ -5027,6 +5057,23 @@
               if (borderTransform) bp.setAttribute('transform', borderTransform);
               bordersGroup.appendChild(bp);
 
+              var seamEl = null;
+              if (seamsGroup) {
+                seamEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                seamEl.setAttribute('class', 'map-seam-line');
+                seamEl.setAttribute('data-p1', b.p1);
+                seamEl.setAttribute('data-p2', b.p2);
+                seamEl.setAttribute('d', b.d);
+                seamEl.setAttribute('fill', 'none');
+                seamEl.setAttribute('stroke', 'none');
+                seamEl.setAttribute('stroke-width', '1.0');
+                seamEl.setAttribute('stroke-linecap', 'round');
+                seamEl.setAttribute('stroke-linejoin', 'round');
+                seamEl.style.display = 'none';
+                if (borderTransform) seamEl.setAttribute('transform', borderTransform);
+                seamsGroup.appendChild(seamEl);
+              }
+
               var glowEl = null;
               if (innerGlowDefs) {
                 glowEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -5036,7 +5083,7 @@
                 if (borderTransform) glowEl.setAttribute('transform', borderTransform);
                 innerGlowDefs.appendChild(glowEl);
               }
-              State.borderElements.push({ el: bp, glowEl: glowEl, p1: b.p1, p2: b.p2 });
+              State.borderElements.push({ el: bp, glowEl: glowEl, seamEl: seamEl, p1: b.p1, p2: b.p2 });
             });
           }
         }
@@ -5458,6 +5505,21 @@
 
             if (item.glowEl) {
               item.glowEl.style.display = isInternalClan ? 'none' : '';
+            }
+
+            if (item.seamEl) {
+              if (isInternalClan) {
+                var isSameClanSeam = !!hlClan && o1 === hlClan;
+                var isDimmedSeam = !!hlClan && !isSameClanSeam;
+                item.seamEl.style.display = '';
+                item.seamEl.style.stroke = getClanColor(o1);
+                item.seamEl.style.strokeWidth = '1.0px';
+                item.seamEl.style.strokeOpacity = isSameClanSeam ? '0.98' : (isDimmedSeam ? '0.86' : '0.88');
+                item.seamEl.classList.toggle('clan-highlighted', isSameClanSeam);
+                item.seamEl.classList.toggle('dimmed', isDimmedSeam);
+              } else {
+                item.seamEl.style.display = 'none';
+              }
             }
 
             if (isSelBorder) {
