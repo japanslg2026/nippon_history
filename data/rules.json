@@ -348,7 +348,7 @@
         "maeda"
       ],
       "setClanId": "maeda",
-      "setDefaultProv": "kaga",
+      "setDefaultProv": "kaga_north",
       "setDaimyo": false
     },
     {
@@ -524,8 +524,8 @@
         "maeda"
       ],
       "setClanId": "maeda",
-      "setDefaultProv": "kaga",
-      "setAssignedProv": "kaga",
+      "setDefaultProv": "kaga_north",
+      "setAssignedProv": "kaga_north",
       "setDaimyo": true
     },
     {
@@ -540,7 +540,7 @@
         "maeda"
       ],
       "setClanId": "maeda",
-      "setDefaultProv": "kaga",
+      "setDefaultProv": "kaga_north",
       "setDaimyo": false
     },
     {
@@ -1149,9 +1149,9 @@
         "owari"
       ],
       "setClanId": "owari",
-      "setDefaultProv": "owari",
+      "setDefaultProv": "owari_north",
       "setDaimyo": false,
-      "setAssignedProv": "owari"
+      "setAssignedProv": "owari_north"
     },
     {
       "id": "satake_imamiya_karo_ugo_1789",
@@ -1462,7 +1462,7 @@
         "owari"
       ],
       "setDaimyo": false,
-      "setAssignedProv": "owari"
+      "setAssignedProv": "owari_north"
     },
     {
       "id": "yohiko_kiyohara",
@@ -2804,8 +2804,8 @@
         "1331"
       ],
       "setClanId": "hojo_kamakura",
-      "setDefaultProv": "kaga",
-      "setAssignedProv": "kaga",
+      "setDefaultProv": "kaga_north",
+      "setAssignedProv": "kaga_north",
       "setDaimyo": false
     },
     {
@@ -3550,7 +3550,7 @@
       "unlessOwner": "ashikaga",
       "setDaimyo": false,
       "setDefaultProv": "bingo",
-      "setAssignedProv": "bingo"
+      "clearAssignment": true
     },
     {
       "id": "muneshige_otomo_bungo_1584",
@@ -4984,8 +4984,8 @@
         "1560"
       ],
       "setClanId": "amago",
-      "setDefaultProv": "izumo",
-      "setAssignedProv": "izumo",
+      "setDefaultProv": "izumo_south",
+      "setAssignedProv": "izumo_south",
       "setDaimyo": true
     },
     {
@@ -5311,8 +5311,8 @@
         "1467"
       ],
       "setClanId": "kyogoku",
-      "setDefaultProv": "izumo",
-      "setAssignedProv": "izumo",
+      "setDefaultProv": "izumo_south",
+      "setAssignedProv": "izumo_south",
       "setDaimyo": false
     },
     {
@@ -5337,8 +5337,8 @@
         "1438"
       ],
       "setClanId": "togashi",
-      "setDefaultProv": "kaga",
-      "setAssignedProv": "kaga",
+      "setDefaultProv": "kaga_north",
+      "setAssignedProv": "kaga_north",
       "setDaimyo": true
     },
     {
@@ -5363,8 +5363,8 @@
         "1438"
       ],
       "setClanId": "kyogoku",
-      "setDefaultProv": "izumo",
-      "setAssignedProv": "izumo",
+      "setDefaultProv": "izumo_south",
+      "setAssignedProv": "izumo_south",
       "setDaimyo": false
     },
     {
@@ -5533,8 +5533,8 @@
         "1391"
       ],
       "setClanId": "togashi",
-      "setDefaultProv": "kaga",
-      "setAssignedProv": "kaga",
+      "setDefaultProv": "kaga_north",
+      "setAssignedProv": "kaga_north",
       "setDaimyo": true
     },
     {
@@ -6071,8 +6071,8 @@
         "1350"
       ],
       "setClanId": "kyogoku",
-      "setDefaultProv": "izumo",
-      "setAssignedProv": "izumo",
+      "setDefaultProv": "izumo_south",
+      "setAssignedProv": "izumo_south",
       "setDaimyo": false
     },
     {
@@ -6177,8 +6177,8 @@
         "1336"
       ],
       "setClanId": "togashi",
-      "setDefaultProv": "kaga",
-      "setAssignedProv": "kaga",
+      "setDefaultProv": "kaga_north",
+      "setAssignedProv": "kaga_north",
       "setDaimyo": true
     },
     {
@@ -6403,8 +6403,8 @@
         "1331"
       ],
       "setClanId": "hojo_kamakura",
-      "setDefaultProv": "kaga",
-      "setAssignedProv": "kaga",
+      "setDefaultProv": "kaga_north",
+      "setAssignedProv": "kaga_north",
       "setDaimyo": false
     },
     {
@@ -6693,7 +6693,7 @@
         "1467"
       ],
       "setClanId": "shiba",
-      "setDefaultProv": "owari",
+      "setDefaultProv": "owari_north",
       "clearAssignment": true,
       "setDaimyo": false
     },
@@ -8162,7 +8162,7 @@
     "oda_iwakura": [
       [
         1457,
-        "owari"
+        "owari_north"
       ]
     ]
   },

@@ -116,7 +116,7 @@
           "yamato_takatori": "jimmu",
           "yamato_yoshino": "jimmu",
           "yamato_higashiyamauchi": "jimmu",
-          "kawachi": "jimmu",
+          "kawachi_north": "jimmu",
           "yamashiro": "jimmu",
           "omi_south": "jimmu",
           "omi_north": "jimmu",
@@ -323,7 +323,8 @@
       "desc": "【物語】<br>九州を平定し大和への帰途についたヤマトタケルは、山陰に君臨する巨大勢力・出雲国の豪族・出雲建（イズモタケル）の討伐へと向かった。<br>タケルはまず出雲建に友誼の礼を尽くし、義兄弟の契りを交わして警戒を解かせた。その裏で、密かに赤檮（いちい）の硬木を削り、本物と見まがう精巧な「木刀」を仕立てて腰に佩いた。<br>肥の河（斐伊川）で共に水浴びをした際、タケルは先に川から上がって出雲建の真剣を帯び、「互いの太刀を交えて武芸を競おうではないか」と誘いかけた。<br>罠と知らず木刀を抜こうとする出雲建は、木刀が鞘から抜けずに狼狽。その隙を見逃さず、タケルは一刀両断に斬り伏せた！<br>『やつめさす 出雲建が佩ける太刀 黒葛多巻き さ身無しに逢はれ』と歌い、大和軍は出雲・伯耆を完全に制圧した！<br><br>【歴史解説（この時代に何があったのか）】<br>出雲は、古代日本において畿内ヤマト政権と並ぶ強大な青銅器・鉄器文化と国つ神（大国主神）信仰を誇った一大独立勢力でした。<br>「木刀の計」による出雲建討伐は、単なる暗殺劇ではなく、大和王権が出雲の政治的・軍事的自立を解体し、出雲の神宝（太刀や鏡）を王権の管轄下に収めた史実を象徴しています。出雲大社の創建伝説（国譲り）と呼応し、西日本における大和の絶対的優位を決定づけた画期です。",
       "changes": {
         "territory": {
-          "izumo": "yamato_court",
+          "izumo_north": "yamato_court",
+          "izumo_south": "yamato_court",
           "hoki_west": "yamato_court",
           "hoki_east": "yamato_court"
         },
@@ -331,7 +332,12 @@
           "off_izumo_takeru"
         ],
         "clanEffects": {
-          "izumo": {
+          "izumo_north": {
+            "moraleDelta": -50,
+            "orderDelta": -40,
+            "troopsRate": 0.3
+          },
+          "izumo_south": {
             "moraleDelta": -50,
             "orderDelta": -40,
             "troopsRate": 0.3
@@ -352,7 +358,11 @@
       "onReject": {
         "message": "出雲建が木刀のすり替えを瞬時に看破し、真剣を奪還して大和軍を撃退！神の国出雲の独立を守り抜きました！",
         "clanEffects": {
-          "izumo": {
+          "izumo_north": {
+            "moraleDelta": 40,
+            "troopsRate": 1.3
+          },
+          "izumo_south": {
             "moraleDelta": 40,
             "troopsRate": 1.3
           },
@@ -716,7 +726,7 @@
           "yamato_takatori": "oama",
           "yamato_yoshino": "oama",
           "yamato_higashiyamauchi": "oama",
-          "kawachi": "oama",
+          "kawachi_north": "oama",
           "settsu": "oama",
           "settsu_osaka": "oama",
           "izumi": "oama",
@@ -1554,7 +1564,7 @@
           "yamashiro": "taira",
           "settsu": "taira",
           "settsu_osaka": "taira",
-          "kawachi": "taira",
+          "kawachi_north": "taira",
           "harima_west": "taira",
           "harima_east": "taira",
           "settsu_shimakami": "taira",
@@ -1587,7 +1597,7 @@
           "yamato_takatori": "goshirakawa_in",
           "yamato_yoshino": "goshirakawa_in",
           "yamato_higashiyamauchi": "goshirakawa_in",
-          "kawachi": "goshirakawa_in",
+          "kawachi_north": "goshirakawa_in",
           "kawachi_south": "goshirakawa_in"
         },
         "killOfficerIds": [
@@ -1654,7 +1664,7 @@
       "desc": "【物語】<br>信西を討ち三条殿を占拠した源義朝に対し、熊野詣から六波羅へ急行した平清盛が大反撃！<br>二条天皇を六波羅へ脱出させ官軍となった清盛は、六条河原にて義朝軍を完全撃滅した！義朝は東国へ敗走中に討死した。<br><br>【歴史解説（この時代に何があったのか）】<br>平治の乱の終結です。これにより源氏嫡流は壊滅的打撃を受け（頼朝は伊豆へ流罪）、平清盛が武士として初めて国の頂点に立つ『平氏政権』が誕生しました。",
       "changes": {
         "territory": {
-          "owari": "taira",
+          "owari_north": "taira",
           "mino": "taira",
           "mino_iwamura": "taira",
           "suruga": "taira",
@@ -1833,7 +1843,8 @@
         "territory": {
           "etchu_west": "kiso",
           "etchu_east": "kiso",
-          "kaga": "kiso",
+          "kaga_north": "kiso",
+          "kaga_south": "kiso",
           "echizen": "kiso",
           "yamashiro": "kiso"
         },
@@ -2034,7 +2045,7 @@
           "harima_east": "hojo_kamakura",
           "tamba_west": "hojo_kamakura",
           "tamba_east": "hojo_kamakura",
-          "kawachi": "hojo_kamakura",
+          "kawachi_north": "hojo_kamakura",
           "izumi": "hojo_kamakura",
           "settsu_shimakami": "hojo_kamakura",
           "kawachi_south": "hojo_kamakura"
@@ -2141,7 +2152,7 @@
           "izumi": {
             "orderDelta": -10
           },
-          "kawachi": {
+          "kawachi_north": {
             "orderDelta": -10
           },
           "settsu_shimakami": {
@@ -2166,7 +2177,7 @@
       ],
       "changes": {
         "territory": {
-          "kawachi": "kusunoki",
+          "kawachi_north": "kusunoki",
           "kawachi_south": "kusunoki"
         },
         "troopShock": {
@@ -2179,7 +2190,7 @@
           }
         },
         "provinceEffects": {
-          "kawachi": {
+          "kawachi_north": {
             "defenseDelta": 20
           },
           "kawachi_south": {
@@ -2253,7 +2264,7 @@
           "mimasaka_west": "akamatsu",
           "mimasaka_east": "akamatsu",
           "settsu_shimakami": "ashikaga",
-          "kawachi": "ashikaga"
+          "kawachi_north": "ashikaga"
         },
         "message": "足利尊氏が京都を制圧し、光明天皇を奉戴して室町幕府を樹立しました！",
         "killOfficerIds": [
@@ -2525,7 +2536,8 @@
       ],
       "changes": {
         "territory": {
-          "kaga": "honganji"
+          "kaga_north": "honganji",
+          "kaga_south": "honganji"
         },
         "killOfficerIds": [
           "off_dm_togashi_1467"
@@ -3103,7 +3115,8 @@
           "totomi_hamamatsu_kakegawa": "tokugawa",
           "mikawa": "tokugawa",
           "mino_iwamura": "oda",
-          "totomi_futamata_haibara": "tokugawa"
+          "totomi_futamata_haibara": "tokugawa",
+          "mikawa_shitara": "tokugawa"
         },
         "message": "長篠設楽原の戦いで武田軍が壊滅し、徳川家康が遠江・三河を完全奪回しました！",
         "killOfficerIds": [
@@ -3385,7 +3398,7 @@
           "omi_south": "akechi",
           "settsu": "toyotomi",
           "settsu_osaka": "toyotomi",
-          "kawachi": "toyotomi",
+          "kawachi_north": "toyotomi",
           "izumi": "toyotomi",
           "harima_west": "toyotomi",
           "harima_east": "toyotomi",
@@ -3398,11 +3411,12 @@
           "awaji": "toyotomi",
           "omi_north": "toyotomi",
           "echizen": "shibata",
-          "kaga": "shibata",
+          "kaga_north": "shibata",
+          "kaga_south": "shibata",
           "noto": "shibata",
           "wakasa": "shibata",
           "hida_takayama": "shibata",
-          "owari": "oda",
+          "owari_north": "oda",
           "ise": "oda",
           "ise_suzuka": "oda",
           "mino": "oda",
@@ -3466,7 +3480,7 @@
             "harima_east": "toyotomi",
             "settsu": "toyotomi",
             "settsu_osaka": "toyotomi",
-            "kawachi": "toyotomi",
+            "kawachi_north": "toyotomi",
             "izumi": "toyotomi",
             "yamato_koriyama": "toyotomi",
             "yamato_takatori": "toyotomi",
@@ -3476,14 +3490,15 @@
             "inaba": "toyotomi",
             "awaji": "toyotomi",
             "echizen": "shibata",
-            "kaga": "shibata",
+            "kaga_north": "shibata",
+            "kaga_south": "shibata",
             "noto": "shibata",
             "omi_north": "toyotomi",
             "wakasa": "shibata",
             "hida_takayama": "shibata",
             "hida_kiun": "shibata",
             "hida_kamioka": "shibata",
-            "owari": "oda",
+            "owari_north": "oda",
             "mino": "oda",
             "mino_iwamura": "oda",
             "ise": "oda",
@@ -3668,7 +3683,8 @@
       "changes": {
         "territory": {
           "echizen": "toyotomi",
-          "kaga": "toyotomi",
+          "kaga_north": "toyotomi",
+          "kaga_south": "toyotomi",
           "noto": "toyotomi"
         },
         "message": "柴田勝家が滅亡し、羽柴秀吉が北陸諸国を完全に傘下に収めました！",
@@ -3795,7 +3811,8 @@
           "iwashiro_ishikawa": "date",
           "iwashiro_tamura": "date",
           "iwaki": "date",
-          "iwaki_shirakawa": "date"
+          "iwaki_shirakawa": "date",
+          "echigo_higashikanbara": "date"
         },
         "troopShock": {
           "ashina": 0.5
@@ -3919,13 +3936,16 @@
           "omi_north": "ii",
           "mino": "tokugawa",
           "mino_iwamura": "tokugawa",
-          "owari": "tokugawa",
+          "owari_north": "tokugawa",
           "yamashiro": "tokugawa",
           "chikuzen_hakata": "kuroda",
           "chikuzen_munakata": "kuroda",
           "chikuzen_kamashi": "kuroda",
           "chikuzen_akizuki": "kuroda",
-          "mino_gujo": "tokugawa"
+          "mino_gujo": "tokugawa",
+          "kaga_south": "maeda",
+          "omi_koka": "tokugawa",
+          "omi_kutsukidani": "tokugawa"
         },
         "message": "徳川家康が関ヶ原の戦いに大勝利し、全国諸大名の領地を大規模に再編しました！",
         "killOfficerIds": [
@@ -3961,7 +3981,7 @@
         "territory": {
           "settsu": "tokugawa",
           "settsu_osaka": "tokugawa",
-          "kawachi": "tokugawa",
+          "kawachi_north": "tokugawa",
           "izumi": "tokugawa",
           "settsu_shimakami": "tokugawa",
           "kawachi_south": "tokugawa"
@@ -4158,7 +4178,7 @@
         "territory": {
           "settsu": "tokugawa",
           "settsu_osaka": "tokugawa",
-          "kawachi": "tokugawa",
+          "kawachi_north": "tokugawa",
           "izumi": "tokugawa",
           "settsu_shimakami": "tokugawa",
           "kawachi_south": "tokugawa"
@@ -4172,7 +4192,7 @@
         "territory": {
           "settsu": "oshio",
           "settsu_osaka": "oshio",
-          "kawachi": "oshio",
+          "kawachi_north": "oshio",
           "izumi": "oshio",
           "kawachi_south": "oshio"
         },
@@ -4438,7 +4458,7 @@
           "yamashiro": "meiji",
           "settsu": "meiji",
           "settsu_osaka": "meiji",
-          "kawachi": "meiji",
+          "kawachi_north": "meiji",
           "izumi": "meiji",
           "yamato_koriyama": "meiji",
           "yamato_takatori": "meiji",
@@ -5071,7 +5091,7 @@
           "yamato_higashiyamauchi": {
             "orderDelta": 20
           },
-          "kawachi": {
+          "kawachi_north": {
             "orderDelta": 15
           },
           "yamashiro": {
@@ -5134,7 +5154,7 @@
           }
         },
         "provinceEffects": {
-          "owari": {
+          "owari_north": {
             "orderDelta": 15
           },
           "owari_south": {
@@ -5167,7 +5187,7 @@
           }
         },
         "provinceEffects": {
-          "owari": {
+          "owari_north": {
             "defenseDelta": 15
           },
           "harima_west": {
@@ -5310,7 +5330,7 @@
           "yamato_higashiyamauchi": {
             "orderDelta": 15
           },
-          "kawachi": {
+          "kawachi_north": {
             "orderDelta": 10
           },
           "settsu": {
@@ -5496,7 +5516,8 @@
       "desc": "【物語】<br>長禄元年（1457年）12月2日雪深き夜、赤松氏の遺臣・上月満吉・石見太郎左衛門ら三十余人が吉野奥地・川上郷の北山御所を急襲！<br>禁闕の変以来十四年間神璽を奉じていた後南朝の皇胤・自天王（尊秀王）と弟の忠義王を襲撃して討ち取り、南朝の象徴であった神璽を奪還した。<br>この軍功により、将軍足利義政と管領細川勝元は赤松満祐の遺児・赤松政則に加賀北半国守護を授け、嘉吉の乱で滅亡していた名門・赤松家の再興が公認された！<br><br>【歴史解説】<br>嘉吉の乱（1441年）で第6代将軍足利義教を暗殺して滅亡した赤松氏の遺臣たちは、主家再興を悲願として幕府の信任を得る機会を狙っていました。彼らは吉野山奥に潜伏していた後南朝を奇襲して神璽を奪い、翌長禄2年に朝廷へ返還。これにより幼少の赤松政則が加賀北半国守護として大名復帰を果たし、のち応仁の乱で播磨・備前・美作の旧領を実力で奪還する礎となりました。",
       "changes": {
         "territory": {
-          "kaga": "akamatsu"
+          "kaga_north": "akamatsu",
+          "kaga_south": "akamatsu"
         },
         "killOfficerIds": [
           "off_jitenno_sonshu",
@@ -5853,7 +5874,7 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
-          "kawachi": {
+          "kawachi_north": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
@@ -6005,7 +6026,7 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
-          "owari": {
+          "owari_north": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -6465,7 +6486,7 @@
             "orderDelta": -8,
             "moraleDelta": -5
           },
-          "kawachi": {
+          "kawachi_north": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -6575,7 +6596,7 @@
             "orderDelta": -8,
             "moraleDelta": -5
           },
-          "owari": {
+          "owari_north": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -6649,7 +6670,7 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
-          "owari": {
+          "owari_north": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
@@ -6685,7 +6706,13 @@
             "orderDelta": -8,
             "moraleDelta": -5
           },
-          "kaga": {
+          "kaga_north": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "kaga_south": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -6756,7 +6783,7 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
-          "kawachi": {
+          "kawachi_north": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
@@ -7238,13 +7265,13 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
-          "kawachi": {
+          "kawachi_north": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
             "moraleDelta": -8
           },
-          "owari": {
+          "owari_north": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -7482,7 +7509,7 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
-          "owari": {
+          "owari_north": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -7765,7 +7792,8 @@
       ],
       "changes": {
         "territory": {
-          "izumo": "amago",
+          "izumo_north": "amago",
+          "izumo_south": "amago",
           "oki": "amago"
         },
         "message": "尼子経久が月山富田城を奪回！出雲・隠岐は京極氏の手を離れ、尼子氏が自立しました。",
@@ -7956,7 +7984,7 @@
     "yamashiro": [
       [
         1185,
-        "平安京・大内裏"
+        "大内裏"
       ],
       [
         1333,
@@ -7964,7 +7992,7 @@
       ],
       [
         1392,
-        "花之御所・室町殿"
+        "花之御所"
       ],
       [
         1573,
@@ -8047,28 +8075,6 @@
       [
         9999,
         "尼崎城"
-      ]
-    ],
-    "kawachi": [
-      [
-        1330,
-        "河内国府館"
-      ],
-      [
-        1532,
-        "若江城"
-      ],
-      [
-        1565,
-        "飯盛山城"
-      ],
-      [
-        1583,
-        "若江城"
-      ],
-      [
-        9999,
-        "枚方・河内代官所"
       ]
     ],
     "sagami": [
@@ -8160,7 +8166,7 @@
     "hitachi_ohta": [
       [
         1180,
-        "常陸国府・府中館"
+        "府中館"
       ],
       [
         9999,
@@ -8170,7 +8176,7 @@
     "shimotsuke": [
       [
         1180,
-        "下野国府・河内郡衙"
+        "下野国府"
       ],
       [
         9999,
@@ -8216,7 +8222,7 @@
     "shinano_kawanakajima": [
       [
         1185,
-        "善光寺・高梨館"
+        "高梨館"
       ],
       [
         1553,
@@ -8272,7 +8278,7 @@
       ],
       [
         1495,
-        "京極館・伊香砦"
+        "京極館"
       ],
       [
         1573,
@@ -8294,7 +8300,7 @@
     "omi_south": [
       [
         1185,
-        "瀬田唐橋館・志賀館"
+        "瀬田唐橋館"
       ],
       [
         1568,
@@ -8315,24 +8321,6 @@
       [
         9999,
         "膳所城"
-      ]
-    ],
-    "owari": [
-      [
-        1333,
-        "尾張国府館"
-      ],
-      [
-        1478,
-        "下津城"
-      ],
-      [
-        1559,
-        "岩倉城"
-      ],
-      [
-        9999,
-        "犬山城"
       ]
     ],
     "mikawa": [
@@ -8380,7 +8368,7 @@
     "izu": [
       [
         1185,
-        "北条館・蛭ヶ小島"
+        "北条館"
       ],
       [
         1495,
@@ -8394,7 +8382,7 @@
     "mino": [
       [
         1185,
-        "美濃国府・大井戸館"
+        "美濃国府"
       ],
       [
         1567,
@@ -8412,11 +8400,11 @@
     "echizen": [
       [
         1338,
-        "越前国府・府中館"
+        "越前国府"
       ],
       [
         1573,
-        "金ヶ崎城・一乗谷城"
+        "一乗谷城"
       ],
       [
         1600,
@@ -8481,16 +8469,6 @@
         "小丸山城"
       ]
     ],
-    "kaga": [
-      [
-        1580,
-        "尾山御坊"
-      ],
-      [
-        9999,
-        "金沢城"
-      ]
-    ],
     "hida_takayama": [
       [
         1585,
@@ -8546,7 +8524,7 @@
     "tajima": [
       [
         1580,
-        "此隅山城・竹田城"
+        "此隅山城"
       ],
       [
         9999,
@@ -8566,7 +8544,7 @@
     "hoki_west": [
       [
         1333,
-        "会見郡衙・名和館"
+        "名和館"
       ],
       [
         1591,
@@ -8575,16 +8553,6 @@
       [
         9999,
         "米子城"
-      ]
-    ],
-    "izumo": [
-      [
-        1600,
-        "月山富田城"
-      ],
-      [
-        9999,
-        "松江城"
       ]
     ],
     "iwami": [
@@ -8600,7 +8568,7 @@
     "bizen": [
       [
         1569,
-        "三石城・天神山城"
+        "天神山城"
       ],
       [
         9999,
@@ -8660,7 +8628,7 @@
     "sanuki": [
       [
         1185,
-        "屋島行宮・讃岐国府"
+        "屋島行宮"
       ],
       [
         1585,
@@ -8784,7 +8752,7 @@
       ],
       [
         1601,
-        "一宇治城・内城"
+        "内城"
       ],
       [
         9999,
@@ -8862,7 +8830,7 @@
     "mutsu_nanbu": [
       [
         1087,
-        "多賀城・厨川柵"
+        "厨川柵"
       ],
       [
         1338,
@@ -8880,7 +8848,7 @@
     "ugo_minato": [
       [
         1087,
-        "秋田城・払田柵"
+        "秋田城"
       ],
       [
         1602,
@@ -8900,7 +8868,7 @@
     "ezo": [
       [
         1590,
-        "勝山館・茂別館"
+        "勝山館"
       ],
       [
         1868,
@@ -8914,7 +8882,7 @@
     "sado": [
       [
         1185,
-        "佐渡国府・国分寺営所"
+        "佐渡国府"
       ],
       [
         1589,
@@ -8922,11 +8890,11 @@
       ],
       [
         1600,
-        "沢根城・新穂城"
+        "沢根城"
       ],
       [
         9999,
-        "相川陣屋・佐渡奉行所"
+        "佐渡奉行所"
       ]
     ],
     "awaji": [
@@ -8936,11 +8904,11 @@
       ],
       [
         1495,
-        "志知城・由良城"
+        "由良城"
       ],
       [
         1581,
-        "洲本城・安宅城"
+        "洲本城"
       ],
       [
         9999,
@@ -8950,21 +8918,21 @@
     "oki": [
       [
         1185,
-        "隠岐国府営所・黒木御所"
+        "黒木御所"
       ],
       [
         1566,
-        "甲尾城・美保関館"
+        "甲尾城"
       ],
       [
         9999,
-        "隠岐陣屋・西郷館"
+        "隠岐陣屋"
       ]
     ],
     "tsushima": [
       [
         1274,
-        "対馬国府・下県郡館"
+        "対馬国府"
       ],
       [
         1587,
@@ -8976,13 +8944,13 @@
       ],
       [
         9999,
-        "厳原城・府中城"
+        "府中城"
       ]
     ],
     "higo_kumamoto": [
       [
         1338,
-        "菊池本城・隈府城"
+        "隈府城"
       ],
       [
         1457,
@@ -9090,7 +9058,7 @@
     "iwaki_shirakawa": [
       [
         1189,
-        "白河関・白河営所"
+        "白河営所"
       ],
       [
         1335,
@@ -9132,7 +9100,7 @@
     "hoki_east": [
       [
         1333,
-        "伯耆国府館・船上山城"
+        "船上山城"
       ],
       [
         1350,
@@ -10402,7 +10370,7 @@
     "mino_gujo": [
       [
         1221,
-        "郡上郡衙・山田庄館"
+        "山田庄館"
       ],
       [
         1320,
@@ -10424,7 +10392,7 @@
     "kawachi_south": [
       [
         1020,
-        "古市・石川郡衙"
+        "石川郡衙"
       ],
       [
         1330,
@@ -10432,7 +10400,7 @@
       ],
       [
         1390,
-        "千早城・上赤坂城"
+        "千早城"
       ],
       [
         1480,
@@ -10463,6 +10431,66 @@
       [
         1868,
         "松尾城"
+      ]
+    ],
+    "owari_north": [
+      [
+        1333,
+        "尾張国府館"
+      ],
+      [
+        1478,
+        "下津城"
+      ],
+      [
+        1559,
+        "岩倉城"
+      ],
+      [
+        9999,
+        "犬山城"
+      ]
+    ],
+    "kawachi_north": [
+      [
+        1330,
+        "河内国府館"
+      ],
+      [
+        1532,
+        "若江城"
+      ],
+      [
+        1565,
+        "飯盛山城"
+      ],
+      [
+        1583,
+        "若江城"
+      ],
+      [
+        9999,
+        "河内代官所"
+      ]
+    ],
+    "kaga_north": [
+      [
+        1580,
+        "尾山御坊"
+      ],
+      [
+        9999,
+        "金沢城"
+      ]
+    ],
+    "izumo_south": [
+      [
+        1600,
+        "月山富田城"
+      ],
+      [
+        9999,
+        "松江城"
       ]
     ]
   },

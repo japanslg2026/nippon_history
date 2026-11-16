@@ -1668,17 +1668,17 @@ export const UIManagerMethods = {
 
     let roleBadge = '';
 
-    if (off.isDaimyo) {
+    if (isRonin) {
+
+      roleBadge = '<span style="background:#7f8c8d; color:#fff; padding:3px 12px; border-radius:4px; font-size:12pt;">浪人</span>';
+
+    } else if (off.isDaimyo) {
 
       roleBadge = '<span style="background:#b7950b; color:#fff; padding:3px 12px; border-radius:4px; font-size:12pt; font-weight:bold;">当主</span>';
 
     } else if (assignedProv) {
 
       roleBadge = '<span style="background:#27ae60; color:#fff; padding:3px 12px; border-radius:4px; font-size:12pt;">城主</span>';
-
-    } else if (isRonin) {
-
-      roleBadge = '<span style="background:#7f8c8d; color:#fff; padding:3px 12px; border-radius:4px; font-size:12pt;">浪人</span>';
 
     } else {
 
@@ -3060,11 +3060,11 @@ export const UIManagerMethods = {
 
           const getRoleScore = (off) => {
 
+            if (off.clanId === 'ronin') return 0;
+
             if (off.isDaimyo) return 3;
 
             if (off.assignedProvId) return 2;
-
-            if (off.clanId === 'ronin') return 0;
 
             return 1;
 
@@ -3292,17 +3292,17 @@ export const UIManagerMethods = {
 
                   let roleBadge = '';
 
-                  if (isMapDaimyo) {
+                  if (isRonin) {
+
+                    roleBadge = '<span style="background:#7f8c8d; color:#fff; padding:2px 8px; border-radius:3px; font-size:12pt;">浪人</span>';
+
+                  } else if (isMapDaimyo) {
 
                     roleBadge = '<span style="background:#b7950b; color:#fff; padding:2px 8px; border-radius:3px; font-size:12pt; font-weight:bold;">👑 当主</span>';
 
                   } else if (assignedProv) {
 
                     roleBadge = '<span style="background:#27ae60; color:#fff; padding:2px 8px; border-radius:3px; font-size:12pt; font-weight:bold;">🏯 城主</span>';
-
-                  } else if (isRonin) {
-
-                    roleBadge = '<span style="background:#7f8c8d; color:#fff; padding:2px 8px; border-radius:3px; font-size:12pt;">浪人</span>';
 
                   } else {
 
@@ -6528,11 +6528,11 @@ export const UIManagerMethods = {
 
           const getRoleScore = (off) => {
 
+            if (off.clanId === 'ronin') return 0;
+
             if (off.isDaimyo) return 3;
 
             if (off.id === p.governorId || off.assignedProvId === p.id) return 2;
-
-            if (off.clanId === 'ronin') return 0;
 
             return 1;
 
@@ -6782,17 +6782,17 @@ export const UIManagerMethods = {
 
                   let roleBadge = '';
 
-                  if (isDaimyo) {
+                  if (isRonin) {
+
+                    roleBadge = `<span style="${roleBadgeBase} background:#7f8c8d; color:#fff;">🤝 浪人</span>`;
+
+                  } else if (isDaimyo) {
 
                     roleBadge = `<span style="${roleBadgeBase} background:#b7950b; color:#fff; font-weight:bold;">👑 当主</span>`;
 
                   } else if (isGov) {
 
                     roleBadge = `<span style="${roleBadgeBase} background:#27ae60; color:#fff; font-weight:bold;">🏯 城主</span>`;
-
-                  } else if (isRonin) {
-
-                    roleBadge = `<span style="${roleBadgeBase} background:#7f8c8d; color:#fff;">🤝 浪人</span>`;
 
                   } else {
 
@@ -7487,9 +7487,9 @@ export const UIManagerMethods = {
           }
           const sortedOfficers = [...provOfficers].sort((a, b) => {
             const roleScore = (off) => {
+              if (off.clanId === 'ronin') return 0;
               if (off.isDaimyo) return 3;
               if (off.id === p.governorId || off.assignedProvId === p.id) return 2;
-              if (off.clanId === 'ronin') return 0;
               return 1;
             };
             const d = roleScore(b) - roleScore(a);

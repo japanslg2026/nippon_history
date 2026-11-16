@@ -363,8 +363,12 @@ class OfficerView {
     const stats = [['武勇', 'military', '⚔'], ['内政', 'politic', '🌾'], ['知略', 'intel', '📜']];
     const bars = stats.map(([l, k, ic]) => { const v = o[k] ?? 0; return `<div class="mk-stat"><span>${ic} ${l}</span><div class="mk-bar"><i style="width:${Math.min(100, v)}%;background:${v >= 90 ? 'linear-gradient(90deg,#d4af37,#ffd700)' : v >= 70 ? 'linear-gradient(90deg,#8e5b1f,#d4af37)' : 'linear-gradient(90deg,#4a3a28,#8c734b)'}"></i></div><b class="${v >= 90 ? 'hi' : ''}">${v}</b></div>`; }).join('');
     const ap = r.ap.slice().sort((a, b) => (+a.sc.year) - (+b.sc.year));
-    const apHTML = ap.length ? ap.map(a => `<div class="mk-ap"><span class="mk-ap-y">${fmtYear(+a.sc.year)}</span><span class="mk-ap-t">${esc(a.sc.title)}</span>
-        <span class="mk-ap-c" style="border-color:${DB.clans[a.clanId]?.color || '#666'}">${esc(DB.clanName(a.clanId))}${a.isDaimyo ? '（当主）' : ''}${(c => c ? `・城主（${esc(c)}）` : '')(DB.lordCastle(a.sc, a.oid))}</span><span class="mk-ap-p">${esc(DB.provName[a.prov] || a.prov || '')}</span></div>`).join('')
+    const apHTML = ap.length ? ap.map(a => {
+      const isRoninAp = !a.clanId || a.clanId === 'ronin';
+      const lc = isRoninAp ? null : DB.lordCastle(a.sc, a.oid);
+      return `<div class="mk-ap"><span class="mk-ap-y">${fmtYear(+a.sc.year)}</span><span class="mk-ap-t">${esc(a.sc.title)}</span>
+        <span class="mk-ap-c" style="border-color:${DB.clans[a.clanId]?.color || '#666'}">${esc(DB.clanName(a.clanId))}${!isRoninAp && a.isDaimyo ? '（当主）' : ''}${lc ? `・城主（${esc(lc)}）` : ''}</span><span class="mk-ap-p">${esc(DB.provName[a.prov] || a.prov || '')}</span></div>`;
+    }).join('')
       : `<div class="mk-note">シナリオ固有の配属記録なし。本籍「${esc(DB.provName[o.defaultProv] || '不明')}」・${esc(DB.clanName(o.clanId))}所属として、生没年に応じ登場します（ゲーム規則により追加登場あり）。</div>`;
     const life = (o.birthYear != null || o.deathYear != null) ? `${fmtYear(o.birthYear)}年 〜 ${fmtYear(o.deathYear)}年${o.birthYear != null && o.deathYear != null ? `（享年${o.deathYear - o.birthYear + 1}）` : ''}` : '生没年不詳';
     const d = this.$('.mk-detail');

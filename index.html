@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja" prefix="og: http://ogp.me/ns#">
 <head>
 
@@ -4192,7 +4192,7 @@
       // 武将配属ルールは data/rules.json（officerAffiliationRules）から読み込む（ゲームと同じデータ。2026-11-14）
       async function loadAffiliationRulesSafe() {
         try {
-          var r = await fetchJsonSmart('rules.json?v=20261115_v23');
+          var r = await fetchJsonSmart('rules.json?v=20261116_v33');
           window.RULES_DATA = r || {};
           return (r && Array.isArray(r.officerAffiliationRules)) ? r.officerAffiliationRules : [];
         } catch (_) {
@@ -4234,6 +4234,10 @@
             if (pick) { copy.defaultProv = pick; copy.assignedProvId = null; }
           }
           if (rule.clearAssignment) copy.assignedProvId = null;
+          if (copy.clanId === 'ronin') {
+            copy.isDaimyo = false;
+            copy.assignedProvId = null;
+          }
           return true;
         }
         return false;
@@ -4242,24 +4246,24 @@
       async function initAllData() {
         var statusEl = document.getElementById('loadingStatusText');
         try {
-          await loadExternalScript(['assets/kamons.js?v=20261115_v19', 'assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
+          await loadExternalScript(['assets/kamons.js?v=20261116_v33', 'assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
           if (typeof window.loadKamonSymbols === 'function') {
             window.loadKamonSymbols();
           }
-          await loadExternalScript(['js/kamonOverrides.js?v=20261115_v19']);
+          await loadExternalScript(['js/kamonOverrides.js?v=20261116_v33']);
 
           statusEl.textContent = '歴史配置ルールとシナリオ・領国・大名・武将データを読み込み中…';
           var rulesPromise = loadAffiliationRulesSafe();
 
           var results = await Promise.all([
-            fetchJsonSmart('scenarios.json?v=20261115_v23'),
-            fetchJsonSmart('provinces.json?v=20261115_v23'),
-            fetchJsonSmart('clans.json?v=20261115_v23'),
-            fetchJsonSmart('officers.json?v=20261115_v23'),
-            fetchJsonSmart('governors.json?v=20261115_v23').catch(function () { return {}; }),
-            fetchJsonSmart('events.json?v=20261115_v23').catch(function () { return {}; }),
+            fetchJsonSmart('scenarios.json?v=20261116_v33'),
+            fetchJsonSmart('provinces.json?v=20261116_v33'),
+            fetchJsonSmart('clans.json?v=20261116_v33'),
+            fetchJsonSmart('officers.json?v=20261116_v33'),
+            fetchJsonSmart('governors.json?v=20261116_v33').catch(function () { return {}; }),
+            fetchJsonSmart('events.json?v=20261116_v33').catch(function () { return {}; }),
             rulesPromise,
-            fetchJsonSmart('map_borders.json?v=20261115_v24').catch(function () { return window.MAP_BORDERS_DATA || null; })
+            fetchJsonSmart('map_borders.json?v=20261116_v33').catch(function () { return window.MAP_BORDERS_DATA || null; })
           ]);
 
           var scenariosRaw = results[0];
@@ -4536,7 +4540,7 @@
 
           var govProv = Object.keys(pinnedGovs).find(function (pid) { return pinnedGovs[pid] === copy.id || pinnedGovs[pid] === copy.name || pinnedGovs[pid] === copy.origName; })
                      || Object.keys(histGovs).find(function (pid) { return histGovs[pid] === copy.id || histGovs[pid] === copy.name || histGovs[pid] === copy.origName; });
-          if (govProv && !(affEntry && affEntry.clearAssignment)) {
+          if (govProv && !(affEntry && (affEntry.clearAssignment || affEntry.clanId === 'ronin'))) {
             var pEntry = State.computedProvs.get(govProv);
             if (pEntry && pEntry.ownerId && activeOwnersSet.has(pEntry.ownerId)) {
               var cEnt = State.computedClans.get(pEntry.ownerId);
@@ -4550,6 +4554,8 @@
 
           if (!copy.clanId || (!activeOwnersSet.has(copy.clanId) && copy.clanId !== 'ronin')) {
             copy.clanId = 'ronin';
+          }
+          if (copy.clanId === 'ronin') {
             copy.isDaimyo = false;
             copy.assignedProvId = null;
           }
@@ -5279,7 +5285,7 @@
           tooltip.innerHTML =
             '<div style="font-weight:bold; color:var(--gold-bright); font-size:12.5pt;">' + esc(pEntry.name) + ' — ' + esc(pEntry.castle) + (isCap ? ' <span style="color:#ffd700;">[本国]</span>' : '') + '</div>' +
             '<div style="font-size:12pt; margin-top:2px;">支配：<b style="color:#fff;">' + esc(fam) + '</b>' + esc(leader) + '</div>' +
-            '<div style="font-size:12pt; margin-top:2px;">城主：<b style="color:#fff;">' + esc(tipGov) + '</b>　武将：<b style="color:#fff;">' + tipOffCount + '名</b></div>';
+            '<div style="font-size:12pt; margin-top:2px;">' + (isCap ? '' : '城主：<b style="color:#fff;">' + esc(tipGov) + '</b>　') + '武将：<b style="color:#fff;">' + tipOffCount + '名</b></div>';
           var rect = stage.getBoundingClientRect();
           tooltip.style.left = Math.min(rect.width - 260, e.clientX - rect.left + 14) + 'px';
           tooltip.style.top = Math.max(10, e.clientY - rect.top - 10) + 'px';
@@ -5750,14 +5756,15 @@
 
         var base = pEntry.base || {};
         var isCapProv = !!(cEntry && cEntry.capitalProvId === pEntry.id);
-        var govName = pEntry.governor ? pEntry.governor.name : (ownerId ? '城代統治' : '国人自治');
+        var capDaimyoItem = isCapProv ? pEntry.officers.find(function (it) { return it && it.role === 'daimyo'; }) : null;
+        var govName = pEntry.governor ? pEntry.governor.name : (capDaimyoItem ? capDaimyoItem.officer.name : (isCapProv && cEntry && cEntry.leaderName ? cEntry.leaderName : (ownerId ? '城代統治' : '国人自治')));
         var cLore = pEntry.castleLore || (pEntry.name + 'の要衝・' + pEntry.castle + '。古来より交通と軍事の拠点として栄えた名城。');
         var officerSummary = document.getElementById('provOfficersSummary');
         var isGovernorListed = pEntry.officers.some(function (item) {
           return item && item.officer && item.officer.name === govName;
         });
         var otherOfficerCount = Math.max(0, pEntry.officers.length - (isGovernorListed ? 1 : 0));
-        if (officerSummary) officerSummary.textContent = '城主：' + govName + '　ほか ' + otherOfficerCount + '名';
+        if (officerSummary) officerSummary.textContent = (isCapProv ? '当主：' : '城主：') + govName + '　ほか ' + otherOfficerCount + '名';
 
         var hasSpecialty = !!(base.specialty || base.goldMine || base.silverMine);
         var specialtyHtml = hasSpecialty ? (
@@ -5781,7 +5788,7 @@
             '</div>' +
             '<span class="castle-governor" style="font-size:12pt; color:var(--gold-pale);">' +
               (ownerId ? '<span class="castle-owner-fam" style="color:#fff; font-weight:bold; margin-right:6px;">' + esc(getClanFamilyName(ownerId, year)) + '</span>' : '') +
-              '城主：<b>' + esc(govName) + '</b></span>' +
+              (isCapProv ? '当主：' : '城主：') + '<b>' + esc(govName) + '</b>' + '</span>' +
           '</div>' +
 
           '<div class="stat-pills-grid-2 stat-pills-top">' +
@@ -5840,7 +5847,7 @@
             var isCastellan = (role === 'daimyo' || role === 'governor');
             var roleBadgeHtml = '';
             if (role === 'daimyo') {
-              roleBadgeHtml = '<span class="role-badge role-daimyo">👑 当主・城主</span>';
+              roleBadgeHtml = (isCapProv ? '<span class="role-badge role-daimyo">👑 当主</span>' : '<span class="role-badge role-daimyo">👑 当主・城主</span>');
             } else if (role === 'governor') {
               roleBadgeHtml = '<span class="role-badge role-governor">🏯 城主</span>';
             }
@@ -6726,14 +6733,14 @@
         var selectedClanName = activeClanId ? getClanFamilyName(activeClanId, year) : '';
 
         function getOfficerProvName(o) {
-          var pid = o.assignedProvId || o.defaultProv;
+          var pid = (o.clanId && o.clanId !== 'ronin' && o.assignedProvId) ? o.assignedProvId : o.defaultProv;
           return (State.provById.get(pid) && State.provById.get(pid).name) || PROV_JP_MAP[pid] || '諸国';
         }
 
         function getOfficerStatusRank(o) {
+          if (!o.clanId || o.clanId === 'ronin' || o.clanId === 'null') return 3;
           if (o.isDaimyo) return 0;
           if (o.assignedProvId) return 1;
-          if (o.clanId === 'ronin') return 3;
           return 2;
         }
 
@@ -6851,7 +6858,7 @@
 
           var rows = source.map(function (o) {
             var cName = (o.clanId && o.clanId !== 'ronin') ? getClanFamilyName(o.clanId, year) : '浪人・未仕官';
-            var provId = o.assignedProvId || o.defaultProv || '';
+            var provId = (o.clanId && o.clanId !== 'ronin' && o.assignedProvId) ? o.assignedProvId : (o.defaultProv || '');
             var provName = getOfficerProvName(o);
             var statusRank = getOfficerStatusRank(o);
             return {
@@ -6915,12 +6922,14 @@
           // PCテーブル行
           tbodyEl.innerHTML = rows.map(function (r) {
             var o = r.o;
-            var isRonin = o.clanId === 'ronin';
+            var isRonin = (!o.clanId || o.clanId === 'ronin' || o.clanId === 'null');
             var bYear = o.birthYear != null ? Number(o.birthYear) : (o.birth != null ? Number(o.birth) : null);
             var age = (bYear != null && year >= bYear) ? (year - bYear) : null;
-            var statusBadge = o.isDaimyo
-              ? '<span class="role-badge role-daimyo">👑当主</span>'
-              : (o.assignedProvId ? '<span class="role-badge role-governor">🏯城主</span>' : (isRonin ? '<span class="role-badge role-ronin">🎋浪人</span>' : '<span class="role-badge role-vassal">家臣</span>'));
+            var statusBadge = isRonin
+              ? '<span class="role-badge role-ronin">🎋浪人</span>'
+              : (o.isDaimyo
+                ? '<span class="role-badge role-daimyo">👑当主</span>'
+                : (o.assignedProvId ? '<span class="role-badge role-governor">🏯城主</span>' : '<span class="role-badge role-vassal">家臣</span>'));
             var skillsTxt = o.skill || (o.tactics && o.tactics.length ? o.tactics.slice(0, 3).join('・') : '—');
             return (
               '<tr class="table-row-hover" data-row-off="' + esc(o.id) + '">' +
@@ -6941,12 +6950,14 @@
           if (cardsEl) {
             cardsEl.innerHTML = rows.map(function (r) {
               var o = r.o;
-              var isRonin = o.clanId === 'ronin';
+              var isRonin = (!o.clanId || o.clanId === 'ronin' || o.clanId === 'null');
               var bYear = o.birthYear != null ? Number(o.birthYear) : (o.birth != null ? Number(o.birth) : null);
               var age = (bYear != null && year >= bYear) ? (year - bYear) : null;
-              var statusBadge = o.isDaimyo
-                ? '<span class="role-badge role-daimyo" title="当主">👑</span>'
-                : (o.assignedProvId ? '<span class="role-badge role-governor" title="城主">🏯</span>' : (isRonin ? '<span class="role-badge role-ronin" title="浪人">浪</span>' : ''));
+              var statusBadge = isRonin
+                ? '<span class="role-badge role-ronin" title="浪人">浪</span>'
+                : (o.isDaimyo
+                  ? '<span class="role-badge role-daimyo" title="当主">👑</span>'
+                  : (o.assignedProvId ? '<span class="role-badge role-governor" title="城主">🏯</span>' : ''));
               var skillsTxt = o.skill || (o.tactics && o.tactics.length ? o.tactics.slice(0, 3).join('・') : '');
               return (
                 '<div class="off-card" data-row-off="' + esc(o.id) + '">' +
@@ -7515,10 +7526,11 @@
         }).join('');
         var ap = r.ap.slice().sort(function (a, b) { return Number(a.sc.year) - Number(b.sc.year); });
         var apHTML = ap.length ? ap.map(function (a) {
-          var lc = DB.lordCastle(a.sc, a.oid);
+          var isRoninAp = (!a.clanId || a.clanId === 'ronin');
+          var lc = isRoninAp ? null : DB.lordCastle(a.sc, a.oid);
           var cCol = (DB.clans[a.clanId] && DB.clans[a.clanId].color) || '#666';
           return '<div class="mk-ap"><span class="mk-ap-y">' + fmtYear(Number(a.sc.year)) + '</span><span class="mk-ap-t">' + esc(a.sc.title) + '</span>' +
-            '<span class="mk-ap-c" style="border-color:' + cCol + '">' + esc(DB.clanName(a.clanId)) + (a.isDaimyo ? '（当主）' : '') + (lc ? '・城主（' + esc(lc) + '）' : '') + '</span>' +
+            '<span class="mk-ap-c" style="border-color:' + cCol + '">' + esc(DB.clanName(a.clanId)) + (!isRoninAp && a.isDaimyo ? '（当主）' : '') + (lc ? '・城主（' + esc(lc) + '）' : '') + '</span>' +
             '<span class="mk-ap-p">' + esc(DB.provName[a.prov] || a.prov || '') + '</span></div>';
         }).join('') : '<div class="mk-note">シナリオ固有の配属記録なし。本籍「' + esc(DB.provName[o.defaultProv] || '不明') + '」・' + esc(DB.clanName(dispClanId)) + '所属として、生没年に応じ登場します。</div>';
         var life = (o.birthYear != null || o.deathYear != null)
