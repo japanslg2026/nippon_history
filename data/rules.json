@@ -7576,7 +7576,10 @@
       "off_chosokabe_morichika",
       "off_chosokabe_yoshitoshi",
       "off_chosokabe_fumikane",
-      "off_jd_023"
+      "off_jd_023",
+      "off_chosokabe_chikayoshi",
+      "off_hewa_chikatake",
+      "off_hieyama_chikaoki"
     ],
     "nanbu": [
       "off_kunohe_sanechika",
@@ -8545,7 +8548,21 @@
     "off_sakai_masatoki_kazusa": {
       "clanId": "sakai_kazusa",
       "defaultProv": "kazusa_togane_naruto"
-    }
+    },
+    "off_kagawa_yukikage": "kagawa",
+    "off_hist_1495_kagawa_motokage": "kagawa",
+    "off_onishi_kakuyo": "onishi",
+    "off_onishi_yoritake": "onishi",
+    "off_onishi_yorikane": "onishi",
+    "off_succ_ashikaga_1509_6": "ashikaga_hirashima",
+    "off_ashikaga_yoshihide": "ashikaga_hirashima",
+    "off_ashikaga_yoshisuke": "ashikaga_hirashima",
+    "off_kaifu_tomomitsu": "ashikaga_hirashima",
+    "off_shinkai_sanetsuna": "ashikaga_hirashima",
+    "off_hachisuka_iemasa": "hachisuka",
+    "off_inada_tanemoto": "hachisuka",
+    "off_sogo_masayuki": "sogo",
+    "off_takato_yoritsugu": "takato"
   },
   "factionRosters": {
     "goryokaku": [

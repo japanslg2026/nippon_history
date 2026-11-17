@@ -407,7 +407,7 @@ export const HISTORICAL_CHOICE_EVENTS = [
             isHistorical: true,
             action: (g) => {
               g.gold += 800;
-              const provIds = ['kai', 'kai_tsuru', 'shinano_takato_iida', 'shinano_sarashina_hanishina', 'suruga', 'suwa_komoro', 'shinano_saku_komoro', 'shinano_suwa', 'shinano_chikuma_kiso', 'shinano_chikuma_azumi', 'shinano_kiso', 'shinano_kawanakajima'];
+              const provIds = ['kai', 'kai_tsuru', 'shinano_takato', 'shinano_iida', 'shinano_takato_iida', 'shinano_sarashina_hanishina', 'suruga', 'suwa_komoro', 'shinano_saku_komoro', 'shinano_suwa', 'shinano_chikuma_kiso', 'shinano_chikuma_azumi', 'shinano_kiso', 'shinano_kawanakajima'];
               provIds.forEach(pid => {
                 const pr = g.provinces.find(p => p.id === pid);
                 if (pr) {
@@ -465,7 +465,7 @@ export const HISTORICAL_CHOICE_EVENTS = [
             desc: '武田軍の猛攻により今川館が陥落。今川氏は戦国大名として滅亡する。',
             isHistorical: true,
             action: (g) => {
-              const provIds = ['kai', 'kai_tsuru', 'shinano_takato_iida', 'shinano_sarashina_hanishina', 'suruga', 'suwa_komoro', 'shinano_saku_komoro', 'shinano_suwa', 'shinano_chikuma_kiso', 'shinano_chikuma_azumi', 'shinano_kiso', 'shinano_kawanakajima'];
+              const provIds = ['kai', 'kai_tsuru', 'shinano_takato', 'shinano_iida', 'shinano_takato_iida', 'shinano_sarashina_hanishina', 'suruga', 'suwa_komoro', 'shinano_saku_komoro', 'shinano_suwa', 'shinano_chikuma_kiso', 'shinano_chikuma_azumi', 'shinano_kiso', 'shinano_kawanakajima'];
               provIds.forEach(pid => {
                 const pr = g.provinces.find(p => p.id === pid);
                 if (pr) {
@@ -1029,7 +1029,7 @@ export const SPECIALTY_SYNERGY = [
     id: 'horse',
     label: '名馬産地',
     keywords: /南部馬|木曽馬|甲州馬|馬|牧|名馬/,
-    provinceIds: ['mutsu_nanbu', 'kai', 'kai_tsuru', 'shinano_kawanakajima', 'shinano_sarashina_hanishina', 'shinano_ueda', 'shinano_chikuma_kiso', 'shinano_chikuma_azumi', 'shinano_kiso', 'shinano_takato_iida'],
+    provinceIds: ['mutsu_nanbu', 'kai', 'kai_tsuru', 'shinano_kawanakajima', 'shinano_sarashina_hanishina', 'shinano_ueda', 'shinano_chikuma_kiso', 'shinano_chikuma_azumi', 'shinano_kiso', 'shinano_takato', 'shinano_iida', 'shinano_takato_iida'],
     effects: { assaultBonus: 0.25 } // 突撃系攻撃力底上げ +25%
   },
   {

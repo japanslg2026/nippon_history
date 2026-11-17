@@ -8,7 +8,7 @@
 
 // モジュール間安全参照ヘルパー
 var SCENARIOS = (typeof window !== 'undefined' && (window.SCENARIOS || window.SCENARIOS_DATA)) || [];
-const SHIKOKU_PROVINCE_IDS = new Set(['iyo_matsuyama', 'iyo_nii', 'iyo_ohzu', 'iyo_uwajima', 'noshima', 'sanuki', 'awa_shikoku', 'tosa_kochi', 'tosa_aki', 'tosa_gun', 'tosa_nakamura']);
+const SHIKOKU_PROVINCE_IDS = new Set(['iyo_matsuyama', 'iyo_nii', 'iyo_ohzu', 'iyo_uwajima', 'noshima', 'sanuki', 'sanuki_west', 'awa_shikoku', 'awa_shikoku_west', 'awa_shikoku_south', 'tosa_kochi', 'tosa_aki', 'tosa_gun', 'tosa_nakamura']);
 const SHIKOKU_MAP_TRANSFORM = 'rotate(4 280 450)';
 // 地図枠と列島全体の傾きは変えず、五島以外だけを右へ寄せる。
 const NON_GOTO_MAP_TRANSFORM = 'translate(16 0)';
@@ -55,61 +55,60 @@ export const MapRendererMethods = {
   },
 
   /**
-   * 地図上の家紋シンボルを生成・更新する：
-   * - 全ての地図家紋で外周の金色縁取り（stroke）を省略してすっきり見せる
-   * - 斎藤道三（saito）や領土色連動大名は背景円を領土色（fillColor）に追随させる
-   * - 【重要】枠線専用円（fill="none"）や2つ目以降の大円をfillColorで塗りつぶさない（手前の絵柄が覆い隠されるのを防止）
+   * 地図上の家紋シンボルを生成・取得する：
+   * - 背景色は保持せず透過（fill="none"）にして、背後の領土色などをそのまま透かす
+   * - 外周の金色縁取り（stroke）を省略してすっきり見せる
+   * - <use> 参照型シンボル（蒲生・五稜郭など）も再帰的に地図用シンボルへ差し替える
    */
-  getMapKamonId(province, fillColor) {
-    const baseId = province?.ownerId ? this.getClanKamonId(province.ownerId) : '';
-    if (!baseId || !province) return baseId;
+  ensureMapKamonSymbol(baseId, visited = new Set()) {
+    if (!baseId || visited.has(baseId)) return baseId;
+    visited.add(baseId);
 
     const source = document.getElementById(baseId);
     if (!source || !source.parentNode) return baseId;
 
     const srcVer = source.getAttribute('data-v') || '1';
-    const mapKamonId = `${baseId}-map-${province.id}`;
+    const mapKamonId = `${baseId}-map`;
     let mapSymbol = document.getElementById(mapKamonId);
     if (!mapSymbol || mapSymbol.getAttribute('data-src-id') !== `${baseId}:${srcVer}`) {
       if (mapSymbol && mapSymbol.parentNode) mapSymbol.parentNode.removeChild(mapSymbol);
       mapSymbol = source.cloneNode(true);
       mapSymbol.id = mapKamonId;
       mapSymbol.setAttribute('data-src-id', `${baseId}:${srcVer}`);
+
+      // viewBox に応じて外周円の半径しきい値を判定（通常 32x32 は 13.5、100x100 等は 40）
+      const vb = mapSymbol.getAttribute('viewBox') || '0 0 32 32';
+      const vbParts = vb.trim().split(/[\s,]+/).map(Number);
+      const vbDim = (vbParts.length >= 4 && vbParts[2] > 0) ? vbParts[2] : 32;
+      const rThreshold = vbDim * 0.42;
+
+      Array.from(mapSymbol.querySelectorAll('circle')).forEach(el => {
+        const r = Number(el.getAttribute('r'));
+        if (r >= rThreshold) {
+          el.setAttribute('fill', 'none');
+          el.setAttribute('stroke', 'none');
+          el.setAttribute('stroke-width', '0');
+          el.style.display = 'none';
+        }
+      });
+
+      Array.from(mapSymbol.querySelectorAll('use')).forEach(u => {
+        const href = u.getAttribute('href') || u.getAttribute('xlink:href') || '';
+        if (href.startsWith('#')) {
+          const targetMapId = this.ensureMapKamonSymbol(href.slice(1), visited);
+          u.setAttribute('href', `#${targetMapId}`);
+        }
+      });
+
       source.parentNode.appendChild(mapSymbol);
     }
-
-    // viewBox に応じて大円の半径しきい値を判定（通常 32x32 は 13.5、100x100 等は 40）
-    const vb = mapSymbol.getAttribute('viewBox') || '0 0 32 32';
-    const vbParts = vb.trim().split(/[\s,]+/).map(Number);
-    const vbDim = (vbParts.length >= 4 && vbParts[2] > 0) ? vbParts[2] : 32;
-    const rThreshold = vbDim * 0.42;
-
-    let bgCircleReplaced = false;
-
-    // symbol 直下およびネストされた circle 要素を安全に走査
-    const circles = Array.from(mapSymbol.querySelectorAll('circle'));
-    circles.forEach(el => {
-      const r = Number(el.getAttribute('r'));
-      if (r >= rThreshold) {
-        // 外周の金色縁取り（stroke）を省略
-        el.setAttribute('stroke', 'none');
-        el.setAttribute('stroke-width', '0');
-
-        const currentFill = (el.getAttribute('fill') || '').trim().toLowerCase();
-        // fill="none" や未指定の円は枠線専用なので中身を塗りつぶさない（重なって絵柄を隠すのを防止）
-        if (currentFill === 'none' || !currentFill) {
-          el.style.display = 'none';
-          return;
-        }
-
-        // 背景色は最初に見つかるベース背景円1つだけに適用（前景パーツや多重円の誤塗りつぶしを防止）
-        if (fillColor && !bgCircleReplaced) {
-          el.setAttribute('fill', fillColor);
-          bgCircleReplaced = true;
-        }
-      }
-    });
     return mapKamonId;
+  },
+
+  getMapKamonId(province, _fillColor) {
+    const baseId = province?.ownerId ? this.getClanKamonId(province.ownerId) : '';
+    if (!baseId || !province) return baseId;
+    return this.ensureMapKamonSymbol(baseId);
   },
 
   /** 和紙テクスチャと勢力外周インナーグロー用のSVG定義を初期化する（家紋symbolは保持） */

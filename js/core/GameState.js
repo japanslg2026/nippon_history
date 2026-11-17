@@ -2006,6 +2006,13 @@ export const GameStateMethods = {
 
     this.provinces.forEach(p => {
 
+      // 当主が特定の自国領（assignedProvId）に在城している場合は、その城も当主親政とする。
+      const stationedDaimyo = p.ownerId && this.activeOfficers.find(o => o.clanId === p.ownerId && o.isDaimyo && o.assignedProvId === p.id && !o.isDead);
+      if (stationedDaimyo) {
+        p.governorId = stationedDaimyo.id;
+        return;
+      }
+
       // 編集器で明示した本拠地の城主だけは、当主の自動配置を上書きする。
       if (p.ownerId && this.isCapitalProvince(p.id, p.ownerId) && !pinnedGovMap[p.id]) {
 
@@ -2724,7 +2731,7 @@ export const GameStateMethods = {
 
       'sado': 2, 'echigo': 2, 'echigo_murakami': 2, 'echigo_kanbara': 2, 'echigo_higashikanbara': 2, 'echigo_uonuma': 2, 'shinano_kawanakajima': 2, 'shinano_sarashina_hanishina': 2, 'shinano_ueda': 2, 'kozuke_takasaki': 2, 'kozuke_agatsuma': 2, 'kozuke_numata': 2, 'kozuke_maebashi': 2, 'kozuke_nitta_kanayama': 2, 'shimotsuke_nasu': 2,
 
-      'shinano_chikuma_kiso': 2, 'shinano_chikuma_azumi': 2, 'shinano_kiso': 2, 'shinano_takato_iida': 2, 'shimotsuke': 2, 'shimotsuke_kanitsuga': 2, 'sano_oyama': 2, 'shimotsuke_oyama': 2, 'shimotsuke_sano': 2, 'kai': 2, 'kai_tsuru': 2, 'hitachi': 2, 'hitachi_ohta': 2, 'hitachi_mito': 2, 'hitachi_makabe': 2, 'hitachi_kashima': 2, 'shimousa_koga': 2,
+      'shinano_chikuma_kiso': 2, 'shinano_chikuma_azumi': 2, 'shinano_kiso': 2, 'shinano_takato': 2, 'shinano_iida': 2, 'shinano_takato_iida': 2, 'shimotsuke': 2, 'shimotsuke_kanitsuga': 2, 'sano_oyama': 2, 'shimotsuke_oyama': 2, 'shimotsuke_sano': 2, 'kai': 2, 'kai_tsuru': 2, 'hitachi': 2, 'hitachi_ohta': 2, 'hitachi_mito': 2, 'hitachi_makabe': 2, 'hitachi_kashima': 2, 'shimousa_koga': 2,
 
       'musashi': 2, 'musashi_oshi': 2, 'musashi_hachigata': 2, 'musashi_iwatsuki': 2, 'musashi_kawagoe': 2, 'musashi_edo_tama': 2, 'musashi_edo': 2, 'musashi_tama': 2, 'hitachi_tsuchiura': 2, 'hitachi_shida': 2, 'sagami': 2, 'sagami_miura': 2, 'shimousa': 2, 'kazusa': 2, 'kazusa_isumi': 2, 'kazusa_togane_naruto': 2, 'awa': 2,
 
@@ -2762,7 +2769,7 @@ export const GameStateMethods = {
 
       // 6: 四国地方
 
-      'sanuki': 6, 'iyo_matsuyama': 6, 'iyo_nii': 6, 'awa_shikoku': 6, 'tosa_kochi': 6, 'tosa_aki': 6, 'tosa_gun': 6, 'tosa_nakamura': 6, 'tosa': 6,
+      'sanuki': 6, 'sanuki_west': 6, 'iyo_matsuyama': 6, 'iyo_nii': 6, 'awa_shikoku': 6, 'awa_shikoku_west': 6, 'awa_shikoku_south': 6, 'tosa_kochi': 6, 'tosa_aki': 6, 'tosa_gun': 6, 'tosa_nakamura': 6, 'tosa': 6,
 
 
 
@@ -2770,7 +2777,7 @@ export const GameStateMethods = {
 
       'tsushima': 7, 'hizen_hirado': 7, 'chikuzen_fukuoka': 7, 'chikuzen_hakata': 7, 'chikuzen_munakata': 7, 'chikuzen_kamashi': 7, 'chikuzen_akizuki': 7, 'hizen': 7, 'hizen_saga': 7, 'hizen_tsukushi': 7, 'hizen_karatsu': 7, 'buzen': 7, 'buzen_ogura': 7, 'buzen_nakatsu': 7,
 
-      'chikugo': 7, 'hizen_omura': 7, 'hizen_shimabara': 7, 'bungo_funai': 7, 'bungo_oka': 7, 'bungo_saiki_usuki': 7, 'higo_kumamoto': 7, 'higo_aso': 7, 'higo_yatsushiro': 7, 'higo_hitoyoshi': 7,
+      'chikugo': 7, 'hizen_omura': 7, 'hizen_shimabara': 7, 'bungo_funai': 7, 'bungo_oka': 7, 'bungo_kitaamabe': 7, 'bungo_minamiamabe': 7, 'bungo_saiki_usuki': 7, 'higo_kumamoto': 7, 'higo_aso': 7, 'higo_yatsushiro': 7, 'higo_hitoyoshi': 7,
 
       'hyuga_takanabe': 7, 'hyuga_sadowara': 7, 'hyuga_obi': 7, 'hyuga_nobeoka': 7, 'satsuma': 7, 'osumi': 7, 'ryukyu': 7
 
@@ -7160,7 +7167,7 @@ export const GameStateMethods = {
 
       'owari_north': '尾張北', 'owari_south': '尾張南', 'mikawa_shitara': '三河設楽郡', 'owari_south': '尾張', 'mikawa': '三河', 'totomi_hamamatsu_kakegawa': '遠江', 'totomi_futamata_haibara': '遠江', 'totomi_joto': '遠江', 'suruga': '駿河', 'kai': '甲斐', 'kai_tsuru': '甲斐', 'shinano_kawanakajima': '高井・水内', 'shinano_sarashina_hanishina': '更級・埴科', 'kai_tsuru': '甲斐', 'shinano_kawanakajima': '高井・水内', 'shinano_sarashina_hanishina': '更級・埴科', 'shinano': '信濃',
 
-      'kitashinano': '北信濃', 'minamishinano': '南信濃', 'shinano_kawanakajima': '川中島・松代', 'shinano_ueda': '上田', 'shinano_chikuma_kiso': '筑摩・木曽谷', 'shinano_chikuma_azumi': '筑摩・安曇', 'shinano_kiso': '木曽谷', 'shinano_takato_iida': '高遠・飯田',
+      'kitashinano': '北信濃', 'minamishinano': '南信濃', 'shinano_kawanakajima': '川中島・松代', 'shinano_ueda': '上田', 'shinano_chikuma_kiso': '筑摩・木曽谷', 'shinano_chikuma_azumi': '筑摩・安曇', 'shinano_kiso': '木曽谷', 'shinano_takato': '信濃高遠', 'shinano_iida': '信濃飯田', 'shinano_takato_iida': '高遠・飯田',
 
       'mino': '美濃', 'mino_gujo': '美濃', 'mino_gujo': '美濃', 'mino_iwamura': '美濃', 'hida': '飛騨', 'hida_takayama': '飛騨', 'hida_kiun': '飛騨', 'hida_kamioka': '飛騨', 'echizen': '越前', 'kaga': '加賀', 'kaga_north': '加賀北', 'kaga_south': '加賀南', 'noto': '能登', 'ecchu': '越中',
 
@@ -7176,9 +7183,9 @@ export const GameStateMethods = {
 
       'harima_west': '西播磨', 'harima_east': '東播磨', 'mimasaka_west': '西美作', 'mimasaka_east': '東美作', 'bizen': '備前', 'bitchu': '備中', 'bitchu_matsuyama': '備中', 'bitchu_takamatsu': '備中', 'bingo': '備後',
 
-      'aki_hiroshima': '安芸', 'aki_koriyama': '安芸郡山', 'suo': '周防', 'nagato': '長門', 'kii': '紀伊', 'awa_shikoku': '阿波', 'sanuki': '讃岐',
+      'aki_hiroshima': '安芸', 'aki_koriyama': '安芸郡山', 'suo': '周防', 'nagato': '長門', 'kii': '紀伊', 'awa_shikoku': '阿波東', 'awa_shikoku_west': '阿波西', 'awa_shikoku_south': '阿波南', 'sanuki': '讃岐東', 'sanuki_west': '讃岐西',
 
-      'iyo_matsuyama': '伊予松山', 'iyo_nii': '新居・西条', 'tosa_kochi': '土佐長岡郡', 'tosa_aki': '土佐安芸', 'tosa_gun': '土佐郡', 'tosa_nakamura': '土佐中村', 'tosa': '土佐', 'chikuzen_fukuoka': '筑前福岡', 'chikuzen_hakata': '筑前博多', 'chikuzen_munakata': '筑前宗像', 'chikuzen_kamashi': '筑前嘉麻', 'chikuzen_akizuki': '夜須郡秋月', 'chikugo': '筑後', 'buzen': '豊前', 'buzen_ogura': '豊前', 'buzen_nakatsu': '豊前', 'bungo_funai': '豊後府内', 'bungo_oka': '豊後岡', 'bungo_saiki_usuki': '佐伯・臼杵',
+      'iyo_matsuyama': '伊予松山', 'iyo_nii': '新居・西条', 'tosa_kochi': '土佐長岡郡', 'tosa_aki': '土佐安芸', 'tosa_gun': '土佐郡', 'tosa_nakamura': '土佐中村', 'tosa': '土佐', 'chikuzen_fukuoka': '筑前福岡', 'chikuzen_hakata': '筑前博多', 'chikuzen_munakata': '筑前宗像', 'chikuzen_kamashi': '筑前嘉麻', 'chikuzen_akizuki': '夜須郡秋月', 'chikugo': '筑後', 'buzen': '豊前', 'buzen_ogura': '豊前', 'buzen_nakatsu': '豊前', 'bungo_funai': '豊後府内', 'bungo_oka': '豊後岡', 'bungo_kitaamabe': '豊後北海部', 'bungo_minamiamabe': '豊後南海部', 'bungo_saiki_usuki': '佐伯・臼杵',
 
       'hizen': '肥前', 'hizen_saga': '肥前', 'hizen_tsukushi': '肥前', 'hizen_karatsu': '肥前', 'higo_kumamoto': '熊本・阿蘇', 'higo_aso': '熊本・阿蘇', 'higo_yatsushiro': '宇土・八代', 'higo_hitoyoshi': '肥後人吉', 'hyuga_nobeoka': '延岡', 'hyuga_takanabe': '高鍋', 'hyuga_sadowara': '佐土原', 'hyuga_obi': '飫肥', 'osumi': '大隅', 'satsuma': '薩摩', 'tsushima': '対馬',
 
@@ -7222,7 +7229,7 @@ export const GameStateMethods = {
 
       'noto': '能登', 'kaga': '加賀', 'kaga_north': '加賀北', 'kaga_south': '加賀南', 'echizen': '越前', 'sado': '佐渡', 'kai': '甲斐', 'shinano': '信濃',
 
-      'shinano_kawanakajima': '川中島・松代', 'shinano_ueda': '上田', 'shinano_chikuma_kiso': '筑摩・木曽谷', 'shinano_chikuma_azumi': '筑摩・安曇', 'shinano_kiso': '木曽谷', 'shinano_takato_iida': '高遠・飯田', 'kitashinano': '北信濃', 'minamishinano': '南信濃',
+      'shinano_kawanakajima': '川中島・松代', 'shinano_ueda': '上田', 'shinano_chikuma_kiso': '筑摩・木曽谷', 'shinano_chikuma_azumi': '筑摩・安曇', 'shinano_kiso': '木曽谷', 'shinano_takato': '信濃高遠', 'shinano_iida': '信濃飯田', 'shinano_takato_iida': '高遠・飯田', 'kitashinano': '北信濃', 'minamishinano': '南信濃',
 
       'hida': '飛騨', 'hida_takayama': '飛騨', 'hida_kiun': '飛騨', 'hida_kamioka': '飛騨', 'mino': '美濃', 'mino_iwamura': '美濃', 'owari_north': '尾張北', 'mikawa': '三河', 'mikawa_shitara': '三河設楽郡', 'totomi_hamamatsu_kakegawa': '遠江', 'totomi_futamata_haibara': '遠江', 'totomi_joto': '遠江', 'suruga': '駿河',
 
@@ -7240,9 +7247,9 @@ export const GameStateMethods = {
 
       'bitchu_matsuyama': '備中', 'bitchu_takamatsu': '備中', 'bitchu': '備中', 'bingo': '備後', 'aki_hiroshima': '安芸', 'aki_koriyama': '安芸郡山', 'suo': '周防', 'nagato': '長門',
 
-      'awa_shikoku': '阿波', 'sanuki': '讃岐', 'iyo_matsuyama': '伊予松山', 'iyo_nii': '新居・西条', 'tosa_kochi': '土佐長岡郡', 'tosa_aki': '土佐安芸', 'tosa_gun': '土佐郡', 'tosa_nakamura': '土佐中村', 'tosa': '土佐', 'chikuzen_fukuoka': '筑前福岡', 'chikuzen_hakata': '筑前博多', 'chikuzen_munakata': '筑前宗像', 'chikuzen_kamashi': '筑前嘉麻', 'chikuzen_akizuki': '夜須郡秋月',
+      'awa_shikoku': '阿波東', 'awa_shikoku_west': '阿波西', 'awa_shikoku_south': '阿波南', 'sanuki': '讃岐東', 'sanuki_west': '讃岐西', 'iyo_matsuyama': '伊予松山', 'iyo_nii': '新居・西条', 'tosa_kochi': '土佐長岡郡', 'tosa_aki': '土佐安芸', 'tosa_gun': '土佐郡', 'tosa_nakamura': '土佐中村', 'tosa': '土佐', 'chikuzen_fukuoka': '筑前福岡', 'chikuzen_hakata': '筑前博多', 'chikuzen_munakata': '筑前宗像', 'chikuzen_kamashi': '筑前嘉麻', 'chikuzen_akizuki': '夜須郡秋月',
 
-      'chikugo': '筑後', 'buzen': '豊前', 'buzen_ogura': '豊前', 'buzen_nakatsu': '豊前', 'bungo_funai': '豊後府内', 'bungo_oka': '豊後岡', 'bungo_saiki_usuki': '佐伯・臼杵', 'hizen': '肥前', 'hizen_saga': '肥前', 'hizen_tsukushi': '肥前', 'hizen_karatsu': '肥前', 'higo_kumamoto': '熊本・阿蘇', 'higo_aso': '熊本・阿蘇', 'higo_yatsushiro': '宇土・八代', 'higo_hitoyoshi': '肥後人吉', 'hyuga_nobeoka': '延岡', 'hyuga_takanabe': '高鍋', 'hyuga_sadowara': '佐土原', 'hyuga_obi': '飫肥',
+      'chikugo': '筑後', 'buzen': '豊前', 'buzen_ogura': '豊前', 'buzen_nakatsu': '豊前', 'bungo_funai': '豊後府内', 'bungo_oka': '豊後岡', 'bungo_kitaamabe': '豊後北海部', 'bungo_minamiamabe': '豊後南海部', 'bungo_saiki_usuki': '佐伯・臼杵', 'hizen': '肥前', 'hizen_saga': '肥前', 'hizen_tsukushi': '肥前', 'hizen_karatsu': '肥前', 'higo_kumamoto': '熊本・阿蘇', 'higo_aso': '熊本・阿蘇', 'higo_yatsushiro': '宇土・八代', 'higo_hitoyoshi': '肥後人吉', 'hyuga_nobeoka': '延岡', 'hyuga_takanabe': '高鍋', 'hyuga_sadowara': '佐土原', 'hyuga_obi': '飫肥',
 
       'osumi': '大隅', 'satsuma': '薩摩', 'tsushima': '対馬', 'iki': '壱岐', 'ezo': '蝦夷', 'tsugaru': '津軽', 'mutsu_tsugaru': '西津軽', 'mutsu_namioka': '東津軽',
 
@@ -11163,7 +11170,7 @@ export const GameStateMethods = {
 
     // 山岳国（甲斐・信濃など）および平野（尾張・武蔵など）の確実な判定
 
-    const mountainIds = ['kai', 'kai_tsuru', 'shinano_kawanakajima', 'shinano_sarashina_hanishina', 'mino_gujo', 'echigo_uonuma', 'shinano_ueda', 'shinano_chikuma_kiso', 'shinano_chikuma_azumi', 'shinano_kiso', 'shinano_takato_iida', 'hida', 'hida_takayama', 'hida_kiun', 'hida_kamioka', 'iwashiro', 'iwashiro_sukagawa', 'iwashiro_ishikawa', 'kozuke_takasaki', 'kozuke_agatsuma', 'kozuke_numata', 'tamba', 'tamba_west', 'tamba_east'];
+    const mountainIds = ['kai', 'kai_tsuru', 'shinano_kawanakajima', 'shinano_sarashina_hanishina', 'mino_gujo', 'echigo_uonuma', 'shinano_ueda', 'shinano_chikuma_kiso', 'shinano_chikuma_azumi', 'shinano_kiso', 'shinano_takato', 'shinano_iida', 'shinano_takato_iida', 'hida', 'hida_takayama', 'hida_kiun', 'hida_kamioka', 'iwashiro', 'iwashiro_sukagawa', 'iwashiro_ishikawa', 'kozuke_takasaki', 'kozuke_agatsuma', 'kozuke_numata', 'tamba', 'tamba_west', 'tamba_east'];
 
     const plainIds = ['owari', 'owari_south', 'echigo_kanbara', 'kazusa_togane_naruto', 'musashi', 'musashi_oshi', 'musashi_hachigata', 'musashi_iwatsuki', 'musashi_kawagoe', 'musashi_edo_tama', 'musashi_edo', 'musashi_tama', 'mikawa', 'echigo', 'echigo_murakami', 'settsu', 'settsu_shimakami', 'settsu_osaka', 'yamashiro', 'shimousa', 'kazusa', 'kazusa_isumi'];
 
@@ -11617,7 +11624,7 @@ export const GameStateMethods = {
 
     const horseProvs = myProvs.filter(p => {
 
-      if (['mutsu_nanbu', 'kai', 'kai_tsuru', 'shinano', 'shinano_kawanakajima', 'shinano_sarashina_hanishina', 'shinano_ueda', 'shinano_chikuma_kiso', 'shinano_chikuma_azumi', 'shinano_kiso', 'shinano_takato_iida'].includes(p.id)) return true;
+      if (['mutsu_nanbu', 'kai', 'kai_tsuru', 'shinano', 'shinano_kawanakajima', 'shinano_sarashina_hanishina', 'shinano_ueda', 'shinano_chikuma_kiso', 'shinano_chikuma_azumi', 'shinano_kiso', 'shinano_takato', 'shinano_iida', 'shinano_takato_iida'].includes(p.id)) return true;
 
       return horseRule && this.provinceMatchesSpecialty(p, horseRule);
 
@@ -12941,13 +12948,13 @@ export const GameStateMethods = {
 
       omi_south: 1.4, echizen: 1.4, bingo: 1.4, omi_north: 1.3, wakasa: 1.3, satsuma: 1.3, suruga: 1.3, mino: 1.2, etchu_west: 1.2, etchu_east: 1.2,
 
-      suo: 1.2, bizen: 1.2, bungo_funai: 1.1, sagami: 1.1, kii_saika_wakayama: 1.1, kii_kichu: 1.1, kii_kumano: 1.1, kii: 1.1, awaji: 1.1, sanuki: 1.1, kawachi: 1.1,
+      suo: 1.2, bizen: 1.2, bungo_funai: 1.1, sagami: 1.1, kii_saika_wakayama: 1.1, kii_kichu: 1.1, kii_kumano: 1.1, kii: 1.1, awaji: 1.1, sanuki: 1.1, sanuki_west: 1.0, kawachi: 1.1,
 
       ezo: 0.5, mutsu_tsugaru: 0.6, mutsu_namioka: 0.6, mutsu_nanbu: 0.6, hida: 0.6, oki: 0.6, rikuchu: 0.7, tosa_kochi: 0.7, tosa_aki: 0.7, tosa_gun: 0.7, tosa_nakamura: 0.7, tosa: 0.7, hyuga_nobeoka: 0.7, hyuga: 0.7, osumi: 0.7,
 
       ugo: 0.8, uzen: 0.8, iwaki: 0.8, iwashiro: 0.8, sado: 0.8, iga: 0.8, mimasaka_west: 0.8, mimasaka_east: 0.8, awa: 0.8, kai: 0.8,
 
-      shinano_kawanakajima: 0.8, shinano_ueda: 0.8, shinano_chikuma_kiso: 0.8, shinano_chikuma_azumi: 0.8, shinano_kiso: 0.8, shinano_takato_iida: 0.8, tango: 0.9, tajima: 0.9, kazusa: 0.9, shimousa: 0.9, hitachi: 0.9, kozuke_takasaki: 0.9, kozuke_agatsuma: 0.9, kozuke_numata: 0.9, kozuke_maebashi: 0.9, kozuke_nitta_kanayama: 0.9,
+      shinano_kawanakajima: 0.8, shinano_ueda: 0.8, shinano_chikuma_kiso: 0.8, shinano_chikuma_azumi: 0.8, shinano_kiso: 0.8, shinano_takato: 0.8, shinano_iida: 0.8, shinano_takato_iida: 0.8, tango: 0.9, tajima: 0.9, kazusa: 0.9, shimousa: 0.9, hitachi: 0.9, kozuke_takasaki: 0.9, kozuke_agatsuma: 0.9, kozuke_numata: 0.9, kozuke_maebashi: 0.9, kozuke_nitta_kanayama: 0.9,
 
       shimotsuke: 0.9, shimotsuke_kanitsuga: 0.9, sano_oyama: 0.9, noto: 0.9, hoki_west: 0.9, hoki_east: 0.9, inaba: 0.9, iwami: 0.9, higo_kumamoto: 0.9, higo_hitoyoshi: 0.9, shima: 0.9
 
@@ -19999,7 +20006,7 @@ export const GameStateMethods = {
       'shinano_ueda': 'sanada',
 
       'shinano_chikuma_kiso': 'ogasawara', 'shinano_chikuma_azumi': 'ogasawara', 'shinano_kiso': 'ogasawara',
-      'shinano_takato_iida': 'takeda',
+      'shinano_takato': 'takeda', 'shinano_iida': 'takeda', 'shinano_takato_iida': 'takeda',
 
       'kaga_north': 'maeda', 'kaga_south': 'niwa',
 
@@ -20094,9 +20101,9 @@ export const GameStateMethods = {
 
       // 四国
 
-      'sanuki': 'sogo',
+      'sanuki': 'sogo', 'sanuki_west': 'kagawa',
 
-      'awa_shikoku': 'hachisuka',
+      'awa_shikoku': 'hachisuka', 'awa_shikoku_west': 'onishi', 'awa_shikoku_south': 'ashikaga_hirashima',
 
       'iyo_matsuyama': 'kono',
       'iyo_nii': 'kono',
@@ -20122,6 +20129,8 @@ export const GameStateMethods = {
 
       'bungo_funai': 'otomo',
       'bungo_oka': 'otomo',
+      'bungo_kitaamabe': 'otomo',
+      'bungo_minamiamabe': 'otomo',
       'bungo_saiki_usuki': 'otomo',
 
       'hizen_omura': 'omura',

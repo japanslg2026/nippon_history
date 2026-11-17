@@ -17,13 +17,13 @@
 
   <!-- Google Fonts: 武士の魂が宿る力強い和風・毛筆フォント -->
   <!-- 起動高速化: ゲームデータJSONをHTML解析と並行して先読み -->
-  <link rel="preload" href="data/scenarios.json?v=20261116_v33" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/clans.json?v=20261116_v33" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/provinces.json?v=20261116_v33" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/officers.json?v=20261116_v33" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/governors.json?v=20261116_v33" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/events.json?v=20261116_v33" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/rules.json?v=20261116_v33" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/scenarios.json?v=20261117_v36" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/clans.json?v=20261117_v36" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/provinces.json?v=20261117_v36" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/officers.json?v=20261117_v36" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/governors.json?v=20261117_v36" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/events.json?v=20261117_v36" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/rules.json?v=20261117_v36" as="fetch" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&amp;family=Dela+Gothic+One&amp;family=Sawarabi+Mincho&amp;family=Shippori+Mincho:wght@600;700;800&amp;family=Yuji+Boku&amp;display=swap" rel="stylesheet">
@@ -154,7 +154,7 @@
   <div class="clan-bar" id="clanBar">
     <div class="stat-card" style="display:flex; flex-direction:row; align-items:center; gap:8px; overflow:hidden; padding:2px 6px;">
       <svg id="headerKamonSvg" width="34" height="34" viewBox="0 0 32 32" style="border-radius:50%; box-shadow:0 0 6px rgba(212,175,55,0.5); flex-shrink:0;">
-        <circle cx="16" cy="16" r="15" fill="#d4ac0d" stroke="#ffd700" stroke-width="2"></circle>
+        <circle cx="16" cy="16" r="15" fill="none" stroke="#ffd700" stroke-width="2"></circle>
         <text x="16" y="21" font-family="'Yu Mincho', serif" font-size="15" font-weight="bold" fill="#fff" text-anchor="middle">長</text>
       </svg>
       <div class="id-col" style="flex:1; min-width:0; display:flex; flex-direction:column; justify-content:center; gap:1px;">
@@ -1927,15 +1927,15 @@
 
   <!-- モジュール化されたJavaScript群 (順序保証ロード) -->
   <!-- 1. 全大名家・全シナリオ・全106領国データベース -->
-  <script defer src="assets/kamons.js?v=20261116_v33"></script>
-  <script defer src="js/kamonOverrides.js?v=20261116_v33"></script>
+  <script defer src="assets/kamons.js?v=20261117_v36"></script>
+  <script defer src="js/kamonOverrides.js?v=20261117_v36"></script>
   
   <!-- 2. 和洋折衷フルオーケストラBGMエンジン (全15曲) -->
   <script defer src="js/bgm.js?v=20261101_mobfix3"></script>
   <script defer src="js/MobileAudioKeepAlive.js?v=20261101_mobfix3"></script>
 
   <!-- 3. 戦国天下統一伝 ゲームエンジン本体 -->
-  <script type="module" src="js/app.js?v=20261116_v33"></script>
+  <script type="module" src="js/app.js?v=20261117_v36"></script>
   <script type="module" src="js/ui/Encyclopedia.js?v=20261109_sp"></script>
   <script defer src="js/ui/StartScreenLayout.js?v=20261115_seamfix"></script>
   <script defer src="js/ui/TitleBgm.js?v=20261107_horagai_fix"></script>

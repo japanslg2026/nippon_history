@@ -1115,7 +1115,10 @@
           "chikuzen_munakata": "heian_court",
           "chikuzen_kamashi": "heian_court",
           "chikuzen_akizuki": "heian_court",
-          "bitchu_takamatsu": "heian_court"
+          "bitchu_takamatsu": "heian_court",
+          "sanuki_west": "heian_court",
+          "awa_shikoku_west": "heian_court",
+          "awa_shikoku_south": "heian_court"
         },
         "killOfficerIds": [
           "off_fujiwara_sumitomo"
@@ -1922,7 +1925,10 @@
       "changes": {
         "territory": {
           "sanuki": "genji_yoritomo",
-          "awa_shikoku": "genji_yoritomo"
+          "sanuki_west": "genji_yoritomo",
+          "awa_shikoku": "genji_yoritomo",
+          "awa_shikoku_west": "genji_yoritomo",
+          "awa_shikoku_south": "genji_yoritomo"
         },
         "troopShock": {
           "taira": 0.8
@@ -1962,7 +1968,10 @@
           "chikuzen_akizuki": "genji_yoritomo",
           "awa_shikoku": "genji_yoritomo",
           "sanuki": "genji_yoritomo",
-          "chikugo": "genji_yoritomo"
+          "chikugo": "genji_yoritomo",
+          "sanuki_west": "genji_yoritomo",
+          "awa_shikoku_west": "genji_yoritomo",
+          "awa_shikoku_south": "genji_yoritomo"
         },
         "message": "壇ノ浦にて平家一門が滅亡し、源頼朝による全国支配と守護・地頭設置が成りました！",
         "killOfficerIds": [
@@ -2942,7 +2951,6 @@
       "changes": {
         "territory": {
           "kai": "takeda",
-          "shinano_takato_iida": "takeda",
           "suruga": "takeda",
           "shinano_saku_komoro": "takeda",
           "shinano_suwa": "takeda",
@@ -2951,7 +2959,9 @@
           "totomi_joto": "tokugawa",
           "shinano_kawanakajima": "takeda",
           "totomi_futamata_haibara": "tokugawa",
-          "shinano_sarashina_hanishina": "takeda"
+          "shinano_sarashina_hanishina": "takeda",
+          "shinano_takato": "takeda",
+          "shinano_iida": "takeda"
         },
         "breakAlliances": [
           {
@@ -2985,7 +2995,7 @@
       "rules": {
         "neverNoop": true,
         "acceptEffectLines": [
-          "武田家が甲斐・高遠飯田・駿河・諏訪小諸・筑摩木曽谷・北信濃を領有",
+          "武田家が甲斐・高遠・飯田・駿河・諏訪小諸・筑摩木曽谷・北信濃を領有",
           "今川氏が戦国大名として滅亡"
         ],
         "rejectEffectLines": [
@@ -3307,11 +3317,12 @@
           "shinano_kawanakajima": "oda",
           "shinano_ueda": "oda",
           "shinano_chikuma_azumi": "kiso",
-          "shinano_takato_iida": "oda",
           "suruga": "tokugawa",
           "shinano_kiso": "kiso",
           "kai_tsuru": "oda",
-          "shinano_sarashina_hanishina": "oda"
+          "shinano_sarashina_hanishina": "oda",
+          "shinano_takato": "oda",
+          "shinano_iida": "oda"
         },
         "message": "武田氏が滅亡し、甲斐・信濃が織田領に、駿河が徳川領となりました！織田方に寝返った木曽義昌には木曽谷・筑摩・安曇が安堵・加増されました。",
         "killOfficerIds": [
@@ -3425,7 +3436,6 @@
           "iga": "oda",
           "kai": "tokugawa",
           "shinano_chikuma_azumi": "tokugawa",
-          "shinano_takato_iida": "tokugawa",
           "shinano_kawanakajima": "uesugi",
           "shinano_ueda": "sanada",
           "suruga": "tokugawa",
@@ -3444,7 +3454,9 @@
           "shinano_sarashina_hanishina": "uesugi",
           "owari_south": "oda",
           "mino_gujo": "oda",
-          "kawachi_south": "toyotomi"
+          "kawachi_south": "toyotomi",
+          "shinano_takato": "tokugawa",
+          "shinano_iida": "tokugawa"
         },
         "message": "織田信長公落命！天下は羽柴秀吉、柴田勝家、徳川家康ら後継勢力の割拠へ突入しました！"
       },
@@ -3508,7 +3520,6 @@
             "kai": "tokugawa",
             "shinano_chikuma_azumi": "tokugawa",
             "shinano_kiso": "tokugawa",
-            "shinano_takato_iida": "tokugawa",
             "shinano_kawanakajima": "uesugi",
             "shinano_ueda": "sanada",
             "kozuke_takasaki": "hojo",
@@ -3522,7 +3533,9 @@
             "shinano_sarashina_hanishina": "uesugi",
             "owari_south": "oda",
             "mino_gujo": "oda",
-            "kawachi_south": "toyotomi"
+            "kawachi_south": "toyotomi",
+            "shinano_takato": "tokugawa",
+            "shinano_iida": "tokugawa"
           },
           "successors": [
             {
@@ -3776,11 +3789,14 @@
       "changes": {
         "territory": {
           "awa_shikoku": "hachisuka",
+          "awa_shikoku_west": "hachisuka",
+          "awa_shikoku_south": "hachisuka",
           "sanuki": "toyotomi",
+          "sanuki_west": "toyotomi",
           "iyo_matsuyama": "toyotomi",
           "iyo_nii": "toyotomi"
         },
-        "message": "長宗我部元親が降伏！阿波・讃岐・伊予が豊臣政権に割譲され、土佐一国に減封されました。"
+        "message": "長宗我部元親が降伏！阿波三郡（東・西・南）・讃岐東西・伊予が豊臣政権に割譲され、土佐一国に減封されました。"
       },
       "requiresClans": [
         "chosokabe",
@@ -3866,14 +3882,15 @@
           "kai": "toyotomi",
           "shinano_chikuma_azumi": "toyotomi",
           "shinano_kiso": "toyotomi",
-          "shinano_takato_iida": "toyotomi",
           "shimousa_koga": "tokugawa",
           "shinano_saku_komoro": "toyotomi",
           "shinano_suwa": "toyotomi",
           "kozuke_nitta_kanayama": "tokugawa",
           "totomi_futamata_haibara": "toyotomi",
           "kai_tsuru": "toyotomi",
-          "kazusa_togane_naruto": "tokugawa"
+          "kazusa_togane_naruto": "tokugawa",
+          "shinano_takato": "toyotomi",
+          "shinano_iida": "toyotomi"
         },
         "message": "後北条氏が滅亡して豊臣秀吉が天下統一を達成！徳川家康は関東へ国替えとなりました！",
         "killOfficerIds": [
@@ -4831,7 +4848,8 @@
           "chikugo": "kuna",
           "bungo_funai": "kuna",
           "bungo_oka": "kuna",
-          "bungo_saiki_usuki": "kuna"
+          "bungo_kitaamabe": "kuna",
+          "bungo_minamiamabe": "kuna"
         },
         "clanEffects": {
           "kuna": {
@@ -4852,7 +4870,10 @@
           "bungo_oka": {
             "defenseDelta": 10
           },
-          "bungo_saiki_usuki": {
+          "bungo_kitaamabe": {
+            "defenseDelta": 10
+          },
+          "bungo_minamiamabe": {
             "defenseDelta": 10
           }
         },
@@ -4883,7 +4904,8 @@
           "chikugo": "yamatai",
           "bungo_funai": "yamatai",
           "bungo_oka": "yamatai",
-          "bungo_saiki_usuki": "yamatai"
+          "bungo_kitaamabe": "yamatai",
+          "bungo_minamiamabe": "yamatai"
         },
         "killOfficerIds": [
           "off_kumaki"
@@ -5361,7 +5383,8 @@
           "chikugo": "yamatai",
           "bungo_funai": "yamatai",
           "bungo_oka": "yamatai",
-          "bungo_saiki_usuki": "yamatai"
+          "bungo_kitaamabe": "yamatai",
+          "bungo_minamiamabe": "yamatai"
         },
         "killOfficerIds": [
           "off_kumaki"
@@ -5755,6 +5778,18 @@
             "defenseDelta": -12,
             "orderDelta": -8,
             "moraleDelta": -5
+          },
+          "awa_shikoku_south": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "awa_shikoku_west": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
           }
         },
         "message": "白鳳の大地震！土佐・伊予・阿波など南海道諸国の兵が失われ、城柵と治安が大きく損なわれました。"
@@ -5952,12 +5987,6 @@
             "orderDelta": -8,
             "moraleDelta": -5
           },
-          "shinano_takato_iida": {
-            "troopsRate": 0.92,
-            "defenseDelta": -12,
-            "orderDelta": -8,
-            "moraleDelta": -5
-          },
           "settsu_shimakami": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
@@ -5969,6 +5998,30 @@
             "defenseDelta": -20,
             "orderDelta": -12,
             "moraleDelta": -8
+          },
+          "awa_shikoku_south": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "awa_shikoku_west": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "shinano_takato": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "shinano_iida": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
           }
         },
         "message": "仁和の大地震！畿内・南海道諸国が倒壊と津波に見舞われ、摂津を中心に兵と治安が大きく損なわれました。"
@@ -6143,6 +6196,12 @@
             "moraleDelta": -5
           },
           "settsu_shimakami": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "awa_shikoku_south": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -6403,10 +6462,10 @@
       "changes": {
         "provinceEffects": {
           "awa_shikoku": {
-            "troopsRate": 0.85,
-            "defenseDelta": -25,
-            "orderDelta": -15,
-            "moraleDelta": -10
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
           },
           "tosa_kochi": {
             "troopsRate": 0.85,
@@ -6511,6 +6570,18 @@
             "moraleDelta": -5
           },
           "kawachi_south": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "awa_shikoku_south": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
+          "awa_shikoku_west": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -6958,6 +7029,12 @@
             "defenseDelta": -20,
             "orderDelta": -12,
             "moraleDelta": -8
+          },
+          "awa_shikoku_south": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
           }
         },
         "message": "慶長の大津波！太平洋沿岸の諸国が津波に襲われ、土佐・阿波・遠江などで兵と治安が損なわれました。"
@@ -7349,12 +7426,6 @@
             "orderDelta": -8,
             "moraleDelta": -5
           },
-          "bungo_saiki_usuki": {
-            "troopsRate": 0.92,
-            "defenseDelta": -12,
-            "orderDelta": -8,
-            "moraleDelta": -5
-          },
           "totomi_futamata_haibara": {
             "troopsRate": 0.85,
             "defenseDelta": -25,
@@ -7378,6 +7449,36 @@
             "defenseDelta": -20,
             "orderDelta": -12,
             "moraleDelta": -8
+          },
+          "awa_shikoku_south": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
+          "sanuki_west": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "awa_shikoku_west": {
+            "troopsRate": 0.94,
+            "defenseDelta": -8,
+            "orderDelta": -5,
+            "moraleDelta": -4
+          },
+          "bungo_kitaamabe": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "bungo_minamiamabe": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
           }
         },
         "message": "宝永の大地震！東海から南海・九州に及ぶ広大な地域が激震と大津波に襲われ、多くの国の兵・城郭・治安が大打撃を受けました。"
@@ -7423,12 +7524,6 @@
             "orderDelta": -8,
             "moraleDelta": -5
           },
-          "shinano_takato_iida": {
-            "troopsRate": 0.92,
-            "defenseDelta": -12,
-            "orderDelta": -8,
-            "moraleDelta": -5
-          },
           "echigo_uonuma": {
             "troopsRate": 0.9,
             "defenseDelta": -15,
@@ -7446,6 +7541,18 @@
             "defenseDelta": -25,
             "orderDelta": -15,
             "moraleDelta": -10
+          },
+          "shinano_takato": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "shinano_iida": {
+            "troopsRate": 0.94,
+            "defenseDelta": -8,
+            "orderDelta": -5,
+            "moraleDelta": -4
           }
         },
         "message": "善光寺の大地震！北信濃が倒壊・大火・洪水に見舞われ、兵と治安が大きく損なわれました。"
@@ -7655,13 +7762,37 @@
             "orderDelta": -8,
             "moraleDelta": -5
           },
-          "bungo_saiki_usuki": {
+          "settsu_shimakami": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
             "moraleDelta": -5
           },
-          "settsu_shimakami": {
+          "awa_shikoku_south": {
+            "troopsRate": 0.85,
+            "defenseDelta": -25,
+            "orderDelta": -15,
+            "moraleDelta": -10
+          },
+          "sanuki_west": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "awa_shikoku_west": {
+            "troopsRate": 0.94,
+            "defenseDelta": -8,
+            "orderDelta": -5,
+            "moraleDelta": -4
+          },
+          "bungo_kitaamabe": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
+          },
+          "bungo_minamiamabe": {
             "troopsRate": 0.92,
             "defenseDelta": -12,
             "orderDelta": -8,
@@ -8631,6 +8762,18 @@
         "屋島行宮"
       ],
       [
+        1390,
+        "讃岐国府"
+      ],
+      [
+        1492,
+        "雨滝城"
+      ],
+      [
+        1545,
+        "勝賀城"
+      ],
+      [
         1585,
         "十河城"
       ],
@@ -8640,6 +8783,10 @@
       ]
     ],
     "awa_shikoku": [
+      [
+        1362,
+        "阿波国府"
+      ],
       [
         1585,
         "勝瑞城"
@@ -9159,28 +9306,6 @@
         "魚津町奉行所"
       ]
     ],
-    "shinano_takato_iida": [
-      [
-        1332,
-        "伊那郡の館"
-      ],
-      [
-        1545,
-        "松尾城"
-      ],
-      [
-        1581,
-        "高遠城"
-      ],
-      [
-        1630,
-        "飯田城"
-      ],
-      [
-        9999,
-        "高遠城"
-      ]
-    ],
     "shinano_ueda": [
       [
         1185,
@@ -9365,20 +9490,6 @@
       [
         9999,
         "岡城"
-      ]
-    ],
-    "bungo_saiki_usuki": [
-      [
-        1561,
-        "栂牟礼城"
-      ],
-      [
-        1593,
-        "臼杵城（丹生島城）"
-      ],
-      [
-        9999,
-        "臼杵城"
       ]
     ],
     "chikuzen_akizuki": [
@@ -10491,6 +10602,188 @@
       [
         9999,
         "松江城"
+      ]
+    ],
+    "shinano_takato": [
+      [
+        1332,
+        "伊那郡の館"
+      ],
+      [
+        1390,
+        "伊那北の館"
+      ],
+      [
+        1871,
+        "高遠城"
+      ],
+      [
+        9999,
+        "高遠城跡（旧高遠藩）"
+      ]
+    ],
+    "shinano_iida": [
+      [
+        1332,
+        "伊那郡の館"
+      ],
+      [
+        1534,
+        "松尾城"
+      ],
+      [
+        1553,
+        "鈴岡城"
+      ],
+      [
+        1581,
+        "飯田城"
+      ],
+      [
+        1871,
+        "飯田城"
+      ],
+      [
+        9999,
+        "飯田城跡（旧飯田藩）"
+      ]
+    ],
+    "sanuki_west": [
+      [
+        1185,
+        "讃岐国府"
+      ],
+      [
+        1335,
+        "宇多津館"
+      ],
+      [
+        1466,
+        "宇多津守護所"
+      ],
+      [
+        1585,
+        "天霧城"
+      ],
+      [
+        1596,
+        "聖通寺城"
+      ],
+      [
+        1614,
+        "丸亀城"
+      ],
+      [
+        1638,
+        "丸亀城跡（生駒領）"
+      ],
+      [
+        9999,
+        "丸亀城"
+      ]
+    ],
+    "awa_shikoku_west": [
+      [
+        1334,
+        "麻殖保館"
+      ],
+      [
+        1362,
+        "秋月城"
+      ],
+      [
+        1585,
+        "白地城"
+      ],
+      [
+        1637,
+        "脇城"
+      ],
+      [
+        1871,
+        "池田陣屋"
+      ],
+      [
+        9999,
+        "池田陣屋跡"
+      ]
+    ],
+    "awa_shikoku_south": [
+      [
+        1350,
+        "牛牧・海部館"
+      ],
+      [
+        1533,
+        "海部城"
+      ],
+      [
+        1575,
+        "平島館"
+      ],
+      [
+        1582,
+        "海部城"
+      ],
+      [
+        1585,
+        "牛岐城"
+      ],
+      [
+        1637,
+        "牛岐城"
+      ],
+      [
+        1871,
+        "富岡陣屋"
+      ],
+      [
+        9999,
+        "牛岐城跡（旧富岡陣屋）"
+      ]
+    ],
+    "bungo_kitaamabe": [
+      [
+        1492,
+        "海部郡の館"
+      ],
+      [
+        1561,
+        "臼杵館"
+      ],
+      [
+        1600,
+        "臼杵城（丹生島城）"
+      ],
+      [
+        1871,
+        "臼杵城"
+      ],
+      [
+        9999,
+        "臼杵城跡（臼杵の戦い）"
+      ]
+    ],
+    "bungo_minamiamabe": [
+      [
+        1349,
+        "佐伯館"
+      ],
+      [
+        1399,
+        "高畑城（佐伯館）"
+      ],
+      [
+        1601,
+        "栂牟礼城"
+      ],
+      [
+        1871,
+        "佐伯城"
+      ],
+      [
+        9999,
+        "佐伯城跡（旧佐伯藩）"
       ]
     ]
   },
