@@ -1445,7 +1445,7 @@ export const GameStateMethods = {
 
 
 
-  switchScenario(scenarioId) {
+  async switchScenario(scenarioId) {
 
     this._isSwitchingScenario = true;
 
@@ -1468,6 +1468,8 @@ export const GameStateMethods = {
 
     if (scenarioId === 'allstar_shuffle') { scenarioId = 'allstar_feudal'; this.currentScenarioId = scenarioId; }
 
+    this._pendingSwitchScenarioId = scenarioId;
+
     let scen = (scenarioId === 'allstar_feudal')
 
         ? this.createAllstarFeudalScenario()
@@ -1475,6 +1477,39 @@ export const GameStateMethods = {
         : (scens.find(s => String(s.id) === String(scenarioId)) || scens[0]);
 
     if (!scen) return;
+
+    if (scen._isStub && typeof window !== 'undefined' && window.DataLoader?.ensureFullScenarios) {
+
+      document.querySelectorAll('.scenario-btn').forEach(btn => {
+        btn.classList.toggle('selected', String(btn.dataset.scenId) === String(scenarioId));
+      });
+      const descEl = document.getElementById('scenarioDescBox');
+      if (descEl && scen.desc) {
+        descEl.textContent = scen.desc;
+      }
+      const grid = document.getElementById('daimyoGrid');
+      if (grid) {
+        grid.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; padding: 28px; color: #f1c40f; font-size: 13pt;">シナリオデータを読み込み中です…</div>';
+      }
+      try {
+        await window.DataLoader.ensureFullScenarios();
+      } catch (err) {
+        console.warn('switchScenario: failed to load full scenarios', err);
+        this._isSwitchingScenario = false;
+        if (grid) {
+          grid.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; padding: 28px; color: #ff8888; font-size: 12pt;">シナリオデータの読み込みに失敗しました。再度お試しください。</div>';
+        }
+        return;
+      }
+      if (String(this._pendingSwitchScenarioId) !== String(scenarioId)) {
+        return;
+      }
+      this._pendingSwitchScenarioId = null;
+      return this.switchScenario(scenarioId);
+
+    }
+
+    this._pendingSwitchScenarioId = null;
 
     this.currentScenario = scen;
 
@@ -18021,7 +18056,29 @@ export const GameStateMethods = {
     return d;
   },
 
-  loadGameData(data) {
+  async loadGameData(data) {
+
+    const targetScenId = data && data.currentScenarioId;
+
+    if (targetScenId && !data._fullScenariosReady && typeof window !== 'undefined' && window.DataLoader?.ensureFullScenarios) {
+
+      const scens = (window.SCENARIOS_DATA && window.SCENARIOS_DATA.length > 0)
+
+        ? window.SCENARIOS_DATA
+
+        : (typeof SCENARIOS !== 'undefined' ? SCENARIOS : []);
+
+      const targetScen = scens.find(s => String(s.id) === String(targetScenId));
+
+      if (targetScen && targetScen._isStub) {
+
+        await window.DataLoader.ensureFullScenarios();
+
+        return this.loadGameData({ ...data, _fullScenariosReady: true });
+
+      }
+
+    }
 
     this.resetHistoricalEventRuntime();
 
@@ -19907,9 +19964,21 @@ export const GameStateMethods = {
 
     const existing = scens.find(s => String(s.id) === 'allstar_feudal');
 
-    if (existing) {
+    if (existing && !existing._isStub) {
 
       const cloned = JSON.parse(JSON.stringify(existing));
+
+      if (cloned.title && cloned.title.length > 10) {
+
+        cloned.title = '群雄割拠オールスター';
+
+      }
+
+      if (cloned.subtitle && cloned.subtitle.length > 20) {
+
+        cloned.subtitle = '全国106国・群雄割拠';
+
+      }
 
       if (!cloned.officerAffiliations || cloned.officerAffiliations.length === 0) {
 
@@ -20226,7 +20295,7 @@ export const GameStateMethods = {
 
       id: 'allstar_feudal',
 
-      title: '全領国オールスター群雄割拠',
+      title: '群雄割拠オールスター',
 
       subtitle: '全国106国・群雄割拠',
 

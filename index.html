@@ -3825,7 +3825,7 @@
               <div class="overlay-box-auto" id="mapScenBox">
                 <div class="overlay-box-header">
                   <span class="overlay-box-title" id="overlayScenTitle"><span class="scen-title-year">【1560年】</span><span class="scen-title-text">桶狭間の戦い</span></span>
-                  <span class="overlay-box-sub" id="overlayScenSub">尾張の風雲児と東海の巨星</span>
+                  <span class="overlay-box-sub" id="overlayScenSub">〜海道一の弓取りと風雲児信長〜</span>
                   <button type="button" class="sp-more-btn" id="scenMoreBtn" aria-expanded="false" aria-label="シナリオ説明の全文を表示／非表示" title="シナリオ説明を表示／非表示"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7 10l5 5 5-5"/></svg></button>
                 </div>
                 <div class="overlay-box-body" id="overlayScenDesc"></div>
@@ -3878,21 +3878,21 @@
         <div class="timeline-dock">
           <div class="timeline-top-row">
             <div class="era-tabs-bar" id="eraFilterBar" role="tablist" aria-label="時代フィルタ（再クリックで全時代へ解除）">
-              <button type="button" class="era-chip-btn active" data-era="all">全時代</button>
-              <button type="button" class="era-chip-btn" data-era="ancient"><span class="era-txt-pc">古代・飛鳥</span><span class="era-txt-sp">古代</span></button>
+              <button type="button" class="era-chip-btn active" data-era="all">全て</button>
+              <button type="button" class="era-chip-btn" data-era="ancient">古代</button>
               <button type="button" class="era-chip-btn" data-era="heian">平安</button>
               <button type="button" class="era-chip-btn" data-era="gempei">源平</button>
               <button type="button" class="era-chip-btn" data-era="kamakura">鎌倉</button>
               <button type="button" class="era-chip-btn" data-era="muromachi">室町</button>
-              <button type="button" class="era-chip-btn" data-era="sengoku"><span class="era-txt-pc">戦国</span><span class="era-txt-sp">戦国</span></button>
-              <button type="button" class="era-chip-btn" data-era="azuchi"><span class="era-txt-pc">安土桃山</span><span class="era-txt-sp">安土</span></button>
+              <button type="button" class="era-chip-btn" data-era="sengoku">戦国</button>
+              <button type="button" class="era-chip-btn" data-era="azuchi">安土</button>
               <button type="button" class="era-chip-btn" data-era="edo">江戸</button>
-              <button type="button" class="era-chip-btn" data-era="bakumatsu"><span class="era-txt-pc">幕末・明治</span><span class="era-txt-sp">近代</span></button>
+              <button type="button" class="era-chip-btn" data-era="bakumatsu">近代</button>
             </div>
             <div class="timeline-controls">
-              <button type="button" class="tl-btn" id="btnPrevScen"><span class="tl-text-pc">◀ 前の時代</span><span class="tl-text-sp">◀ 前</span></button>
-              <button type="button" class="tl-btn" id="btnPlayTimeline"><span class="tl-text-pc">▶ 時代自動再生</span><span class="tl-text-sp">▶ 再生</span></button>
-              <button type="button" class="tl-btn" id="btnNextScen"><span class="tl-text-pc">次の時代 ▶</span><span class="tl-text-sp">次 ▶</span></button>
+              <button type="button" class="tl-btn" id="btnPrevScen" title="前の時代">◀ 前</button>
+              <button type="button" class="tl-btn" id="btnPlayTimeline" title="時代自動再生">▶ 再生</button>
+              <button type="button" class="tl-btn" id="btnNextScen" title="次の時代">次 ▶</button>
             </div>
           </div>
 
@@ -4125,9 +4125,15 @@
         borderElements: [],
         coastElements: [],
         activeOfficers: [],
-        officerAppearMap: new Map()
+        officerAppearMap: new Map(),
+        officersLoaded: false,
+        scenariosFullLoaded: false
       };
       window.State = State;
+
+      var bgOfficersPromise = Promise.resolve();
+      var bgScenariosPromise = Promise.resolve();
+      var bgAllReadyPromise = Promise.resolve();
 
       // ==================== 官公庁セキュアブラウザ対応データローダー（eval / new Function 完全不使用） ====================
       function loadExternalScript(paths) {
@@ -4243,6 +4249,41 @@
         return false;
       }
 
+      function filterAndSortScenarios(scenariosRaw) {
+        return (scenariosRaw || [])
+          .filter(function (s) { return s && !/^allstar/i.test(String(s.id)) && !/オールスター/.test(String(s.name || '')); })
+          .sort(function (a, b) { return Number(a.year) - Number(b.year); });
+      }
+
+      function renderPanelsPreservingExpanded(pEntry) {
+        var dBox = document.getElementById('mapDaimyoBox');
+        var wasDaimyoExp = !!(dBox && dBox.classList.contains('is-expanded'));
+        var expEl = document.getElementById('castleExpandedContent');
+        var wasCastleExp = !!(expEl && expEl.classList.contains('is-expanded'));
+        var dTitle = document.getElementById('atlasDrawerTitle');
+        if (dTitle && pEntry) {
+          var yr = State.currentScenario ? State.currentScenario.year : 1560;
+          var fName = pEntry.ownerId ? getClanFamilyName(pEntry.ownerId, yr) : '空白地';
+          dTitle.textContent = '🏯 ' + pEntry.name + '（' + pEntry.castle + '）— ' + fName;
+        }
+        renderPanels(pEntry);
+        if (wasDaimyoExp && dBox) {
+          dBox.classList.add('is-expanded');
+          var dBtn = dBox.querySelector('.daimyo-more-btn');
+          if (dBtn) dBtn.setAttribute('aria-expanded', 'true');
+        }
+        if (wasCastleExp) {
+          var newExp = document.getElementById('castleExpandedContent');
+          var loreBtn = document.getElementById('btnToggleCastleLore');
+          if (newExp) newExp.classList.add('is-expanded');
+          if (loreBtn) {
+            loreBtn.setAttribute('aria-expanded', 'true');
+            var icon = loreBtn.querySelector('.lore-toggle-icon');
+            if (icon) icon.textContent = '▲';
+          }
+        }
+      }
+
       async function initAllData() {
         var statusEl = document.getElementById('loadingStatusText');
         try {
@@ -4251,6 +4292,194 @@
             window.loadKamonSymbols();
           }
           await loadExternalScript(['js/kamonOverrides.js?v=20261117_v36']);
+
+          var urlParams = new URLSearchParams(window.location.search);
+          var initialScenId = urlParams.get('scenario');
+          var initialProvId = urlParams.get('prov') || urlParams.get('province');
+          var fastMode = !initialScenId || String(initialScenId) === '1560';
+
+          if (fastMode) {
+            // Phase 1: 桶狭間の戦い（1560）と地図描画に必要な最小限データのみ先行読み込み
+            statusEl.textContent = '桶狭間の戦い（1560年）と全国地図データを読み込み中…';
+
+            var splitScenPromise = Promise.all([
+              fetchJsonSmart('scenario_1560.json?v=20261117_v36'),
+              fetchJsonSmart('scenarios_meta.json?v=20261117_v36')
+            ]).then(function (pair) {
+              return { split: true, s1560: pair[0], meta: pair[1] };
+            }).catch(function () {
+              return fetchJsonSmart('scenarios.json?v=20261117_v36').then(function (all) {
+                return { split: false, all: all };
+              });
+            });
+
+            var phase1Results = await Promise.all([
+              splitScenPromise,
+              fetchJsonSmart('provinces.json?v=20261117_v36'),
+              fetchJsonSmart('clans.json?v=20261117_v36'),
+              fetchJsonSmart('map_borders.json?v=20261117_v36').catch(function () { return window.MAP_BORDERS_DATA || null; })
+            ]);
+
+            var scenRes = phase1Results[0];
+            var provincesRaw = phase1Results[1];
+            var clansData = phase1Results[2];
+            if (phase1Results[3]) {
+              window.MAP_BORDERS_DATA = phase1Results[3];
+            }
+
+            var scenariosMerged = [];
+            if (scenRes && scenRes.split) {
+              var full1560 = Array.isArray(scenRes.s1560)
+                ? (scenRes.s1560.find(function (s) { return String(s && s.id) === '1560'; }) || scenRes.s1560[0])
+                : (scenRes.s1560 && scenRes.s1560.scenario ? scenRes.s1560.scenario : scenRes.s1560);
+              var metaArr = Array.isArray(scenRes.meta)
+                ? scenRes.meta
+                : (scenRes.meta && Array.isArray(scenRes.meta.scenarios) ? scenRes.meta.scenarios : []);
+              var has1560 = false;
+              for (var mi = 0; mi < metaArr.length; mi++) {
+                var m = metaArr[mi];
+                if (!m) continue;
+                if (String(m.id) === '1560' && full1560) {
+                  scenariosMerged.push(full1560);
+                  has1560 = true;
+                } else {
+                  scenariosMerged.push(Object.assign({}, m, { _isStub: true }));
+                }
+              }
+              if (!has1560 && full1560) {
+                scenariosMerged.push(full1560);
+              }
+              State.scenariosFullLoaded = false;
+            } else {
+              scenariosMerged = (scenRes && scenRes.all) || [];
+              State.scenariosFullLoaded = true;
+            }
+
+            window.SCENARIOS_DATA = scenariosMerged || [];
+            window.PROVINCES_DATA = provincesRaw || [];
+            window.OFFICERS_MASTER = [];
+            window.CLAN_MASTER_DATA = clansData?.clans || clansData || {};
+            window.CLAN_ABILITIES = clansData?.abilities || {};
+            window.CLAN_CAPITAL_PROVINCES = clansData?.capitals || {};
+            window.SCENARIO_HISTORICAL_GOVERNORS = {};
+
+            State.scenarios = filterAndSortScenarios(scenariosMerged);
+            State.filteredScenarios = State.scenarios.slice();
+
+            State.provinces = provincesRaw || [];
+            State.provById = new Map(State.provinces.map(function (p) { return [p.id, p]; }));
+
+            State.clans = clansData?.clans || clansData || {};
+            State.clanAbilities = clansData?.abilities || {};
+            State.clanCapitals = clansData?.capitals || {};
+
+            State.officers = [];
+            State.officerById = new Map();
+            State.governorsByScen = {};
+            State.pinnedGovernors = {};
+            State.castleChanges = {};
+            State.affiliationRules = [];
+            State.officersLoaded = false;
+
+            buildSvgMap();
+            initTimelineUI();
+            initTopMenuModals();
+
+            var defaultIdx = State.filteredScenarios.findIndex(function (s) { return String(s.id) === '1560'; });
+            State.currentFilteredIdx = defaultIdx >= 0 ? defaultIdx : Math.floor(State.filteredScenarios.length / 2);
+            selectScenarioByFilteredIndex(State.currentFilteredIdx);
+
+            if (initialProvId) {
+              setTimeout(function () { selectProvinceOnMap(initialProvId); }, 100);
+            }
+
+            document.getElementById('loadingScreen').classList.add('hidden');
+
+            // Phase 2: 残りの武将データ・全シナリオデータをバックグラウンドで読み込み
+            var resolveBgOfficers, resolveBgScenarios;
+            bgOfficersPromise = new Promise(function (res) { resolveBgOfficers = res; });
+            bgScenariosPromise = State.scenariosFullLoaded
+              ? Promise.resolve(window.SCENARIOS_DATA)
+              : new Promise(function (res) { resolveBgScenarios = res; });
+            bgAllReadyPromise = Promise.all([bgOfficersPromise, bgScenariosPromise]).then(function () {
+              buildGlobalAppearIndex();
+              DB = null;
+            });
+
+            setTimeout(function () {
+              Promise.all([
+                fetchJsonSmart('officers.json?v=20261117_v36'),
+                fetchJsonSmart('governors.json?v=20261117_v36').catch(function () { return {}; }),
+                fetchJsonSmart('events.json?v=20261117_v36').catch(function () { return {}; }),
+                loadAffiliationRulesSafe()
+              ]).then(function (bgRes) {
+                var officersRaw = bgRes[0];
+                var govData = bgRes[1];
+                var eventsData = bgRes[2];
+                var rulesData = bgRes[3];
+
+                window.OFFICERS_MASTER = officersRaw || [];
+                window.SCENARIO_HISTORICAL_GOVERNORS = govData?.governors || govData || {};
+
+                State.officers = officersRaw || [];
+                State.officerById = new Map(State.officers.map(function (o) { return [o.id, o]; }));
+                State.governorsByScen = govData?.governors || govData || {};
+                State.pinnedGovernors = govData?.pinnedGovernors || {};
+                State.castleChanges = eventsData?.castleChanges || {};
+                State.affiliationRules = rulesData || [];
+                State.officersLoaded = true;
+
+                if (State.currentScenario && !State.currentScenario._isStub) {
+                  computeScenarioState(State.currentScenario);
+                  if (State.selectedProvId && State.computedProvs.has(State.selectedProvId)) {
+                    renderPanelsPreservingExpanded(State.computedProvs.get(State.selectedProvId));
+                  }
+                }
+              }).catch(function (err) {
+                console.error('Background officers load failed:', err);
+                State.officersLoaded = true;
+              }).then(function () {
+                resolveBgOfficers();
+              });
+
+              if (!State.scenariosFullLoaded) {
+                fetchJsonSmart('scenarios.json?v=20261117_v36').then(function (scenariosRaw) {
+                  window.SCENARIOS_DATA = scenariosRaw || [];
+                  var fullList = filterAndSortScenarios(scenariosRaw);
+                  var fullById = new Map(fullList.map(function (s) { return [String(s.id), s]; }));
+
+                  State.scenarios = fullList;
+                  State.filteredScenarios = State.filteredScenarios.map(function (s) {
+                    return fullById.get(String(s.id)) || s;
+                  });
+                  State.scenariosFullLoaded = true;
+
+                  if (State.currentScenario && State.currentScenario._isStub) {
+                    var fullCurrent = fullById.get(String(State.currentScenario.id));
+                    if (fullCurrent) {
+                      State.currentScenario = fullCurrent;
+                      computeScenarioState(fullCurrent);
+                      if (State.selectedProvId && State.computedProvs.has(State.selectedProvId)) {
+                        var selEntry = State.computedProvs.get(State.selectedProvId);
+                        State.selectedClanId = selEntry.ownerId || null;
+                        State.highlightedClanId = selEntry.ownerId || null;
+                        refreshMapVisuals();
+                        renderPanelsPreservingExpanded(selEntry);
+                      } else {
+                        refreshMapVisuals();
+                      }
+                    }
+                  }
+                }).catch(function (err) {
+                  console.error('Background scenarios load failed:', err);
+                  State.scenariosFullLoaded = true;
+                }).then(function () {
+                  resolveBgScenarios();
+                });
+              }
+            }, 0);
+            return;
+          }
 
           statusEl.textContent = '歴史配置ルールとシナリオ・領国・大名・武将データを読み込み中…';
           var rulesPromise = loadAffiliationRulesSafe();
@@ -4285,9 +4514,7 @@
           window.CLAN_CAPITAL_PROVINCES = clansData?.capitals || {};
           window.SCENARIO_HISTORICAL_GOVERNORS = govData?.governors || govData || {};
 
-          State.scenarios = (scenariosRaw || [])
-            .filter(function (s) { return !/^allstar/i.test(String(s.id)) && !/オールスター/.test(String(s.name || '')); })
-            .sort(function (a, b) { return Number(a.year) - Number(b.year); });
+          State.scenarios = filterAndSortScenarios(scenariosRaw);
           State.filteredScenarios = State.scenarios.slice();
 
           State.provinces = provincesRaw || [];
@@ -4304,26 +4531,27 @@
           State.pinnedGovernors = govData?.pinnedGovernors || {};
           State.castleChanges = eventsData?.castleChanges || {};
           State.affiliationRules = rulesData || [];
+          State.officersLoaded = true;
+          State.scenariosFullLoaded = true;
+          bgOfficersPromise = Promise.resolve();
+          bgScenariosPromise = Promise.resolve();
+          bgAllReadyPromise = Promise.resolve();
 
           buildGlobalAppearIndex();
           buildSvgMap();
           initTimelineUI();
           initTopMenuModals();
 
-          // 初回読み込み時：URLパラメータ指定があれば優先、なければ1560年シナリオを表示
-          var urlParams = new URLSearchParams(window.location.search);
-          var initialScenId = urlParams.get('scenario');
-          var defaultIdx = -1;
+          var fullIdx = -1;
           if (initialScenId) {
-            defaultIdx = State.filteredScenarios.findIndex(function (s) { return String(s.id) === String(initialScenId); });
+            fullIdx = State.filteredScenarios.findIndex(function (s) { return String(s.id) === String(initialScenId); });
           }
-          if (defaultIdx < 0) {
-            defaultIdx = State.filteredScenarios.findIndex(function (s) { return String(s.id) === '1560'; });
+          if (fullIdx < 0) {
+            fullIdx = State.filteredScenarios.findIndex(function (s) { return String(s.id) === '1560'; });
           }
-          State.currentFilteredIdx = defaultIdx >= 0 ? defaultIdx : Math.floor(State.filteredScenarios.length / 2);
+          State.currentFilteredIdx = fullIdx >= 0 ? fullIdx : Math.floor(State.filteredScenarios.length / 2);
           selectScenarioByFilteredIndex(State.currentFilteredIdx);
 
-          var initialProvId = urlParams.get('prov') || urlParams.get('province');
           if (initialProvId) {
             setTimeout(function () { selectProvinceOnMap(initialProvId); }, 100);
           }
@@ -5365,27 +5593,98 @@
         });
       }
 
+      function computeProvinceSvgMetrics(d) {
+        if (!d || typeof d !== 'string') return { area: 0, minDim: 0 };
+        var subpaths = d.split(/(?=[Mm])/);
+        var totalArea = 0;
+        var minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+        for (var s = 0; s < subpaths.length; s++) {
+          var sub = subpaths[s].trim();
+          if (!sub) continue;
+          var nums = sub.match(/-?\d+(?:\.\d+)?/g);
+          if (!nums || nums.length < 6) continue;
+          var ptsCount = Math.floor(nums.length / 2);
+          var area2 = 0;
+          for (var i = 0; i < ptsCount; i++) {
+            var x1 = parseFloat(nums[i * 2]);
+            var y1 = parseFloat(nums[i * 2 + 1]);
+            if (x1 < minX) minX = x1;
+            if (x1 > maxX) maxX = x1;
+            if (y1 < minY) minY = y1;
+            if (y1 > maxY) maxY = y1;
+            var j = (i + 1) % ptsCount;
+            var x2 = parseFloat(nums[j * 2]);
+            var y2 = parseFloat(nums[j * 2 + 1]);
+            area2 += (x1 * y2 - x2 * y1);
+          }
+          totalArea += Math.abs(area2) * 0.5;
+        }
+        var minDim = (minX <= maxX && minY <= maxY)
+          ? Math.min(maxX - minX, maxY - minY)
+          : 0;
+        return { area: totalArea, minDim: minDim };
+      }
+
+      function computeProvinceSvgArea(d) {
+        return computeProvinceSvgMetrics(d).area;
+      }
+
+      function getKamonBadgeSize(p, ownedCount, isMobile, totalKoku) {
+        var base = isMobile ? 17.5 : 14;
+        if (!p) return base;
+        if (ownedCount === 1) {
+          if (typeof p._svgArea !== 'number' || typeof p._svgMinDim !== 'number') {
+            var metrics = computeProvinceSvgMetrics(p.svgPath || p.d || '');
+            p._svgArea = metrics.area;
+            p._svgMinDim = metrics.minDim;
+          }
+          var area = p._svgArea;
+          var minDim = p._svgMinDim;
+          if (area > 0 && area < 130) return Number((base * 0.60).toFixed(2));
+          if ((area > 0 && area < 535) || (minDim > 0 && minDim < 19.2)) {
+            return Number((base * 0.72).toFixed(2));
+          }
+        }
+        if (Number(totalKoku) >= 1000000) {
+          return Number((base * 1.60).toFixed(2));
+        }
+        if (Number(totalKoku) >= 500000) {
+          return Number((base * 1.30).toFixed(2));
+        }
+        return base;
+      }
+
+      function applyKamonBadgeGeometry(p, useEl, labelEl, ownedCount, isMobile, totalKoku) {
+        if (!p || p.cx === undefined || p.cy === undefined) return;
+        var badgeSize = getKamonBadgeSize(p, ownedCount, isMobile, totalKoku);
+        var kamonBaseX = p.kamonX !== undefined ? p.kamonX : p.cx;
+        var kx = kamonBaseX + (Number.isFinite(p.kamonOffsetX) ? p.kamonOffsetX : 0);
+        var ky = p.kamonY !== undefined ? p.kamonY : p.cy;
+        if (useEl) {
+          useEl.setAttribute('x', kx - badgeSize / 2);
+          useEl.setAttribute('y', ky + (Number.isFinite(p.kamonOffsetY) ? p.kamonOffsetY : 0) - badgeSize / 2);
+          useEl.setAttribute('width', badgeSize);
+          useEl.setAttribute('height', badgeSize);
+        }
+        if (labelEl) {
+          labelEl.setAttribute('y', ky + badgeSize / 2 + 7);
+        }
+      }
+
       function updateKamonBadgeSizes() {
         var isMobile = window.innerWidth <= 1100;
-        var badgeSize = isMobile ? 17.5 : 14;
         if (!State.provinces) return;
         for (var i = 0; i < State.provinces.length; i++) {
           var p = State.provinces[i];
           if (p.cx !== undefined && p.cy !== undefined) {
-            var kamonBaseX = p.kamonX !== undefined ? p.kamonX : p.cx;
-            var kx = kamonBaseX + (Number.isFinite(p.kamonOffsetX) ? p.kamonOffsetX : 0);
-            var ky = p.kamonY !== undefined ? p.kamonY : p.cy;
+            var pEntry = State.computedProvs ? State.computedProvs.get(p.id) : null;
+            var ownerId = pEntry ? pEntry.ownerId : null;
+            var cEntry = (ownerId && State.computedClans) ? State.computedClans.get(ownerId) : null;
+            var ownedCount = cEntry ? cEntry.provIds.length : 0;
+            var totalKoku = cEntry ? cEntry.totalKoku : 0;
             var use = document.getElementById('kamon-use-' + p.id);
-            if (use) {
-              use.setAttribute('x', kx - badgeSize / 2);
-              use.setAttribute('y', ky + (Number.isFinite(p.kamonOffsetY) ? p.kamonOffsetY : 0) - badgeSize / 2);
-              use.setAttribute('width', badgeSize);
-              use.setAttribute('height', badgeSize);
-            }
             var txt = document.getElementById('prov-label-' + p.id);
-            if (txt) {
-              txt.setAttribute('y', ky + badgeSize / 2 + 7);
-            }
+            applyKamonBadgeGeometry(p, use, txt, ownedCount, isMobile, totalKoku);
           }
         }
       }
@@ -5483,6 +5782,10 @@
             var symId = getMapKamonSymbolId(ownerId, pid, color);
             if (ownerId && symId && isCapital) {
               kamonUse.setAttribute('href', '#' + symId);
+              var pBase = pEntry.base || State.provById.get(pid);
+              var ownedCount = cEntry ? cEntry.provIds.length : 0;
+              var totalKoku = cEntry ? cEntry.totalKoku : 0;
+              applyKamonBadgeGeometry(pBase, kamonUse, labelTxt, ownedCount, window.innerWidth <= 1100, totalKoku);
               kamonG.style.display = '';
               kamonG.classList.toggle('clan-highlighted', isSameClan);
               kamonG.classList.toggle('dimmed', isDimmed);
@@ -5857,7 +6160,11 @@
         offCountBadge.textContent = pEntry.officers.length + ' 名';
 
         if (pEntry.officers.length === 0) {
-          offListEl.innerHTML = '<div style="color:var(--text-sub); font-size:12pt; padding:10px 4px;">この時代の' + esc(pEntry.name) + 'に記録されている主要武将はいません。</div>';
+          if (!State.officersLoaded) {
+            offListEl.innerHTML = '<div style="color:var(--text-sub); font-size:12pt; padding:10px 4px;">武将データをバックグラウンドで読み込み中…</div>';
+          } else {
+            offListEl.innerHTML = '<div style="color:var(--text-sub); font-size:12pt; padding:10px 4px;">この時代の' + esc(pEntry.name) + 'に記録されている主要武将はいません。</div>';
+          }
         } else {
           offListEl.innerHTML = pEntry.officers.map(function (item) {
             var o = item.officer;
@@ -5909,7 +6216,10 @@
       }
 
       // ==================== 武将列伝・人物詳細モーダル ====================
-      function openOfficerBioModal(officerId) {
+      async function openOfficerBioModal(officerId) {
+        if (!State.officersLoaded || !State.scenariosFullLoaded) {
+          await bgAllReadyPromise;
+        }
         var requestedId = (typeof officerId === 'object' && officerId) ? officerId.id : officerId;
         // 一覧と同じ、年代別の改名済みコピーを列伝にも渡す。
         var o = (State.activeOfficers || []).find(function (off) { return off.id === requestedId; })
@@ -6227,6 +6537,23 @@
         });
       }
 
+      function applyComputedScenarioAndSelection(scen, options) {
+        computeScenarioState(scen);
+
+        if (options && options.explicitProvId && State.computedProvs.has(options.explicitProvId)) {
+          selectProvinceOnMap(options.explicitProvId);
+          return;
+        }
+
+        // 領国を選択して時代を進めた際、支配勢力が別の大名家に切り替わった後も
+        // その選択領国と、その時点で統治している大名家の領土全体を継続してハイライト表示する
+        if (State.selectedProvId && State.computedProvs.has(State.selectedProvId)) {
+          selectProvinceOnMap(State.selectedProvId, { keepSheetState: true }); // 前・再生・次では、畳んだシートを押し上げない
+        } else {
+          resetAllSelectionAndHighlight();
+        }
+      }
+
       function selectScenarioByFilteredIndex(fIdx, opts) {
         if (fIdx < 0 || fIdx >= State.filteredScenarios.length) return;
         var options = opts || {};
@@ -6251,27 +6578,32 @@
           scenBoxForSub.classList.toggle('no-subtitle', !scen.subtitle); // 副題なしの場合はスマホでもタイトルを表示
         }
 
-        computeScenarioState(scen);
-
-        if (options.explicitProvId && State.computedProvs.has(options.explicitProvId)) {
-          selectProvinceOnMap(options.explicitProvId);
+        if (scen._isStub) {
+          bgScenariosPromise.then(function () {
+            if (State.currentScenario && String(State.currentScenario.id) === String(scen.id)) {
+              if (State.currentScenario._isStub) {
+                var fullScen = State.filteredScenarios.find(function (s) { return String(s.id) === String(scen.id); })
+                  || State.scenarios.find(function (s) { return String(s.id) === String(scen.id); });
+                if (fullScen && !fullScen._isStub) {
+                  State.currentScenario = fullScen;
+                  applyComputedScenarioAndSelection(fullScen, options);
+                }
+              } else if (options.explicitProvId && State.computedProvs.has(options.explicitProvId)) {
+                selectProvinceOnMap(options.explicitProvId);
+              }
+            }
+          });
           return;
         }
 
-        // 領国を選択して時代を進めた際、支配勢力が別の大名家に切り替わった後も
-        // その選択領国と、その時点で統治している大名家の領土全体を継続してハイライト表示する
-        if (State.selectedProvId && State.computedProvs.has(State.selectedProvId)) {
-          selectProvinceOnMap(State.selectedProvId, { keepSheetState: true }); // 前・再生・次では、畳んだシートを押し上げない
-        } else {
-          resetAllSelectionAndHighlight();
-        }
+        applyComputedScenarioAndSelection(scen, options);
       }
 
       function startTimelinePlay() {
         var btn = document.getElementById('btnPlayTimeline');
         if (btn) {
           btn.classList.add('playing');
-          btn.innerHTML = '<span class="tl-text-pc">■ 自動再生停止</span><span class="tl-text-sp">■ 停止</span>';
+          btn.textContent = '■ 停止';
         }
         if (State.currentFilteredIdx >= State.filteredScenarios.length - 1) {
           selectScenarioByFilteredIndex(0);
@@ -6294,12 +6626,12 @@
         var btn = document.getElementById('btnPlayTimeline');
         if (btn) {
           btn.classList.remove('playing');
-          btn.innerHTML = '<span class="tl-text-pc">▶ 時代自動再生</span><span class="tl-text-sp">▶ 再生</span>';
+          btn.textContent = '▶ 再生';
         }
       }
 
       // ==================== 「領国一覧」「武将一覧」モーダル ====================
-      function openProvinceListModal() {
+      async function openProvinceListModal() {
         var modal = document.getElementById('provinceListModal');
         if (!modal) {
           modal = document.createElement('div');
@@ -6311,6 +6643,18 @@
           document.body.appendChild(modal);
         }
         modal.classList.remove('hidden');
+
+        if (!State.officersLoaded || !State.scenariosFullLoaded) {
+          modal.innerHTML =
+            '<div class="modal-window"><div class="modal-head">' +
+              '<div class="modal-head-title">読み込み中…</div>' +
+              '<button type="button" class="modal-close-btn" id="closeProvListLoadingBtn">✕</button>' +
+            '</div><div class="modal-body" style="padding:24px; color:var(--text-sub); font-size:12pt;">データをバックグラウンドで読み込み中…</div></div>';
+          var closeLoadBtn = document.getElementById('closeProvListLoadingBtn');
+          if (closeLoadBtn) closeLoadBtn.onclick = function () { modal.classList.add('hidden'); };
+          await bgAllReadyPromise;
+          if (modal.classList.contains('hidden')) return;
+        }
 
         var activeClanId = State.highlightedClanId ? State.selectedClanId : null;
         var currentTab = activeClanId ? 'my' : 'all';
@@ -6726,7 +7070,7 @@
         renderList();
       }
 
-      function openOfficerListModal() {
+      async function openOfficerListModal() {
         var modal = document.getElementById('officerListModal');
         if (!modal) {
           modal = document.createElement('div');
@@ -6738,6 +7082,18 @@
           document.body.appendChild(modal);
         }
         modal.classList.remove('hidden');
+
+        if (!State.officersLoaded || !State.scenariosFullLoaded) {
+          modal.innerHTML =
+            '<div class="modal-window"><div class="modal-head">' +
+              '<div class="modal-head-title">読み込み中…</div>' +
+              '<button type="button" class="modal-close-btn" id="closeOffListLoadingBtn">✕</button>' +
+            '</div><div class="modal-body" style="padding:24px; color:var(--text-sub); font-size:12pt;">データをバックグラウンドで読み込み中…</div></div>';
+          var closeOffLoadBtn = document.getElementById('closeOffListLoadingBtn');
+          if (closeOffLoadBtn) closeOffLoadBtn.onclick = function () { modal.classList.add('hidden'); };
+          await bgAllReadyPromise;
+          if (modal.classList.contains('hidden')) return;
+        }
 
         var activeClanId = State.highlightedClanId ? State.selectedClanId : null;
         var currentTab = activeClanId ? 'my' : 'all';
@@ -7351,7 +7707,28 @@
         }
       }
 
-      function openEncyclopedia(kind, focusId) {
+      async function openEncyclopedia(kind, focusId) {
+        if (!State.officersLoaded || !State.scenariosFullLoaded) {
+          closeEncyclopedia();
+          mkOverlay = document.createElement('div');
+          mkOverlay.className = 'mk-overlay';
+          mkOverlay.innerHTML =
+            '<div class="mk-card" role="dialog" aria-modal="true">' +
+              '<div class="mk-head">' +
+                '<div class="mk-title"><span class="mk-title-icon">' + (kind === 'officer' ? '📜' : '🏯') + '</span>' +
+                  '<span>' + (kind === 'officer' ? '武将名鑑' : '大名名鑑') + '</span></div>' +
+                '<button type="button" class="mk-close" title="閉じる (Esc)">✕</button>' +
+              '</div>' +
+              '<div class="mk-body" style="padding:24px; color:var(--text-sub); font-size:12pt;">データをバックグラウンドで読み込み中…</div>' +
+            '</div>';
+          document.body.appendChild(mkOverlay);
+          requestAnimationFrame(function () { if (mkOverlay) mkOverlay.classList.add('show'); });
+          mkOverlay.addEventListener('mousedown', function (e) { if (e.target === mkOverlay) closeEncyclopedia(); });
+          mkOverlay.querySelector('.mk-close').onclick = closeEncyclopedia;
+          var pendingOverlay = mkOverlay;
+          await bgAllReadyPromise;
+          if (!mkOverlay || mkOverlay !== pendingOverlay) return;
+        }
         buildMeikanDB();
         closeEncyclopedia();
         mkOverlay = document.createElement('div');
@@ -7808,8 +8185,11 @@
 
         var scenBoxEl = document.getElementById('mapScenBox');
         if (scenBoxEl) {
-          // スマホ：ピクトグラムを押した時だけシナリオ説明の全文を開閉（ボックス自体のタップは画面スクロールを妨げない）
           var scenMoreBtn = document.getElementById('scenMoreBtn');
+          if (window.matchMedia('(min-width: 1101px)').matches) {
+            scenBoxEl.classList.add('is-expanded');
+            if (scenMoreBtn) scenMoreBtn.setAttribute('aria-expanded', 'true');
+          }
           if (scenMoreBtn) {
             scenMoreBtn.onclick = function (e) {
               e.stopPropagation();
@@ -7870,7 +8250,13 @@
             openEncyclopedia(State.selectedClanId ? 'clan' : 'officer', State.selectedClanId);
           };
         }
-        document.getElementById('btnOpenAbout').onclick = function () {
+        document.getElementById('btnOpenAbout').onclick = async function () {
+          if (!State.officersLoaded || !State.scenariosFullLoaded) {
+            document.getElementById('aboutModalBody').innerHTML = '<div style="padding:16px; color:var(--text-sub);">データをバックグラウンドで読み込み中…</div>';
+            openModal('aboutModal');
+            await bgAllReadyPromise;
+            if (document.getElementById('aboutModal').classList.contains('hidden')) return;
+          }
           document.getElementById('aboutModalBody').innerHTML =
             '<div style="margin-bottom:14px;">' +
               '<h3 class="modal-head-title-pc" style="color:var(--gold-bright); font-size:14pt; margin-bottom:6px;">🗾 日本史 勢力図・人物一覧 ～日本通史総覧～ について</h3>' +
@@ -8160,12 +8546,70 @@
 
 /* ==================== 要望4, 5, 6 の最適化スタイル ==================== */
 
-/* PC画面：左上のシナリオ説明は説明文が見切れないように上下幅可変とする */
+/* PC画面：左上のシナリオ説明はサブタイトル＋開閉ボタンを1行表示し、本文は折りたたみ可とする */
 @media (min-width: 1101px) {
   #mapScenBox {
     height: auto !important;
     max-height: none !important;
     overflow: visible !important;
+  }
+  #mapScenBox .overlay-box-header {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 10px;
+  }
+  #mapScenBox:not(.is-expanded) .overlay-box-header {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+  #mapScenBox #overlayScenTitle {
+    display: none !important;
+  }
+  #mapScenBox #overlayScenSub {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 12.5pt;
+    font-weight: bold;
+    color: var(--gold-bright);
+  }
+  #mapScenBox #scenMoreBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    margin: 0 0 0 auto;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    color: var(--gold-bright);
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  #mapScenBox #scenMoreBtn:hover {
+    background: rgba(212, 175, 55, 0.14);
+  }
+  #mapScenBox #scenMoreBtn svg {
+    width: 24px;
+    height: 24px;
+    fill: rgba(212, 175, 55, 0.14);
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.2s ease;
+  }
+  #mapScenBox #scenMoreBtn[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+  }
+  #mapScenBox:not(.is-expanded) #overlayScenDesc {
+    display: none !important;
+  }
+  #mapScenBox.is-expanded #overlayScenDesc {
+    display: block !important;
   }
   #mapScenBox #overlayScenDesc {
     font-size: 11pt !important;

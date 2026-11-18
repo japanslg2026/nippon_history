@@ -111,6 +111,94 @@ export const MapRendererMethods = {
     return this.ensureMapKamonSymbol(baseId);
   },
 
+  /** SVGパス文字列からシューレース法でポリゴン面積と最小バウンディング辺長を概算する */
+  computeProvinceSvgMetrics(d) {
+    if (!d || typeof d !== 'string') return { area: 0, minDim: 0 };
+    let total = 0;
+    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+    const subpaths = d.split(/(?=[Mm])/);
+    for (const sub of subpaths) {
+      const matches = sub.match(/-?\d+(?:\.\d+)?/g);
+      if (!matches || matches.length < 6) continue;
+      const n = Math.floor(matches.length / 2);
+      let sum = 0;
+      for (let i = 0; i < n; i++) {
+        const x1 = Number(matches[2 * i]);
+        const y1 = Number(matches[2 * i + 1]);
+        if (x1 < minX) minX = x1;
+        if (x1 > maxX) maxX = x1;
+        if (y1 < minY) minY = y1;
+        if (y1 > maxY) maxY = y1;
+        const j = (i + 1) % n;
+        const x2 = Number(matches[2 * j]);
+        const y2 = Number(matches[2 * j + 1]);
+        sum += x1 * y2 - x2 * y1;
+      }
+      total += Math.abs(sum) / 2;
+    }
+    const minDim = (minX <= maxX && minY <= maxY)
+      ? Math.min(maxX - minX, maxY - minY)
+      : 0;
+    return { area: total, minDim };
+  },
+
+  /** SVGパス文字列からシューレース法でポリゴン面積を概算する */
+  computeProvinceSvgArea(d) {
+    return this.computeProvinceSvgMetrics(d).area;
+  },
+
+  /** 領有国数・総石高と領国のSVG面積・幅高さに応じて家紋バッジサイズを返す（狭小1国は縮小、50万石以上・100万石以上は段階拡大） */
+  getKamonBadgeSize(province, ownedCount, totalKoku = 0) {
+    const baseSize = 14;
+    if (!province) return baseSize;
+    if (ownedCount === 1) {
+      if (typeof province._svgArea !== 'number' || typeof province._svgMinDim !== 'number') {
+        const metrics = this.computeProvinceSvgMetrics(province.svgPath || province.d || '');
+        province._svgArea = metrics.area;
+        province._svgMinDim = metrics.minDim;
+      }
+      const area = province._svgArea;
+      const minDim = province._svgMinDim;
+      if (area > 0 && area < 130) return Number((baseSize * 0.60).toFixed(2));
+      if ((area > 0 && area < 535) || (minDim > 0 && minDim < 19.2)) {
+        return Number((baseSize * 0.72).toFixed(2));
+      }
+    }
+    if (Number(totalKoku) >= 1000000) {
+      return Number((baseSize * 1.60).toFixed(2));
+    }
+    if (Number(totalKoku) >= 500000) {
+      return Number((baseSize * 1.30).toFixed(2));
+    }
+    return baseSize;
+  },
+
+  /** 全領国を走査して大名IDごとの領有国数・総石高マップを返す */
+  getClanTerritoryStats() {
+    const counts = {};
+    const kokuTotals = {};
+    (this.provinces || []).forEach(p => {
+      if (p && p.ownerId) {
+        counts[p.ownerId] = (counts[p.ownerId] || 0) + 1;
+        kokuTotals[p.ownerId] = (kokuTotals[p.ownerId] || 0) + (Number(p.kokudaka) || 0);
+      }
+    });
+    return { counts, kokuTotals };
+  },
+
+  /** 全領国を走査して大名IDごとの領有国数マップを返す */
+  getOwnedProvinceCounts() {
+    return this.getClanTerritoryStats().counts;
+  },
+
+  /** 家紋バッジの中心座標を返す */
+  getKamonCenter(province) {
+    const kamonBaseX = province.kamonX !== undefined ? province.kamonX : province.cx;
+    const x = kamonBaseX + (Number.isFinite(province.kamonOffsetX) ? province.kamonOffsetX : 0);
+    const y = (province.kamonY !== undefined ? province.kamonY : province.cy) + (Number.isFinite(province.kamonOffsetY) ? province.kamonOffsetY : 0);
+    return { x, y };
+  },
+
   /** 和紙テクスチャと勢力外周インナーグロー用のSVG定義を初期化する（家紋symbolは保持） */
   ensureMapTextureDefs() {
     if (typeof document === 'undefined') return null;
@@ -632,6 +720,7 @@ export const MapRendererMethods = {
     });
 
     // 領国ポリゴン & 家紋バッジの描画（家紋は大名の本拠地のみに表示）
+    const { counts: ownedCounts, kokuTotals } = this.getClanTerritoryStats();
     this.provinces.forEach(p => {
       const isMine = p.ownerId === this.playerClanId;
       const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -674,14 +763,12 @@ export const MapRendererMethods = {
           badgeG.style.display = 'none';
         }
 
-        // 家紋バッジ (金色の外縁を省略し、ごくわずかに小型化: 14px)
-        const badgeSize = 14;
+        // 家紋バッジ (金色の外縁を省略し、狭小1国は縮小、50万石以上は拡大)
+        const badgeSize = this.getKamonBadgeSize(p, p.ownerId ? (ownedCounts[p.ownerId] || 0) : 0, p.ownerId ? (kokuTotals[p.ownerId] || 0) : 0);
         const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
         use.setAttribute('id', `kamon-use-${p.id}`);
         use.setAttribute('href', showKamon ? `#${this.getMapKamonId(p, this.getProvinceColor(p))}` : '');
-        const kamonBaseX = p.kamonX !== undefined ? p.kamonX : p.cx;
-        const kamonX = kamonBaseX + (Number.isFinite(p.kamonOffsetX) ? p.kamonOffsetX : 0);
-        const kamonY = (p.kamonY !== undefined ? p.kamonY : p.cy) + (Number.isFinite(p.kamonOffsetY) ? p.kamonOffsetY : 0);
+        const { x: kamonX, y: kamonY } = this.getKamonCenter(p);
         use.setAttribute('x', kamonX - badgeSize / 2);
         use.setAttribute('y', kamonY - badgeSize / 2);
         use.setAttribute('width', badgeSize);
@@ -1168,6 +1255,7 @@ export const MapRendererMethods = {
 
     // 1勢力につき最大1箇所のみ本拠地家紋を表示するためのトラッカー（2重表示防止フェイルセーフ）
     const displayedKamonClans = new Set();
+    const { counts: ownedCounts, kokuTotals } = this.getClanTerritoryStats();
 
     this.provinces.forEach(p => {
       const isMine = p.ownerId === this.playerClanId;
@@ -1185,6 +1273,7 @@ export const MapRendererMethods = {
         }
       }
       const showKamon = !!(p.ownerId && isCapital);
+      const badgeSize = this.getKamonBadgeSize(p, p.ownerId ? (ownedCounts[p.ownerId] || 0) : 0, p.ownerId ? (kokuTotals[p.ownerId] || 0) : 0);
 
       const cached = this._mapTileCache[p.id];
 
@@ -1197,6 +1286,7 @@ export const MapRendererMethods = {
           cached.troops === p.troops &&
           cached.showKamon === showKamon &&
           cached.kamonId === kamonId &&
+          cached.badgeSize === badgeSize &&
           cached.isMine === isMine) {
         return;
       }
@@ -1213,6 +1303,7 @@ export const MapRendererMethods = {
         troops: p.troops,
         showKamon,
         kamonId,
+        badgeSize,
         isMine
       };
 
@@ -1249,7 +1340,12 @@ export const MapRendererMethods = {
           use.setAttribute('href', '');
           use.style.display = 'none';
         } else {
+          const { x: kamonX, y: kamonY } = this.getKamonCenter(p);
           use.setAttribute('href', `#${kamonId}`);
+          use.setAttribute('x', kamonX - badgeSize / 2);
+          use.setAttribute('y', kamonY - badgeSize / 2);
+          use.setAttribute('width', badgeSize);
+          use.setAttribute('height', badgeSize);
           use.style.display = '';
         }
       }

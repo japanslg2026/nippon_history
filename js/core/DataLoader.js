@@ -9,15 +9,102 @@
  */
 
 export class DataLoader {
+  static DATA_VERSION = '20261117_v36'; // japan_slg.html の preload と同じ値にすること
+  static _fullScenariosPromise = null;
+  static _fullScenariosLoaded = false;
+  static _gameData = null;
+
+  /**
+   * 初回起動高速化のため、scenarios_meta.json と scenario_1560.json のみを先読みして統合する。
+   * 片方でも取得に失敗した場合は従来の scenarios.json へフォールバックする。
+   * @param {string} v
+   * @returns {Promise<Scenario[]>}
+   */
+  static async fetchInitialScenarios(v = DataLoader.DATA_VERSION) {
+    try {
+      const [metaList, s1560] = await Promise.all([
+        DataLoader.fetchJson(`data/scenarios_meta.json?v=${v}`),
+        DataLoader.fetchJson(`data/scenario_1560.json?v=${v}`)
+      ]);
+      if (!Array.isArray(metaList) || !s1560 || typeof s1560 !== 'object') {
+        throw new Error('Invalid initial scenario payload');
+      }
+      let replaced = false;
+      const merged = metaList.map(entry => {
+        if (entry && String(entry.id) === String(s1560.id)) {
+          replaced = true;
+          return s1560;
+        }
+        return entry && typeof entry === 'object' ? { ...entry, _isStub: true } : entry;
+      });
+      if (!replaced) merged.push(s1560);
+      return merged;
+    } catch (err) {
+      console.warn('DataLoader: split initial scenarios fetch failed, falling back to scenarios.json', err);
+      DataLoader._fullScenariosLoaded = true;
+      return await DataLoader.fetchJson(`data/scenarios.json?v=${v}`);
+    }
+  }
+
+  /**
+   * 全シナリオ完全版 (data/scenarios.json) を1回だけフェッチし、既存の配列参照をインプレース更新する。
+   * @returns {Promise<Scenario[]>}
+   */
+  static ensureFullScenarios() {
+    const v = DataLoader.DATA_VERSION || '20261117_v36';
+    const existing = (typeof window !== 'undefined' && (window.SCENARIOS_DATA || window.SCENARIOS)) || DataLoader._gameData?.scenarios;
+    if (DataLoader._fullScenariosLoaded && Array.isArray(existing) && existing.length > 0 && !existing.some(s => s && s._isStub)) {
+      return Promise.resolve(existing);
+    }
+    if (DataLoader._fullScenariosPromise) {
+      return DataLoader._fullScenariosPromise;
+    }
+    DataLoader._fullScenariosPromise = DataLoader.fetchJson(`data/scenarios.json?v=${v}`)
+      .then(fullScenarios => {
+        if (!Array.isArray(fullScenarios)) {
+          throw new Error('scenarios.json did not return an array');
+        }
+        const targets = new Set();
+        if (DataLoader._gameData && Array.isArray(DataLoader._gameData.scenarios)) {
+          targets.add(DataLoader._gameData.scenarios);
+        }
+        if (typeof window !== 'undefined') {
+          if (Array.isArray(window.SCENARIOS_DATA)) targets.add(window.SCENARIOS_DATA);
+          if (Array.isArray(window.SCENARIOS)) targets.add(window.SCENARIOS);
+        }
+        if (targets.size > 0) {
+          targets.forEach(arr => {
+            arr.splice(0, arr.length, ...fullScenarios);
+          });
+        } else if (typeof window !== 'undefined') {
+          window.SCENARIOS_DATA = fullScenarios;
+          window.SCENARIOS = fullScenarios;
+        }
+        if (DataLoader._gameData && !Array.isArray(DataLoader._gameData.scenarios)) {
+          DataLoader._gameData.scenarios = fullScenarios;
+        }
+        DataLoader._fullScenariosLoaded = true;
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('fullScenariosLoaded'));
+        }
+        return DataLoader._gameData?.scenarios || (typeof window !== 'undefined' ? window.SCENARIOS_DATA : fullScenarios) || fullScenarios;
+      })
+      .catch(err => {
+        DataLoader._fullScenariosPromise = null;
+        throw err;
+      });
+    return DataLoader._fullScenariosPromise;
+  }
+
   /**
    * 全ゲームデータを非同期で並列フェッチし、統合データオブジェクトを生成する
    * @returns {Promise<{scenarios: Scenario[], officers: Officer[], provinces: Province[], clans: Object, clanAbilities: Object, clanCapitals: Object, governors: Object, jodaiClans: Object, pinnedGovernors: Object, historicalEvents: Object, castleChanges: Object, daimyoLifespans: Object}>}
    */
   static async loadAllData() {
     try {
-      const v = '20261117_v36'; // japan_slg.html の preload と同じ値にすること
+      const v = DataLoader.DATA_VERSION;
       const [scenarios, officers, provinces, clansData, governorsData, eventsData, mapBordersData, rulesData] = await Promise.all([
-        DataLoader.fetchJson(`data/scenarios.json?v=${v}`),
+        DataLoader.fetchInitialScenarios(v),
         DataLoader.fetchJson(`data/officers.json?v=${v}`),
         DataLoader.fetchJson(`data/provinces.json?v=${v}`),
         DataLoader.fetchJson(`data/clans.json?v=${v}`),
@@ -79,8 +166,19 @@ export class DataLoader {
         rules: rulesData || {}
       };
 
+      DataLoader._gameData = gameData;
+
       // 既存のコードとの100%完全な互換性を確保するためのグローバル参照同期
       DataLoader.syncGlobalReferences(gameData);
+
+      // 残りの全シナリオデータをバックグラウンドで先読み
+      if (!DataLoader._fullScenariosLoaded && Array.isArray(gameData.scenarios) && gameData.scenarios.some(s => s && s._isStub)) {
+        setTimeout(() => {
+          DataLoader.ensureFullScenarios().catch(err => {
+            console.warn('DataLoader: background full scenarios load failed:', err);
+          });
+        }, 0);
+      }
 
       return gameData;
     } catch (err) {
@@ -170,4 +268,8 @@ export class DataLoader {
     window.ALLSTAR_OFFICER_AFFILIATIONS = r.allstarAffiliations || {};
     window.FACTION_ROSTER_MAPPINGS = r.factionRosters || {};
   }
+}
+
+if (typeof window !== 'undefined') {
+  window.DataLoader = DataLoader;
 }

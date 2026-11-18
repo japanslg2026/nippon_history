@@ -53,19 +53,6 @@
       "setDaimyo": false
     },
     {
-      "id": "audit13_off_dm_date_1546_1531",
-      "officerIds": [
-        "off_dm_date_1546"
-      ],
-      "scenarioIds": [
-        "1531"
-      ],
-      "setClanId": "date",
-      "setDefaultProv": "iwashiro",
-      "setDaimyo": false,
-      "placeInOwnedProv": "iwashiro"
-    },
-    {
       "id": "user_18th_century_updates_20261015_satake_ugo_1702",
       "officerIds": [
         "off_satake_yoshisumi"
@@ -151,90 +138,6 @@
       "setDaimyo": false
     },
     {
-      "id": "user_1590_updates_20261015_satomi_yoshiyori_1590",
-      "officerIds": [
-        "off_dm_satomi_1582"
-      ],
-      "scenarioIds": [
-        "1590"
-      ],
-      "setClanId": "satomi",
-      "setDefaultProv": "awa",
-      "setDaimyo": true
-    },
-    {
-      "id": "user_1590_updates_20261015_chiba_shimousa_1590",
-      "officerIds": [
-        "off_chiba_shigetane"
-      ],
-      "scenarioIds": [
-        "1590"
-      ],
-      "setClanId": "hojo",
-      "setDefaultProv": "shimousa",
-      "setDaimyo": false
-    },
-    {
-      "id": "user_1590_updates_20261015_asano_north_omi_1590",
-      "officerIds": [
-        "off_dm_asano_1600"
-      ],
-      "scenarioIds": [
-        "1590"
-      ],
-      "setClanId": "toyotomi",
-      "setDefaultProv": "omi_north",
-      "setDaimyo": false
-    },
-    {
-      "id": "user_shikoku_updates_20261015_miyoshi_awa_ronin_1584",
-      "officerIds": [
-        "off_dm_miyoshi_1570"
-      ],
-      "scenarioIds": [
-        "1584"
-      ],
-      "setClanId": "ronin",
-      "setDefaultProv": "awa_shikoku",
-      "setDaimyo": false
-    },
-    {
-      "id": "user_shikoku_updates_20261015_toyotomi_hideyori_1587",
-      "officerIds": [
-        "off_dm_toyotomi_1600"
-      ],
-      "scenarioIds": [
-        "1587"
-      ],
-      "setClanId": "toyotomi",
-      "setDefaultProv": "settsu_osaka",
-      "setDaimyo": false
-    },
-    {
-      "id": "user_shikoku_updates_20261015_asano_yoshinaga_1587",
-      "officerIds": [
-        "off_dm_asano_1600"
-      ],
-      "scenarioIds": [
-        "1587"
-      ],
-      "setClanId": "toyotomi",
-      "setDefaultProv": "settsu_osaka",
-      "setDaimyo": false
-    },
-    {
-      "id": "user_scenario_updates_20261015_chiba_hara_1555",
-      "officerIds": [
-        "off_chiba_toshitane"
-      ],
-      "scenarioIds": [
-        "1555"
-      ],
-      "setClanId": "hojo",
-      "setDefaultProv": "shimousa",
-      "setDaimyo": false
-    },
-    {
       "id": "user_scenario_updates_20261015_mimura_1555",
       "officerIds": [
         "off_mimura_iechika"
@@ -267,31 +170,6 @@
       ],
       "setClanId": "uesugi",
       "setDefaultProv": "uzen_yonezawa",
-      "setDaimyo": false
-    },
-    {
-      "id": "user_scenario_updates_20261015_nanbu_nobunao_mutsu_retainer",
-      "officerIds": [
-        "off_dm_nanbu_1582"
-      ],
-      "scenarioIds": [
-        "1555",
-        "1560"
-      ],
-      "setClanId": "nanbu",
-      "setDefaultProv": "mutsu_nanbu",
-      "setDaimyo": false
-    },
-    {
-      "id": "user_scenario_updates_20261015_chiba_hara_1573",
-      "officerIds": [
-        "off_chiba_toshitane"
-      ],
-      "scenarioIds": [
-        "1573"
-      ],
-      "setClanId": "hojo",
-      "setDefaultProv": "shimousa",
       "setDaimyo": false
     },
     {
@@ -1264,8 +1142,7 @@
     {
       "id": "ito_clan_hyuga_1600",
       "officerIds": [
-        "off_succ2_ito_1580",
-        "off_ito_sukeyoshi"
+        "off_succ2_ito_1580"
       ],
       "scenarioIds": [
         "1600"
@@ -1290,22 +1167,6 @@
       ],
       "setClanId": "shimazu",
       "setDefaultProv": "satsuma",
-      "setDaimyo": false
-    },
-    {
-      "id": "hachisuka_yoshishige_toyotomi_1600",
-      "officerIds": [
-        "off_hachisuka_yoshishige"
-      ],
-      "scenarioIds": [
-        "1600"
-      ],
-      "requireOwners": [
-        "toyotomi"
-      ],
-      "unlessOwner": "hachisuka",
-      "setClanId": "toyotomi",
-      "setDefaultProv": "awa_shikoku",
       "setDaimyo": false
     },
     {
@@ -1591,7 +1452,6 @@
     {
       "id": "ito_clan_hyuga_1614",
       "officerIds": [
-        "off_ito_sukeisa",
         "off_succ2_ito_1580"
       ],
       "scenarioIds": [
@@ -2793,19 +2653,6 @@
       "setClanId": "taira",
       "setDefaultProv": "suo",
       "setAssignedProv": "suo",
-      "setDaimyo": false
-    },
-    {
-      "id": "togashi_hojo_1331",
-      "officerIds": [
-        "off_togashi_ujiharu"
-      ],
-      "scenarioIds": [
-        "1331"
-      ],
-      "setClanId": "hojo_kamakura",
-      "setDefaultProv": "kaga_north",
-      "setAssignedProv": "kaga_north",
       "setDaimyo": false
     },
     {
@@ -5156,19 +5003,6 @@
       "setDaimyo": true
     },
     {
-      "id": "ashikaga_yoshiteru_yamashiro_1546",
-      "officerIds": [
-        "off_ashikaga_yoshiteru"
-      ],
-      "scenarioIds": [
-        "1546"
-      ],
-      "setClanId": "ashikaga",
-      "setDefaultProv": "yamashiro",
-      "setAssignedProv": "yamashiro",
-      "setDaimyo": true
-    },
-    {
       "id": "hosokawa_masamoto_settsu_1495",
       "officerIds": [
         "off_hosokawa_masamoto"
@@ -5183,23 +5017,9 @@
       "setDaimyo": true
     },
     {
-      "id": "echigo_retainers_1546",
-      "officerIds": [
-        "off_honjo_shigenaga"
-      ],
-      "scenarioIds": [
-        "1546"
-      ],
-      "setClanId": "uesugi",
-      "setDefaultProv": "echigo",
-      "setAssignedProv": "echigo",
-      "setDaimyo": false
-    },
-    {
       "id": "nagano_narimasa_kozuke_1546",
       "officerIds": [
-        "off_nagano_narimasa",
-        "off_jd_251"
+        "off_nagano_narimasa"
       ],
       "scenarioIds": [
         "1546"
@@ -5208,33 +5028,6 @@
       "setDefaultProv": "kozuke_takasaki",
       "clearAssignment": true,
       "isStandby": true,
-      "setDaimyo": false
-    },
-    {
-      "id": "kodera_norimoto_harima_1495",
-      "officerIds": [
-        "off_succ_akamatsu_1440_0"
-      ],
-      "scenarioIds": [
-        "1495",
-        "1493"
-      ],
-      "setClanId": "akamatsu",
-      "setDefaultProv": "harima_west",
-      "setAssignedProv": "harima_west",
-      "setDaimyo": false
-    },
-    {
-      "id": "iwamatsu_iezumi_kozuke_1495",
-      "officerIds": [
-        "off_iwamatsu_iezumi"
-      ],
-      "scenarioIds": [
-        "1495"
-      ],
-      "setClanId": "uesugi",
-      "setDefaultProv": "kozuke_takasaki",
-      "setAssignedProv": "kozuke_takasaki",
       "setDaimyo": false
     },
     {
@@ -5329,19 +5122,6 @@
       "setDaimyo": true
     },
     {
-      "id": "togashi_mochiharu_kaga_1438",
-      "officerIds": [
-        "off_togashi_mochiharu"
-      ],
-      "scenarioIds": [
-        "1438"
-      ],
-      "setClanId": "togashi",
-      "setDefaultProv": "kaga_north",
-      "setAssignedProv": "kaga_north",
-      "setDaimyo": true
-    },
-    {
       "id": "toki_mochiyori_mino_1438",
       "officerIds": [
         "off_dm_toki_1438"
@@ -5353,19 +5133,6 @@
       "setDefaultProv": "mino",
       "setAssignedProv": "mino",
       "setDaimyo": true
-    },
-    {
-      "id": "amago_mochihisa_izumo_1438",
-      "officerIds": [
-        "off_amago_mochihisa"
-      ],
-      "scenarioIds": [
-        "1438"
-      ],
-      "setClanId": "kyogoku",
-      "setDefaultProv": "izumo_south",
-      "setAssignedProv": "izumo_south",
-      "setDaimyo": false
     },
     {
       "id": "yamana_morouji_tamba_1359",
@@ -5525,19 +5292,6 @@
       "setDaimyo": true
     },
     {
-      "id": "togashi_masaie_kaga_1391",
-      "officerIds": [
-        "off_succ2_togashi_1365"
-      ],
-      "scenarioIds": [
-        "1391"
-      ],
-      "setClanId": "togashi",
-      "setDefaultProv": "kaga_north",
-      "setAssignedProv": "kaga_north",
-      "setDaimyo": true
-    },
-    {
       "id": "so_sugeshige_tsushima_1391",
       "officerIds": [
         "off_succ_so_1330_173"
@@ -5549,19 +5303,6 @@
       "setDefaultProv": "tsushima",
       "setAssignedProv": "tsushima",
       "setDaimyo": true
-    },
-    {
-      "id": "isshiki_norimitsu_mikawa_1391",
-      "officerIds": [
-        "off_jd_404"
-      ],
-      "scenarioIds": [
-        "1391"
-      ],
-      "setClanId": "isshiki",
-      "setDefaultProv": "mikawa",
-      "setAssignedProv": "mikawa",
-      "setDaimyo": false
     },
     {
       "id": "kitabatake_akiyoshi_yamato_1359",
@@ -5618,32 +5359,6 @@
       "setDaimyo": true
     },
     {
-      "id": "shimazu_officers_satsuma_1274",
-      "officerIds": [
-        "off_shimazu_tadayoshi"
-      ],
-      "scenarioIds": [
-        "1274"
-      ],
-      "setClanId": "shimazu",
-      "setDefaultProv": "satsuma",
-      "setAssignedProv": "satsuma",
-      "setDaimyo": false
-    },
-    {
-      "id": "honma_tadaie_sado_1274",
-      "officerIds": [
-        "off_succ_honma_1260_32"
-      ],
-      "scenarioIds": [
-        "1274"
-      ],
-      "setClanId": "honma",
-      "setDefaultProv": "sado",
-      "setAssignedProv": "sado",
-      "setDaimyo": false
-    },
-    {
       "id": "otomo_officers_bungo_1331",
       "officerIds": [
         "off_jd_219"
@@ -5658,7 +5373,6 @@
     {
       "id": "nanbu_officers_mutsu_1531",
       "officerIds": [
-        "off_nanbu_harumasa",
         "off_succ2_nanbu_1495"
       ],
       "scenarioIds": [
@@ -5828,19 +5542,6 @@
       "setDaimyo": false
     },
     {
-      "id": "nanbu_nobumasa_mutsu_1359",
-      "officerIds": [
-        "off_jd_241"
-      ],
-      "scenarioIds": [
-        "1359"
-      ],
-      "setClanId": "nanbu",
-      "setDefaultProv": "mutsu_nanbu",
-      "setAssignedProv": "mutsu_nanbu",
-      "setDaimyo": true
-    },
-    {
       "id": "jinbo_kunihisa_etchu_1391",
       "officerIds": [
         "off_jd_402"
@@ -5865,19 +5566,6 @@
       "setDefaultProv": "ise",
       "setAssignedProv": "ise",
       "setDaimyo": true
-    },
-    {
-      "id": "kitabatake_akiyoshi_shima_1391",
-      "officerIds": [
-        "off_kitabatake_akiyoshi"
-      ],
-      "scenarioIds": [
-        "1391"
-      ],
-      "setClanId": "kitabatake",
-      "setDefaultProv": "shima",
-      "setAssignedProv": "shima",
-      "setDaimyo": false
     },
     {
       "id": "rokkaku_mitsutaka_south_omi_1391",
@@ -5959,19 +5647,6 @@
       "setDaimyo": true
     },
     {
-      "id": "chiba_hara_kamakura_fu_1467",
-      "officerIds": [
-        "off_dm_chiba_1467"
-      ],
-      "scenarioIds": [
-        "1467"
-      ],
-      "setClanId": "kamakura_fu",
-      "setDefaultProv": "shimousa",
-      "setAssignedProv": "shimousa",
-      "setDaimyo": false
-    },
-    {
       "id": "soma_noritane_iwaki_1391",
       "officerIds": [
         "off_soma_noritane"
@@ -6009,19 +5684,6 @@
       "setDefaultProv": "iwashiro",
       "setAssignedProv": "iwashiro",
       "setDaimyo": true
-    },
-    {
-      "id": "ashina_morimasa_iwashiro_1391",
-      "officerIds": [
-        "off_succ_ashina_1380_7"
-      ],
-      "scenarioIds": [
-        "1391"
-      ],
-      "setClanId": "ashina",
-      "setDefaultProv": "iwashiro",
-      "setAssignedProv": "iwashiro",
-      "setDaimyo": false
     },
     {
       "id": "satake_sadayoshi_hitachi_1350",
@@ -6063,19 +5725,6 @@
       "setDaimyo": true
     },
     {
-      "id": "enyo_takasada_izumo_1350",
-      "officerIds": [
-        "off_dm_enyo_1331"
-      ],
-      "scenarioIds": [
-        "1350"
-      ],
-      "setClanId": "kyogoku",
-      "setDefaultProv": "izumo_south",
-      "setAssignedProv": "izumo_south",
-      "setDaimyo": false
-    },
-    {
       "id": "masuda_iwami_1350",
       "officerIds": [
         "off_masuda_kanemi",
@@ -6088,32 +5737,6 @@
       "setDefaultProv": "iwami",
       "setAssignedProv": "iwami",
       "setDaimyo": true
-    },
-    {
-      "id": "hosokawa_kazuuji_awa_1350",
-      "officerIds": [
-        "off_dm_hosokawa_1331"
-      ],
-      "scenarioIds": [
-        "1350"
-      ],
-      "setClanId": "hosokawa",
-      "setDefaultProv": "awa_shikoku",
-      "setAssignedProv": "awa_shikoku",
-      "setDaimyo": false
-    },
-    {
-      "id": "wada_masato_kii_1350",
-      "officerIds": [
-        "off_wada_masato"
-      ],
-      "scenarioIds": [
-        "1350"
-      ],
-      "setClanId": "kusunoki",
-      "setDefaultProv": "kii_kichu",
-      "setAssignedProv": "kii_kichu",
-      "setDaimyo": false
     },
     {
       "id": "kira_sadaie_mikawa_1333",
@@ -6140,19 +5763,6 @@
       "setDefaultProv": "sagami",
       "clearAssignment": true,
       "isStandby": true,
-      "setDaimyo": false
-    },
-    {
-      "id": "yamana_ujiie_bingo_1336",
-      "officerIds": [
-        "off_yamana_ujiie"
-      ],
-      "scenarioIds": [
-        "1336"
-      ],
-      "setClanId": "yamana",
-      "setDefaultProv": "bingo",
-      "setAssignedProv": "bingo",
       "setDaimyo": false
     },
     {
@@ -6195,32 +5805,6 @@
       "setDaimyo": true
     },
     {
-      "id": "nanbu_daimyo_mutsu_1350",
-      "officerIds": [
-        "off_dm_nanbu_1331"
-      ],
-      "scenarioIds": [
-        "1350"
-      ],
-      "setClanId": "nanbu",
-      "setDefaultProv": "mutsu_nanbu",
-      "setAssignedProv": "mutsu_nanbu",
-      "setDaimyo": true
-    },
-    {
-      "id": "nanbu_officers_mutsu_1350",
-      "officerIds": [
-        "off_jd_241"
-      ],
-      "scenarioIds": [
-        "1350"
-      ],
-      "setClanId": "nanbu",
-      "setDefaultProv": "mutsu_nanbu",
-      "setAssignedProv": "mutsu_nanbu",
-      "setDaimyo": false
-    },
-    {
       "id": "murakami_nobusada_north_shinano_1350",
       "officerIds": [
         "off_murakami_nobusada"
@@ -6250,7 +5834,6 @@
     {
       "id": "miura_officers_sagami_1350",
       "officerIds": [
-        "off_miura_takatsugu",
         "off_miura_tokitaka_kama"
       ],
       "scenarioIds": [
@@ -6276,33 +5859,6 @@
       "setDaimyo": true
     },
     {
-      "id": "nawa_yoshitaka_hoki_1350",
-      "officerIds": [
-        "off_nawa_yoshitaka"
-      ],
-      "scenarioIds": [
-        "1350"
-      ],
-      "setClanId": "nawa",
-      "setDefaultProv": "hoki_west",
-      "setAssignedProv": "hoki_west",
-      "setDaimyo": true
-    },
-    {
-      "id": "nanbu_officers_mutsu_1336",
-      "officerIds": [
-        "off_succ2_nanbu_1345"
-      ],
-      "scenarioIds": [
-        "1336"
-      ],
-      "setClanId": "kitabatake",
-      "setDefaultProv": "mutsu_nanbu",
-      "clearAssignment": true,
-      "isStandby": true,
-      "setDaimyo": false
-    },
-    {
       "id": "anekoji_ietsuna_hida_1336",
       "officerIds": [
         "off_jd_224"
@@ -6316,19 +5872,6 @@
       "setDaimyo": true
     },
     {
-      "id": "ashikaga_motouji_sagami_1336",
-      "officerIds": [
-        "off_dm_kamakura_fu_1350"
-      ],
-      "scenarioIds": [
-        "1336"
-      ],
-      "setClanId": "ashikaga",
-      "setDefaultProv": "sagami",
-      "setAssignedProv": "sagami",
-      "setDaimyo": false
-    },
-    {
       "id": "miura_tokitaka_sagami_1336",
       "officerIds": [
         "off_miura_tokitaka_kama"
@@ -6339,20 +5882,6 @@
       "setClanId": "ashikaga",
       "setDefaultProv": "sagami",
       "setAssignedProv": "sagami",
-      "setDaimyo": false
-    },
-    {
-      "id": "utsunomiya_clan_awa_1336",
-      "officerIds": [
-        "off_utsunomiya_ujitsuna"
-      ],
-      "scenarioIds": [
-        "1336"
-      ],
-      "setClanId": "ashikaga",
-      "setDefaultProv": "awa",
-      "clearAssignment": true,
-      "isStandby": true,
       "setDaimyo": false
     },
     {
@@ -6370,19 +5899,6 @@
       "setDaimyo": false
     },
     {
-      "id": "nanbu_officers_mutsu_1331",
-      "officerIds": [
-        "off_nanbu_masamitsu"
-      ],
-      "scenarioIds": [
-        "1331"
-      ],
-      "setClanId": "kitabatake",
-      "setDefaultProv": "mutsu_nanbu",
-      "setAssignedProv": "mutsu_nanbu",
-      "setDaimyo": false
-    },
-    {
       "id": "gofushimi_in_yamashiro_1331",
       "officerIds": [
         "off_gofushimi_in"
@@ -6392,19 +5908,6 @@
       ],
       "setDefaultProv": "yamashiro",
       "setAssignedProv": "yamashiro",
-      "setDaimyo": false
-    },
-    {
-      "id": "togashi_hojo_1331",
-      "officerIds": [
-        "off_togashi_ujiharu"
-      ],
-      "scenarioIds": [
-        "1331"
-      ],
-      "setClanId": "hojo_kamakura",
-      "setDefaultProv": "kaga_north",
-      "setAssignedProv": "kaga_north",
       "setDaimyo": false
     },
     {
@@ -6437,7 +5940,6 @@
     {
       "id": "miura_officers_sagami_1359",
       "officerIds": [
-        "off_miura_takatsugu",
         "off_miura_tokitaka_kama"
       ],
       "scenarioIds": [
@@ -6448,97 +5950,6 @@
       "clearAssignment": true,
       "isStandby": true,
       "setDaimyo": false
-    },
-    {
-      "id": "hosokawa_akiuji_sanuki_1359",
-      "officerIds": [
-        "off_dm_hosokawa_1350"
-      ],
-      "scenarioIds": [
-        "1359"
-      ],
-      "setClanId": "hosokawa",
-      "setDefaultProv": "sanuki",
-      "clearAssignment": true,
-      "setDaimyo": false
-    },
-    {
-      "id": "nawa_yoshitaka_hoki_1359",
-      "officerIds": [
-        "off_nawa_yoshitaka"
-      ],
-      "scenarioIds": [
-        "1359"
-      ],
-      "setClanId": "nawa",
-      "setDefaultProv": "hoki_west",
-      "setAssignedProv": "hoki_west",
-      "setDaimyo": true
-    },
-    {
-      "id": "miura_takatsugu_sagami_1391",
-      "officerIds": [
-        "off_miura_takatsugu"
-      ],
-      "scenarioIds": [
-        "1391"
-      ],
-      "setClanId": "kamakura_fu",
-      "setDefaultProv": "sagami",
-      "clearAssignment": true,
-      "setDaimyo": false
-    },
-    {
-      "id": "utsunomiya_ujitsuna_awa_1391",
-      "officerIds": [
-        "off_utsunomiya_ujitsuna"
-      ],
-      "scenarioIds": [
-        "1391"
-      ],
-      "setClanId": "satomi",
-      "setDefaultProv": "awa",
-      "clearAssignment": true,
-      "setDaimyo": false
-    },
-    {
-      "id": "shoni_fuyusuke_hizen_1391",
-      "officerIds": [
-        "off_shoni_fuyusuke"
-      ],
-      "scenarioIds": [
-        "1391"
-      ],
-      "setClanId": "shoni",
-      "setDefaultProv": "hizen_saga",
-      "clearAssignment": true,
-      "setDaimyo": false
-    },
-    {
-      "id": "hosokawa_akiuji_sanuki_1391",
-      "officerIds": [
-        "off_dm_hosokawa_1350"
-      ],
-      "scenarioIds": [
-        "1391"
-      ],
-      "setClanId": "hosokawa",
-      "setDefaultProv": "sanuki",
-      "clearAssignment": true,
-      "setDaimyo": false
-    },
-    {
-      "id": "nawa_yoshitaka_hoki_1391",
-      "officerIds": [
-        "off_nawa_yoshitaka"
-      ],
-      "scenarioIds": [
-        "1391"
-      ],
-      "setClanId": "nawa",
-      "setDefaultProv": "hoki_west",
-      "setAssignedProv": "hoki_west",
-      "setDaimyo": true
     },
     {
       "id": "nanbu_nobunaga_mutsu_1400",
@@ -6595,7 +6006,6 @@
     {
       "id": "nawa_officers_higo_1400",
       "officerIds": [
-        "off_nawa_yoshitaka",
         "off_nawa_norinaga"
       ],
       "scenarioIds": [
@@ -6620,19 +6030,6 @@
       "setDaimyo": true
     },
     {
-      "id": "shiba_yoshitoshi_owari_1438",
-      "officerIds": [
-        "off_succ_shiba_1390_156"
-      ],
-      "scenarioIds": [
-        "1438"
-      ],
-      "setClanId": "shiba",
-      "setDefaultProv": "owari_south",
-      "clearAssignment": true,
-      "setDaimyo": false
-    },
-    {
       "id": "otomo_chikaaki_bungo_1438",
       "officerIds": [
         "off_succ2_otomo_1390"
@@ -6642,19 +6039,6 @@
       ],
       "setClanId": "otomo",
       "setDefaultProv": "bungo_funai",
-      "clearAssignment": true,
-      "setDaimyo": false
-    },
-    {
-      "id": "nagao_yoshikage_echigo_1467",
-      "officerIds": [
-        "off_nagao_yoshikage"
-      ],
-      "scenarioIds": [
-        "1467"
-      ],
-      "setClanId": "uesugi",
-      "setDefaultProv": "echigo",
       "clearAssignment": true,
       "setDaimyo": false
     },
@@ -6694,20 +6078,6 @@
       ],
       "setClanId": "shiba",
       "setDefaultProv": "owari_north",
-      "clearAssignment": true,
-      "setDaimyo": false
-    },
-    {
-      "id": "nawa_officers_higo_1467",
-      "officerIds": [
-        "off_nawa_akitada",
-        "off_nawa_norinaga"
-      ],
-      "scenarioIds": [
-        "1467"
-      ],
-      "setClanId": "kikuchi",
-      "setDefaultProv": "higo_yatsushiro",
       "clearAssignment": true,
       "setDaimyo": false
     },
@@ -6822,19 +6192,6 @@
       "setDaimyo": false
     },
     {
-      "id": "chiba_masatane_shimousa_1531",
-      "officerIds": [
-        "off_pl1570_181"
-      ],
-      "scenarioIds": [
-        "1531"
-      ],
-      "setClanId": "ashikaga_koga",
-      "setDefaultProv": "shimousa",
-      "setAssignedProv": "shimousa",
-      "setDaimyo": false
-    },
-    {
       "id": "ogigayatsu_tomooki_musashi_1531",
       "officerIds": [
         "off_uesugi_tomooki"
@@ -6846,20 +6203,6 @@
       "setDefaultProv": "musashi_kawagoe",
       "setAssignedProv": "musashi_kawagoe",
       "setDaimyo": true
-    },
-    {
-      "id": "ando_chikasue_ugo_1531",
-      "officerIds": [
-        "off_dm_ando_1560"
-      ],
-      "scenarioIds": [
-        "1531"
-      ],
-      "setClanId": "ando",
-      "setDefaultProv": "ugo_minato",
-      "clearAssignment": true,
-      "isStandby": true,
-      "setDaimyo": false
     },
     {
       "id": "nanbu_harumasa_mutsu_1538",
@@ -6920,27 +6263,12 @@
     {
       "id": "chiba_retainers_shimousa_1546",
       "officerIds": [
-        "off_hara_tanesada_1546",
-        "off_jd_307"
+        "off_hara_tanesada_1546"
       ],
       "scenarioIds": [
         "1546"
       ],
       "setClanId": "chiba",
-      "setDefaultProv": "shimousa",
-      "clearAssignment": true,
-      "isStandby": true,
-      "setDaimyo": false
-    },
-    {
-      "id": "chiba_toshitane_shimousa_hojo_1555",
-      "officerIds": [
-        "off_chiba_toshitane"
-      ],
-      "scenarioIds": [
-        "1555"
-      ],
-      "setClanId": "hojo",
       "setDefaultProv": "shimousa",
       "clearAssignment": true,
       "isStandby": true,
@@ -7098,20 +6426,6 @@
       "setDaimyo": false
     },
     {
-      "id": "toyotomi_hideyori_settsu_1592",
-      "officerIds": [
-        "off_dm_toyotomi_1600"
-      ],
-      "scenarioIds": [
-        "1592"
-      ],
-      "setClanId": "toyotomi",
-      "setDefaultProv": "settsu_osaka",
-      "clearAssignment": true,
-      "isStandby": true,
-      "setDaimyo": false
-    },
-    {
       "id": "ukita_three_retainers_1592",
       "officerIds": [
         "off_jd_419",
@@ -7172,9 +6486,7 @@
       "id": "uragami_clan_ronin_1600",
       "officerIds": [
         "off_uragami_narimune",
-        "off_uragami_muneyasu",
-        "off_uragami_munenobu",
-        "off_dm_uragami_1546"
+        "off_uragami_muneyasu"
       ],
       "scenarioIds": [
         "1600"
@@ -7195,19 +6507,6 @@
       "setClanId": "toyotomi",
       "setDefaultProv": "harima_west",
       "setAssignedProv": "harima_west",
-      "setDaimyo": false
-    },
-    {
-      "id": "hachisuka_yoshishige_awa_1600",
-      "officerIds": [
-        "off_hachisuka_yoshishige"
-      ],
-      "scenarioIds": [
-        "1600"
-      ],
-      "setClanId": "hachisuka",
-      "setDefaultProv": "awa_shikoku",
-      "setAssignedProv": "awa_shikoku",
       "setDaimyo": false
     },
     {
@@ -7242,8 +6541,7 @@
       "id": "miura_sawara_hojo_sagami_1274",
       "officerIds": [
         "off_succ2_miura_1225",
-        "off_miura_tokiaki",
-        "off_miura_tokitsugu"
+        "off_miura_tokiaki"
       ],
       "scenarioIds": [
         "1274"
@@ -7332,21 +6630,6 @@
       "setDefaultProv": "uzen_yonezawa",
       "setAssignedProv": "uzen_yonezawa",
       "setDaimyo": true
-    },
-    {
-      "id": "ukita_hideie_hanafusa_uragami_1570_1573",
-      "officerIds": [
-        "off_dm_ukita_1582"
-      ],
-      "scenarioIds": [
-        "1570",
-        "1573"
-      ],
-      "setClanId": "uragami",
-      "setDefaultProv": "bizen",
-      "clearAssignment": true,
-      "isStandby": true,
-      "setDaimyo": false
     },
     {
       "id": "yamanaka_amago_ronin_harima_1573_onwards",

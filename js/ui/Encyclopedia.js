@@ -33,7 +33,9 @@ async function loadDB() {
   const clans = w.CLAN_MASTER_DATA || w.CLAN_MASTER;
   const [o, s, p, c] = await Promise.all([
     officers?.length ? officers : get('officers.json'),
-    scenarios?.length ? scenarios : get('scenarios.json'),
+    (scenarios?.length && !scenarios.some(x => x?._isStub))
+      ? scenarios
+      : (w.DataLoader?.ensureFullScenarios ? w.DataLoader.ensureFullScenarios() : get('scenarios.json')),
     provinces?.length ? provinces : get('provinces.json'),
     clans && Object.keys(clans).length ? { clans } : get('clans.json'),
   ]);
