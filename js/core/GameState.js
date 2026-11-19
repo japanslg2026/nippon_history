@@ -2048,8 +2048,9 @@ export const GameStateMethods = {
         return;
       }
 
-      // 編集器で明示した本拠地の城主だけは、当主の自動配置を上書きする。
-      if (p.ownerId && this.isCapitalProvince(p.id, p.ownerId) && !pinnedGovMap[p.id]) {
+      // 当主がいる州（本拠地）は常に当主親政とし、他の武将を城主にしない。
+
+      if (p.ownerId && this.isCapitalProvince(p.id, p.ownerId)) {
 
         const daimyoOfficer = this.activeOfficers.find(o => o.clanId === p.ownerId && o.isDaimyo && !o.assignedProvId && !o.isDead);
 
@@ -2069,7 +2070,7 @@ export const GameStateMethods = {
 
     // 【ステップ2: 支城（本拠地以外の城）への史実城代・有力家臣の配置】
 
-    // 2-A: シナリオ固有の史実城代マッピングの適用（本拠地は pinned の明示指定時のみ対象）
+    // 2-A: シナリオ固有の史実城代マッピングの適用（当主がいる本拠地には城代を置かない）
 
     if (histGovMap) {
 
@@ -2077,9 +2078,8 @@ export const GameStateMethods = {
 
         
 
-        // 通常は支城のみ。本拠地でも pinned 指定なら城主を明示できる。
         const targetIdOrName = pinnedGovMap[p.id] || histGovMap[p.id];
-        if (!p.governorId && p.ownerId && (!this.isCapitalProvince(p.id, p.ownerId) || !!pinnedGovMap[p.id]) && targetIdOrName) {
+        if (!p.governorId && p.ownerId && !this.isCapitalProvince(p.id, p.ownerId) && targetIdOrName) {
 
           
 
@@ -2231,6 +2231,25 @@ export const GameStateMethods = {
     this.appointHistoricalHomeGovernors();
 
     this.autoAppointComputerCastellans({ fillVacancies: false });
+
+    // 各州で城主は1名のみ（重複・非城主の assignedProvId 残存を完全に排除）
+    const provById = new Map((this.provinces || []).map(p => [p.id, p]));
+    const seenGovIds = new Set();
+    (this.provinces || []).forEach(p => {
+      if (!p.governorId) return;
+      if (seenGovIds.has(p.governorId)) {
+        p.governorId = null;
+      } else {
+        seenGovIds.add(p.governorId);
+      }
+    });
+    (this.activeOfficers || []).forEach(o => {
+      if (!o.assignedProvId) return;
+      const gp = provById.get(o.assignedProvId);
+      if (!gp || gp.ownerId !== o.clanId || gp.governorId !== o.id) {
+        o.assignedProvId = null;
+      }
+    });
 
 
 
@@ -3267,7 +3286,14 @@ export const GameStateMethods = {
 
         if (scenarioOverride.defaultProv) off.defaultProv = scenarioOverride.defaultProv;
 
-        if (scenarioOverride.assignedProvId) off.assignedProvId = scenarioOverride.assignedProvId;
+        if (scenarioOverride.assignedProvId) {
+          const isDaimyoRole = !!(off.isDaimyo || (this._isSwitchingScenario && scenarioOverride.isDaimyo));
+          const isCapTarget = this.isCapitalProvince(scenarioOverride.assignedProvId, off.clanId);
+          const targetProv = (this.provinces || []).find(p => p.id === scenarioOverride.assignedProvId);
+          if (isDaimyoRole || (!isCapTarget && scenarioOverride.isCastleLord !== false && (this._isSwitchingScenario || (targetProv && targetProv.governorId === off.id)))) {
+            off.assignedProvId = scenarioOverride.assignedProvId;
+          }
+        }
 
         else if (scenarioOverride.clearAssignment) off.assignedProvId = null;
 
@@ -3309,8 +3335,7 @@ export const GameStateMethods = {
 
         // 本拠（当主の居城）は城代を置かないので、そこへの指名では他家へ移さない
 
-        const isPinnedGovernor = pinnedGovMap[myGovProv] === off.id;
-        if (provOwner && ownersSet.has(provOwner) && (!this.isCapitalProvince(myGovProv, provOwner) || isPinnedGovernor)) {
+        if (provOwner && ownersSet.has(provOwner) && !this.isCapitalProvince(myGovProv, provOwner)) {
 
           // シナリオ当主は城代名簿で吸収しない（清衡が義家配下になる、など）
 
@@ -8702,11 +8727,15 @@ export const GameStateMethods = {
       const capId = (scen.capitals && scen.capitals[pl.id]) || capitals[pl.id];
       const cap = owned.find(p => p.id === capId) || owned.find(p => p.id === pl.startProvId) || owned[0];
       (this.activeOfficers || []).forEach(o => {
-        if (o !== head && o.clanId === pl.id && o.isDaimyo) {
-          o.isDaimyo = false;
+        if (o !== head && o.clanId === pl.id) {
+          if (o.isDaimyo) o.isDaimyo = false;
           if (o.assignedProvId === cap.id) o.assignedProvId = null;
         }
       });
+      if (cap.governorId && cap.governorId !== head.id) {
+        const prevGov = (this.activeOfficers || []).find(o => o.id === cap.governorId);
+        if (prevGov && prevGov.assignedProvId === cap.id) prevGov.assignedProvId = null;
+      }
       head.clanId = pl.id;
       head.isDaimyo = true;
       this.provinces.forEach(p => { if (p.governorId === head.id && p.id !== cap.id) p.governorId = null; });

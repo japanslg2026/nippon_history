@@ -1411,7 +1411,7 @@
     "sagae": {
       "family": "寒河江家",
       "color": "#1e8449",
-      "kamon": "kamon-mori",
+      "kamon": "kamon-sagae",
       "capital_pref": [
         "uzen_nishimurayama"
       ],
@@ -2037,7 +2037,8 @@
         "1584": "鈴木重秀",
         "1600": "鈴木重朝",
         "default": "鈴木重秀"
-      }
+      },
+      "kamonFixed": true
     },
     "saito": {
       "family": "斎藤家",
@@ -4235,7 +4236,7 @@
     "taira_tadatsune": {
       "family": "房総平氏",
       "color": "#b03a2e",
-      "kamon": "kamon-masakado",
+      "kamon": "kamon-taira_tadatsune",
       "capital_pref": [
         "kazusa",
         "shimousa",
@@ -4851,7 +4852,7 @@
     "shiba_oshu": {
       "family": "奥州斯波家",
       "color": "#2471a3",
-      "kamon": "kamon-shiba",
+      "kamon": "kamon-shiba_oshu",
       "capital_pref": [
         "iwate"
       ],
@@ -5731,7 +5732,7 @@
     "kira_oshu": {
       "family": "奥州吉良家",
       "color": "#8e44ad",
-      "kamon": "kamon-ashikaga",
+      "kamon": "kamon-kira_oshu",
       "capital_pref": [
         "rikuzen",
         "sendai"
@@ -6265,7 +6266,7 @@
     "nihonmatsu_hatakeyama": {
       "family": "二本松畠山家",
       "color": "#7d6608",
-      "kamon": "kamon-hatakeyama",
+      "kamon": "kamon-nihonmatsu_hatakeyama",
       "capital_pref": [
         "iwashiro_nihonmatsu"
       ],
@@ -6321,7 +6322,7 @@
     "adachi": {
       "family": "安達家",
       "color": "#6c757d",
-      "kamon": "kamon-default",
+      "kamon": "kamon-adachi",
       "capital_pref": [
         "iwashiro_nihonmatsu"
       ],
@@ -6336,7 +6337,7 @@
     "hineno": {
       "family": "日根野家",
       "color": "#884c21",
-      "kamon": "kamon-default",
+      "kamon": "kamon-hineno",
       "capital_pref": [
         "shinano_suwa"
       ],
@@ -7086,7 +7087,7 @@
     "kashima": {
       "family": "鹿島家",
       "color": "#1f618d",
-      "kamon": "kamon-kashima-mukaicho",
+      "kamon": "kamon-kashima-mitsudomoe",
       "capital_pref": [
         "hitachi_kashima"
       ],
@@ -7525,7 +7526,7 @@
       }
     },
     "kokura_mori": {
-      "family": "毛利家（豊前小倉）",
+      "family": "豊前毛利家",
       "color": "#7b241c",
       "kamon": "kamon-kokura-mori-tsurumaru",
       "capital_pref": [
@@ -7803,7 +7804,7 @@
     "shibata_echigo": {
       "family": "新発田家",
       "color": "#2874a6",
-      "kamon": "kamon-sasaki",
+      "kamon": "kamon-shibata_echigo",
       "capital_pref": [
         "echigo_kanbara"
       ],
@@ -7853,7 +7854,7 @@
     "mizoguchi": {
       "family": "溝口家",
       "color": "#1f618d",
-      "kamon": "kamon-genji",
+      "kamon": "kamon-mizoguchi",
       "capital_pref": [
         "echigo_kanbara"
       ],
@@ -7868,7 +7869,7 @@
     "oyamada": {
       "family": "小山田家",
       "color": "#884ea0",
-      "kamon": "kamon-takeda",
+      "kamon": "kamon-oyamada",
       "capital_pref": [
         "kai_tsuru"
       ],
@@ -7883,7 +7884,7 @@
     "takanashi": {
       "family": "高梨家",
       "color": "#2e6b5e",
-      "kamon": "kamon-genji",
+      "kamon": "kamon-takanashi",
       "capital_pref": [
         "shinano_kawanakajima"
       ],
@@ -7980,7 +7981,7 @@
     "endo_gujo": {
       "family": "遠藤家",
       "color": "#2e6b4e",
-      "kamon": "kamon-chiba",
+      "kamon": "kamon-endo_gujo",
       "capital_pref": [
         "mino_gujo"
       ],
@@ -8095,7 +8096,7 @@
     "kutsuki": {
       "family": "朽木家",
       "color": "#3f6079",
-      "kamon": "kamon-kyogoku",
+      "kamon": "kamon-kutsuki",
       "capital_pref": [
         "omi_kutsukidani"
       ],
@@ -8163,7 +8164,7 @@
     "kagawa": {
       "family": "香川家",
       "color": "#2e86c1",
-      "kamon": "kamon-taira",
+      "kamon": "kamon-kagawa",
       "capital_pref": [
         "sanuki_west"
       ],
@@ -8191,7 +8192,7 @@
     "onishi": {
       "family": "大西家",
       "color": "#884ea0",
-      "kamon": "kamon-fujiwara",
+      "kamon": "kamon-onishi",
       "capital_pref": [
         "awa_shikoku_west"
       ],
@@ -10066,6 +10067,14 @@
       "personality": "balanced",
       "title": "伊那松尾の弓馬家",
       "note": "下伊那の松尾城に拠り、府中・鈴岡両家と信濃小笠原の覇権を争った。"
+    },
+    "kokura_mori": {
+      "military": 70,
+      "politics": 70,
+      "stratagem": 70,
+      "personality": "balanced",
+      "title": "戦国大名",
+      "note": ""
     }
   },
   "capitals": {

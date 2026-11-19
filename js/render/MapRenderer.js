@@ -68,6 +68,7 @@ export const MapRendererMethods = {
     if (!source || !source.parentNode) return baseId;
 
     const srcVer = source.getAttribute('data-v') || '1';
+    if (Number(srcVer) >= 4) return baseId; // 紋に含まれる輪をそのまま表示する
     const mapKamonId = `${baseId}-map`;
     let mapSymbol = document.getElementById(mapKamonId);
     if (!mapSymbol || mapSymbol.getAttribute('data-src-id') !== `${baseId}:${srcVer}`) {
@@ -159,9 +160,9 @@ export const MapRendererMethods = {
       }
       const area = province._svgArea;
       const minDim = province._svgMinDim;
-      if (area > 0 && area < 130) return Number((baseSize * 0.60).toFixed(2));
+      if (area > 0 && area < 130) return Number((baseSize * 0.40).toFixed(2));
       if ((area > 0 && area < 535) || (minDim > 0 && minDim < 19.2)) {
-        return Number((baseSize * 0.72).toFixed(2));
+        return Number((baseSize * 0.60).toFixed(2));
       }
     }
     if (Number(totalKoku) >= 1000000) {

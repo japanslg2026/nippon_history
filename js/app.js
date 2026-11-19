@@ -11,7 +11,7 @@
 
 import { GameState, GameStateMethods } from './core/GameState.js?v=20261117_v36';
 import { UIManager, UIManagerMethods } from './ui/UIManager.js?v=20261114_shu';
-import { MapRenderer, MapRendererMethods } from './render/MapRenderer.js?v=20261117_v36';
+import { MapRenderer, MapRendererMethods } from './render/MapRenderer.js?v=20261119_v39';
 import { ComputerLogic, ComputerLogicMethods } from './ai/ComputerLogic.js?v=20261117_v36';
 import { DataLoader } from './core/DataLoader.js?v=20261117_v36';
 import * as GameRules from './core/GameRules.js?v=20261117_v36';

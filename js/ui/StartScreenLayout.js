@@ -721,7 +721,7 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     const ci = clanInfo(id);
     const card = [...document.querySelectorAll('#daimyoGrid .daimyo-card')].find(c => c.dataset.id === id);
     const tr = troopsOf(card);
-    const kid = document.getElementById('kamon-' + id) ? 'kamon-' + id : '';
+    const kid = game()?.getClanKamonId(id);
 
     let kamonHtml = '';
     if (kid) {
@@ -1113,7 +1113,8 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     for (const p of Object.values(paths)) { const on = !!id && p.dataset.owner === id; p.classList.toggle('sel', on); if (on) { n++; p.parentNode.appendChild(p); } }
     const info = $('.sl-map-info');
     if (info && id) {
-      const ci = clanInfo(id); const kid = document.getElementById('kamon-' + id) ? 'kamon-' + id : '';
+      const ci = clanInfo(id);
+      const kid = g?.getClanKamonId(id);
       info.classList.add('sl-sel-badge'); info.style.setProperty('--sl-clan', ci.color);
       info.innerHTML = `${kid ? `<svg class="sl-sel-kamon" viewBox="0 0 32 32" aria-hidden="true"><use href="#${kid}"></use></svg>` : `<i class="sl-dot sl-sel-dot" style="background:${ci.color}"></i>`}<span class="sl-sel-lbl">選択中</span><b class="sl-sel-name">${esc(ci.leader || ci.name)}</b>${ci.leader ? `<span class="sl-sel-clan">${esc(ci.name)}</span>` : ''}${IS_PHONE ? `<span class="sl-sel-n" title="支配 ${n} 国"><i class="sl-ic" aria-hidden="true">🏯</i>${n}</span>` : `<span class="sl-sel-n">支配 ${n} 国</span>`}${troopsOf(card) != null ? (IS_PHONE ? `<span class="sl-sel-t" title="兵力 ${troopsOf(card)}"><i class="sl-ic" aria-hidden="true">⚔️</i>${troopsOf(card)}</span>` : `<span class="sl-sel-t">兵 ${troopsOf(card)}</span>`) : ''}`;
     } else if (info) {

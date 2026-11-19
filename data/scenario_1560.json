@@ -622,7 +622,7 @@
       "name": "斯波詮真",
       "color": "#2471a3",
       "crest": "奥",
-      "kamonSvgId": "kamon-shiba",
+      "kamonSvgId": "kamon-shiba_oshu",
       "difficulty": "上級",
       "winRate": 44,
       "startProvId": "rikuchu_morioka",
@@ -788,7 +788,7 @@
       "name": "安東愛季",
       "color": "#247cba",
       "crest": "安",
-      "kamonSvgId": "kamon-ando"
+      "kamonSvgId": "kamon-ando-northern"
     },
     {
       "id": "asari",
@@ -966,7 +966,7 @@
       "name": "二本松義国",
       "color": "#7d6608",
       "crest": "二",
-      "kamonSvgId": "kamon-hatakeyama",
+      "kamonSvgId": "kamon-nihonmatsu_hatakeyama",
       "difficulty": "上級",
       "winRate": 44,
       "startProvId": "iwashiro_nihonmatsu",
@@ -1140,10 +1140,10 @@
       "startProvId": "echigo",
       "provCount": 4,
       "myProvinces": [
+        "echigo",
         "echigo_murakami",
         "echigo_kanbara",
-        "echigo_uonuma",
-        "echigo"
+        "echigo_uonuma"
       ],
       "gold": 1500,
       "rice": 1800,
@@ -1219,11 +1219,11 @@
       "startProvId": "settsu_osaka",
       "provCount": 5,
       "myProvinces": [
-        "kaga_north",
-        "kaga_south",
-        "ise_nagashima",
         "settsu_osaka",
-        "yamato_yoshino"
+        "yamato_yoshino",
+        "ise_nagashima",
+        "kaga_north",
+        "kaga_south"
       ],
       "gold": 650,
       "rice": 800,
@@ -1310,7 +1310,7 @@
       "name": "鹿島治時",
       "color": "#1f618d",
       "crest": "鹿",
-      "kamonSvgId": "kamon-kashima-mukaicho"
+      "kamonSvgId": "kamon-kashima-mitsudomoe"
     },
     {
       "id": "oda_hitachi",
@@ -1456,9 +1456,7 @@
         "kozuke_numata",
         "kozuke_maebashi",
         "kozuke_nitta_kanayama",
-        "kazusa_togane_naruto",
         "shimousa",
-        "shimousa_koga",
         "musashi_oshi",
         "musashi_hachigata",
         "musashi_iwatsuki",
@@ -1467,7 +1465,9 @@
         "musashi_tama",
         "sagami",
         "sagami_miura",
-        "izu"
+        "izu",
+        "shimousa_koga",
+        "kazusa_togane_naruto"
       ],
       "gold": 1400,
       "rice": 1700,
@@ -1486,8 +1486,8 @@
       "startProvId": "kozuke_takasaki",
       "provCount": 2,
       "myProvinces": [
-        "kozuke_agatsuma",
-        "kozuke_takasaki"
+        "kozuke_takasaki",
+        "kozuke_agatsuma"
       ],
       "gold": 1500,
       "rice": 1800,
@@ -1546,15 +1546,15 @@
       "provCount": 10,
       "myProvinces": [
         "kai",
-        "kai_tsuru",
-        "shinano_sarashina_hanishina",
         "shinano_ueda",
+        "shinano_chikuma_azumi",
+        "shinano_kiso",
         "shinano_saku_komoro",
         "shinano_suwa",
+        "kai_tsuru",
+        "shinano_sarashina_hanishina",
         "shinano_takato",
-        "shinano_iida",
-        "shinano_chikuma_azumi",
-        "shinano_kiso"
+        "shinano_iida"
       ],
       "gold": 1150,
       "rice": 1400,
@@ -1578,7 +1578,7 @@
       ],
       "provCount": 1,
       "color": "#2e6b5e",
-      "kamonSvgId": "kamon-genji",
+      "kamonSvgId": "kamon-takanashi",
       "crest": "高",
       "winRate": 44,
       "personality": "balanced",
@@ -1593,9 +1593,9 @@
       "provCount": 6,
       "myProvinces": [
         "suruga",
+        "totomi_hamamatsu_kakegawa",
         "totomi_futamata_haibara",
         "totomi_joto",
-        "totomi_hamamatsu_kakegawa",
         "mikawa",
         "mikawa_shitara"
       ],
@@ -1735,7 +1735,7 @@
       ],
       "provCount": 1,
       "color": "#2e6b4e",
-      "kamonSvgId": "kamon-chiba",
+      "kamonSvgId": "kamon-endo_gujo",
       "crest": "遠",
       "winRate": 44,
       "personality": "balanced",
@@ -1912,7 +1912,7 @@
       "name": "朽木元綱",
       "color": "#3f6079",
       "crest": "朽",
-      "kamonSvgId": "kamon-kyogoku"
+      "kamonSvgId": "kamon-kutsuki"
     },
     {
       "id": "rokkaku",
@@ -1959,13 +1959,13 @@
       "startProvId": "settsu_shimakami",
       "provCount": 9,
       "myProvinces": [
-        "settsu_shimakami",
         "settsu",
+        "settsu_shimakami",
         "izumi",
-        "awaji",
         "sanuki",
-        "sanuki_west",
         "awa_shikoku",
+        "awaji",
+        "sanuki_west",
         "awa_shikoku_west",
         "awa_shikoku_south"
       ],
@@ -1989,9 +1989,9 @@
       "startProvId": "kawachi_south",
       "provCount": 3,
       "myProvinces": [
-        "kawachi_north",
+        "kii_kichu",
         "kawachi_south",
-        "kii_kichu"
+        "kawachi_north"
       ],
       "gold": 700,
       "rice": 850,
@@ -2245,10 +2245,10 @@
       "myProvinces": [
         "hoki_west",
         "hoki_east",
-        "izumo_north",
-        "izumo_south",
+        "iwami",
         "oki",
-        "iwami"
+        "izumo_south",
+        "izumo_north"
       ],
       "gold": 1150,
       "rice": 1400,
@@ -2327,12 +2327,12 @@
       "provCount": 7,
       "myProvinces": [
         "bingo",
-        "aki_koriyama",
         "aki_hiroshima",
         "suo",
         "nagato",
         "buzen_ogura",
-        "chikuzen_kamashi"
+        "chikuzen_kamashi",
+        "aki_koriyama"
       ],
       "gold": 1900,
       "rice": 2300,
@@ -2370,8 +2370,8 @@
       "startProvId": "iyo_matsuyama",
       "provCount": 2,
       "myProvinces": [
-        "iyo_nii",
-        "iyo_matsuyama"
+        "iyo_matsuyama",
+        "iyo_nii"
       ],
       "gold": 650,
       "rice": 800,
@@ -2506,12 +2506,12 @@
       "myProvinces": [
         "buzen_nakatsu",
         "bungo_funai",
-        "bungo_kitaamabe",
-        "bungo_minamiamabe",
-        "bungo_oka",
         "chikuzen_hakata",
         "chikugo",
-        "higo_kumamoto"
+        "higo_kumamoto",
+        "bungo_oka",
+        "bungo_kitaamabe",
+        "bungo_minamiamabe"
       ],
       "gold": 1400,
       "rice": 1700,
@@ -2740,8 +2740,8 @@
       "startProvId": "higo_hitoyoshi",
       "provCount": 2,
       "myProvinces": [
-        "higo_yatsushiro",
-        "higo_hitoyoshi"
+        "higo_hitoyoshi",
+        "higo_yatsushiro"
       ],
       "gold": 650,
       "rice": 800,
@@ -2799,8 +2799,8 @@
       "startProvId": "satsuma",
       "provCount": 2,
       "myProvinces": [
-        "hyuga_obi",
-        "satsuma"
+        "satsuma",
+        "hyuga_obi"
       ],
       "gold": 900,
       "rice": 1100,
@@ -3032,7 +3032,6 @@
     "off_kagawa_yukikage": {
       "clanId": "miyoshi",
       "defaultProv": "sanuki_west",
-      "assignedProvId": "sanuki_west",
       "location": "sanuki_west",
       "isDaimyo": false,
       "isLeader": false,
@@ -3054,7 +3053,6 @@
     "off_naoe_sanetsuna": {
       "clanId": "nagao",
       "defaultProv": "echigo",
-      "assignedProvId": "echigo",
       "location": "echigo",
       "isDaimyo": false,
       "isLeader": false,
@@ -3243,7 +3241,8 @@
     },
     "off_pl1570_017": {
       "clanId": "imagawa",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "mikawa"
     },
     "off_pl1570_018": {
       "clanId": "imagawa",
@@ -3481,7 +3480,6 @@
     "off_pl1570_066": {
       "clanId": "nagao",
       "defaultProv": "echigo",
-      "assignedProvId": "echigo",
       "location": "echigo",
       "isDaimyo": false,
       "isLeader": false,
@@ -3490,7 +3488,6 @@
     "off_pl1570_067": {
       "clanId": "nagao",
       "defaultProv": "echigo",
-      "assignedProvId": "echigo",
       "location": "echigo",
       "isDaimyo": false,
       "isLeader": false,
@@ -3499,7 +3496,6 @@
     "off_pl1570_068": {
       "clanId": "nagao",
       "defaultProv": "echigo",
-      "assignedProvId": "echigo",
       "location": "echigo",
       "isDaimyo": false,
       "isLeader": false,
@@ -3508,7 +3504,6 @@
     "off_pl1570_069": {
       "clanId": "nagao",
       "defaultProv": "echigo",
-      "assignedProvId": "echigo",
       "location": "echigo",
       "isDaimyo": false,
       "isLeader": false,
@@ -3526,7 +3521,6 @@
     "off_pl1570_072": {
       "clanId": "nagao",
       "defaultProv": "echigo",
-      "assignedProvId": "echigo",
       "location": "echigo",
       "isDaimyo": false,
       "isLeader": false,
@@ -3672,8 +3666,7 @@
       "clearAssignment": true,
       "isDaimyo": false,
       "isLeader": false,
-      "isCastleLord": false,
-      "assignedProvId": "yamato_higashiyamauchi"
+      "isCastleLord": false
     },
     "off_pl1570_100": {
       "clanId": "ashikaga",
@@ -3735,7 +3728,6 @@
     "off_pl1570_111": {
       "clanId": "mori",
       "defaultProv": "bingo",
-      "assignedProvId": "bingo",
       "location": "bingo",
       "isDaimyo": false,
       "isLeader": false,
@@ -3744,7 +3736,6 @@
     "off_pl1570_113": {
       "clanId": "mori",
       "defaultProv": "bingo",
-      "assignedProvId": "bingo",
       "location": "bingo",
       "isDaimyo": false,
       "isLeader": false,
@@ -3885,7 +3876,6 @@
     "off_pl1570_143": {
       "clanId": "ryuzoji",
       "defaultProv": "hizen_saga",
-      "assignedProvId": "hizen_saga",
       "location": "hizen_saga",
       "isDaimyo": false,
       "isLeader": false,
@@ -3957,7 +3947,6 @@
     "off_pl1570_155": {
       "clanId": "kimotsuki",
       "defaultProv": "osumi",
-      "assignedProvId": "osumi",
       "location": "osumi",
       "isDaimyo": false,
       "isLeader": false,
@@ -3966,7 +3955,6 @@
     "off_pl1570_156": {
       "clanId": "kimotsuki",
       "defaultProv": "osumi",
-      "assignedProvId": "osumi",
       "location": "osumi",
       "isDaimyo": false,
       "isLeader": false,
@@ -3975,7 +3963,6 @@
     "off_pl1570_157": {
       "clanId": "kimotsuki",
       "defaultProv": "osumi",
-      "assignedProvId": "osumi",
       "location": "osumi",
       "isDaimyo": false,
       "isLeader": false,
@@ -4020,8 +4007,8 @@
       "clanId": "tendo",
       "defaultProv": "uzen_kitamurayama",
       "isDaimyo": false,
-      "assignedProvId": "uzen_kitamurayama",
-      "location": "uzen_kitamurayama"
+      "location": "uzen_kitamurayama",
+      "isCastleLord": false
     },
     "off_pl1570_168": {
       "clanId": "ashina",
@@ -4051,7 +4038,6 @@
     "off_pl1570_176": {
       "clanId": "oda_hitachi",
       "defaultProv": "hitachi_tsuchiura",
-      "assignedProvId": "hitachi_tsuchiura",
       "location": "hitachi_tsuchiura",
       "isDaimyo": false,
       "isLeader": false,
@@ -4065,12 +4051,12 @@
     },
     "off_pl1570_179": {
       "clanId": "hojo",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "shimousa_koga"
     },
     "off_pl1570_180": {
       "clanId": "hojo",
       "defaultProv": "shimousa_koga",
-      "assignedProvId": "shimousa_koga",
       "location": "shimousa_koga",
       "isDaimyo": false,
       "isLeader": false,
@@ -4240,7 +4226,6 @@
     "off_pl1590_021": {
       "clanId": "hojo",
       "defaultProv": "shimousa_koga",
-      "assignedProvId": "shimousa_koga",
       "location": "shimousa_koga",
       "isDaimyo": false,
       "isLeader": false,
@@ -4277,15 +4262,14 @@
     "off_pl1590_049": {
       "clanId": "tendo",
       "defaultProv": "uzen_kitamurayama",
-      "assignedProvId": "uzen_kitamurayama",
       "location": "uzen_kitamurayama",
       "isDaimyo": false,
-      "ignoreLifespan": true
+      "ignoreLifespan": true,
+      "isCastleLord": false
     },
     "off_pl1590_053": {
       "clanId": "nagao",
       "defaultProv": "echigo",
-      "assignedProvId": "echigo",
       "location": "echigo",
       "isDaimyo": false,
       "isLeader": false,
@@ -4294,7 +4278,6 @@
     "off_pl1590_055": {
       "clanId": "nagao",
       "defaultProv": "echigo",
-      "assignedProvId": "echigo",
       "location": "echigo",
       "isDaimyo": false,
       "isLeader": false,
@@ -4338,7 +4321,8 @@
     },
     "off_pl1590_091": {
       "clanId": "akamatsu",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "settsu"
     },
     "off_pl1590_095": {
       "clanId": "oda",
@@ -4469,7 +4453,6 @@
     "off_yukawa_naomitsu": {
       "clanId": "hatakeyama_bishu",
       "defaultProv": "kii_kichu",
-      "assignedProvId": "kii_kichu",
       "location": "kii_kichu",
       "isDaimyo": false,
       "isLeader": false,
@@ -4501,7 +4484,6 @@
     "off_succ_ashikaga_1509_6": {
       "clanId": "miyoshi",
       "defaultProv": "awa_shikoku_south",
-      "assignedProvId": "awa_shikoku_south",
       "location": "awa_shikoku_south",
       "isDaimyo": false,
       "isLeader": false,
@@ -4515,12 +4497,12 @@
     },
     "off_toki_yorinari": {
       "clanId": "satomi",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "mino"
     },
     "off_matsunaga_hisamichi": {
       "clanId": "matsunaga",
       "defaultProv": "yamato_koriyama",
-      "assignedProvId": "yamato_koriyama",
       "location": "yamato_koriyama",
       "isDaimyo": false,
       "isLeader": false,
@@ -4529,9 +4511,9 @@
     "off_kamiizumi_nobutsuna": {
       "clanId": "nagano",
       "defaultProv": "kozuke_takasaki",
-      "assignedProvId": "kozuke_takasaki",
       "location": "kozuke_takasaki",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "isCastleLord": false
     },
     "off_toda_seigen": {
       "clanId": "asakura",
@@ -4540,7 +4522,8 @@
     },
     "off_yagyu_muneyoshi": {
       "clanId": "matsunaga",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "yamato_higashiyamauchi"
     },
     "off_marume_nagayoshi": {
       "clanId": "sagara",
@@ -4571,7 +4554,6 @@
     "off_dm_date_1560": {
       "clanId": "date",
       "defaultProv": "uzen_yonezawa",
-      "assignedProvId": "uzen_yonezawa",
       "isCastleLord": false,
       "isDaimyo": false,
       "demoteDaimyo": true
@@ -4581,7 +4563,8 @@
       "assignedProvId": "shimousa_koga",
       "location": "shimousa_koga",
       "isCastleLord": true,
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "shimousa_koga"
     },
     "off_uesugi_kenshin": {
       "clanId": "nagao",
@@ -4604,11 +4587,11 @@
       "isDaimyo": true
     },
     "off_suzuki_shigekane": {
-      "assignedProv": "kii_saika_wakayama",
       "defaultProv": "kii_saika_wakayama",
       "isDaimyo": false,
       "demoteDaimyo": true,
-      "clanId": "saika"
+      "clanId": "saika",
+      "isCastleLord": false
     },
     "off_eriguchi_nobutsune": {
       "clanId": "ryuzoji",
@@ -4722,14 +4705,13 @@
     "off_jd_251": {
       "clanId": "nagano",
       "defaultProv": "kozuke_takasaki",
-      "assignedProvId": "kozuke_takasaki",
       "location": "kozuke_takasaki",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "isCastleLord": false
     },
     "off_amakasu_kagemochi": {
       "clanId": "nagao",
       "defaultProv": "echigo",
-      "assignedProvId": "echigo",
       "location": "echigo",
       "isDaimyo": false,
       "isLeader": false,
@@ -4738,7 +4720,6 @@
     "off_dm_murakami_1546": {
       "clanId": "nagao",
       "defaultProv": "echigo",
-      "assignedProvId": "echigo",
       "location": "echigo",
       "isDaimyo": false,
       "isLeader": false,
@@ -4747,7 +4728,6 @@
     "off_mochizuki_nobumasa": {
       "clanId": "takeda",
       "defaultProv": "shinano_saku_komoro",
-      "assignedProvId": "shinano_saku_komoro",
       "location": "shinano_kawanakajima",
       "isDaimyo": false,
       "isLeader": false,
@@ -4764,7 +4744,6 @@
     "off_maeda_toshiie": {
       "clanId": "oda",
       "defaultProv": "owari_south",
-      "assignedProvId": "owari_south",
       "location": "owari_south",
       "isDaimyo": false,
       "isLeader": false,
@@ -4779,7 +4758,6 @@
     "off_itakura_katsushige": {
       "clanId": "imagawa",
       "defaultProv": "mikawa",
-      "assignedProvId": "mikawa",
       "location": "mikawa",
       "isDaimyo": false,
       "isLeader": false,
@@ -4788,7 +4766,6 @@
     "off_torii_mototada": {
       "clanId": "imagawa",
       "defaultProv": "mikawa",
-      "assignedProvId": "mikawa",
       "location": "mikawa",
       "isDaimyo": false,
       "isLeader": false,
@@ -4819,7 +4796,6 @@
     "off_jd_028": {
       "clanId": "oda",
       "defaultProv": "owari_north",
-      "assignedProvId": "owari_south",
       "location": "owari_south",
       "isDaimyo": false,
       "isLeader": false,
@@ -4828,7 +4804,6 @@
     "off_mashita_nagamori": {
       "clanId": "oda",
       "defaultProv": "owari_north",
-      "assignedProvId": "owari_south",
       "location": "owari_south",
       "isDaimyo": false,
       "isLeader": false,
@@ -4846,8 +4821,8 @@
     "off_iio_noritsura": {
       "clanId": "imagawa",
       "defaultProv": "totomi_hamamatsu_kakegawa",
-      "assignedProvId": "totomi_hamamatsu_kakegawa",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "isCastleLord": false
     },
     "off_iio_tsuratatsu": {
       "clanId": "imagawa",
@@ -4867,8 +4842,8 @@
     "off_morita_joun": {
       "clanId": "momochi",
       "defaultProv": "iga",
-      "assignedProvId": "iga",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "isCastleLord": false
     },
     "off_miura_sadakatsu": {
       "clanId": "miura_mimasaka",
@@ -4882,15 +4857,14 @@
     "off_miura_sadamori": {
       "clanId": "miura_mimasaka",
       "defaultProv": "mimasaka_west",
-      "assignedProvId": "mimasaka_west",
       "location": "mimasaka_west",
       "isDaimyo": false,
-      "isLeader": false
+      "isLeader": false,
+      "isCastleLord": false
     },
     "off_nabeshima_naoshige": {
       "clanId": "ryuzoji",
       "defaultProv": "hizen_saga",
-      "assignedProvId": "hizen_saga",
       "location": "hizen_saga",
       "isDaimyo": false,
       "isLeader": false,
@@ -4913,7 +4887,6 @@
     "off_jd_305": {
       "clanId": "nagao",
       "defaultProv": "echigo",
-      "assignedProvId": "echigo",
       "location": "echigo",
       "isDaimyo": false,
       "isLeader": false,
@@ -4922,7 +4895,6 @@
     "off_sassa_narimasa": {
       "clanId": "oda",
       "defaultProv": "owari_north",
-      "assignedProvId": "owari_south",
       "location": "owari_south",
       "isDaimyo": false,
       "isLeader": false,
@@ -5047,7 +5019,6 @@
       "clanId": "aso",
       "defaultProv": "higo_aso",
       "isDaimyo": false,
-      "assignedProvId": "higo_aso",
       "isLeader": false,
       "isCastleLord": false
     },
@@ -5078,7 +5049,6 @@
     "off_hist_1495_hiraga_hiroyasu": {
       "clanId": "mori",
       "defaultProv": "aki_koriyama",
-      "assignedProvId": "aki_koriyama",
       "location": "aki_koriyama",
       "isDaimyo": false,
       "isLeader": false,
@@ -5096,7 +5066,6 @@
     "off_shimizu_muneharu": {
       "clanId": "mimura",
       "defaultProv": "bitchu_takamatsu",
-      "assignedProvId": "bitchu_takamatsu",
       "isDaimyo": false,
       "isCastleLord": false,
       "location": "bitchu_takamatsu"
@@ -5152,7 +5121,6 @@
     "off_miyabe_keijun": {
       "clanId": "azai",
       "defaultProv": "omi_north",
-      "assignedProvId": "omi_north",
       "location": "omi_north",
       "isDaimyo": false,
       "isLeader": false,
@@ -5188,7 +5156,8 @@
     },
     "off_shimazu_tadayoshi": {
       "clanId": "shimazu",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "satsuma"
     },
     "off_kimotsuki_kanetsugu": {
       "clanId": "kimotsuki",
@@ -5216,7 +5185,6 @@
     "off_kurushima_michiyasu": {
       "clanId": "murakami_noshima",
       "defaultProv": "noshima",
-      "assignedProvId": "noshima",
       "location": "noshima",
       "isDaimyo": false,
       "isLeader": false,
@@ -5233,12 +5201,12 @@
     },
     "off_takeda_nobutora": {
       "clanId": "imagawa",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "kai"
     },
     "off_jd_256": {
       "clanId": "ema",
       "defaultProv": "hida_kamioka",
-      "assignedProvId": "hida_kamioka",
       "location": "hida_takayama",
       "isDaimyo": false,
       "isLeader": false,
@@ -5288,7 +5256,8 @@
     },
     "off_added_suwa_komoro_02": {
       "clanId": "saito",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "shinano_suwa"
     },
     "off_sanada_yukitaka": {
       "clanId": "takeda",
@@ -5472,7 +5441,6 @@
     "off_doden_tadayoshi": {
       "clanId": "oda",
       "defaultProv": "owari_north",
-      "assignedProvId": "owari_south",
       "location": "owari_south",
       "isDaimyo": false,
       "isLeader": false,
@@ -5672,8 +5640,8 @@
       "clanId": "toki_kazusa",
       "defaultProv": "kazusa_isumi",
       "isDaimyo": false,
-      "assignedProvId": "kazusa_isumi",
-      "location": "kazusa_isumi"
+      "location": "kazusa_isumi",
+      "isCastleLord": false
     },
     "off_oyamada_toramitsu": {
       "clanId": "takeda",
@@ -5687,7 +5655,6 @@
     "off_suwa_yoritada": {
       "clanId": "takeda",
       "defaultProv": "shinano_suwa",
-      "assignedProvId": "shinano_suwa",
       "isDaimyo": false,
       "isLeader": false,
       "isCastleLord": false
@@ -5706,8 +5673,7 @@
       "defaultProv": "ise_suzuka",
       "isDaimyo": false,
       "isLeader": false,
-      "isCastleLord": false,
-      "assignedProvId": "ise_suzuka"
+      "isCastleLord": false
     },
     "off_honzenji_shochin": {
       "clanId": "honganji",
@@ -5723,8 +5689,7 @@
       "defaultProv": "yamato_higashiyamauchi",
       "isDaimyo": false,
       "isLeader": false,
-      "isCastleLord": false,
-      "assignedProvId": "yamato_higashiyamauchi"
+      "isCastleLord": false
     },
     "off_tsutsui_junsei": {
       "clanId": "tsutsui",
@@ -5753,8 +5718,7 @@
       "defaultProv": "tamba_west",
       "isDaimyo": false,
       "isLeader": false,
-      "isCastleLord": false,
-      "assignedProvId": "tamba_west"
+      "isCastleLord": false
     },
     "off_jd_258": {
       "clanId": "otomo",
@@ -5785,7 +5749,6 @@
     "off_aso_koretane": {
       "clanId": "aso",
       "defaultProv": "higo_aso",
-      "assignedProvId": "higo_aso",
       "isDaimyo": false,
       "isLeader": false,
       "isCastleLord": false
@@ -5803,7 +5766,6 @@
     "off_hashio_tamenori": {
       "clanId": "tsutsui",
       "defaultProv": "yamato_higashiyamauchi",
-      "assignedProvId": null,
       "isDaimyo": false
     },
     "off_hist_1560_matsui_munenobu": {
@@ -5840,7 +5802,6 @@
       "defaultProv": "settsu_shimakami"
     },
     "off_hist_1582_shimizu_munetomo": {
-      "assignedProvId": "bitchu_takamatsu",
       "location": "bitchu_takamatsu",
       "isCastleLord": false,
       "defaultProv": "bitchu_takamatsu",
@@ -5866,7 +5827,6 @@
       "clanId": "satake",
       "defaultProv": "hitachi_mito",
       "isDaimyo": false,
-      "assignedProvId": "hitachi_mito",
       "location": "hitachi_mito",
       "isLeader": false,
       "isCastleLord": false
@@ -5875,22 +5835,22 @@
       "clanId": "nikaho",
       "defaultProv": "ugo_yuri",
       "isDaimyo": false,
-      "assignedProvId": "ugo_yuri",
-      "location": "ugo_yuri"
+      "location": "ugo_yuri",
+      "isCastleLord": false
     },
     "off_nikaho_shigetaka": {
       "clanId": "nikaho",
       "defaultProv": "ugo_yuri",
       "isDaimyo": false,
-      "assignedProvId": "ugo_yuri",
-      "location": "ugo_yuri"
+      "location": "ugo_yuri",
+      "isCastleLord": false
     },
     "off_hist_asonuma_chikahiro": {
       "clanId": "asonuma",
       "defaultProv": "rikuchu_kamiheii",
-      "assignedProvId": "rikuchu_kamiheii",
       "location": "rikuchu_kamiheii",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "isCastleLord": false
     },
     "off_pl1570_165": {
       "clanId": "shiratori",
@@ -5923,7 +5883,6 @@
     "off_hist_1605_honda_toshihisa": {
       "clanId": "ronin",
       "defaultProv": "owari_north",
-      "assignedProvId": null,
       "location": "owari_north",
       "isDaimyo": false,
       "isLeader": false,
@@ -5933,10 +5892,10 @@
     "off_miura_sadahiro": {
       "clanId": "amago",
       "defaultProv": "izumo_south",
-      "assignedProvId": "izumo_south",
       "location": "izumo_south",
       "isDaimyo": false,
-      "isLeader": false
+      "isLeader": false,
+      "isCastleLord": false
     },
     "off_toyama_tsunakage": {
       "clanId": "hojo",
@@ -5981,7 +5940,6 @@
     "off_date_tanemune_early": {
       "clanId": "date",
       "defaultProv": "rikuzen",
-      "assignedProvId": "rikuzen",
       "isCastleLord": false,
       "isDaimyo": false,
       "demoteDaimyo": true
@@ -6005,12 +5963,12 @@
       "assignedProvId": "echigo_uonuma",
       "location": "echigo_uonuma",
       "isCastleLord": true,
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "echigo_uonuma"
     },
     "off_sakai_toshifusa_kazusa": {
       "clanId": "hojo",
       "defaultProv": "kazusa_togane_naruto",
-      "assignedProvId": "kazusa_togane_naruto",
       "location": "kazusa_togane_naruto",
       "isCastleLord": false
     },
@@ -6027,7 +5985,8 @@
       "assignedProvId": "izu",
       "location": "izu",
       "isCastleLord": true,
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "izu"
     },
     "off_sogo_kazumasa": {
       "clanId": "miyoshi",
@@ -6050,35 +6009,40 @@
       "assignedProvId": "kazusa",
       "location": "kazusa",
       "isCastleLord": true,
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "kazusa"
     },
     "off_jd_255": {
       "clanId": "miyoshi",
       "assignedProvId": "izumi",
       "location": "izumi",
       "isCastleLord": true,
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "izumi"
     },
     "off_atagi_fuyuyasu": {
       "clanId": "miyoshi",
       "assignedProvId": "awaji",
       "location": "awaji",
       "isCastleLord": true,
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "awaji"
     },
     "off_yamana_toyokazu": {
       "clanId": "yamana",
       "assignedProvId": "inaba",
       "location": "inaba",
       "isCastleLord": true,
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "inaba"
     },
     "off_jd_057": {
       "clanId": "otomo",
       "assignedProvId": "chikugo",
       "location": "chikugo",
       "isCastleLord": true,
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "chikugo"
     },
     "off_akiyama_nobutomo": {
       "clanId": "takeda",
@@ -6093,26 +6057,30 @@
       "assignedProvId": "suo",
       "location": "suo",
       "isCastleLord": true,
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "suo"
     },
     "off_yonehara_tsunahiro": {
       "clanId": "amago",
       "isCastleLord": false,
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "izumo_south"
     },
     "off_jd_259": {
       "clanId": "sagara",
       "assignedProvId": "higo_yatsushiro",
       "location": "higo_yatsushiro",
       "isCastleLord": true,
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "higo_hitoyoshi"
     },
     "off_baba_nobuharu": {
       "clanId": "takeda",
       "assignedProvId": "shinano_chikuma_azumi",
       "location": "shinano_chikuma_azumi",
       "isCastleLord": true,
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "kai"
     },
     "off_tachibana_dosetsu": {
       "clanId": "otomo",
@@ -6124,7 +6092,8 @@
       "assignedProvId": "shinano_sarashina_hanishina",
       "location": "shinano_sarashina_hanishina",
       "isCastleLord": true,
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "shinano_sarashina_hanishina"
     },
     "off_oda_nobukiyo": {
       "clanId": "oda_inuyama",
@@ -6287,11 +6256,13 @@
     },
     "off_araki_motokiyo": {
       "clanId": "miyoshi",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "settsu"
     },
     "off_hara_tanesada_1546": {
       "clanId": "hojo",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "shimousa"
     },
     "off_kimura_yoshikiyo_gamo": {
       "clanId": "ronin",
@@ -6300,15 +6271,18 @@
     },
     "off_takagi_taneyoshi": {
       "clanId": "hojo",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "shimousa"
     },
     "off_kunohe_masazane": {
       "clanId": "nanbu",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "mutsu_nanbu"
     },
     "off_kunohe_sanechika": {
       "clanId": "nanbu",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "mutsu_nanbu"
     },
     "off_kyogoku_takayoshi": {
       "clanId": "ashikaga",
@@ -6317,23 +6291,28 @@
     },
     "off_muroga_mitsumasa": {
       "clanId": "takeda",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "shinano_sarashina_hanishina"
     },
     "off_yashiro_masakuni": {
       "clanId": "takeda",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "shinano_sarashina_hanishina"
     },
     "off_saito_toshitaka": {
       "clanId": "saito",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "mino"
     },
     "off_succ_togashi_1540_197": {
       "clanId": "asakura",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "kaga_north"
     },
     "off_togashi_harusada": {
       "clanId": "honganji",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "kaga_north"
     },
     "off_suganuma_masasada": {
       "clanId": "imagawa",
@@ -6370,7 +6349,8 @@
     },
     "off_okamoto_yoshikatsu": {
       "clanId": "seki",
-      "isDaimyo": false
+      "isDaimyo": false,
+      "defaultProv": "ise_suzuka"
     },
     "off_sugihara_ietsugu": {
       "clanId": "oda",
@@ -6400,7 +6380,6 @@
     "off_oda_nobukata_iwakura": {
       "clanId": "ronin",
       "defaultProv": "owari_north",
-      "assignedProvId": null,
       "location": "owari_north",
       "isDaimyo": false,
       "isLeader": false,
@@ -6410,7 +6389,6 @@
     "off_inada_sadasuke": {
       "clanId": "ronin",
       "defaultProv": "owari_south",
-      "assignedProvId": null,
       "location": "owari_south",
       "isDaimyo": false,
       "isLeader": false,
@@ -6494,7 +6472,6 @@
     "off_onishi_yoritake": {
       "clanId": "miyoshi",
       "defaultProv": "awa_shikoku_west",
-      "assignedProvId": "awa_shikoku_west",
       "location": "awa_shikoku_west",
       "isDaimyo": false,
       "isLeader": false,
@@ -6504,7 +6481,6 @@
     "off_onishi_kakuyo": {
       "clanId": "miyoshi",
       "defaultProv": "awa_shikoku_west",
-      "assignedProvId": "awa_shikoku_west",
       "location": "awa_shikoku_west",
       "isDaimyo": false,
       "isLeader": false,
@@ -6514,7 +6490,6 @@
     "off_kaifu_tomomitsu": {
       "clanId": "miyoshi",
       "defaultProv": "awa_shikoku_south",
-      "assignedProvId": "awa_shikoku_south",
       "location": "awa_shikoku_south",
       "isDaimyo": false,
       "isLeader": false,
@@ -6524,7 +6499,6 @@
     "off_ashikaga_yoshihide": {
       "clanId": "miyoshi",
       "defaultProv": "awa_shikoku_south",
-      "assignedProvId": "awa_shikoku_south",
       "location": "awa_shikoku_south",
       "isDaimyo": false,
       "isLeader": false,
@@ -6534,7 +6508,6 @@
     "off_ashikaga_yoshisuke": {
       "clanId": "miyoshi",
       "defaultProv": "awa_shikoku_south",
-      "assignedProvId": "awa_shikoku_south",
       "location": "awa_shikoku_south",
       "isDaimyo": false,
       "isLeader": false,
@@ -6544,7 +6517,6 @@
     "off_shinkai_sanetsuna": {
       "clanId": "miyoshi",
       "defaultProv": "awa_shikoku_south",
-      "assignedProvId": "awa_shikoku_south",
       "location": "awa_shikoku_south",
       "isDaimyo": false,
       "isLeader": false,
@@ -6554,7 +6526,6 @@
     "off_tojo_sekinohyoe": {
       "clanId": "miyoshi",
       "defaultProv": "awa_shikoku_south",
-      "assignedProvId": "awa_shikoku_south",
       "location": "awa_shikoku_south",
       "isDaimyo": false,
       "isLeader": false,

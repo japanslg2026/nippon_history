@@ -150,18 +150,6 @@
       "setDaimyo": true
     },
     {
-      "id": "user_scenario_updates_20261015_kuroda_1853_1860",
-      "officerIds": [
-        "off_kuroda_nagashige"
-      ],
-      "scenarioIds": [
-        "1853"
-      ],
-      "setClanId": "kuroda",
-      "setDefaultProv": "chikuzen_hakata",
-      "setDaimyo": false
-    },
-    {
       "id": "user_scenario_updates_20261015_nagao_uzen",
       "officerIds": [
         "off_nagao_kagehiro",
@@ -184,19 +172,6 @@
       "setDaimyo": false,
       "keepDaimyoIfSameClan": true,
       "placeInOwnedProv": "uzen_higashimurayama"
-    },
-    {
-      "id": "ito_ronin_hyuga_1637",
-      "officerIds": [
-        "off_succ2_ito_1630"
-      ],
-      "scenarioIds": [
-        "1637"
-      ],
-      "setClanId": "ronin",
-      "setDefaultProv": "hyuga_obi",
-      "clearAssignment": true,
-      "setDaimyo": false
     },
     {
       "id": "amago_naritomo_mori_nagato_1637",
@@ -970,21 +945,6 @@
       "setDaimyo": true
     },
     {
-      "id": "so_former_leader_1789_hist",
-      "officerIds": [
-        "off_edo_so_1773_202"
-      ],
-      "scenarioIds": [
-        "1789"
-      ],
-      "requireOwners": [
-        "so"
-      ],
-      "setClanId": "so",
-      "setDefaultProv": "tsushima",
-      "setDaimyo": false
-    },
-    {
       "id": "ito_former_leader_1789_hist",
       "officerIds": [
         "off_edo_ito_sukeyoshi_1789"
@@ -1463,19 +1423,6 @@
       "setDaimyo": false
     },
     {
-      "id": "ito_clan_hyuga_1637",
-      "officerIds": [
-        "off_succ2_ito_1630"
-      ],
-      "scenarioIds": [
-        "1637"
-      ],
-      "setClanId": "ito",
-      "setDefaultProv": "hyuga_obi",
-      "setAssignedProv": "hyuga_obi",
-      "setDaimyo": false
-    },
-    {
       "id": "ito_daimyo_hyuga_1702",
       "officerIds": [
         "off_ito_sukezane"
@@ -1703,8 +1650,7 @@
     {
       "id": "ito_clan_hyuga_1651",
       "officerIds": [
-        "off_succ2_ito_1630",
-        "off_ito_sukezane"
+        "off_succ2_ito_1630"
       ],
       "scenarioIds": [
         "1651"
@@ -1717,8 +1663,7 @@
     {
       "id": "kitsuregawa_tokugawa_yamashiro_1651",
       "officerIds": [
-        "off_kitsuregawa_takauji",
-        "off_kitsuregawa_akiuji"
+        "off_kitsuregawa_takauji"
       ],
       "scenarioIds": [
         "1651"

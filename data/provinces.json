@@ -406,7 +406,9 @@
     "castleLore": "伊達政宗が築いた青葉城（仙台城）。宮城郡を扼し広瀬川の断崖に立つ天然の要塞。古代多賀城・中世利府城・白石城などの歴史を受け継ぐ陸前国の中心拠点。",
     "battleHistory": "白石城の戦い、岩切城の合戦、多賀城攻防戦。",
     "culturalNotes": "伊達文化、宮城野の歌枕、三陸の海運と良港。",
-    "mapNo": 13
+    "mapNo": 13,
+    "_svgArea": 1203.5918000004604,
+    "_svgMinDim": 48.29000000000002
   },
   {
     "id": "ugo_minato",
@@ -1331,7 +1333,9 @@
     "culturalNotes": "加賀百万石の絢爛豪華な工芸・茶道文化、兼六園。",
     "mapNo": 43,
     "kamonX": 541,
-    "kamonY": 379.2
+    "kamonY": 379.2,
+    "_svgArea": 408.26239999996324,
+    "_svgMinDim": 25.909999999999968
   },
   {
     "id": "kaga_south",
@@ -4266,7 +4270,9 @@
     "castleLore": "隠岐氏累代の甲尾城。後鳥羽上皇や後醍醐天皇配流の地としても名高い。",
     "battleHistory": "毛利氏による山陰・隠岐経略戦。",
     "culturalNotes": "後醍醐天皇脱出の伝承地。隠岐古典相撲・牛突き。",
-    "mapNo": 138
+    "mapNo": 138,
+    "_svgArea": 101.36694999997417,
+    "_svgMinDim": 12.159999999999968
   },
   {
     "id": "iwami",
@@ -4479,7 +4485,9 @@
     "culturalNotes": "鞆の浦（潮待ちの港・足利義昭亡命の地）、イ草栽培。",
     "mapNo": 145,
     "kamonX": 293.1,
-    "kamonY": 397.6
+    "kamonY": 397.6,
+    "_svgArea": 1501.3545000000886,
+    "_svgMinDim": 40.40999999999997
   },
   {
     "id": "aki_koriyama",
@@ -4620,7 +4628,9 @@
     "castleLore": "毛利輝元が関ヶ原後に築いた萩城（指月城）。日本海に突き出す名城。",
     "battleHistory": "壇ノ浦の戦い（平家滅亡）、下関戦争・四境戦争。",
     "culturalNotes": "赤間関（関門海峡の要衝）、松下村塾と明治維新の策源地。",
-    "mapNo": 150
+    "mapNo": 150,
+    "_svgArea": 1241.4471999998823,
+    "_svgMinDim": 41.079999999999984
   },
   {
     "id": "awaji",
@@ -4647,7 +4657,9 @@
     "castleLore": "三好三人衆・安宅冬康が拠った洲本城。瀬戸内海の制海権を握る水軍要衝。",
     "battleHistory": "羽柴秀吉・池田元助による淡路平定戦。",
     "culturalNotes": "国生み神話の地（伊弉諾神宮）。人形浄瑠璃と水軍の伝統。",
-    "mapNo": 151
+    "mapNo": 151,
+    "_svgArea": 243.78025000006892,
+    "_svgMinDim": 20.139999999999986
   },
   {
     "id": "sanuki",
@@ -4705,7 +4717,9 @@
       "noshima",
       "sanuki"
     ],
-    "mapNo": 153
+    "mapNo": 153,
+    "_svgArea": 379.1323500000435,
+    "_svgMinDim": 24.899999999999977
   },
   {
     "id": "awa_shikoku",
@@ -4733,7 +4747,9 @@
       "awaji",
       "sanuki"
     ],
-    "mapNo": 154
+    "mapNo": 154,
+    "_svgArea": 436.59835000014573,
+    "_svgMinDim": 21.610000000000014
   },
   {
     "id": "awa_shikoku_west",
@@ -4763,7 +4779,9 @@
       "sanuki_west",
       "tosa_kochi"
     ],
-    "mapNo": 155
+    "mapNo": 155,
+    "_svgArea": 536.8549499998917,
+    "_svgMinDim": 23.829999999999984
   },
   {
     "id": "awa_shikoku_south",

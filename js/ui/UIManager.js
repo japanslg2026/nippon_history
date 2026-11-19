@@ -1649,7 +1649,7 @@ export const UIManagerMethods = {
 
 
 
-    const assignedProv = (off.assignedProvId && off.clanId !== 'ronin') ? this.provinces.find(x => x.id === off.assignedProvId) : null;
+    const assignedProv = (off.assignedProvId && off.clanId !== 'ronin') ? this.provinces.find(x => x.id === off.assignedProvId && (off.isDaimyo || x.governorId === off.id)) : null;
 
     const isMyClan = off.clanId === this.playerClanId;
 
@@ -2162,7 +2162,7 @@ export const UIManagerMethods = {
 
                   const isAssignedHere = off.clanId !== 'ronin' && off.id === p.governorId;
 
-                  const assignedProv = (off.assignedProvId && off.clanId !== 'ronin') ? this.provinces.find(x => x.id === off.assignedProvId) : null;
+                  const assignedProv = (off.assignedProvId && off.clanId !== 'ronin') ? this.provinces.find(x => x.id === off.assignedProvId && (off.isDaimyo || x.governorId === off.id)) : null;
 
                   const age = this.year - (off.birthYear || 1530);
 
@@ -3272,7 +3272,7 @@ export const UIManagerMethods = {
 
                 ${list.map((off, idx) => {
 
-                  const assignedProv = (off.assignedProvId && off.clanId !== 'ronin') ? this.provinces.find(x => x.id === off.assignedProvId) : null;
+                  const assignedProv = (off.assignedProvId && off.clanId !== 'ronin') ? this.provinces.find(x => x.id === off.assignedProvId && (off.isDaimyo || x.governorId === off.id)) : null;
 
                   const isMyClan = off.clanId === this.playerClanId;
 
@@ -6532,7 +6532,7 @@ export const UIManagerMethods = {
 
             if (off.isDaimyo) return 3;
 
-            if (off.id === p.governorId || off.assignedProvId === p.id) return 2;
+            if (off.id === p.governorId) return 2;
 
             return 1;
 
@@ -6764,7 +6764,7 @@ export const UIManagerMethods = {
 
                 ${list.map((off, idx) => {
 
-                  const isGov = off.clanId !== 'ronin' && (off.id === p.governorId || off.assignedProvId === p.id);
+                  const isGov = off.clanId !== 'ronin' && !off.isDaimyo && off.id === p.governorId;
 
                   const isDaimyo = off.isDaimyo;
 
@@ -7489,7 +7489,7 @@ export const UIManagerMethods = {
             const roleScore = (off) => {
               if (off.clanId === 'ronin') return 0;
               if (off.isDaimyo) return 3;
-              if (off.id === p.governorId || off.assignedProvId === p.id) return 2;
+              if (off.id === p.governorId) return 2;
               return 1;
             };
             const d = roleScore(b) - roleScore(a);

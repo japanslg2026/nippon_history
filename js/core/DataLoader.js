@@ -9,7 +9,7 @@
  */
 
 export class DataLoader {
-  static DATA_VERSION = '20261117_v36'; // japan_slg.html の preload と同じ値にすること
+  static DATA_VERSION = '20261119_v38'; // japan_slg.html の preload と同じ値にすること
   static _fullScenariosPromise = null;
   static _fullScenariosLoaded = false;
   static _gameData = null;
@@ -51,7 +51,7 @@ export class DataLoader {
    * @returns {Promise<Scenario[]>}
    */
   static ensureFullScenarios() {
-    const v = DataLoader.DATA_VERSION || '20261117_v36';
+    const v = DataLoader.DATA_VERSION || '20261119_v38';
     const existing = (typeof window !== 'undefined' && (window.SCENARIOS_DATA || window.SCENARIOS)) || DataLoader._gameData?.scenarios;
     if (DataLoader._fullScenariosLoaded && Array.isArray(existing) && existing.length > 0 && !existing.some(s => s && s._isStub)) {
       return Promise.resolve(existing);

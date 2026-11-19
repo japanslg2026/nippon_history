@@ -4198,7 +4198,7 @@
       // 武将配属ルールは data/rules.json（officerAffiliationRules）から読み込む（ゲームと同じデータ。2026-11-14）
       async function loadAffiliationRulesSafe() {
         try {
-          var r = await fetchJsonSmart('rules.json?v=20261117_v36');
+          var r = await fetchJsonSmart('rules.json?v=20261119_v38');
           window.RULES_DATA = r || {};
           return (r && Array.isArray(r.officerAffiliationRules)) ? r.officerAffiliationRules : [];
         } catch (_) {
@@ -4287,11 +4287,11 @@
       async function initAllData() {
         var statusEl = document.getElementById('loadingStatusText');
         try {
-          await loadExternalScript(['assets/kamons.js?v=20261117_v36', 'assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
+          await loadExternalScript(['assets/kamons.js?v=20261119_v39', 'assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
           if (typeof window.loadKamonSymbols === 'function') {
             window.loadKamonSymbols();
           }
-          await loadExternalScript(['js/kamonOverrides.js?v=20261117_v36']);
+          await loadExternalScript(['js/kamonOverrides.js?v=20261119_v39']);
 
           var urlParams = new URLSearchParams(window.location.search);
           var initialScenId = urlParams.get('scenario');
@@ -4303,21 +4303,21 @@
             statusEl.textContent = '桶狭間の戦い（1560年）と全国地図データを読み込み中…';
 
             var splitScenPromise = Promise.all([
-              fetchJsonSmart('scenario_1560.json?v=20261117_v36'),
-              fetchJsonSmart('scenarios_meta.json?v=20261117_v36')
+              fetchJsonSmart('scenario_1560.json?v=20261119_v38'),
+              fetchJsonSmart('scenarios_meta.json?v=20261119_v38')
             ]).then(function (pair) {
               return { split: true, s1560: pair[0], meta: pair[1] };
             }).catch(function () {
-              return fetchJsonSmart('scenarios.json?v=20261117_v36').then(function (all) {
+              return fetchJsonSmart('scenarios.json?v=20261119_v38').then(function (all) {
                 return { split: false, all: all };
               });
             });
 
             var phase1Results = await Promise.all([
               splitScenPromise,
-              fetchJsonSmart('provinces.json?v=20261117_v36'),
-              fetchJsonSmart('clans.json?v=20261117_v36'),
-              fetchJsonSmart('map_borders.json?v=20261117_v36').catch(function () { return window.MAP_BORDERS_DATA || null; })
+              fetchJsonSmart('provinces.json?v=20261119_v38'),
+              fetchJsonSmart('clans.json?v=20261119_v38'),
+              fetchJsonSmart('map_borders.json?v=20261119_v38').catch(function () { return window.MAP_BORDERS_DATA || null; })
             ]);
 
             var scenRes = phase1Results[0];
@@ -4408,9 +4408,9 @@
 
             setTimeout(function () {
               Promise.all([
-                fetchJsonSmart('officers.json?v=20261117_v36'),
-                fetchJsonSmart('governors.json?v=20261117_v36').catch(function () { return {}; }),
-                fetchJsonSmart('events.json?v=20261117_v36').catch(function () { return {}; }),
+                fetchJsonSmart('officers.json?v=20261119_v38'),
+                fetchJsonSmart('governors.json?v=20261119_v38').catch(function () { return {}; }),
+                fetchJsonSmart('events.json?v=20261119_v38').catch(function () { return {}; }),
                 loadAffiliationRulesSafe()
               ]).then(function (bgRes) {
                 var officersRaw = bgRes[0];
@@ -4443,7 +4443,7 @@
               });
 
               if (!State.scenariosFullLoaded) {
-                fetchJsonSmart('scenarios.json?v=20261117_v36').then(function (scenariosRaw) {
+                fetchJsonSmart('scenarios.json?v=20261119_v38').then(function (scenariosRaw) {
                   window.SCENARIOS_DATA = scenariosRaw || [];
                   var fullList = filterAndSortScenarios(scenariosRaw);
                   var fullById = new Map(fullList.map(function (s) { return [String(s.id), s]; }));
@@ -4485,14 +4485,14 @@
           var rulesPromise = loadAffiliationRulesSafe();
 
           var results = await Promise.all([
-            fetchJsonSmart('scenarios.json?v=20261117_v36'),
-            fetchJsonSmart('provinces.json?v=20261117_v36'),
-            fetchJsonSmart('clans.json?v=20261117_v36'),
-            fetchJsonSmart('officers.json?v=20261117_v36'),
-            fetchJsonSmart('governors.json?v=20261117_v36').catch(function () { return {}; }),
-            fetchJsonSmart('events.json?v=20261117_v36').catch(function () { return {}; }),
+            fetchJsonSmart('scenarios.json?v=20261119_v38'),
+            fetchJsonSmart('provinces.json?v=20261119_v38'),
+            fetchJsonSmart('clans.json?v=20261119_v38'),
+            fetchJsonSmart('officers.json?v=20261119_v38'),
+            fetchJsonSmart('governors.json?v=20261119_v38').catch(function () { return {}; }),
+            fetchJsonSmart('events.json?v=20261119_v38').catch(function () { return {}; }),
             rulesPromise,
-            fetchJsonSmart('map_borders.json?v=20261117_v36').catch(function () { return window.MAP_BORDERS_DATA || null; })
+            fetchJsonSmart('map_borders.json?v=20261119_v38').catch(function () { return window.MAP_BORDERS_DATA || null; })
           ]);
 
           var scenariosRaw = results[0];
@@ -4767,12 +4767,12 @@
           }
 
           var govProv = Object.keys(pinnedGovs).find(function (pid) { return pinnedGovs[pid] === copy.id || pinnedGovs[pid] === copy.name || pinnedGovs[pid] === copy.origName; })
-                     || Object.keys(histGovs).find(function (pid) { return histGovs[pid] === copy.id || histGovs[pid] === copy.name || histGovs[pid] === copy.origName; });
+                     || Object.keys(histGovs).find(function (pid) { return !pinnedGovs[pid] && (histGovs[pid] === copy.id || histGovs[pid] === copy.name || histGovs[pid] === copy.origName); });
           if (govProv && !(affEntry && (affEntry.clearAssignment || affEntry.clanId === 'ronin'))) {
             var pEntry = State.computedProvs.get(govProv);
             if (pEntry && pEntry.ownerId && activeOwnersSet.has(pEntry.ownerId)) {
               var cEnt = State.computedClans.get(pEntry.ownerId);
-              if (cEnt && (cEnt.capitalProvId !== govProv || pinnedGovs[govProv] === copy.id) && !copy.isDaimyo) {
+              if (cEnt && cEnt.capitalProvId !== govProv && !copy.isDaimyo) {
                 copy.clanId = pEntry.ownerId;
                 copy.defaultProv = govProv;
                 copy.assignedProvId = govProv;
@@ -4823,7 +4823,7 @@
               var stProv = State.computedProvs.get(leader.assignedProvId);
               if (stProv && stProv.ownerId === cid) { stProv.governor = leader; stationed = true; }
             }
-            if (!stationed && cEntry.capitalProvId && !pinnedGovs[cEntry.capitalProvId]) {
+            if (!stationed && cEntry.capitalProvId) {
               leader.assignedProvId = cEntry.capitalProvId;
               var capProv = State.computedProvs.get(cEntry.capitalProvId);
               if (capProv) capProv.governor = leader;
@@ -4848,7 +4848,8 @@
           }
           var explicitCastleLord = activeOfficers.find(function (o) {
             var af = affMap[o.id];
-            return o.clanId === pEntry.ownerId && !o.isDaimyo && (o.assignedProvId === pid || (af && typeof af === 'object' && af.isCastleLord && (af.defaultProv === pid || af.assignedProvId === pid)));
+            var allowAssigned = !(af && typeof af === 'object' && af.isCastleLord === false);
+            return o.clanId === pEntry.ownerId && !o.isDaimyo && ((allowAssigned && o.assignedProvId === pid) || (af && typeof af === 'object' && af.isCastleLord && (af.defaultProv === pid || af.assignedProvId === pid)));
           });
           if (explicitCastleLord) {
             pEntry.governor = explicitCastleLord;
@@ -4864,9 +4865,21 @@
           }
         });
 
+        // 所在州内で城主は各州1名のみとし、城主以外の武将の assignedProvId をクリアして重複を防ぐ
+        for (var j = 0; j < activeOfficers.length; j++) {
+          var ao = activeOfficers[j];
+          if (!ao.isDaimyo && ao.assignedProvId) {
+            var gp = State.computedProvs.get(ao.assignedProvId);
+            if (!gp || !gp.governor || gp.governor.id !== ao.id) {
+              if (gp && gp.ownerId === ao.clanId && !ao._residenceProvId) ao._residenceProvId = ao.assignedProvId;
+              ao.assignedProvId = null;
+            }
+          }
+        }
+
         for (var k = 0; k < activeOfficers.length; k++) {
           var off = activeOfficers[k];
-          var targetProvId = off.assignedProvId;
+          var targetProvId = off.assignedProvId || off._residenceProvId;
           if (!targetProvId) {
             if (off.clanId === 'ronin') {
               targetProvId = off.defaultProv;
@@ -4978,6 +4991,7 @@
         var source = document.getElementById(baseId);
         if (!source || !source.parentNode) return baseId;
         var srcVer = source.getAttribute('data-v') || '1';
+        if (Number(srcVer) >= 4) return baseId; // 紋に含まれる輪をそのまま表示する
         var mapId = baseId + '-map';
         var mapSymbol = document.getElementById(mapId);
         if (!mapSymbol || mapSymbol.getAttribute('data-src-id') !== (baseId + ':' + srcVer)) {
@@ -5640,9 +5654,9 @@
           }
           var area = p._svgArea;
           var minDim = p._svgMinDim;
-          if (area > 0 && area < 130) return Number((base * 0.60).toFixed(2));
+          if (area > 0 && area < 130) return Number((base * 0.40).toFixed(2));
           if ((area > 0 && area < 535) || (minDim > 0 && minDim < 19.2)) {
-            return Number((base * 0.72).toFixed(2));
+            return Number((base * 0.60).toFixed(2));
           }
         }
         if (Number(totalKoku) >= 1000000) {
@@ -7107,7 +7121,7 @@
         var selectedClanName = activeClanId ? getClanFamilyName(activeClanId, year) : '';
 
         function getOfficerProvName(o) {
-          var pid = (o.clanId && o.clanId !== 'ronin' && o.assignedProvId) ? o.assignedProvId : o.defaultProv;
+          var pid = (o.clanId && o.clanId !== 'ronin' && (o.assignedProvId || o._residenceProvId)) ? (o.assignedProvId || o._residenceProvId) : o.defaultProv;
           return (State.provById.get(pid) && State.provById.get(pid).name) || PROV_JP_MAP[pid] || '諸国';
         }
 
@@ -7232,7 +7246,7 @@
 
           var rows = source.map(function (o) {
             var cName = (o.clanId && o.clanId !== 'ronin') ? getClanFamilyName(o.clanId, year) : '浪人・未仕官';
-            var provId = (o.clanId && o.clanId !== 'ronin' && o.assignedProvId) ? o.assignedProvId : (o.defaultProv || '');
+            var provId = (o.clanId && o.clanId !== 'ronin' && (o.assignedProvId || o._residenceProvId)) ? (o.assignedProvId || o._residenceProvId) : (o.defaultProv || '');
             var provName = getOfficerProvName(o);
             var statusRank = getOfficerStatusRank(o);
             return {
