@@ -5,6 +5,15 @@
   <!-- スマホの幅に合わせ、ホームインジケータ分の余白（safe-area）も使えるようにする -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>戦国天下統一伝 〜群雄割拠の覇道〜</title>
+  <script>
+    /* 画面全体の表示倍率（html { zoom: var(--ui-zoom) }）を返す。座標計算で px を CSS 値へ換算するのに使う */
+    window.getUiZoom = function (el) {
+      var z = el && el.currentCSSZoom;
+      if (z) return z;
+      var r = parseFloat(getComputedStyle(document.documentElement).zoom);
+      return r > 0 ? r : 1;
+    };
+  </script>
 
   <!-- 外部CDNライブラリ群 -->
   <script defer src="https://unpkg.com/lucide@1.66.0/dist/umd/lucide.min.js"></script>
@@ -17,22 +26,22 @@
 
   <!-- Google Fonts: 武士の魂が宿る力強い和風・毛筆フォント -->
   <!-- 起動高速化: ゲームデータJSONをHTML解析と並行して先読み -->
-  <link rel="preload" href="data/scenario_1560.json?v=20261119_v38" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/scenarios_meta.json?v=20261119_v38" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/clans.json?v=20261119_v38" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/provinces.json?v=20261119_v38" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/officers.json?v=20261119_v38" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/governors.json?v=20261119_v38" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/events.json?v=20261119_v38" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/rules.json?v=20261119_v38" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/scenario_1560.json?v=20261121_v41" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/scenarios_meta.json?v=20261121_v41" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/clans.json?v=20261121_v41" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/provinces.json?v=20261121_v41" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/officers.json?v=20261121_v41" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/governors.json?v=20261121_v41" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/events.json?v=20261121_v41" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/rules.json?v=20261121_v41" as="fetch" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&amp;family=Dela+Gothic+One&amp;family=Sawarabi+Mincho&amp;family=Shippori+Mincho:wght@600;700;800&amp;family=Yuji+Boku&amp;display=swap" rel="stylesheet">
 
   <!-- モジュール化されたCSSスタイルシート (1080p最適化・和風デザイン) -->
-  <link rel="stylesheet" href="css/style.css?v=20261115_fullwidth">
-  <link rel="stylesheet" href="css/encyclopedia.css?v=20261109_sp">
-  <link rel="stylesheet" href="css/startscreen.css?v=20261115_seamfix">
+  <link rel="stylesheet" href="css/style.css?v=20261120_zoom81">
+  <link rel="stylesheet" href="css/encyclopedia.css?v=20261120_zoom90">
+  <link rel="stylesheet" href="css/startscreen.css?v=20261120_zoom90">
   <script>
     // スマホ判定: 画面幅768px以下、タッチ主体、または ?mobile=1 / ?phone=1 パラメータ → スマホ用レスポンシブ新レイアウト
     (function(){var mm=function(q){return window.matchMedia&&matchMedia(q).matches;};
@@ -515,7 +524,7 @@
 
 <!-- 1. ゲーム開始・シナリオ＆大名家選択モーダル (全54大歴史シナリオ・年代順網羅) -->
 <div class="modal-overlay" id="startModal">
-  <div class="modal-card" style="width: 96vw; max-width: 1760px; max-height: 94vh; padding: 16px 24px; box-sizing: border-box; position: relative;">
+  <div class="modal-card" style="width: calc(96vw / var(--ui-zoom, 1)); max-width: 1760px; max-height: calc(94vh / var(--ui-zoom, 1)); padding: 16px 24px; box-sizing: border-box; position: relative;">
     <div class="start-header-actions">
     <!-- 初期選択画面 右上：記録読込（オープニングの左隣）（前回の戦況から再開・記録枠・ファイル読込を一つのダイアログに統合） -->
     　　<!-- 武将名鑑・大名名鑑（記録読込の左隣） -->
@@ -785,6 +794,11 @@
           <strong class="scen-title">小田原城の戦い</strong>
           <span class="scen-sub">謙信十万包囲</span>
         </button>
+        <button class="scenario-btn" data-scen-id="1565" data-era="sengoku_climax">
+          <span class="scen-badge">1565年</span>
+          <strong class="scen-title">尾張統一</strong>
+          <span class="scen-sub">犬山落城・美濃侵攻</span>
+        </button>
         <button class="scenario-btn" data-scen-id="1567" data-era="sengoku_climax">
           <span class="scen-badge">1567年</span>
           <strong class="scen-title">稲葉山城の戦い</strong>
@@ -799,6 +813,11 @@
           <span class="scen-badge">1573年</span>
           <strong class="scen-title">三方ヶ原の戦い</strong>
           <span class="scen-sub">武田信玄の西上</span>
+        </button>
+        <button class="scenario-btn" data-scen-id="1575" data-era="sengoku_climax">
+          <span class="scen-badge">1575年</span>
+          <strong class="scen-title">長篠の戦い</strong>
+          <span class="scen-sub">勝頼の長篠城包囲</span>
         </button>
         <button class="scenario-btn" data-scen-id="1576" data-era="sengoku_climax">
           <span class="scen-badge">1576年</span>
@@ -855,6 +874,11 @@
           <strong class="scen-title">文禄の役</strong>
           <span class="scen-sub">名護屋集結</span>
         </button>
+        <button class="scenario-btn" data-scen-id="1597" data-era="unification">
+          <span class="scen-badge">1597年</span>
+          <strong class="scen-title">慶長の役</strong>
+          <span class="scen-sub">再出兵</span>
+        </button>
         <button class="scenario-btn" data-scen-id="1600" data-era="unification">
           <span class="scen-badge">1600年</span>
           <strong class="scen-title">関ヶ原の戦い</strong>
@@ -889,6 +913,11 @@
           <span class="scen-badge">1721年</span>
           <strong class="scen-title">享保の改革</strong>
           <span class="scen-sub">徳川吉宗</span>
+        </button>
+        <button class="scenario-btn" style="display:none;" data-scen-id="1783" data-era="edo_bakumatsu">
+          <span class="scen-badge">1783年</span>
+          <strong class="scen-title">田沼意次の改革</strong>
+          <span class="scen-sub">田沼意次</span>
         </button>
         <button class="scenario-btn" style="display:none;" data-scen-id="1789" data-era="edo_bakumatsu">
           <span class="scen-badge">1789年</span>
@@ -1326,7 +1355,7 @@
 </div>
 
 <!-- 6.4. 戦国天下統一伝 オープニング絵巻シアター (信長の野望 武将風雲録風 HTML Canvas) -->
-<div class="modal-overlay hidden" id="openingMovieModal" style="position:fixed; inset:0; width:100vw; height:100vh; background:#000000; z-index:999999; display:flex; flex-direction:column; overflow:hidden;">
+<div class="modal-overlay hidden" id="openingMovieModal" style="position:fixed; inset:0; width:calc(100vw / var(--ui-zoom, 1)); height:calc(100vh / var(--ui-zoom, 1)); background:#000000; z-index:999999; display:flex; flex-direction:column; overflow:hidden;">
   <!-- オープニングメインキャンバス -->
   <canvas id="openingMovieCanvas" style="position:absolute; inset:0; width:100%; height:100%; cursor:pointer;"></canvas>
 
@@ -1351,7 +1380,7 @@
 </div>
 
 <!-- 6.5. 感動の全画面シネマティック・エンドロールシアター -->
-<div class="modal-overlay hidden" id="endingRollModal" style="position:fixed; inset:0; width:100vw; height:100vh; background:#070403; z-index:99999; display:flex; flex-direction:column; overflow:hidden;">
+<div class="modal-overlay hidden" id="endingRollModal" style="position:fixed; inset:0; width:calc(100vw / var(--ui-zoom, 1)); height:calc(100vh / var(--ui-zoom, 1)); background:#070403; z-index:99999; display:flex; flex-direction:column; overflow:hidden;">
   <!-- 桜吹雪キャンバス -->
   <canvas id="endingSakuraCanvas" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:2;"></canvas>
 
@@ -1375,7 +1404,7 @@
   </div>
 
   <!-- スクロールコンテナ -->
-  <div id="endingRollContainer" style="position:absolute; inset:0; overflow-y:scroll; scroll-behavior:auto; z-index:3; text-align:center; padding: 45vh 20px 45vh 20px; box-sizing:border-box;">
+  <div id="endingRollContainer" style="position:absolute; inset:0; overflow-y:scroll; scroll-behavior:auto; z-index:3; text-align:center; padding: calc(45vh / var(--ui-zoom, 1)) 20px calc(45vh / var(--ui-zoom, 1)) 20px; box-sizing:border-box;">
     <div id="endingRollContent" style="max-width:860px; margin:0 auto; color:#fff; text-shadow:0 2px 10px rgba(0,0,0,0.95); font-family:'Noto Serif JP', 'Yu Mincho', serif;">
       <!-- JavaScriptにより各大名家・ルート固有のエンドロールが動的生成されます -->
     </div>
@@ -1384,7 +1413,7 @@
 
 <!-- 7. 天下統一偉業達成モーダル -->
 <div class="modal-overlay hidden" id="victoryModal" style="z-index: 9999;">
-  <div class="modal-card" style="max-width: 1420px; width: 92vw; max-height: 92vh; display: flex; flex-direction: column; text-align: center; border-color: #ffd700; box-shadow: 0 0 70px rgba(255,215,0,0.85); padding: 20px 32px; box-sizing: border-box;">
+  <div class="modal-card" style="max-width: 1420px; width: calc(92vw / var(--ui-zoom, 1)); max-height: calc(92vh / var(--ui-zoom, 1)); display: flex; flex-direction: column; text-align: center; border-color: #ffd700; box-shadow: 0 0 70px rgba(255,215,0,0.85); padding: 20px 32px; box-sizing: border-box;">
     <div style="flex-shrink: 0; border-bottom: 2px solid #ffd700; padding-bottom: 8px; margin-bottom: 10px;">
       <div class="modal-title" style="color: #ffd700; font-size: 22pt; margin-bottom: 4px;" id="victoryMainTitle">
         ❖ 天下統一の偉業達成 ❖
@@ -1657,7 +1686,7 @@
 
 <!-- 全戦況年代記モーダル (ヘッダー年代記クリックで展開) -->
 <div class="modal-overlay hidden" id="chronicleModal">
-  <div class="modal-card" style="max-width: 820px; max-height: 85vh; display: flex; flex-direction: column;">
+  <div class="modal-card" style="max-width: 820px; max-height: calc(85vh / var(--ui-zoom, 1)); display: flex; flex-direction: column;">
     <div class="modal-title" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); padding-bottom: 8px;">
       <span style="display:flex; align-items:center; gap:8px;">
         <i data-lucide="scroll" style="width:20px; height:20px; color:var(--gold-bright);"></i>
@@ -1665,7 +1694,7 @@
       </span>
       <button id="closeChronicleModalBtn" style="background:none; border:none; color:#aaa; font-size:18pt; cursor:pointer; line-height:1;">✕</button>
     </div>
-    <div class="chronicle-modal-list" id="chronicleFullList" style="flex: 1; overflow-y: auto; padding: 14px 18px; font-size: 12pt; line-height: 1.8; background: rgba(0,0,0,0.5); border: 1px solid #4a3828; border-radius: 6px; margin: 14px 0; max-height: 60vh;">
+    <div class="chronicle-modal-list" id="chronicleFullList" style="flex: 1; overflow-y: auto; padding: 14px 18px; font-size: 12pt; line-height: 1.8; background: rgba(0,0,0,0.5); border: 1px solid #4a3828; border-radius: 6px; margin: 14px 0; max-height: calc(60vh / var(--ui-zoom, 1));">
       <div class="log-entry important">戦国乱世の幕が開きました。当主を選択して覇道を開始してください。</div>
     </div>
     <div style="display: flex; justify-content: flex-end;">
@@ -1678,7 +1707,7 @@
 
 <!-- 戦国管弦楽 響宴録 モーダル (全24曲BGM・オーケストラ効果音鑑賞＆調律) -->
 <div class="modal-overlay hidden" id="musicJukeboxModal" style="z-index: 10000;">
-  <div class="modal-card" style="max-width: 960px; max-height: 90vh; display: flex; flex-direction: column; background: linear-gradient(180deg, #24160f 0%, #150d09 100%); border: 2px solid var(--gold); box-shadow: 0 10px 40px rgba(0,0,0,0.95), 0 0 30px rgba(212,175,55,0.3);">
+  <div class="modal-card" style="max-width: 960px; max-height: calc(90vh / var(--ui-zoom, 1)); display: flex; flex-direction: column; background: linear-gradient(180deg, #24160f 0%, #150d09 100%); border: 2px solid var(--gold); box-shadow: 0 10px 40px rgba(0,0,0,0.95), 0 0 30px rgba(212,175,55,0.3);">
     <!-- モーダルヘッダー -->
     <div class="modal-title" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); padding-bottom: 8px;">
       <span style="display:flex; align-items:center; gap:10px;">
@@ -1757,7 +1786,7 @@
           <span>🎼 全24曲 和洋折衷フルオーケストラ楽曲録</span>
           <span style="font-size: 10pt; color: #aaa;">クリックで即座に試聴・ゲーム中BGM設定</span>
         </div>
-        <div id="jbTrackListContainer" style="display: flex; flex-direction: column; gap: 12px; max-height: 38vh; overflow-y: auto; padding-right: 4px;">
+        <div id="jbTrackListContainer" style="display: flex; flex-direction: column; gap: 12px; max-height: calc(38vh / var(--ui-zoom, 1)); overflow-y: auto; padding-right: 4px;">
           <!-- カテゴリごとにJSで生成 -->
         </div>
       </div>
@@ -1816,7 +1845,7 @@
 
 <!-- 10. 戦況記録・再開（複数スロット ＆ JSONエクスポート/インポート）モーダル -->
 <div class="modal-overlay hidden" id="saveLoadModal" style="z-index: 10006;">
-  <div class="modal-card saveload-card" style="width: 95vw; max-width: 860px; max-height: 92vh; padding: 18px 22px; box-sizing: border-box; background: linear-gradient(180deg, #25160e 0%, #150d08 100%); border: 2px solid var(--gold); box-shadow: 0 0 60px rgba(0,0,0,0.85); display: flex; flex-direction: column;">
+  <div class="modal-card saveload-card" style="width: calc(95vw / var(--ui-zoom, 1)); max-width: 860px; max-height: calc(92vh / var(--ui-zoom, 1)); padding: 18px 22px; box-sizing: border-box; background: linear-gradient(180deg, #25160e 0%, #150d08 100%); border: 2px solid var(--gold); box-shadow: 0 0 60px rgba(0,0,0,0.85); display: flex; flex-direction: column;">
     <div class="modal-title" style="display:flex; justify-content:space-between; align-items:center; border-bottom: 2px solid var(--gold); padding-bottom: 8px; margin-bottom: 12px;">
       <span style="color: var(--gold-bright); font-size: 14pt; font-weight: bold; display: flex; align-items: center; gap: 8px;">
         <span id="saveLoadModalIcon" style="font-size:16pt;">💾</span>
@@ -1839,12 +1868,12 @@
     </div>
 
     <!-- スロットリスト表示エリア -->
-    <div id="saveLoadSlotsContainer" style="display:flex; flex-direction:column; gap:10px; max-height:56vh; overflow-y:auto; padding-right:4px;">
+    <div id="saveLoadSlotsContainer" style="display:flex; flex-direction:column; gap:10px; max-height:calc(56vh / var(--ui-zoom, 1)); overflow-y:auto; padding-right:4px;">
       <!-- JavaScriptで動的生成 -->
     </div>
 
     <!-- JSON入出力タブ用エリア -->
-    <div id="saveLoadJsonContainer" class="hidden" style="display:flex; flex-direction:column; gap:12px; max-height:56vh; overflow-y:auto; padding:6px 2px;">
+    <div id="saveLoadJsonContainer" class="hidden" style="display:flex; flex-direction:column; gap:12px; max-height:calc(56vh / var(--ui-zoom, 1)); overflow-y:auto; padding:6px 2px;">
       <div style="background:rgba(0,0,0,0.45); border:1px solid #775533; border-radius:6px; padding:12px 14px;">
         <div style="font-size:12pt; font-weight:bold; color:var(--gold-bright); margin-bottom:6px;">
           📥 現在の戦況を外部へ出力（エクスポート）
@@ -1901,7 +1930,7 @@
 
 <!-- 途中参戦用 大名選択モーダル -->
 <div class="modal-overlay hidden" id="spectatorDaimyoModal">
-  <div class="modal-card" style="width: 94vw; max-width: 1400px; max-height: 90vh; padding: 18px 24px; box-sizing: border-box; background:linear-gradient(180deg, #1e130c, #100a06); border:2px solid var(--gold); border-radius:8px;">
+  <div class="modal-card" style="width: calc(94vw / var(--ui-zoom, 1)); max-width: 1400px; max-height: calc(90vh / var(--ui-zoom, 1)); padding: 18px 24px; box-sizing: border-box; background:linear-gradient(180deg, #1e130c, #100a06); border:2px solid var(--gold); border-radius:8px;">
     <div class="modal-title" style="color:var(--gold-bright); border-bottom: 2px solid var(--gold); display:flex; justify-content:space-between; align-items:center; padding-bottom:8px; margin-bottom:12px;">
       <span style="font-size:14pt; font-weight:bold; display:flex; align-items:center; gap:8px;">
         <span>⚔️</span>
@@ -1912,7 +1941,7 @@
     <div style="font-size:11.5pt; color:#ddd; margin-bottom:12px; line-height:1.5;">
       現在割拠している大名家の中から、当主として率いる勢力を選択してください。即座に通常操作へ切り替わり、自ら采配を振るって天下統一を目指すことができます。
     </div>
-    <div id="spectatorDaimyoGrid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(210px, 1fr)); gap:10px; max-height:60vh; overflow-y:auto; padding:6px 2px;">
+    <div id="spectatorDaimyoGrid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(210px, 1fr)); gap:10px; max-height:calc(60vh / var(--ui-zoom, 1)); overflow-y:auto; padding:6px 2px;">
       <!-- JavaScriptで動的生成 -->
     </div>
     <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; border-top:1px solid #553e2a; padding-top:10px;">
@@ -1928,17 +1957,17 @@
 
   <!-- モジュール化されたJavaScript群 (順序保証ロード) -->
   <!-- 1. 全大名家・全シナリオ・全106領国データベース -->
-  <script defer src="assets/kamons.js?v=20261119_v39"></script>
-  <script defer src="js/kamonOverrides.js?v=20261119_v39"></script>
+  <script defer src="assets/kamons.js?v=20261121_v41"></script>
+  <script defer src="js/kamonOverrides.js?v=20261121_v41"></script>
   
   <!-- 2. 和洋折衷フルオーケストラBGMエンジン (全15曲) -->
   <script defer src="js/bgm.js?v=20261101_mobfix3"></script>
   <script defer src="js/MobileAudioKeepAlive.js?v=20261101_mobfix3"></script>
 
   <!-- 3. 戦国天下統一伝 ゲームエンジン本体 -->
-  <script type="module" src="js/app.js?v=20261119_v39"></script>
+  <script type="module" src="js/app.js?v=20261121_v41_kamon85"></script>
   <script type="module" src="js/ui/Encyclopedia.js?v=20261109_sp"></script>
-  <script defer src="js/ui/StartScreenLayout.js?v=20261119_v39"></script>
+  <script defer src="js/ui/StartScreenLayout.js?v=20261121_v41_zoom90"></script>
   <script defer src="js/ui/TitleBgm.js?v=20261107_horagai_fix"></script>
 
 
@@ -1981,7 +2010,7 @@
   /* 季節進行ドック：右パネルが出ている間はパネルの最下部に固定して溶け込ませる */
   .main-layout.drawer-open > .bottom-action-dock {
     right: 0 !important; bottom: 0 !important;
-    width: 416px !important; max-width: 44vw !important; box-sizing: border-box;
+    width: 416px !important; max-width: calc(44vw / var(--ui-zoom, 1)) !important; box-sizing: border-box;
     background: rgba(16, 11, 8, 0.98) !important;
     border: none !important; border-top: 1px solid var(--border-gold) !important; border-left: 2px solid var(--border-gold) !important;
     border-radius: 0 !important; box-shadow: 0 -6px 14px rgba(0, 0, 0, 0.55) !important;
@@ -2046,7 +2075,7 @@
     var ctm = svg.getScreenCTM(); if (!ctm) return;
     var wr = wrap.getBoundingClientRect();
     var pr = side.offsetParent ? side.offsetParent.getBoundingClientRect() : { left: 0 };
-    var sideLeft = pr.left + side.offsetLeft; // スライドイン中の transform を除いた最終位置
+    var sideLeft = pr.left + side.offsetLeft * window.getUiZoom(side); // スライドイン中の transform を除いた最終位置（画面縮小倍率を反映）
     var margin = 14;
     var rightLimit = Math.min(sideLeft, wr.right) - margin, leftLimit = wr.left + margin;
     var topLimit = wr.top + margin, bottomLimit = wr.bottom - margin;

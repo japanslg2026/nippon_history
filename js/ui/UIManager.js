@@ -1690,7 +1690,7 @@ export const UIManagerMethods = {
 
     modal.innerHTML = `
 
-      <div style="background:#1c130d; border:2px solid var(--gold); border-radius:8px; width:92vw; max-width:660px; max-height:88vh; display:flex; flex-direction:column; box-shadow:0 0 50px rgba(0,0,0,0.95); color:#f5eedc; font-family:'Noto Serif JP',serif; animation:modalPopIn 0.18s ease-out;">
+      <div style="background:#1c130d; border:2px solid var(--gold); border-radius:8px; width:calc(92vw / var(--ui-zoom, 1)); max-width:660px; max-height:calc(88vh / var(--ui-zoom, 1)); display:flex; flex-direction:column; box-shadow:0 0 50px rgba(0,0,0,0.95); color:#f5eedc; font-family:'Noto Serif JP',serif; animation:modalPopIn 0.18s ease-out;">
 
         <!-- ヘッダー -->
 
@@ -2044,7 +2044,7 @@ export const UIManagerMethods = {
 
       modal.innerHTML = `
 
-        <div class="custom-modal-content appoint-modal-content" style="background:#1b140e; border:2px solid var(--gold); border-radius:8px; width:95vw; max-width:1180px; height:88vh; display:flex; flex-direction:column; box-shadow:0 0 45px rgba(0,0,0,0.95); color:#f5eedc; font-family:'Noto Serif JP',serif;">
+        <div class="custom-modal-content appoint-modal-content" style="background:#1b140e; border:2px solid var(--gold); border-radius:8px; width:calc(95vw / var(--ui-zoom, 1)); max-width:1180px; height:calc(88vh / var(--ui-zoom, 1)); display:flex; flex-direction:column; box-shadow:0 0 45px rgba(0,0,0,0.95); color:#f5eedc; font-family:'Noto Serif JP',serif;">
 
           <!-- ヘッダー -->
 
@@ -2808,7 +2808,7 @@ export const UIManagerMethods = {
 
       modal.innerHTML = `
 
-        <div style="background:#1b140e; border:2px solid var(--gold); border-radius:8px; width:95vw; max-width:920px; height:86vh; display:flex; flex-direction:column; color:#f5eedc; font-family:'Noto Serif JP',serif;">
+        <div style="background:#1b140e; border:2px solid var(--gold); border-radius:8px; width:calc(95vw / var(--ui-zoom, 1)); max-width:920px; height:calc(86vh / var(--ui-zoom, 1)); display:flex; flex-direction:column; color:#f5eedc; font-family:'Noto Serif JP',serif;">
 
           <div style="padding:12px 20px; border-bottom:1px solid #5a4638; display:flex; justify-content:space-between; align-items:center; background:linear-gradient(180deg, #2b1d14 0%, #1a110a 100%);">
 
@@ -3140,7 +3140,7 @@ export const UIManagerMethods = {
 
       modal.innerHTML = `
 
-        <div class="custom-modal-content officer-modal-content" style="background:#1b140e; border:2px solid var(--gold); border-radius:8px; width:95vw; max-width:1400px; height:88vh; display:flex; flex-direction:column; box-shadow:0 0 45px rgba(0,0,0,0.95); color:#f5eedc; font-family:'Noto Serif JP',serif;">
+        <div class="custom-modal-content officer-modal-content" style="background:#1b140e; border:2px solid var(--gold); border-radius:8px; width:calc(95vw / var(--ui-zoom, 1)); max-width:1400px; height:calc(88vh / var(--ui-zoom, 1)); display:flex; flex-direction:column; box-shadow:0 0 45px rgba(0,0,0,0.95); color:#f5eedc; font-family:'Noto Serif JP',serif;">
 
           <!-- ヘッダー -->
 
@@ -3937,7 +3937,7 @@ export const UIManagerMethods = {
 
       modal.innerHTML = `
 
-        <div class="custom-modal-content province-modal-content" style="background:#1b140e; border:2px solid var(--gold); border-radius:8px; width:96vw; max-width:1560px; height:88vh; display:flex; flex-direction:column; box-shadow:0 0 45px rgba(0,0,0,0.95); color:#f5eedc; font-family:'Noto Serif JP',serif;">
+        <div class="custom-modal-content province-modal-content" style="background:#1b140e; border:2px solid var(--gold); border-radius:8px; width:calc(96vw / var(--ui-zoom, 1)); max-width:1560px; height:calc(88vh / var(--ui-zoom, 1)); display:flex; flex-direction:column; box-shadow:0 0 45px rgba(0,0,0,0.95); color:#f5eedc; font-family:'Noto Serif JP',serif;">
 
           <div class="modal-header-bar" style="padding:12px 22px; border-bottom:1px solid #5a4638; background:linear-gradient(180deg, #2b1d14 0%, #1a110a 100%); display:flex; justify-content:space-between; align-items:center;">
 
@@ -4665,7 +4665,7 @@ export const UIManagerMethods = {
 
       modal.innerHTML = `
 
-        <div class="custom-modal-content faction-modal-content" style="background:#1b140e; border:2px solid var(--gold); border-radius:8px; width:95vw; max-width:1580px; height:88vh; display:flex; flex-direction:column; box-shadow:0 0 45px rgba(0,0,0,0.95); color:#f5eedc; font-family:'Noto Serif JP',serif;">
+        <div class="custom-modal-content faction-modal-content" style="background:#1b140e; border:2px solid var(--gold); border-radius:8px; width:calc(95vw / var(--ui-zoom, 1)); max-width:1580px; height:calc(88vh / var(--ui-zoom, 1)); display:flex; flex-direction:column; box-shadow:0 0 45px rgba(0,0,0,0.95); color:#f5eedc; font-family:'Noto Serif JP',serif;">
 
           <!-- ヘッダー -->
 
@@ -5332,7 +5332,7 @@ export const UIManagerMethods = {
 
     modal.innerHTML = `
 
-      <div style="background:linear-gradient(180deg, #1f140e 0%, #150d09 100%); border:2px solid var(--gold); border-radius:8px; width:94vw; max-width:540px; max-height:86vh; display:flex; flex-direction:column; box-shadow:0 10px 45px rgba(0,0,0,0.95); color:#f5eedc; font-family:'Noto Serif JP',serif; animation:modalPopIn 0.18s ease-out; overflow:hidden;">
+      <div style="background:linear-gradient(180deg, #1f140e 0%, #150d09 100%); border:2px solid var(--gold); border-radius:8px; width:calc(94vw / var(--ui-zoom, 1)); max-width:540px; max-height:calc(86vh / var(--ui-zoom, 1)); display:flex; flex-direction:column; box-shadow:0 10px 45px rgba(0,0,0,0.95); color:#f5eedc; font-family:'Noto Serif JP',serif; animation:modalPopIn 0.18s ease-out; overflow:hidden;">
 
         <!-- ヘッダー -->
 
@@ -6060,7 +6060,7 @@ export const UIManagerMethods = {
 
       modal.innerHTML = `
 
-        <div style="background:#1b140e; border:2px solid var(--gold); border-radius:8px; width:95vw; max-width:1180px; height:88vh; display:flex; flex-direction:column; box-shadow:0 0 45px rgba(0,0,0,0.95); color:#f5eedc; font-family:'Noto Serif JP',serif;">
+        <div style="background:#1b140e; border:2px solid var(--gold); border-radius:8px; width:calc(95vw / var(--ui-zoom, 1)); max-width:1180px; height:calc(88vh / var(--ui-zoom, 1)); display:flex; flex-direction:column; box-shadow:0 0 45px rgba(0,0,0,0.95); color:#f5eedc; font-family:'Noto Serif JP',serif;">
 
           <!-- ヘッダー -->
 
@@ -6604,7 +6604,7 @@ export const UIManagerMethods = {
 
       modal.innerHTML = `
 
-        <div class="custom-modal-content prov-officers-modal-content" style="background:#1b140e; border:2px solid var(--gold); border-radius:8px; width:95vw; max-width:1080px; max-height:88vh; display:flex; flex-direction:column; box-shadow:0 0 45px rgba(0,0,0,0.95); color:#f5eedc; font-family:'Noto Serif JP',serif;">
+        <div class="custom-modal-content prov-officers-modal-content" style="background:#1b140e; border:2px solid var(--gold); border-radius:8px; width:calc(95vw / var(--ui-zoom, 1)); max-width:1080px; max-height:calc(88vh / var(--ui-zoom, 1)); display:flex; flex-direction:column; box-shadow:0 0 45px rgba(0,0,0,0.95); color:#f5eedc; font-family:'Noto Serif JP',serif;">
 
           <!-- ヘッダー -->
 
@@ -11205,7 +11205,7 @@ export const UIManagerMethods = {
 
     modal.innerHTML = `
 
-      <div style="background:#19120c; border:2px solid #e74c3c; border-radius:8px; width:92%; max-width:760px; max-height:88vh; display:flex; flex-direction:column; box-shadow:0 0 40px rgba(231,76,60,0.6); color:#f5eedc; font-family:'Noto Serif JP',serif;">
+      <div style="background:#19120c; border:2px solid #e74c3c; border-radius:8px; width:92%; max-width:760px; max-height:calc(88vh / var(--ui-zoom, 1)); display:flex; flex-direction:column; box-shadow:0 0 40px rgba(231,76,60,0.6); color:#f5eedc; font-family:'Noto Serif JP',serif;">
 
         <div style="padding:14px 20px; border-bottom:1px solid #78281f; background:linear-gradient(180deg, #3a1510 0%, #1c0a08 100%);">
 

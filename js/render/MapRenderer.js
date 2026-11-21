@@ -151,7 +151,7 @@ export const MapRendererMethods = {
   /** 領有国数・総石高と領国のSVG面積・幅高さに応じて家紋バッジサイズを返す（狭小1国は縮小、50万石以上・100万石以上は段階拡大） */
   getKamonBadgeSize(province, ownedCount, totalKoku = 0) {
     const baseSize = 14;
-    if (!province) return baseSize;
+    if (!province) return Number((baseSize * 0.85).toFixed(2));
     if (ownedCount === 1) {
       if (typeof province._svgArea !== 'number' || typeof province._svgMinDim !== 'number') {
         const metrics = this.computeProvinceSvgMetrics(province.svgPath || province.d || '');
@@ -160,18 +160,18 @@ export const MapRendererMethods = {
       }
       const area = province._svgArea;
       const minDim = province._svgMinDim;
-      if (area > 0 && area < 130) return Number((baseSize * 0.40).toFixed(2));
+      if (area > 0 && area < 130) return Number((baseSize * 0.30).toFixed(2));
       if ((area > 0 && area < 535) || (minDim > 0 && minDim < 19.2)) {
-        return Number((baseSize * 0.60).toFixed(2));
+        return Number((baseSize * 0.50).toFixed(2));
       }
     }
     if (Number(totalKoku) >= 1000000) {
-      return Number((baseSize * 1.60).toFixed(2));
-    }
-    if (Number(totalKoku) >= 500000) {
       return Number((baseSize * 1.30).toFixed(2));
     }
-    return baseSize;
+    if (Number(totalKoku) >= 500000) {
+      return Number((baseSize * 1.10).toFixed(2));
+    }
+    return Number((baseSize * 0.85).toFixed(2));
   },
 
   /** 全領国を走査して大名IDごとの領有国数・総石高マップを返す */

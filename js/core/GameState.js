@@ -983,8 +983,10 @@ const FACTION_HEADS_OVERRIDE = {
   '1550': ['takeda', 'murakami', 'miyoshi'],
   '1555': ['mori', 'sue', 'amago'],
   '1560': ['imagawa', 'oda', 'takeda'],
+  '1565': ['oda', 'saito', 'miyoshi'],
   '1570': ['oda', 'azai', 'asakura'],
   '1573': ['takeda', 'tokugawa', 'oda'],
+  '1575': ['takeda', 'oda', 'tokugawa'],
   '1576': ['mori', 'honganji', 'oda'],
   '1577': ['uesugi', 'oda', 'matsunaga'],
   '1578': ['araki', 'oda', 'mori'],
@@ -994,12 +996,14 @@ const FACTION_HEADS_OVERRIDE = {
   '1587': ['toyotomi', 'shimazu', 'otomo'],
   '1590': ['toyotomi', 'hojo', 'date'],
   '1592': ['toyotomi', 'tokugawa', 'maeda'],
+  '1597': ['toyotomi', 'tokugawa', 'kobayakawa'],
   '1600': ['tokugawa', ['ishida', '石田家（西軍）'], ['mori', '毛利家（西軍総大将）']],
   '1614': ['toyotomi', 'tokugawa', 'date'],
   '1637': ['amakusa', 'tokugawa', 'hosokawa'],
   '1651': ['yui', 'tokugawa', 'kishu'],
   '1702': ['ako_ronin', 'tokugawa', 'asano'],
   '1721': ['tokugawa', 'owari', 'kishu'],
+  '1783': ['tokugawa', 'uesugi', 'kumamoto_hosokawa'],
   '1789': ['tokugawa', 'owari', 'uesugi'],
   '1837': ['oshio', 'tokugawa', 'mito'],
   '1853': ['tokugawa', 'shimazu', 'mito'],
@@ -1028,7 +1032,7 @@ function buildFactionHeadsText(scen) {
       const ly = m.leaders && m.leaders[String(scen.year)];
       if (!nm && ly) nm = ly;
       // 改名（松平元康→徳川家康 等）は master の年代別当主表記に合わせる
-      if (nm === '松平元康' && ly === '徳川家康') nm = ly;
+      if (['松平元康', '松平家康', '徳川家康'].includes(nm) && ['松平元康', '松平家康', '徳川家康'].includes(ly)) nm = ly;
       return nm;
     };
     const labelOf = id => { const m = masters[id] || {}; const pl = pls.find(p => p.id === id); return m.family || m.name || (pl && pl.name) || id; };
@@ -1863,7 +1867,7 @@ export const GameStateMethods = {
 
       if (clean === '羽柴秀次' || clean === '豊臣秀次') return '秀次';
 
-      if (clean === '松平元康' || clean === '徳川家康') return '家康';
+      if (clean === '松平元康' || clean === '松平家康' || clean === '徳川家康') return '家康';
 
       if (clean === '黒田官兵衛' || clean === '黒田孝高' || clean === '黒田如水') return '黒田官兵衛';
 
@@ -6088,7 +6092,7 @@ export const GameStateMethods = {
 
         // 永禄6年（1563）に元康から家康へ改名。同一人物を二枚にしない
 
-        o.name = (this.year >= 1563) ? '徳川家康' : '松平元康';
+        o.name = (this.year >= 1567) ? '徳川家康' : ((this.year >= 1563) ? '松平家康' : '松平元康');
 
       }
 
@@ -6873,11 +6877,14 @@ export const GameStateMethods = {
 
     const isIeyasuEra = (this.year >= 1563);
 
-    const targetName = isIeyasuEra ? '徳川家康' : '松平元康';
+    // 永禄9年（1566）12月に徳川へ改姓。1563〜1566年は「松平家康」
+    const isTokugawaEra = (this.year >= 1567);
+
+    const targetName = isTokugawaEra ? '徳川家康' : (isIeyasuEra ? '松平家康' : '松平元康');
 
     const oldName = isIeyasuEra ? '松平元康' : '徳川家康';
 
-    const targetClanName = isIeyasuEra ? '徳川家' : '松平家';
+    const targetClanName = isTokugawaEra ? '徳川家' : '松平家';
 
 
 
@@ -6923,7 +6930,7 @@ export const GameStateMethods = {
 
         if (window.CLAN_MASTER_DATA[cid]) {
 
-          if (isIeyasuEra) {
+          if (isTokugawaEra) {
 
             window.CLAN_MASTER_DATA[cid].family = '徳川家';
 
@@ -6957,7 +6964,7 @@ export const GameStateMethods = {
 
       if (pToku) {
 
-        if (pToku.name && this.leaderNamesMatch(pToku.name, '徳川家康')) {
+        if (pToku.name && (this.leaderNamesMatch(pToku.name, '徳川家康') || pToku.name === '松平家康')) {
 
           pToku.name = targetName;
 
@@ -6977,7 +6984,7 @@ export const GameStateMethods = {
 
       this._ieyasuAnnounced = true;
 
-      this.log('📜【改名】松平元康公は今川義元より賜った「元」の字を捨て、「徳川家康」へと改名しました！', 'important');
+      this.log('📜【改名】松平元康公は今川義元より賜った「元」の字を捨て、「家康」へと改名しました！', 'important');
 
       if (this.audio) this.audio.playHyoshigi();
 
@@ -15781,7 +15788,7 @@ export const GameStateMethods = {
         title: `❖ ${label}の結果 ❖`,
         html: `
           <div style="font-size:12pt; color:#f5eedc; text-align:left; font-family:'Noto Serif JP',serif;">
-            <div id="capBulkList" style="max-height:50vh; overflow-y:auto; background:rgba(0,0,0,0.35); border:1px solid #4a3b2c; border-radius:4px; padding:6px 10px;">
+            <div id="capBulkList" style="max-height:calc(50vh / var(--ui-zoom, 1)); overflow-y:auto; background:rgba(0,0,0,0.35); border:1px solid #4a3b2c; border-radius:4px; padding:6px 10px;">
               ${shown.map(r => `<div class="cap-bulk-line" style="display:flex; justify-content:space-between; gap:10px; padding:3px 0; border-bottom:1px dotted #3d2f22; opacity:0; transition:opacity .25s;"><span style="color:#fff; font-weight:bold;">${r.name}</span><span style="color:${r.color}; white-space:nowrap;">${r.text}</span></div>`).join('')}
             </div>
             <div style="text-align:center; margin-top:8px; color:#ffd700; font-weight:bold;">${summary}</div>
@@ -21057,6 +21064,13 @@ export const GameStateMethods = {
     if (!ev) return false;
 
     const required = Array.isArray(ev.requiresClans) ? ev.requiresClans : [];
+    // requiresOwners：{ 国ID: [家ID…] } その国を指定の家が持っているときだけ起こす（2026-11-20）
+    const reqOwners = (ev.requiresOwners && typeof ev.requiresOwners === 'object') ? ev.requiresOwners : null;
+    if (reqOwners && !Object.entries(reqOwners).every(([pId, list]) => {
+      const prov = (this.provinces || []).find(p => p.id === pId);
+      const ids = [].concat(list || []);
+      return !!prov && ids.some(c => prov.ownerId === c || prov.ownerId === (this.resolveEventTargetClan(c) || c));
+    })) return false;
 
     return required.every(clanId => this.isClanExtant(this.resolveEventTargetClan(clanId) || clanId));
 
@@ -22688,7 +22702,7 @@ applyEventTerritory(changes) {
 
     const items = lines.map(line => `<li>${this.escapeEventText(line)}</li>`).join('');
 
-    return `<ul style="margin:6px 0 0 1.2em; padding:0; text-align:left; font-size:11pt; line-height:1.55; max-height:28vh; overflow:auto;">${items}</ul>`;
+    return `<ul style="margin:6px 0 0 1.2em; padding:0; text-align:left; font-size:11pt; line-height:1.55; max-height:calc(28vh / var(--ui-zoom, 1)); overflow:auto;">${items}</ul>`;
 
   },
 

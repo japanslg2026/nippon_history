@@ -16,6 +16,15 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    /* 画面全体の表示倍率（html { zoom: var(--ui-zoom) }）を返す。座標計算で px を CSS 値へ換算するのに使う */
+    window.getUiZoom = function (el) {
+      var z = el && el.currentCSSZoom;
+      if (z) return z;
+      var r = parseFloat(getComputedStyle(document.documentElement).zoom);
+      return r > 0 ? r : 1;
+    };
+  </script>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>日本史 勢力図・人物一覧 ～日本通史総覧～</title>
 
@@ -67,7 +76,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&amp;family=Shippori+Mincho:wght@500;700;800&amp;display=swap" rel="stylesheet">
   <!-- 既存の encyclopedia.css が存在する場合の読み込み（単一HTMLでも下の内蔵CSSで完全動作） -->
-  <link rel="stylesheet" href="css/encyclopedia.css?v=20261107_hist_v16">
+  <link rel="stylesheet" href="css/encyclopedia.css?v=20261120_zoom90">
 
   <style>
     :root {
@@ -86,7 +95,11 @@
       --accent-red: #c0392b;
       --accent-blue: #2980b9;
       --accent-green: #27ae60;
+      /* 画面全体の表示倍率（2026-11-20: 0.9 から追加で約10%縮小 → 0.81）。vh/vw は calc(… / var(--ui-zoom)) で画面いっぱいを保つ */
+      --ui-zoom: 0.81;
     }
+
+    html { zoom: var(--ui-zoom); }
 
     * {
       box-sizing: border-box;
@@ -130,8 +143,8 @@
     .app-shell {
       display: flex;
       flex-direction: column;
-      width: 100vw;
-      height: 100vh;
+      width: calc(100vw / var(--ui-zoom, 1));
+      height: calc(100vh / var(--ui-zoom, 1));
     }
 
     /* ==================== 上部ヘッダーナビゲーション ==================== */
@@ -1051,9 +1064,9 @@
       background: linear-gradient(180deg, #21170f 0%, #120c07 100%);
       border: 2px solid var(--gold);
       border-radius: 10px;
-      width: 96vw;
+      width: calc(96vw / var(--ui-zoom, 1));
       max-width: 1440px;
-      max-height: 90vh;
+      max-height: calc(90vh / var(--ui-zoom, 1));
       display: flex;
       flex-direction: column;
       box-shadow: 0 12px 50px rgba(0, 0, 0, 0.95);
@@ -1224,9 +1237,9 @@
       background: linear-gradient(180deg, #1f150d 0%, #120c07 100%);
       border: 2px solid var(--gold);
       border-radius: 10px;
-      width: 96vw;
+      width: calc(96vw / var(--ui-zoom, 1));
       max-width: 1480px;
-      height: 92vh;
+      height: calc(92vh / var(--ui-zoom, 1));
       display: flex;
       flex-direction: column;
       box-shadow: 0 12px 50px rgba(0, 0, 0, 0.95);
@@ -2175,7 +2188,7 @@
         width: 100%;
         height: auto;
         min-height: 260px;
-        max-height: 70vh;
+        max-height: calc(70vh / var(--ui-zoom, 1));
         aspect-ratio: 965 / 520;
         overflow: hidden;
         flex-shrink: 0;
@@ -2195,7 +2208,7 @@
       }
       .app-shell {
         height: auto;
-        min-height: 100vh;
+        min-height: calc(100vh / var(--ui-zoom, 1));
       }
       .workspace {
         display: flex;
@@ -2642,7 +2655,7 @@
         width: 100% !important;
         height: auto !important;
         min-height: 220px !important;
-        max-height: 52vh !important;
+        max-height: calc(52vh / var(--ui-zoom, 1)) !important;
         aspect-ratio: 980 / 535 !important;
         overflow: hidden !important;
         background: #070a0d url('assets/images/map_ocean_bg.jpg') center center / cover no-repeat !important;
@@ -2751,11 +2764,11 @@
 
       /* === 領国一覧・武将一覧モーダル（スマホカード表示完全最適化） === */
       .modal-window {
-        width: 95vw !important;
-        max-width: 95vw !important;
-        height: 92vh !important;
-        height: 92dvh !important;
-        max-height: 92dvh !important;
+        width: calc(95vw / var(--ui-zoom, 1)) !important;
+        max-width: calc(95vw / var(--ui-zoom, 1)) !important;
+        height: calc(92vh / var(--ui-zoom, 1)) !important;
+        height: calc(92dvh / var(--ui-zoom, 1)) !important;
+        max-height: calc(92dvh / var(--ui-zoom, 1)) !important;
         margin: auto !important;
         border-radius: 8px !important;
         display: flex !important;
@@ -3000,20 +3013,20 @@
         left: 0 !important;
         right: 0 !important;
         bottom: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        height: 100dvh !important;
+        width: calc(100vw / var(--ui-zoom, 1)) !important;
+        height: calc(100vh / var(--ui-zoom, 1)) !important;
+        height: calc(100dvh / var(--ui-zoom, 1)) !important;
         padding: 0 !important;
         margin: 0 !important;
         overflow: hidden !important;
         z-index: 100000 !important;
       }
       .mk-card {
-        width: 100vw !important;
-        height: 100vh !important;
-        height: 100dvh !important;
-        max-width: 100vw !important;
-        max-height: 100dvh !important;
+        width: calc(100vw / var(--ui-zoom, 1)) !important;
+        height: calc(100vh / var(--ui-zoom, 1)) !important;
+        height: calc(100dvh / var(--ui-zoom, 1)) !important;
+        max-width: calc(100vw / var(--ui-zoom, 1)) !important;
+        max-height: calc(100dvh / var(--ui-zoom, 1)) !important;
         border-radius: 0 !important;
         border: none !important;
         display: flex !important;
@@ -3087,9 +3100,9 @@
     left: 0 !important;
     right: 0 !important;
     bottom: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    height: 100dvh !important;
+    width: calc(100vw / var(--ui-zoom, 1)) !important;
+    height: calc(100vh / var(--ui-zoom, 1)) !important;
+    height: calc(100dvh / var(--ui-zoom, 1)) !important;
     padding: 0 !important;
     margin: 0 !important;
     overflow: hidden !important;
@@ -3098,11 +3111,11 @@
   .mk-overlay .mk-card {
     display: flex !important;
     flex-direction: column !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    height: 100dvh !important;
-    max-width: 100vw !important;
-    max-height: 100dvh !important;
+    width: calc(100vw / var(--ui-zoom, 1)) !important;
+    height: calc(100vh / var(--ui-zoom, 1)) !important;
+    height: calc(100dvh / var(--ui-zoom, 1)) !important;
+    max-width: calc(100vw / var(--ui-zoom, 1)) !important;
+    max-height: calc(100dvh / var(--ui-zoom, 1)) !important;
     border-radius: 0 !important;
     border: none !important;
     overflow: hidden !important;
@@ -3654,7 +3667,7 @@
     top: 8px !important;
     right: 8px !important;
     bottom: 8px !important;
-    width: min(440px, 38vw) !important;
+    width: min(440px, calc(38vw / var(--ui-zoom, 1))) !important;
     max-width: 460px !important;
     z-index: 45 !important;
     background: linear-gradient(180deg, rgba(26, 18, 11, 0.975) 0%, rgba(15, 10, 6, 0.985) 100%) !important;
@@ -3699,7 +3712,7 @@
     top: auto !important;
     width: 100% !important;
     max-width: 100% !important;
-    max-height: min(56dvh, calc(100dvh - 178px)) !important;
+    max-height: min(calc(56dvh / var(--ui-zoom, 1)), calc(calc(100dvh / var(--ui-zoom, 1)) - 178px)) !important;
     z-index: 900 !important;
     background: linear-gradient(180deg, rgba(26, 18, 12, 0.985) 0%, rgba(14, 9, 6, 0.992) 100%) !important;
     border-top: 2px solid var(--gold) !important;
@@ -4198,7 +4211,7 @@
       // 武将配属ルールは data/rules.json（officerAffiliationRules）から読み込む（ゲームと同じデータ。2026-11-14）
       async function loadAffiliationRulesSafe() {
         try {
-          var r = await fetchJsonSmart('rules.json?v=20261119_v38');
+          var r = await fetchJsonSmart('rules.json?v=20261121_v41');
           window.RULES_DATA = r || {};
           return (r && Array.isArray(r.officerAffiliationRules)) ? r.officerAffiliationRules : [];
         } catch (_) {
@@ -4287,11 +4300,11 @@
       async function initAllData() {
         var statusEl = document.getElementById('loadingStatusText');
         try {
-          await loadExternalScript(['assets/kamons.js?v=20261119_v39', 'assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
+          await loadExternalScript(['assets/kamons.js?v=20261121_v41', 'assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
           if (typeof window.loadKamonSymbols === 'function') {
             window.loadKamonSymbols();
           }
-          await loadExternalScript(['js/kamonOverrides.js?v=20261119_v39']);
+          await loadExternalScript(['js/kamonOverrides.js?v=20261121_v41']);
 
           var urlParams = new URLSearchParams(window.location.search);
           var initialScenId = urlParams.get('scenario');
@@ -4303,21 +4316,21 @@
             statusEl.textContent = '桶狭間の戦い（1560年）と全国地図データを読み込み中…';
 
             var splitScenPromise = Promise.all([
-              fetchJsonSmart('scenario_1560.json?v=20261119_v38'),
-              fetchJsonSmart('scenarios_meta.json?v=20261119_v38')
+              fetchJsonSmart('scenario_1560.json?v=20261121_v41'),
+              fetchJsonSmart('scenarios_meta.json?v=20261121_v41')
             ]).then(function (pair) {
               return { split: true, s1560: pair[0], meta: pair[1] };
             }).catch(function () {
-              return fetchJsonSmart('scenarios.json?v=20261119_v38').then(function (all) {
+              return fetchJsonSmart('scenarios.json?v=20261121_v41').then(function (all) {
                 return { split: false, all: all };
               });
             });
 
             var phase1Results = await Promise.all([
               splitScenPromise,
-              fetchJsonSmart('provinces.json?v=20261119_v38'),
-              fetchJsonSmart('clans.json?v=20261119_v38'),
-              fetchJsonSmart('map_borders.json?v=20261119_v38').catch(function () { return window.MAP_BORDERS_DATA || null; })
+              fetchJsonSmart('provinces.json?v=20261121_v41'),
+              fetchJsonSmart('clans.json?v=20261121_v41'),
+              fetchJsonSmart('map_borders.json?v=20261121_v41').catch(function () { return window.MAP_BORDERS_DATA || null; })
             ]);
 
             var scenRes = phase1Results[0];
@@ -4408,9 +4421,9 @@
 
             setTimeout(function () {
               Promise.all([
-                fetchJsonSmart('officers.json?v=20261119_v38'),
-                fetchJsonSmart('governors.json?v=20261119_v38').catch(function () { return {}; }),
-                fetchJsonSmart('events.json?v=20261119_v38').catch(function () { return {}; }),
+                fetchJsonSmart('officers.json?v=20261121_v41'),
+                fetchJsonSmart('governors.json?v=20261121_v41').catch(function () { return {}; }),
+                fetchJsonSmart('events.json?v=20261121_v41').catch(function () { return {}; }),
                 loadAffiliationRulesSafe()
               ]).then(function (bgRes) {
                 var officersRaw = bgRes[0];
@@ -4443,7 +4456,7 @@
               });
 
               if (!State.scenariosFullLoaded) {
-                fetchJsonSmart('scenarios.json?v=20261119_v38').then(function (scenariosRaw) {
+                fetchJsonSmart('scenarios.json?v=20261121_v41').then(function (scenariosRaw) {
                   window.SCENARIOS_DATA = scenariosRaw || [];
                   var fullList = filterAndSortScenarios(scenariosRaw);
                   var fullById = new Map(fullList.map(function (s) { return [String(s.id), s]; }));
@@ -4485,14 +4498,14 @@
           var rulesPromise = loadAffiliationRulesSafe();
 
           var results = await Promise.all([
-            fetchJsonSmart('scenarios.json?v=20261119_v38'),
-            fetchJsonSmart('provinces.json?v=20261119_v38'),
-            fetchJsonSmart('clans.json?v=20261119_v38'),
-            fetchJsonSmart('officers.json?v=20261119_v38'),
-            fetchJsonSmart('governors.json?v=20261119_v38').catch(function () { return {}; }),
-            fetchJsonSmart('events.json?v=20261119_v38').catch(function () { return {}; }),
+            fetchJsonSmart('scenarios.json?v=20261121_v41'),
+            fetchJsonSmart('provinces.json?v=20261121_v41'),
+            fetchJsonSmart('clans.json?v=20261121_v41'),
+            fetchJsonSmart('officers.json?v=20261121_v41'),
+            fetchJsonSmart('governors.json?v=20261121_v41').catch(function () { return {}; }),
+            fetchJsonSmart('events.json?v=20261121_v41').catch(function () { return {}; }),
             rulesPromise,
-            fetchJsonSmart('map_borders.json?v=20261119_v38').catch(function () { return window.MAP_BORDERS_DATA || null; })
+            fetchJsonSmart('map_borders.json?v=20261121_v41').catch(function () { return window.MAP_BORDERS_DATA || null; })
           ]);
 
           var scenariosRaw = results[0];
@@ -5079,7 +5092,7 @@
         var ctm = svg.getScreenCTM();
         if (!path || !ctm) return;
         var cs = getComputedStyle(drawer);
-        var drawerTop = window.innerHeight - (parseFloat(cs.bottom) || 0) - drawer.offsetHeight; // スライド中の transform を除いた最終位置
+        var drawerTop = window.innerHeight - ((parseFloat(cs.bottom) || 0) + drawer.offsetHeight) * window.getUiZoom(drawer); // スライド中の transform を除いた最終位置（画面縮小倍率を反映）
         var wr = wrap.getBoundingClientRect();
         var top = wr.top + 8, bottom = Math.min(wr.bottom, drawerTop) - 8;
         if (bottom - top < 50) return;
@@ -5116,7 +5129,7 @@
         if (!ctm) return;
         var st = stage.getBoundingClientRect();
         var parentRect = drawer.offsetParent ? drawer.offsetParent.getBoundingClientRect() : { left: 0 };
-        var drawerLeft = parentRect.left + drawer.offsetLeft; // スライドイン中の transform を除いた最終位置
+        var drawerLeft = parentRect.left + drawer.offsetLeft * window.getUiZoom(drawer); // スライドイン中の transform を除いた最終位置（画面縮小倍率を反映）
         var margin = 14;
         var rightLimit = Math.min(drawerLeft, st.right) - margin;
         var leftLimit = st.left + margin;
@@ -5373,7 +5386,7 @@
 
           if (p.cx !== undefined && p.cy !== undefined) {
             var isMobile = window.innerWidth <= 1100;
-            var badgeSize = isMobile ? 17.5 : 14; /* 金色縁取りを省き、家紋をごくわずかに小さく表示 */
+            var badgeSize = Number(((isMobile ? 17.5 : 14) * 0.85).toFixed(2)); /* 金色縁取りを省き、家紋をごくわずかに小さく表示 */
             var kamonBaseX = p.kamonX !== undefined ? p.kamonX : p.cx;
             var kx = kamonBaseX + (Number.isFinite(p.kamonOffsetX) ? p.kamonOffsetX : 0);
             var ky = p.kamonY !== undefined ? p.kamonY : p.cy;
@@ -5547,8 +5560,9 @@
             '<div style="font-size:12pt; margin-top:2px;">支配：<b style="color:#fff;">' + esc(fam) + '</b>' + esc(leader) + '</div>' +
             '<div style="font-size:12pt; margin-top:2px;">' + (isCap ? '' : '城主：<b style="color:#fff;">' + esc(tipGov) + '</b>　') + '武将：<b style="color:#fff;">' + tipOffCount + '名</b></div>';
           var rect = stage.getBoundingClientRect();
-          tooltip.style.left = Math.min(rect.width - 260, e.clientX - rect.left + 14) + 'px';
-          tooltip.style.top = Math.max(10, e.clientY - rect.top - 10) + 'px';
+          var tz = window.getUiZoom(tooltip);
+          tooltip.style.left = Math.min(rect.width / tz - 260, (e.clientX - rect.left) / tz + 14) + 'px';
+          tooltip.style.top = Math.max(10, (e.clientY - rect.top) / tz - 10) + 'px';
           tooltip.style.opacity = '1';
         });
 
@@ -5645,7 +5659,7 @@
 
       function getKamonBadgeSize(p, ownedCount, isMobile, totalKoku) {
         var base = isMobile ? 17.5 : 14;
-        if (!p) return base;
+        if (!p) return Number((base * 0.85).toFixed(2));
         if (ownedCount === 1) {
           if (typeof p._svgArea !== 'number' || typeof p._svgMinDim !== 'number') {
             var metrics = computeProvinceSvgMetrics(p.svgPath || p.d || '');
@@ -5654,18 +5668,18 @@
           }
           var area = p._svgArea;
           var minDim = p._svgMinDim;
-          if (area > 0 && area < 130) return Number((base * 0.40).toFixed(2));
+          if (area > 0 && area < 130) return Number((base * 0.30).toFixed(2));
           if ((area > 0 && area < 535) || (minDim > 0 && minDim < 19.2)) {
-            return Number((base * 0.60).toFixed(2));
+            return Number((base * 0.50).toFixed(2));
           }
         }
         if (Number(totalKoku) >= 1000000) {
-          return Number((base * 1.60).toFixed(2));
-        }
-        if (Number(totalKoku) >= 500000) {
           return Number((base * 1.30).toFixed(2));
         }
-        return base;
+        if (Number(totalKoku) >= 500000) {
+          return Number((base * 1.10).toFixed(2));
+        }
+        return Number((base * 0.85).toFixed(2));
       }
 
       function applyKamonBadgeGeometry(p, useEl, labelEl, ownedCount, isMobile, totalKoku) {
@@ -8317,7 +8331,7 @@
     margin: 0 !important;
     height: auto !important;        /* 説明の下に余白ができないよう、内容に合わせて上下幅を自動で縮める */
     min-height: 0 !important;
-    max-height: 40vh;
+    max-height: calc(40vh / var(--ui-zoom, 1));
     flex: 0 0 auto;
     box-sizing: border-box;
   }
@@ -8341,7 +8355,7 @@
     if (mq.matches) {
       if (box.parentNode !== stack || box.previousElementSibling !== row) stack.insertBefore(box, row.nextSibling);
       if (scen) {
-        var w = scen.getBoundingClientRect().width;
+        var w = scen.getBoundingClientRect().width / window.getUiZoom(scen);
         if (w > 0) { box.style.width = w + 'px'; box.style.maxWidth = w + 'px'; }
       }
     } else {
@@ -8366,10 +8380,10 @@
 /* PC：右パネル表示中は、下の年代目盛（タイムライン）の右端をパネルの手前まで縮める（2026-11-07） */
 @media (min-width: 1101px) {
   .timeline-dock { transition: margin-right 0.26s cubic-bezier(0.22, 1, 0.36, 1); }
-  body.atlas-drawer-open .timeline-dock { margin-right: calc(min(440px, 38vw) + 16px); }
+  body.atlas-drawer-open .timeline-dock { margin-right: calc(min(440px, calc(38vw / var(--ui-zoom, 1))) + 16px); }
   /* 右パネル表示中は、シナリオ説明・大名概要・地図操作ボタン（＋−⟲国）もパネルの手前に収める */
   .map-left-overlay-stack { transition: right 0.26s cubic-bezier(0.22, 1, 0.36, 1); }
-  body.atlas-drawer-open .map-left-overlay-stack { right: calc(min(440px, 38vw) + 24px); max-width: none; }
+  body.atlas-drawer-open .map-left-overlay-stack { right: calc(min(440px, calc(38vw / var(--ui-zoom, 1))) + 24px); max-width: none; }
 }
 </style>
 <style id="spUiImprove">
@@ -8381,7 +8395,7 @@
   /* シートは年代目盛の真上に出し、目盛を隠さない。高さは地図が見える程度に抑える */
   .right-sidebar {
     bottom: var(--sp-timeline-h, calc(88px + env(safe-area-inset-bottom))) !important;
-    max-height: min(46dvh, calc(100dvh - var(--sp-timeline-h, 88px) - 150px)) !important;
+    max-height: min(calc(46dvh / var(--ui-zoom, 1)), calc(calc(100dvh / var(--ui-zoom, 1)) - var(--sp-timeline-h, 88px) - 150px)) !important;
   }
   .atlas-drawer-btn { min-height: 34px !important; padding: 0 12px !important; }
   /* スクロールしても見出し帯の下の文字が透けないよう不透明に */
@@ -8421,7 +8435,7 @@
   function setTl() {
     var tl = document.querySelector('.timeline-dock');
     if (!tl) return;
-    var h = Math.max(0, window.innerHeight - tl.getBoundingClientRect().top);
+    var h = Math.max(0, (window.innerHeight - tl.getBoundingClientRect().top) / window.getUiZoom(document.documentElement));
     document.documentElement.style.setProperty('--sp-timeline-h', h + 'px');
   }
   function init() {
@@ -8450,7 +8464,7 @@
   #officersSection > #provOfficersList,
   #officersSection > .prov-officers-hint { display: none !important; }
   #officersSection > .section-header { margin-bottom: 0 !important; border-bottom: none !important; padding-bottom: 0 !important; }
-  #provOfficersModal .modal-window { max-height: 82dvh; display: flex; flex-direction: column; }
+  #provOfficersModal .modal-window { max-height: calc(82dvh / var(--ui-zoom, 1)); display: flex; flex-direction: column; }
   #provOfficersModal .modal-body { overflow-y: auto; }
   #provOfficersModalBody #provOfficersList { display: flex !important; flex-direction: column; max-height: none !important; height: auto !important; overflow: visible !important; }
 }

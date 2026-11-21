@@ -907,7 +907,7 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
       const p = e.target.closest('.sl-prov'); if (!p) { tip.style.opacity = 0; return; }
       const o = owners()[p.dataset.p]; const ci = o ? clanInfo(o) : null;
       tip.innerHTML = `<b>${esc(provName(p.dataset.p))}</b>${ci ? `<span><i style="background:${ci.color}"></i>${esc(ci.name)}${ci.leader ? '・' + esc(ci.leader) : ''}${ci.playable ? '' : '（選択不可）'}</span>` : '<span>空白地</span>'}`;
-      const r = el.getBoundingClientRect(); tip.style.left = (e.clientX - r.left + 14) + 'px'; tip.style.top = (e.clientY - r.top + 10) + 'px'; tip.style.opacity = 1;
+      const r = el.getBoundingClientRect(); const tz = (window.getUiZoom ? window.getUiZoom(tip) : 1) || 1; tip.style.left = ((e.clientX - r.left) / tz + 14) + 'px'; tip.style.top = ((e.clientY - r.top) / tz + 10) + 'px'; tip.style.opacity = 1;
     });
     svg.addEventListener('mouseleave', () => { tip.style.opacity = 0; });
 
