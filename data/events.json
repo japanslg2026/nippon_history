@@ -1431,13 +1431,15 @@
           "ugo_minato": "kiyohara",
           "ugo_hinai": "kiyohara",
           "ugo_yuri": "kiyohara",
-          "ugo_kakunodate": "kiyohara",
+          "ugo_senhoku": "kiyohara",
           "ugo_yokote": "kiyohara",
           "rikuchu_morioka": "kiyohara",
           "rikuchu_kamiheii": "kiyohara",
           "rikuchu_shimoheii": "kiyohara",
           "rikuchu_hienuki": "kiyohara",
-          "rikuchu_waga": "kiyohara"
+          "rikuchu_waga": "kiyohara",
+          "ugo_hondoh": "kiyohara",
+          "ugo_rokugoh": "kiyohara"
         },
         "killOfficerIds": [
           "off_kiyohara_iehira",
@@ -1671,7 +1673,8 @@
           "mino": "taira",
           "mino_iwamura": "taira",
           "suruga": "taira",
-          "totomi_hamamatsu_kakegawa": "taira",
+          "totomi_hamamatsu": "taira",
+          "totomi_kakegawa": "taira",
           "totomi_joto": "taira",
           "totomi_futamata_haibara": "taira",
           "owari_south": "taira",
@@ -1821,7 +1824,8 @@
           "musashi_edo": "genji_yoritomo",
           "musashi_tama": "genji_yoritomo",
           "suruga": "genji_yoritomo",
-          "totomi_hamamatsu_kakegawa": "genji_yoritomo",
+          "totomi_hamamatsu": "genji_yoritomo",
+          "totomi_kakegawa": "genji_yoritomo",
           "totomi_joto": "genji_yoritomo",
           "totomi_futamata_haibara": "genji_yoritomo"
         },
@@ -1849,7 +1853,8 @@
           "kaga_north": "kiso",
           "kaga_south": "kiso",
           "echizen": "kiso",
-          "yamashiro": "kiso"
+          "yamashiro": "kiso",
+          "echizen_ohno": "kiso"
         },
         "message": "木曽義仲が京都を占領し、平家一門は西国（屋島・壇ノ浦）へ逃亡しました！"
       },
@@ -1968,10 +1973,11 @@
           "chikuzen_akizuki": "genji_yoritomo",
           "awa_shikoku": "genji_yoritomo",
           "sanuki": "genji_yoritomo",
-          "chikugo": "genji_yoritomo",
           "sanuki_west": "genji_yoritomo",
           "awa_shikoku_west": "genji_yoritomo",
-          "awa_shikoku_south": "genji_yoritomo"
+          "awa_shikoku_south": "genji_yoritomo",
+          "chikugo_north": "genji_yoritomo",
+          "chikugo_south": "genji_yoritomo"
         },
         "message": "壇ノ浦にて平家一門が滅亡し、源頼朝による全国支配と守護・地頭設置が成りました！",
         "killOfficerIds": [
@@ -2014,7 +2020,7 @@
           "uzen_kitamurayama": "genji_yoritomo",
           "uzen_nishimurayama": "genji_yoritomo",
           "uzen_higashimurayama": "genji_yoritomo",
-          "ugo_kakunodate": "genji_yoritomo",
+          "ugo_senhoku": "genji_yoritomo",
           "ugo_yokote": "genji_yoritomo",
           "rikuzen_osaki": "genji_yoritomo",
           "rikuchu_kasai": "genji_yoritomo",
@@ -2022,7 +2028,9 @@
           "iwashiro_date_shinobu": "genji_yoritomo",
           "iwaki_soma": "genji_yoritomo",
           "iwashiro_tamura": "genji_yoritomo",
-          "iwaki_shirakawa": "genji_yoritomo"
+          "iwaki_shirakawa": "genji_yoritomo",
+          "ugo_hondoh": "genji_yoritomo",
+          "ugo_rokugoh": "genji_yoritomo"
         },
         "message": "奥州藤原氏が滅亡！奥羽全土が鎌倉幕府の支配下に入りました。",
         "killOfficerIds": [
@@ -2787,13 +2795,13 @@
       "year": 1560,
       "season": "初夏",
       "title": "桶狭間の奇跡・信長の急襲と松平自立",
-      "desc": "駿河・遠江・三河四万を率いて尾張へ乱入した今川義元に対し、織田信長が田楽狭間の豪雨を突いて本陣を強襲！義元を討ち取られた今川軍は総崩れとなり、松平元康（家康）は岡崎城で劇的自立を果たした！",
+      "desc": "駿河・遠江・三河四万を率いて尾張へ乱入した今川義元に対し、織田信長が田楽狭間の豪雨を突いて本陣を強襲！義元を討ち取られた今川軍は総崩れとなり、松平元康（家康）は岡崎城で劇的自立を果たした！（東三河の吉田城はなお今川の城代が守る）",
       "changes": {
         "territory": {
-          "mikawa": "matsudaira",
+          "mikawa_okazaki": "matsudaira",
           "owari_south": "oda"
         },
-        "message": "今川義元が討死し、織田信長が尾張を完全掌握、松平元康が三河で独立しました！",
+        "message": "今川義元が討死し、織田信長が尾張を完全掌握、松平元康が西三河（岡崎）で独立しました！（東三河の吉田はなお今川方）",
         "killOfficerIds": [
           "off_imagawa_yoshimoto"
         ],
@@ -2882,6 +2890,31 @@
       }
     },
     {
+      "id": "evt_1564_takanashi_iiyama",
+      "scenarioId": "*",
+      "year": 1564,
+      "season": "秋",
+      "title": "第五次川中島の対陣・高梨氏の越後退去",
+      "desc": "長沼城（弘治3年）・高梨氏館（永禄2年）を武田方に奪われた北信濃の高梨政頼は、飯山城に拠って上杉輝虎の庇護を受けていた。永禄七年、輝虎は川中島で武田信玄と対陣したのち飯山城を自らの前線基地として改修し、高梨氏は国衆としての自立を失って上杉家臣となった。善光寺平の大半は武田の支配に帰した。",
+      "requiresClans": [
+        "takeda"
+      ],
+      "onlyFrom": [
+        "takanashi"
+      ],
+      "requiresOwners": {
+        "shinano_kawanakajima": [
+          "takanashi"
+        ]
+      },
+      "changes": {
+        "territory": {
+          "shinano_kawanakajima": "takeda"
+        },
+        "message": "高梨政頼は飯山城を上杉輝虎に委ねて越後に退き、高梨一族は上杉家臣となりました。長沼城を押さえる武田家が北信濃高井・水内を領有しました。"
+      }
+    },
+    {
       "id": "evt_1565_eiroku_no_hen",
       "scenarioId": "*",
       "year": 1565,
@@ -2942,6 +2975,48 @@
         "mino": [
           "saito"
         ]
+      }
+    },
+    {
+      "id": "evt_1566_hatano_yakami",
+      "scenarioId": "*",
+      "year": 1566,
+      "season": "春",
+      "title": "八上城奪回・波多野氏の再興",
+      "desc": "弘治三年（1557年）に松永久秀に八上城を奪われた丹波の波多野氏は、多紀郡の山中に雌伏していた。永禄八年に丹波を押さえていた内藤宗勝（松永長頼）が荻野直正に討たれると、三好方の丹波支配は揺らぐ。永禄九年二月、波多野元秀・秀治父子は赤井直正の支援を得て八上城を攻め、松永孫六を退けて城を奪い返した。波多野氏は丹波東部の国衆として独立を回復した。",
+      "requiresClans": [
+        "miyoshi"
+      ],
+      "onlyFrom": [
+        "miyoshi"
+      ],
+      "requiresOwners": {
+        "tamba_east": [
+          "miyoshi"
+        ]
+      },
+      "changes": {
+        "territory": {
+          "tamba_east": "hatano"
+        },
+        "setLeader": {
+          "hatano": "off_hatano_hideharu"
+        },
+        "message": "波多野秀治が八上城を奪回し、丹波東部は波多野家の領国に戻りました。"
+      },
+      "rules": {
+        "afterApply": {
+          "transferOfficers": [
+            {
+              "officerIds": [
+                "off_hatano_motohide"
+              ],
+              "toClan": "hatano",
+              "provId": "tamba_east",
+              "revive": false
+            }
+          ]
+        }
       }
     },
     {
@@ -3079,7 +3154,8 @@
           "shinano_saku_komoro": "takeda",
           "shinano_suwa": "takeda",
           "shinano_chikuma_azumi": "takeda",
-          "totomi_hamamatsu_kakegawa": "tokugawa",
+          "totomi_hamamatsu": "tokugawa",
+          "totomi_kakegawa": "tokugawa",
           "totomi_joto": "tokugawa",
           "shinano_kawanakajima": "takeda",
           "totomi_futamata_haibara": "tokugawa",
@@ -3172,7 +3248,8 @@
       "changes": {
         "territory": {
           "echizen": "oda",
-          "omi_north": "oda"
+          "omi_north": "oda",
+          "echizen_ohno": "oda"
         },
         "appoint": {
           "echizen": "off_shibata_katsuie",
@@ -3246,11 +3323,13 @@
       "desc": "三河長篠城をめぐる決戦にて、織田・徳川連合軍の三重の馬防柵と三千挺の鉄砲三段撃ちが武田勝頼の精鋭騎馬隊を粉砕！山県昌景・馬場信春ら名将が討死し、徳川家康は遠江・三河を奪回した！",
       "changes": {
         "territory": {
-          "totomi_hamamatsu_kakegawa": "tokugawa",
-          "mikawa": "tokugawa",
+          "totomi_hamamatsu": "tokugawa",
+          "mikawa_okazaki": "tokugawa",
+          "mikawa_yoshida": "tokugawa",
           "mino_iwamura": "oda",
           "totomi_futamata_haibara": "tokugawa",
-          "mikawa_shitara": "tokugawa"
+          "mikawa_shitara": "tokugawa",
+          "totomi_kakegawa": "tokugawa"
         },
         "message": "長篠設楽原の戦いで武田軍が壊滅し、徳川家康が遠江・三河を完全奪回しました！",
         "killOfficerIds": [
@@ -3572,9 +3651,10 @@
           "shinano_kawanakajima": "uesugi",
           "shinano_ueda": "sanada",
           "suruga": "tokugawa",
-          "totomi_hamamatsu_kakegawa": "tokugawa",
+          "totomi_hamamatsu": "tokugawa",
           "totomi_joto": "tokugawa",
-          "mikawa": "tokugawa",
+          "mikawa_okazaki": "tokugawa",
+          "mikawa_yoshida": "tokugawa",
           "kozuke_takasaki": "hojo",
           "kozuke_agatsuma": "sanada",
           "kozuke_numata": "sanada",
@@ -3589,7 +3669,8 @@
           "mino_gujo": "oda",
           "kawachi_south": "toyotomi",
           "shinano_takato": "tokugawa",
-          "shinano_iida": "tokugawa"
+          "shinano_iida": "tokugawa",
+          "totomi_kakegawa": "tokugawa"
         },
         "message": "織田信長公落命！天下は羽柴秀吉、柴田勝家、徳川家康ら後継勢力の割拠へ突入しました！"
       },
@@ -3831,7 +3912,8 @@
           "echizen": "toyotomi",
           "kaga_north": "toyotomi",
           "kaga_south": "toyotomi",
-          "noto": "toyotomi"
+          "noto": "toyotomi",
+          "echizen_ohno": "toyotomi"
         },
         "message": "柴田勝家が滅亡し、羽柴秀吉が北陸諸国を完全に傘下に収めました！",
         "killOfficerIds": [
@@ -3862,7 +3944,6 @@
       ],
       "changes": {
         "territory": {
-          "chikugo": "shimazu",
           "higo_yatsushiro": "shimazu",
           "higo_hitoyoshi": "shimazu",
           "hizen_saga": "shimazu",
@@ -3871,7 +3952,9 @@
           "hizen_shimabara": "shimazu",
           "chikuzen_akizuki": "shimazu",
           "hizen_omura": "omura",
-          "chikuzen_kamashi": "shimazu"
+          "chikuzen_kamashi": "shimazu",
+          "chikugo_north": "shimazu",
+          "chikugo_south": "shimazu"
         },
         "killOfficerIds": [
           "off_ryuzoji_takanobu",
@@ -4009,9 +4092,10 @@
           "kazusa_isumi": "tokugawa",
           "shimousa": "tokugawa",
           "suruga": "toyotomi",
-          "totomi_hamamatsu_kakegawa": "toyotomi",
+          "totomi_hamamatsu": "toyotomi",
           "totomi_joto": "toyotomi",
-          "mikawa": "toyotomi",
+          "mikawa_okazaki": "toyotomi",
+          "mikawa_yoshida": "toyotomi",
           "kai": "toyotomi",
           "shinano_chikuma_azumi": "toyotomi",
           "shinano_kiso": "toyotomi",
@@ -4023,7 +4107,8 @@
           "kai_tsuru": "toyotomi",
           "kazusa_togane_naruto": "tokugawa",
           "shinano_takato": "toyotomi",
-          "shinano_iida": "toyotomi"
+          "shinano_iida": "toyotomi",
+          "totomi_kakegawa": "toyotomi"
         },
         "message": "後北条氏が滅亡して豊臣秀吉が天下統一を達成！徳川家康は関東へ国替えとなりました！",
         "killOfficerIds": [
@@ -5043,11 +5128,12 @@
       "desc": "【物語】<br>南九州に拠り、女王の支配に服さぬ男王の国『狗奴国（クナコク）』。<br>男王・卑弥弓呼（ヒミクコ）と軍権を握る軍神・狗古智卑狗（クコチヒコ）が肥後菊池の要塞より全軍を率いて怒涛の北伐を開始した！<br>狗奴国の誇る強靭な剛弓部隊の電撃戦により筑後・豊後の防衛線が突破され、邪馬台国は建国以来最大の危機に直面する！<br><br>【歴史解説（この時代に何があったのか）】<br>魏志倭人伝に『女王に服さず、狗奴国の男王・卑弥弓呼あり、素より和せず』と明記された激突です。<br>狗奴国の本拠地とされる熊本県の方保田東原遺跡からは大量の鉄器や石包丁が出土しており、南九州の豊かな鉱物・軍事力を持った軍事国家が邪馬台国の北九州拠点に猛攻を仕掛けた緊張関係が再現されています。",
       "changes": {
         "territory": {
-          "chikugo": "kuna",
           "bungo_funai": "kuna",
           "bungo_oka": "kuna",
           "bungo_kitaamabe": "kuna",
-          "bungo_minamiamabe": "kuna"
+          "bungo_minamiamabe": "kuna",
+          "chikugo_north": "kuna",
+          "chikugo_south": "kuna"
         },
         "clanEffects": {
           "kuna": {
@@ -5059,7 +5145,7 @@
           }
         },
         "provinceEffects": {
-          "chikugo": {
+          "chikugo_north": {
             "defenseDelta": 10
           },
           "bungo_funai": {
@@ -5099,11 +5185,12 @@
       "desc": "【物語】<br>狗奴国との死闘が続く中、魏の帯方郡より塞曹掾史・張政が来朝！<br>皇帝の軍旗『黄幢（こうどう）』が邪馬台国の大将軍・難升米に授与され、魏の檄文が諸国に布告された。<br>皇帝直授の黄幢を翻した難升米は全軍を鼓舞して乾坤一擲の大反撃を開始！筑後・豊後を電撃的に奪還し、狗奴国の勇将・熊木を討ち取った！<br><br>【歴史解説（この時代に何があったのか）】<br>正始8年（247年）、邪馬台国は狗奴国との戦況を魏に報告し、魏は張政を派遣して『黄幢』を難升米に授けました。<br>『黄幢』とは中国の皇帝軍の象徴である黄色い軍旗。異国の将にこれを授けるのは異例中の異例であり、魏が邪馬台国を強固な軍事同盟国として全面的にバックアップしていた歴史的証拠です。",
       "changes": {
         "territory": {
-          "chikugo": "yamatai",
           "bungo_funai": "yamatai",
           "bungo_oka": "yamatai",
           "bungo_kitaamabe": "yamatai",
-          "bungo_minamiamabe": "yamatai"
+          "bungo_minamiamabe": "yamatai",
+          "chikugo_north": "yamatai",
+          "chikugo_south": "yamatai"
         },
         "killOfficerIds": [
           "off_kumaki"
@@ -5578,11 +5665,12 @@
       "desc": "【物語】<br>邪馬台国からの急使に応え、魏の帯方郡より塞曹掾史・張政が大和の都・纒向へ来朝！<br>魏の皇帝の軍旗『黄幢（こうどう）』が大将軍・難升米に授与され、魏の檄文が天下に下された。<br>難升米と四道将軍は黄幢を掲げて西征軍を発進！瀬戸内海を渡って九州へと進軍し、狗奴国軍を壊滅させて筑後・豊後を奪回した！<br><br>【歴史解説（この時代に何があったのか）】<br>正始8年（247年）、邪馬台国と狗奴国の交戦に際し魏は張政を派遣して軍旗・黄幢を授けました。大和説では、魏の後ろ盾を得た大和の正規軍が瀬戸内海航路を通じて九州へと大遠征を行い、反抗勢力を鎮圧したと解釈されます。",
       "changes": {
         "territory": {
-          "chikugo": "yamatai",
           "bungo_funai": "yamatai",
           "bungo_oka": "yamatai",
           "bungo_kitaamabe": "yamatai",
-          "bungo_minamiamabe": "yamatai"
+          "bungo_minamiamabe": "yamatai",
+          "chikugo_north": "yamatai",
+          "chikugo_south": "yamatai"
         },
         "killOfficerIds": [
           "off_kumaki"
@@ -5846,6 +5934,10 @@
         "message": "越前長禄合戦で朝倉孝景が主家・斯波義敏軍を撃破！越前の実権が朝倉氏へと大きく傾きました！",
         "provinceEffects": {
           "echizen": {
+            "orderDelta": -25,
+            "moraleDelta": -15
+          },
+          "echizen_ohno": {
             "orderDelta": -25,
             "moraleDelta": -15
           }
@@ -6241,7 +6333,7 @@
             "orderDelta": -15,
             "moraleDelta": -10
           },
-          "totomi_hamamatsu_kakegawa": {
+          "totomi_hamamatsu": {
             "troopsRate": 0.85,
             "defenseDelta": -25,
             "orderDelta": -15,
@@ -6265,7 +6357,13 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
-          "mikawa": {
+          "mikawa_okazaki": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "mikawa_yoshida": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
@@ -6799,7 +6897,7 @@
       "forced": true,
       "changes": {
         "provinceEffects": {
-          "totomi_hamamatsu_kakegawa": {
+          "totomi_hamamatsu": {
             "troopsRate": 0.85,
             "defenseDelta": -25,
             "orderDelta": -15,
@@ -6829,7 +6927,13 @@
             "orderDelta": -15,
             "moraleDelta": -10
           },
-          "mikawa": {
+          "mikawa_okazaki": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "mikawa_yoshida": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
@@ -7016,6 +7120,12 @@
             "defenseDelta": -25,
             "orderDelta": -15,
             "moraleDelta": -10
+          },
+          "echizen_ohno": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
           }
         },
         "message": "天正の大地震！飛騨の帰雲城が山崩れに埋まり、近江長浜城・越中木舟城も倒壊。中部諸国の兵と城郭が大打撃を受けました。",
@@ -7208,7 +7318,13 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
-          "totomi_hamamatsu_kakegawa": {
+          "totomi_hamamatsu": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "totomi_kakegawa": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
@@ -7526,7 +7642,7 @@
             "orderDelta": -15,
             "moraleDelta": -10
           },
-          "totomi_hamamatsu_kakegawa": {
+          "totomi_hamamatsu": {
             "troopsRate": 0.85,
             "defenseDelta": -25,
             "orderDelta": -15,
@@ -7574,7 +7690,13 @@
             "orderDelta": -12,
             "moraleDelta": -8
           },
-          "mikawa": {
+          "mikawa_okazaki": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "mikawa_yoshida": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
@@ -7824,7 +7946,7 @@
             "orderDelta": -15,
             "moraleDelta": -10
           },
-          "totomi_hamamatsu_kakegawa": {
+          "totomi_hamamatsu": {
             "troopsRate": 0.85,
             "defenseDelta": -25,
             "orderDelta": -15,
@@ -7836,7 +7958,13 @@
             "orderDelta": -15,
             "moraleDelta": -10
           },
-          "mikawa": {
+          "mikawa_okazaki": {
+            "troopsRate": 0.88,
+            "defenseDelta": -20,
+            "orderDelta": -12,
+            "moraleDelta": -8
+          },
+          "mikawa_yoshida": {
             "troopsRate": 0.88,
             "defenseDelta": -20,
             "orderDelta": -12,
@@ -8147,7 +8275,8 @@
       ],
       "changes": {
         "territory": {
-          "echizen": "asakura"
+          "echizen": "asakura",
+          "echizen_ohno": "asakura"
         },
         "message": "朝倉孝景が東軍に寝返り越前守護の座を得ました！越前は斯波氏の手を離れ、朝倉氏のものとなりました。"
       }
@@ -8345,6 +8474,27 @@
         ],
         "message": "佐竹義宣が南方三十三館の諸将を謀殺し、常陸鹿島を併合しました。"
       }
+    },
+    {
+      "id": "evt_1565_yoshida_capture",
+      "scenarioId": "*",
+      "year": 1565,
+      "season": "春",
+      "title": "吉田城の開城・徳川の東三河制圧",
+      "desc": "永禄七年から八年にかけて、徳川家康は今川方の東三河の要・吉田城を攻めた。城代・小原鎮実は耐えきれず開城して退き、家康は重臣・酒井忠次を吉田城代に任じて東三河の国衆を束ねさせた。",
+      "changes": {
+        "territory": {
+          "mikawa_yoshida": "tokugawa"
+        },
+        "message": "徳川家康が吉田城を落とし、酒井忠次を城代として東三河を制圧しました！"
+      },
+      "requiresClans": [
+        "imagawa",
+        "tokugawa"
+      ],
+      "onlyFrom": [
+        "imagawa"
+      ]
     }
   ],
   "choiceEventRules": {
@@ -8750,32 +8900,80 @@
         "膳所城"
       ]
     ],
-    "mikawa": [
+    "mikawa_okazaki": [
       [
-        1185,
-        "三河国府館"
+        1180,
+        "額田郡衙"
       ],
       [
-        1560,
+        1183,
+        "足助館"
+      ],
+      [
+        1221,
+        "矢田館"
+      ],
+      [
+        1274,
+        "矢作・額田郡"
+      ],
+      [
+        1331,
+        "西条城"
+      ],
+      [
+        1333,
+        "矢作・額田郡"
+      ],
+      [
+        1336,
+        "矢作館"
+      ],
+      [
+        1391,
+        "西条城"
+      ],
+      [
+        1438,
+        "東条城"
+      ],
+      [
+        1457,
+        "松平郷館"
+      ],
+      [
+        1467,
         "岡崎城"
       ],
       [
-        1867,
-        "岡崎城"
+        1493,
+        "岩津城"
+      ],
+      [
+        1531,
+        "安城城"
       ],
       [
         9999,
-        "吉田城"
+        "岡崎城"
       ]
     ],
-    "totomi_hamamatsu_kakegawa": [
+    "totomi_hamamatsu": [
       [
         1185,
-        "遠江国府館"
+        "敷智郡（伊場・引間）"
+      ],
+      [
+        1221,
+        "浜松荘（引間）"
+      ],
+      [
+        1467,
+        "曳馬城"
       ],
       [
         1570,
-        "曳馬城"
+        "浜松城"
       ],
       [
         9999,
@@ -9242,7 +9440,7 @@
         "福岡城"
       ]
     ],
-    "chikugo": [
+    "chikugo_north": [
       [
         1620,
         "柳川城"
@@ -11404,6 +11602,50 @@
       [
         9999,
         "佐伯城跡（旧佐伯藩）"
+      ]
+    ],
+    "totomi_kakegawa": [
+      [
+        1185,
+        "遠江国府館"
+      ],
+      [
+        1467,
+        "見付城"
+      ],
+      [
+        1493,
+        "掛川城"
+      ],
+      [
+        9999,
+        "掛川城"
+      ]
+    ],
+    "mikawa_yoshida": [
+      [
+        1180,
+        "三河国府館"
+      ],
+      [
+        1221,
+        "三河国府館"
+      ],
+      [
+        1493,
+        "三河国府"
+      ],
+      [
+        1517,
+        "田原城"
+      ],
+      [
+        1531,
+        "今橋城"
+      ],
+      [
+        9999,
+        "吉田城"
       ]
     ]
   },

@@ -323,7 +323,7 @@ export const HISTORICAL_CHOICE_EVENTS = [
               g.okehazamaOccurred = true;
 
               // 三河国の松平（徳川）家独立
-              const mikawaProv = (g.provinces || []).find(pr => pr.id === 'mikawa');
+              const mikawaProv = (g.provinces || []).find(pr => pr.id === 'mikawa_okazaki');
               if (mikawaProv && mikawaProv.ownerId === 'imagawa') {
                 mikawaProv.ownerId = 'matsudaira';
                 mikawaProv.troops = 3000;
@@ -415,7 +415,7 @@ export const HISTORICAL_CHOICE_EVENTS = [
                   pr.troops = Math.max(3000, pr.troops || 3000);
                 }
               });
-              ['totomi_hamamatsu_kakegawa', 'totomi_futamata_haibara', 'totomi_joto'].forEach(tid => {
+              ['totomi_hamamatsu', 'totomi_kakegawa', 'totomi_futamata_haibara', 'totomi_joto'].forEach(tid => {
                 const totomi = g.provinces.find(p => p.id === tid);
                 if (totomi && totomi.ownerId === 'imagawa') {
                   const tokuId = g.isClanExtant('tokugawa') ? 'tokugawa' : (g.isClanExtant('matsudaira') ? 'matsudaira' : 'takeda');
@@ -473,7 +473,7 @@ export const HISTORICAL_CHOICE_EVENTS = [
                   pr.troops = Math.max(3000, pr.troops || 3000);
                 }
               });
-              ['totomi_hamamatsu_kakegawa', 'totomi_futamata_haibara', 'totomi_joto'].forEach(tid => {
+              ['totomi_hamamatsu', 'totomi_kakegawa', 'totomi_futamata_haibara', 'totomi_joto'].forEach(tid => {
                 const totomi = g.provinces.find(p => p.id === tid);
                 if (totomi && totomi.ownerId === 'imagawa') {
                   const tokuId = g.isClanExtant('tokugawa') ? 'tokugawa' : (g.isClanExtant('matsudaira') ? 'matsudaira' : 'takeda');

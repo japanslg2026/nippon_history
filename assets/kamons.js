@@ -1067,6 +1067,10 @@ window.KAMONS_SVG_CONTENT = `<svg xmlns="http://www.w3.org/2000/svg" width="0" h
     <title>北条家・鎌倉幕府・三つ鱗</title>
     <use href="#kamon-ema-mitsuuroko" width="32" height="32" />
   </symbol>
+  <symbol id="kamon-hondo" data-v="4" data-mon="八甃" viewBox="2 2 28 28">
+    <title>本堂家・八甃</title>
+    <path d="M 13.6 4 L 18.4 4 L 18.4 8.8 L 13.6 8.8 Z M 8.8 8.8 L 13.6 8.8 L 13.6 13.6 L 8.8 13.6 Z M 18.4 8.8 L 23.2 8.8 L 23.2 13.6 L 18.4 13.6 Z M 4 13.6 L 8.8 13.6 L 8.8 18.4 L 4 18.4 Z M 23.2 13.6 L 28 13.6 L 28 18.4 L 23.2 18.4 Z M 8.8 18.4 L 13.6 18.4 L 13.6 23.2 L 8.8 23.2 Z M 18.4 18.4 L 23.2 18.4 L 23.2 23.2 L 18.4 23.2 Z M 13.6 23.2 L 18.4 23.2 L 18.4 28 L 13.6 28 Z" fill="#ffffff" />
+  </symbol>
   <symbol id="kamon-honganji" data-v="4" data-mon="卍" viewBox="2 2 28 28">
     <title>本願寺家・卍</title>
     <path d="M 17.8 14.2 L 17.8 6 L 6 6 L 6 9.6 L 14.2 9.6 L 14.2 14.2 L 6 14.2 L 6 26 L 9.6 26 L 9.6 17.8 L 14.2 17.8 L 14.2 26 L 26 26 L 26 22.4 L 17.8 22.4 L 17.8 17.8 L 26 17.8 L 26 6 L 22.4 6 L 22.4 14.2 Z" fill="#ffffff" />
@@ -1780,6 +1784,33 @@ window.KAMONS_SVG_CONTENT = `<svg xmlns="http://www.w3.org/2000/svg" width="0" h
     <title>六角家・隅立て四つ目結</title>
     <path d="M 16 3.7 L 21.66 9.35 L 16 15.01 L 10.34 9.35 Z M 16 6.67 L 13.31 9.35 L 16 12.04 L 18.69 9.35 Z M 22.65 10.34 L 28.3 16 L 22.65 21.66 L 16.99 16 Z M 22.65 13.31 L 19.96 16 L 22.65 18.69 L 25.33 16 Z M 9.35 10.34 L 15.01 16 L 9.35 21.66 L 3.7 16 Z M 9.35 13.31 L 6.67 16 L 9.35 18.69 L 12.04 16 Z M 16 16.99 L 21.66 22.65 L 16 28.3 L 10.34 22.65 Z M 16 19.96 L 13.31 22.65 L 16 25.33 L 18.69 22.65 Z" fill="#ffffff" fill-rule="evenodd" />
   </symbol>
+  <symbol id="kamon-rokugo" data-v="4" data-mon="六郷亀甲" viewBox="2 2 28 28">
+    <title>六郷家・六郷亀甲</title>
+    <path d="M 16 4.15 L 21.09 7.09 L 21.09 12.97 L 16 15.91 L 10.91 12.97 L 10.91 7.09 Z M 16 5.13 L 20.24 7.58 L 20.24 12.48 L 16 14.93 L 11.76 12.48 L 11.76 7.58 Z" fill="#ffffff" fill-rule="evenodd" />
+    <circle cx="16" cy="10.03" r="1.25" fill="#ffffff" />
+    <circle cx="16" cy="7.07" r="1.25" fill="#ffffff" />
+    <circle cx="18.56" cy="8.55" r="1.25" fill="#ffffff" />
+    <circle cx="18.56" cy="11.51" r="1.25" fill="#ffffff" />
+    <circle cx="16" cy="12.99" r="1.25" fill="#ffffff" />
+    <circle cx="13.44" cy="11.51" r="1.25" fill="#ffffff" />
+    <circle cx="13.44" cy="8.55" r="1.25" fill="#ffffff" />
+    <path d="M 21.39 13.48 L 26.48 16.42 L 26.48 22.3 L 21.39 25.24 L 16.29 22.3 L 16.29 16.42 Z M 21.39 14.46 L 25.63 16.91 L 25.63 21.81 L 21.39 24.26 L 17.15 21.81 L 17.15 16.91 Z" fill="#ffffff" fill-rule="evenodd" />
+    <circle cx="21.39" cy="19.36" r="1.25" fill="#ffffff" />
+    <circle cx="21.39" cy="16.4" r="1.25" fill="#ffffff" />
+    <circle cx="23.95" cy="17.88" r="1.25" fill="#ffffff" />
+    <circle cx="23.95" cy="20.84" r="1.25" fill="#ffffff" />
+    <circle cx="21.39" cy="22.32" r="1.25" fill="#ffffff" />
+    <circle cx="18.83" cy="20.84" r="1.25" fill="#ffffff" />
+    <circle cx="18.83" cy="17.88" r="1.25" fill="#ffffff" />
+    <path d="M 10.61 13.48 L 15.71 16.42 L 15.71 22.3 L 10.61 25.24 L 5.52 22.3 L 5.52 16.42 Z M 10.61 14.46 L 14.85 16.91 L 14.85 21.81 L 10.61 24.26 L 6.37 21.81 L 6.37 16.91 Z" fill="#ffffff" fill-rule="evenodd" />
+    <circle cx="10.61" cy="19.36" r="1.25" fill="#ffffff" />
+    <circle cx="10.61" cy="16.4" r="1.25" fill="#ffffff" />
+    <circle cx="13.17" cy="17.88" r="1.25" fill="#ffffff" />
+    <circle cx="13.17" cy="20.84" r="1.25" fill="#ffffff" />
+    <circle cx="10.61" cy="22.32" r="1.25" fill="#ffffff" />
+    <circle cx="8.05" cy="20.84" r="1.25" fill="#ffffff" />
+    <circle cx="8.05" cy="17.88" r="1.25" fill="#ffffff" />
+  </symbol>
   <symbol id="kamon-ryukyu" data-v="4" data-mon="左三つ巴" viewBox="0 0 32 32">
     <title>琉球王家・左三つ巴</title>
     <use href="#kamon-akamatsu" width="32" height="32" />
@@ -2336,7 +2367,64 @@ window.KAMONS_SVG_CONTENT = `<svg xmlns="http://www.w3.org/2000/svg" width="0" h
     <title>榎本家（五稜郭・新選組）</title>
     <use href="#kamon-shinsengumi"/>
   </symbol>
-</defs>
+  <symbol id="kamon-hori" data-v="4" data-mon="堀亀甲に花菱" viewBox="2 2 28 28">
+    <title>堀家・堀亀甲に花菱</title>
+    <path d="M 16 3.8 L 26.57 9.9 L 26.57 22.1 L 16 28.2 L 5.43 22.1 L 5.43 9.9 Z M 16 5.45 L 25.14 10.72 L 25.14 21.28 L 16 26.55 L 6.86 21.28 L 6.86 10.72 Z" fill="#ffffff" fill-rule="evenodd" />
+    <path d="M 16 6.6 L 24.14 11.3 L 24.14 20.7 L 16 25.4 L 7.86 20.7 L 7.86 11.3 Z M 16 7.75 L 23.14 11.88 L 23.14 20.12 L 16 24.25 L 8.86 20.12 L 8.86 11.88 Z" fill="#ffffff" fill-rule="evenodd" />
+    <polygon points="16,14.8 17.2,16 16,17.2 14.8,16" fill="#ffffff" />
+    <path d="M 14.3 16 C 13.5 14.0 11.4 14.3 10.1 16 C 11.4 17.7 13.5 18.0 14.3 16 Z" fill="#ffffff" />
+    <path d="M 17.7 16 C 18.5 14.0 20.6 14.3 21.9 16 C 20.6 17.7 18.5 18.0 17.7 16 Z" fill="#ffffff" />
+    <path d="M 16 14.3 C 14.0 13.5 14.3 11.4 16 10.1 C 17.7 11.4 18.0 13.5 16 14.3 Z" fill="#ffffff" />
+    <path d="M 16 17.7 C 14.0 18.5 14.3 20.6 16 21.9 C 17.7 20.6 18.0 18.5 16 17.7 Z" fill="#ffffff" />
+  </symbol>
+  <symbol id="kamon-kanamori" data-v="4" data-mon="金森梅鉢" viewBox="2 2 28 28">
+    <title>金森家・金森梅鉢</title>
+    <circle cx="16" cy="16" r="12.2" fill="none" stroke="#ffffff" stroke-width="1.5" />
+    <circle cx="16" cy="16" r="1.85" fill="#ffffff" />
+    <line x1="16" y1="14.15" x2="16" y2="11.5" stroke="#ffffff" stroke-width="0.9" />
+    <line x1="17.76" y1="15.43" x2="20.28" y2="14.61" stroke="#ffffff" stroke-width="0.9" />
+    <line x1="17.09" y1="17.5" x2="18.65" y2="19.64" stroke="#ffffff" stroke-width="0.9" />
+    <line x1="14.91" y1="17.5" x2="13.35" y2="19.64" stroke="#ffffff" stroke-width="0.9" />
+    <line x1="14.24" y1="15.43" x2="11.72" y2="14.61" stroke="#ffffff" stroke-width="0.9" />
+    <circle cx="16.00" cy="9.40" r="3.20" fill="#ffffff" />
+    <circle cx="22.28" cy="13.96" r="3.20" fill="#ffffff" />
+    <circle cx="19.88" cy="21.34" r="3.20" fill="#ffffff" />
+    <circle cx="12.12" cy="21.34" r="3.20" fill="#ffffff" />
+    <circle cx="9.72" cy="13.96" r="3.20" fill="#ffffff" />
+  </symbol>
+  <symbol id="kamon-mori-tsurumaru" data-v="4" data-mon="森鶴丸" viewBox="0 0 32 32">
+    <title>森家・鶴の丸</title>
+    <use href="#kamon-kokura-mori-tsurumaru" width="32" height="32" />
+  </symbol>
+  <symbol id="kamon-saiki-mori" data-v="4" data-mon="丸に違い矢筈" viewBox="2 2 28 28">
+    <title>毛利家・丸に違い矢筈</title>
+    <circle cx="16" cy="16" r="12.2" fill="none" stroke="#ffffff" stroke-width="1.65" />
+    <path d="M 8.6 9.9 L 10.6 7.9 L 12.1 9.4 L 11.4 10.9 L 23.2 22.7 L 21.8 24.1 L 10.0 12.3 L 8.5 13.0 L 7.0 11.5 Z" fill="#ffffff" />
+    <path d="M 23.4 9.9 L 25.0 11.5 L 23.5 13.0 L 22.0 12.3 L 10.2 24.1 L 8.8 22.7 L 20.6 10.9 L 19.9 9.4 L 21.4 7.9 Z" fill="#ffffff" />
+  </symbol>
+  <symbol id="kamon-matsumoto-ishikawa" data-v="4" data-mon="笹竜胆" viewBox="0 0 32 32">
+    <title>石川家・笹竜胆</title>
+    <use href="#kamon-genji" width="32" height="32" />
+  </symbol>
+  <symbol id="kamon-tanaka" data-v="4" data-mon="丸に釘抜" viewBox="2 2 28 28">
+    <title>田中家・丸に釘抜</title>
+    <circle cx="16" cy="16" r="12.2" fill="none" stroke="#ffffff" stroke-width="1.65" />
+    <path d="M 16 7.6 L 24.4 16 L 16 24.4 L 7.6 16 Z M 16 12.2 L 19.8 16 L 16 19.8 L 12.2 16 Z" fill="#ffffff" fill-rule="evenodd" />
+  </symbol>
+  <symbol id="kamon-horio" data-v="4" data-mon="丸に分銅" viewBox="2 2 28 28">
+    <title>堀尾家・丸に分銅</title>
+    <circle cx="16" cy="16" r="12.2" fill="none" stroke="#ffffff" stroke-width="1.65" />
+    <path d="M 10.5 8.8 C 12.2 7.2 19.8 7.2 21.5 8.8 C 22.8 10.0 22.4 12.4 20.4 13.3 C 18.6 14.1 18.6 17.9 20.4 18.7 C 22.4 19.6 22.8 22.0 21.5 23.2 C 19.8 24.8 12.2 24.8 10.5 23.2 C 9.2 22.0 9.6 19.6 11.6 18.7 C 13.4 17.9 13.4 14.1 11.6 13.3 C 9.6 12.4 9.2 10.0 10.5 8.8 Z M 16 12.4 A 1.3 1.3 0 1 0 16 9.8 A 1.3 1.3 0 1 0 16 12.4 Z M 16 22.2 A 1.3 1.3 0 1 0 16 19.6 A 1.3 1.3 0 1 0 16 22.2 Z" fill="#ffffff" fill-rule="evenodd" />
+  </symbol>
+  <symbol id="kamon-nakamura" data-v="4" data-mon="丸に三つ銀杏" viewBox="2 2 28 28">
+    <title>中村家・丸に三つ銀杏</title>
+    <circle cx="16" cy="16" r="12.2" fill="none" stroke="#ffffff" stroke-width="1.65" />
+    <path d="M 16 15.2 L 12.0 8.5 C 12.8 7.2 14.3 6.8 15.3 7.6 L 16 9.0 L 16.7 7.6 C 17.7 6.8 19.2 7.2 20.0 8.5 Z" fill="#ffffff" />
+    <path d="M 16.7 16.4 L 24.5 17.4 C 24.8 18.8 23.8 20.2 22.5 20.4 L 21.0 19.9 L 21.7 21.3 C 21.5 22.6 20.0 23.3 18.6 22.6 Z" fill="#ffffff" />
+    <path d="M 15.3 16.4 L 13.4 22.6 C 12.0 23.3 10.5 22.6 10.3 21.3 L 11.0 19.9 L 9.5 20.4 C 8.2 20.2 7.2 18.8 7.5 17.4 Z" fill="#ffffff" />
+    <circle cx="16" cy="16" r="1.2" fill="#ffffff" />
+  </symbol>
+  </defs>
 </svg>`;
 
 // 家紋SVGシンボルのDOM自動注入ロジック

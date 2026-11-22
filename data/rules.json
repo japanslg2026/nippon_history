@@ -2723,7 +2723,7 @@
         "off_miyamoto_musashi"
       ],
       "setClanId": "tokugawa",
-      "setDefaultProv": "mikawa",
+      "setDefaultProv": "mikawa_okazaki",
       "years": [
         1614
       ],
@@ -2980,10 +2980,6 @@
         "off_toyotomi_hideyoshi",
         "off_toyotomi_hidenaga",
         "off_toyotomi_hidetsugu",
-        "off_ikeda_tsuneoki",
-        "off_ikeda_terumasa",
-        "off_mori_nagayoshi",
-        "off_hori_hidemasa",
         "off_maeda_toshiie",
         "off_asano_nagamasa",
         "off_ishida_mitsunari",
@@ -3000,7 +2996,6 @@
         "off_cho_tsuratatsu",
         "off_maeda_geni",
         "off_yamana_toyokuni",
-        "off_kanamori_arishige",
         "off_wakisaka_yasuharu",
         "off_succ_ito_1550_45",
         "off_koide_yoshimasa"
@@ -3091,7 +3086,6 @@
         "off_gamo_ujisato",
         "off_hachisuka_iemasa",
         "off_maeda_toshiie",
-        "off_hori_hidemasa",
         "off_kobayakawa_takakage",
         "off_konishi_yukinaga",
         "off_hosokawa_fujitaka",
@@ -3101,7 +3095,6 @@
         "off_niwa_nagashige",
         "off_maeda_geni",
         "off_yamana_toyokuni",
-        "off_kanamori_arishige",
         "off_kato_yoshiaki",
         "off_sengoku_hidehisa",
         "off_succ_ito_1550_45",
@@ -3200,7 +3193,6 @@
         "off_toyotomi_hidetsugu",
         "off_maeda_toshiie",
         "off_dm_maeda_1600",
-        "off_hori_hidemasa",
         "off_niwa_nagashige",
         "off_dm_ukita_1582",
         "off_kobayakawa_takakage",
@@ -3212,7 +3204,6 @@
         "off_fukushima_masanori",
         "off_hachisuka_iemasa",
         "off_hachisuka_koroku",
-        "off_yamauchi_kazutoyo",
         "off_wakisaka_yasuharu",
         "off_kato_yoshiaki",
         "off_katagiri_katsumoto",
@@ -3283,15 +3274,9 @@
         "off_cho_tsuratatsu",
         "off_soma_yoshitane",
         "off_succ_ito_1550_45",
-        "off_yamauchi_kazutoyo",
-        "off_tanaka_yoshimasa",
         "off_todo_takatora",
-        "off_kyogoku_takatsugu",
         "off_koide_yoshimasa",
-        "off_ikeda_terumasa",
         "off_kato_yoshiaki",
-        "off_nakamura_kazuuji",
-        "off_ishikawa_kazumasa",
         "off_wakisaka_yasuharu",
         "off_sengoku_hidehisa"
       ],
@@ -3420,7 +3405,7 @@
         "tachibana"
       ],
       "setDaimyo": true,
-      "setDefaultProv": "chikugo"
+      "setDefaultProv": "chikugo_north"
     },
     {
       "id": "single_any_toyotomi_黒田官兵衛_30",
@@ -3444,7 +3429,8 @@
       "setClanId": "sanada",
       "requireOwners": [
         "sanada"
-      ]
+      ],
+      "unlessOwner": "numata_sanada"
     },
     {
       "id": "single_any_hojo_千葉邦胤_32",
@@ -4917,8 +4903,8 @@
         "1333"
       ],
       "setClanId": "ashikaga",
-      "setDefaultProv": "mikawa",
-      "setAssignedProv": "mikawa",
+      "setDefaultProv": "mikawa_okazaki",
+      "setAssignedProv": "mikawa_okazaki",
       "setDaimyo": false
     },
     {
@@ -5672,19 +5658,6 @@
       "setDaimyo": false
     },
     {
-      "id": "ikeda_toshitaka_toyotomi_harima_1600",
-      "officerIds": [
-        "off_succ_okayama_1584_117"
-      ],
-      "scenarioIds": [
-        "1600"
-      ],
-      "setClanId": "toyotomi",
-      "setDefaultProv": "harima_west",
-      "setAssignedProv": "harima_west",
-      "setDaimyo": false
-    },
-    {
       "id": "inami_tsunenaga_hojo_kazusa_1274",
       "officerIds": [
         "off_inami_tsunenaga"
@@ -6024,15 +5997,15 @@
       "officerIds": [
         "off_torii_suneemon"
       ],
-      "fromYear": 1556,
+      "fromYear": 1555,
       "toYear": 1561,
       "requireOwners": [
         "imagawa"
       ],
       "setClanId": "imagawa",
-      "setDefaultProv": "suruga",
       "clearAssignment": true,
-      "setDaimyo": false
+      "setDaimyo": false,
+      "placeInOwnedProv": "mikawa_shitara"
     },
     {
       "id": "a2_torii_suneemon_takeda_1571_1573",
@@ -6046,6 +6019,97 @@
       ],
       "setClanId": "takeda",
       "setDefaultProv": "mikawa_shitara",
+      "clearAssignment": true,
+      "setDaimyo": false,
+      "placeInOwnedProv": "mikawa_shitara"
+    },
+    {
+      "id": "f3_shimazu_katsuhisa_bungo_exile",
+      "officerIds": [
+        "off_shimazu_katsuhisa"
+      ],
+      "fromYear": 1540,
+      "toYear": 1573,
+      "setClanId": "ronin",
+      "setDefaultProv": "bungo_funai",
+      "clearAssignment": true,
+      "setDaimyo": false
+    },
+    {
+      "id": "f3_shimazu_tadanao_uesugi_1562_1581",
+      "officerIds": [
+        "off_shimazu_tadanao"
+      ],
+      "fromYear": 1562,
+      "toYear": 1581,
+      "requireOwners": [
+        "uesugi"
+      ],
+      "setClanId": "uesugi",
+      "placeInOwnedProv": "echigo",
+      "clearAssignment": true,
+      "setDaimyo": false
+    },
+    {
+      "id": "f3_shimazu_tadanao_nagao_1562_1581",
+      "officerIds": [
+        "off_shimazu_tadanao"
+      ],
+      "fromYear": 1562,
+      "toYear": 1581,
+      "requireOwners": [
+        "nagao"
+      ],
+      "setClanId": "nagao",
+      "placeInOwnedProv": "echigo",
+      "clearAssignment": true,
+      "setDaimyo": false
+    },
+    {
+      "id": "f3_yamada_munemasa_ito_1558_1577",
+      "officerIds": [
+        "off_yamada_munemasa"
+      ],
+      "fromYear": 1558,
+      "toYear": 1577,
+      "requireOwners": [
+        "ito"
+      ],
+      "setClanId": "ito",
+      "placeInOwnedProv": "hyuga_sadowara",
+      "clearAssignment": true,
+      "setDaimyo": false
+    },
+    {
+      "id": "f3_okudaira_takeda_1571_1573",
+      "officerIds": [
+        "off_pl1570_024",
+        "off_jd_040"
+      ],
+      "fromYear": 1571,
+      "toYear": 1573,
+      "requireOwners": [
+        "takeda"
+      ],
+      "setClanId": "takeda",
+      "placeInOwnedProv": "mikawa_shitara",
+      "clearAssignment": true,
+      "setDaimyo": false
+    },
+    {
+      "id": "f3_okudaira_tokugawa_1574",
+      "officerIds": [
+        "off_pl1570_024",
+        "off_jd_040",
+        "off_torii_suneemon"
+      ],
+      "fromYear": 1574,
+      "toYear": 1575,
+      "requireOwners": [
+        "tokugawa"
+      ],
+      "setClanId": "tokugawa",
+      "placeInOwnedProv": "mikawa_shitara",
       "clearAssignment": true,
       "setDaimyo": false
     }
@@ -6406,6 +6470,22 @@
       "setClanId": "uesugi",
       "fromYear": 1583,
       "toYear": 1599
+    },
+    {
+      "clanIds": [
+        "takanashi"
+      ],
+      "setClanId": "uesugi",
+      "fromYear": 1553,
+      "toYear": 1582
+    },
+    {
+      "clanIds": [
+        "takanashi"
+      ],
+      "setClanId": "nagao",
+      "fromYear": 1553,
+      "toYear": 1582
     }
   ],
   "leaderNameAliases": [
@@ -6507,6 +6587,26 @@
         "family": "徳川家"
       },
       "log": "📜【改姓】松平家康公は勅許を得て姓を松平から「徳川」に改め、従五位下三河守に叙任されました。松平家はこれより「徳川家」を称します。"
+    },
+    "tosa": {
+      "switchYear": 1601,
+      "before": {
+        "family": "山内家"
+      },
+      "after": {
+        "family": "土佐藩山内家"
+      },
+      "log": "📜【入封】山内一豊公は土佐一国20万石に封じられ、これより「土佐藩山内家」を称します。"
+    },
+    "kyogoku_iida": {
+      "switchYear": 1601,
+      "before": {
+        "family": "飯田京極家"
+      },
+      "after": {
+        "family": "丹後京極家"
+      },
+      "log": "📜【加増移封】京極高知公は関ヶ原の戦功により丹後一国12万3千石へ移封され、宮津城に入ってこれより「丹後京極家」を称します。"
     }
   },
   "clanCapitalEras": {
@@ -6585,11 +6685,11 @@
     "tokugawa": [
       [
         1560,
-        "mikawa"
+        "mikawa_okazaki"
       ],
       [
         1570,
-        "totomi_hamamatsu_kakegawa"
+        "totomi_hamamatsu"
       ],
       [
         1586,
@@ -6670,6 +6770,190 @@
       [
         1457,
         "owari_north"
+      ]
+    ],
+    "hori": [
+      [
+        1583,
+        "omi_north"
+      ],
+      [
+        1586,
+        "echizen"
+      ],
+      [
+        1598,
+        "echigo"
+      ],
+      [
+        1610,
+        "shinano_kawanakajima"
+      ],
+      [
+        1618,
+        "echigo_murakami"
+      ],
+      [
+        1643,
+        "shimotsuke_nasu"
+      ],
+      [
+        1672,
+        "shinano_iida"
+      ]
+    ],
+    "kanamori": [
+      [
+        1583,
+        "echizen_ohno"
+      ],
+      [
+        1586,
+        "hida_takayama"
+      ],
+      [
+        1697,
+        "mino_gujo"
+      ]
+    ],
+    "mori_clan": [
+      [
+        1583,
+        "mino_iwamura"
+      ],
+      [
+        1600,
+        "shinano_sarashina_hanishina"
+      ],
+      [
+        1603,
+        "mimasaka_east"
+      ]
+    ],
+    "saiki_mori": [
+      [
+        1590,
+        "shinano_iida"
+      ],
+      [
+        1594,
+        "bungo_minamiamabe"
+      ]
+    ],
+    "matsumoto_ishikawa": [
+      [
+        1590,
+        "shinano_chikuma_azumi"
+      ]
+    ],
+    "kyogoku_iida": [
+      [
+        1593,
+        "shinano_iida"
+      ],
+      [
+        1601,
+        "tango"
+      ]
+    ],
+    "tanaka": [
+      [
+        1590,
+        "mikawa_okazaki"
+      ],
+      [
+        1601,
+        "chikugo_south"
+      ]
+    ],
+    "okayama": [
+      [
+        1580,
+        "settsu"
+      ],
+      [
+        1584,
+        "mino"
+      ],
+      [
+        1590,
+        "mikawa_yoshida"
+      ],
+      [
+        1601,
+        "harima_west"
+      ],
+      [
+        1632,
+        "bizen"
+      ]
+    ],
+    "tottori": [
+      [
+        1601,
+        "inaba"
+      ]
+    ],
+    "horio": [
+      [
+        1590,
+        "totomi_hamamatsu"
+      ],
+      [
+        1601,
+        "izumo_north"
+      ]
+    ],
+    "tosa": [
+      [
+        1585,
+        "omi_north"
+      ],
+      [
+        1590,
+        "totomi_kakegawa"
+      ],
+      [
+        1601,
+        "tosa_gun"
+      ]
+    ],
+    "nakamura": [
+      [
+        1583,
+        "izumi"
+      ],
+      [
+        1585,
+        "omi_koka"
+      ],
+      [
+        1590,
+        "suruga"
+      ]
+    ],
+    "numata_sanada": [
+      [
+        1590,
+        "kozuke_numata"
+      ]
+    ],
+    "kyogoku": [
+      [
+        1331,
+        "omi_north"
+      ],
+      [
+        1590,
+        "omi_south"
+      ],
+      [
+        1601,
+        "wakasa"
+      ],
+      [
+        1658,
+        "sanuki_west"
       ]
     ]
   },
@@ -7066,7 +7350,35 @@
     "off_hachisuka_iemasa": "hachisuka",
     "off_inada_tanemoto": "hachisuka",
     "off_sogo_masayuki": "sogo",
-    "off_takato_yoritsugu": "takato"
+    "off_takato_yoritsugu": "takato",
+    "off_hist_1567_ishikawa_hisatomo": "mimura",
+    "off_pl1590_079": "otomo",
+    "off_genpei_chr_124": "taira",
+    "off_honjo_shigenaga": "uesugi",
+    "off_asakura_kageakira": "asakura",
+    "off_pl1570_066": "uesugi",
+    "off_pl1331_012": "kikuchi",
+    "off_nawa_akioki": "kikuchi",
+    "off_kashima_michiharu": "satake",
+    "off_pl1570_177": "satake",
+    "off_hata_chikashi": "ryuzoji",
+    "off_pl1570_128": "ryuzoji",
+    "off_tagishimimi": "jimmu",
+    "off_jd_hist_0368": "kitabatake",
+    "off_seki_morimasa": "kitabatake",
+    "off_jd_hist_0370": "kono",
+    "off_ono_naoshige": "kono",
+    "off_toyama_kagesaki": "saito",
+    "off_anc_F_046": "taira_masakado",
+    "off_okiyoou": "taira_masakado",
+    "off_hienuki_terutoki": "shiba_oshu",
+    "off_pl1590_101": "toyotomi",
+    "off_jd_hist_0369": "akechi",
+    "off_asari_katsuyori": "ando",
+    "off_jd_hist_0375": "onodera",
+    "off_shakenobe_hidetsuna": "mogami",
+    "off_mononobe_toochine": "yamato_court",
+    "off_taika_T1_008": "yamato_court"
   },
   "factionRosters": {
     "goryokaku": [
@@ -7113,6 +7425,18 @@
     [
       "off_shimazu_yoshihisa",
       "off_shimazu_tadayoshi"
+    ],
+    [
+      "off_h_so_yoshikatsu_1771",
+      "off_succ_so_1755_183"
+    ],
+    [
+      "off_jd_hist_0244",
+      "off_hist_1801_satake_yoshiyasu"
+    ],
+    [
+      "off_jd_hist_0345",
+      "off_hist_1840_matsudaira_tadanari"
     ]
   ],
   "_comment_distinctHomonymOfficerIds": "同姓同名だが別人の武将。ゲームの同名重複排除でまとめて消さない"
