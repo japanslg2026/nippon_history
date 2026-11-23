@@ -5803,8 +5803,8 @@
     "mapNo": 185,
     "_svgArea": 231.3841499999835,
     "_svgMinDim": 24.28000000000003,
-    "kamonX": 127.9,
-    "kamonY": 410.1
+    "kamonX": 114.3,
+    "kamonY": 399
   },
   {
     "region": "九州",
@@ -5832,7 +5832,9 @@
       "bungo_funai",
       "chikugo_north",
       "higo_kumamoto"
-    ]
+    ],
+    "kamonX": 108.1,
+    "kamonY": 408.9
   },
   {
     "id": "hizen_saga",
