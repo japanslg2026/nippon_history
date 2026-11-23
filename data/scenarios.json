@@ -290639,8 +290639,8 @@
       "sagami_miura": "tokugawa",
       "izu": "tokugawa",
       "kozuke_takasaki": "tokugawa",
-      "kozuke_agatsuma": "numata_sanada",
-      "kozuke_numata": "numata_sanada",
+      "kozuke_agatsuma": "sanada",
+      "kozuke_numata": "sanada",
       "kozuke_maebashi": "tokugawa",
       "kozuke_nitta_kanayama": "tokugawa",
       "shimousa": "tokugawa",
@@ -291628,12 +291628,12 @@
         "myProvinces": [
           "hitachi_ohta",
           "hitachi_mito",
-          "hitachi_makabe",
-          "hitachi_kashima",
+          "hitachi_fuchu",
           "hitachi_tsuchiura",
-          "hitachi_shida",
+          "hitachi_makabe",
           "hitachi_shimotsuma",
-          "hitachi_fuchu"
+          "hitachi_kashima",
+          "hitachi_shida"
         ],
         "gold": 1600,
         "rice": 1800,
@@ -291760,35 +291760,34 @@
         }
       },
       {
-        "id": "numata_sanada",
-        "name": "真田信之",
-        "clan": "沼田真田家",
-        "title": "上野沼田沼田城主・沼田真田家",
-        "startProvId": "kozuke_numata",
-        "color": "#b03a2e",
-        "kamon": "kamon-sanada",
-        "crest": "沼",
-        "officerId": "off_sanada_nobuyuki",
-        "desc": "真田昌幸の嫡男・真田信之（信幸）が上野沼田城・岩櫃城を拠点に統治した沼田領・沼田藩真田家。本多忠勝の娘・小松姫を正室に迎え、関ヶ原の戦いでは父・昌幸や弟・幸村と袂を分かって東軍に属し真田家の血脈を守り抜いた。信之の松代移封後も信吉・信政・信利が上野沼田藩主として分立した。",
-        "stats": {
-          "military": 75,
-          "politics": 77,
-          "intellect": 72,
-          "stratagem": 72
-        },
-        "kamonSvgId": "kamon-sanada",
-        "difficulty": "中級",
+        "id": "sanada",
+        "difficulty": "上級",
         "winRate": 48,
-        "provCount": 2,
+        "startProvId": "shinano_ueda",
+        "provCount": 3,
         "myProvinces": [
           "kozuke_numata",
-          "kozuke_agatsuma"
+          "kozuke_agatsuma",
+          "shinano_ueda"
         ],
         "gold": 1400,
-        "rice": 1800,
+        "rice": 1500,
         "personality": "balanced",
-        "tactic": "獅子奮迅の沼田六文銭",
-        "tacticDesc": "徳川・豊臣双方から器量を認められた真田信之と沼田衆の堅実無比な布陣により、部隊の攻防と士気を高める。"
+        "officerId": "off_sanada_masayuki",
+        "desc": "幸隆・昌幸・幸村と続く智謀の家。上田城を本拠に徳川の大軍を二度にわたり撃退し、「日本一の兵」として後世に語り継がれた。",
+        "name": "真田昌幸",
+        "color": "#922b21",
+        "crest": "真",
+        "kamonSvgId": "kamon-sanada",
+        "clan": "真田家",
+        "tactic": "表裏比興の神謀",
+        "tacticDesc": "神算鬼謀の計略で大軍を狭隘な隘路に誘い込み、完全に殲滅する。",
+        "stats": {
+          "military": 75,
+          "politics": 74,
+          "intellect": 97,
+          "stratagem": 97
+        }
       },
       {
         "id": "satomi",
@@ -291816,34 +291815,6 @@
           "politics": 44,
           "intellect": 41,
           "stratagem": 41
-        }
-      },
-      {
-        "id": "sanada",
-        "difficulty": "上級",
-        "winRate": 48,
-        "startProvId": "shinano_ueda",
-        "provCount": 1,
-        "myProvinces": [
-          "shinano_ueda"
-        ],
-        "gold": 1400,
-        "rice": 1500,
-        "personality": "balanced",
-        "officerId": "off_sanada_masayuki",
-        "desc": "幸隆・昌幸・幸村と続く智謀の家。上田城を本拠に徳川の大軍を二度にわたり撃退し、「日本一の兵」として後世に語り継がれた。",
-        "name": "真田昌幸",
-        "color": "#922b21",
-        "crest": "真",
-        "kamonSvgId": "kamon-sanada",
-        "clan": "真田家",
-        "tactic": "表裏比興の神謀",
-        "tacticDesc": "神算鬼謀の計略で大軍を狭隘な隘路に誘い込み、完全に殲滅する。",
-        "stats": {
-          "military": 75,
-          "politics": 74,
-          "intellect": 97,
-          "stratagem": 97
         }
       },
       {
@@ -295388,13 +295359,14 @@
         "isCastleLord": true
       },
       "off_yazawa_yoriyasu": {
-        "clanId": "numata_sanada",
+        "clanId": "sanada",
+        "defaultProv": "kozuke_agatsuma",
+        "assignedProvId": "kozuke_agatsuma",
+        "location": "kozuke_agatsuma",
         "isDaimyo": false,
         "isLeader": false,
-        "defaultProv": "kozuke_agatsuma",
-        "location": "kozuke_agatsuma",
         "isCastleLord": true,
-        "assignedProvId": "kozuke_agatsuma"
+        "ignoreLifespan": true
       },
       "off_goto_tameshige_new": {
         "clanId": "toyotomi",
@@ -295480,13 +295452,14 @@
         "isCastleLord": false
       },
       "off_oyamada_shigemasa": {
-        "clanId": "numata_sanada",
+        "clanId": "sanada",
+        "defaultProv": "kozuke_numata",
+        "assignedProvId": null,
+        "location": "kozuke_numata",
         "isDaimyo": false,
         "isLeader": false,
-        "defaultProv": "kozuke_numata",
-        "location": "kozuke_numata",
         "isCastleLord": false,
-        "clearAssignment": true
+        "ignoreLifespan": true
       },
       "off_mizuno_katsunari": {
         "clanId": "ronin",
@@ -296032,13 +296005,14 @@
         "defaultProv": "shinano_kawanakajima"
       },
       "off_sanada_nobuyuki": {
-        "clanId": "numata_sanada",
-        "isDaimyo": true,
-        "isLeader": true,
+        "clanId": "sanada",
         "defaultProv": "kozuke_numata",
+        "assignedProvId": "kozuke_numata",
         "location": "kozuke_numata",
+        "isDaimyo": false,
+        "isLeader": false,
         "isCastleLord": true,
-        "assignedProvId": "kozuke_numata"
+        "ignoreLifespan": true
       },
       "off_jd_336": {
         "clanId": "date",
@@ -297138,8 +297112,8 @@
       "sagami_miura": "tokugawa",
       "izu": "tokugawa",
       "kozuke_takasaki": "tokugawa",
-      "kozuke_agatsuma": "numata_sanada",
-      "kozuke_numata": "numata_sanada",
+      "kozuke_agatsuma": "sanada",
+      "kozuke_numata": "sanada",
       "kozuke_maebashi": "tokugawa",
       "kozuke_nitta_kanayama": "tokugawa",
       "shimousa": "tokugawa",
@@ -298127,12 +298101,12 @@
         "myProvinces": [
           "hitachi_ohta",
           "hitachi_mito",
-          "hitachi_makabe",
-          "hitachi_kashima",
+          "hitachi_fuchu",
           "hitachi_tsuchiura",
-          "hitachi_shida",
+          "hitachi_makabe",
           "hitachi_shimotsuma",
-          "hitachi_fuchu"
+          "hitachi_kashima",
+          "hitachi_shida"
         ],
         "gold": 1600,
         "rice": 1800,
@@ -298259,35 +298233,34 @@
         }
       },
       {
-        "id": "numata_sanada",
-        "name": "真田信之",
-        "clan": "沼田真田家",
-        "title": "上野沼田沼田城主・沼田真田家",
-        "startProvId": "kozuke_numata",
-        "color": "#b03a2e",
-        "kamon": "kamon-sanada",
-        "crest": "沼",
-        "officerId": "off_sanada_nobuyuki",
-        "desc": "真田昌幸の嫡男・真田信之（信幸）が上野沼田城・岩櫃城を拠点に統治した沼田領・沼田藩真田家。本多忠勝の娘・小松姫を正室に迎え、関ヶ原の戦いでは父・昌幸や弟・幸村と袂を分かって東軍に属し真田家の血脈を守り抜いた。信之の松代移封後も信吉・信政・信利が上野沼田藩主として分立した。",
-        "stats": {
-          "military": 75,
-          "politics": 77,
-          "intellect": 72,
-          "stratagem": 72
-        },
-        "kamonSvgId": "kamon-sanada",
-        "difficulty": "中級",
+        "id": "sanada",
+        "difficulty": "上級",
         "winRate": 48,
-        "provCount": 2,
+        "startProvId": "shinano_ueda",
+        "provCount": 3,
         "myProvinces": [
           "kozuke_numata",
-          "kozuke_agatsuma"
+          "kozuke_agatsuma",
+          "shinano_ueda"
         ],
         "gold": 1400,
-        "rice": 1800,
+        "rice": 1500,
         "personality": "balanced",
-        "tactic": "獅子奮迅の沼田六文銭",
-        "tacticDesc": "徳川・豊臣双方から器量を認められた真田信之と沼田衆の堅実無比な布陣により、部隊の攻防と士気を高める。"
+        "officerId": "off_sanada_masayuki",
+        "desc": "幸隆・昌幸・幸村と続く智謀の家。上田城を本拠に徳川の大軍を二度にわたり撃退し、「日本一の兵」として後世に語り継がれた。",
+        "name": "真田昌幸",
+        "color": "#922b21",
+        "crest": "真",
+        "kamonSvgId": "kamon-sanada",
+        "clan": "真田家",
+        "tactic": "表裏比興の神謀",
+        "tacticDesc": "神算鬼謀の計略で大軍を狭隘な隘路に誘い込み、完全に殲滅する。",
+        "stats": {
+          "military": 75,
+          "politics": 74,
+          "intellect": 97,
+          "stratagem": 97
+        }
       },
       {
         "id": "satomi",
@@ -298315,34 +298288,6 @@
           "politics": 44,
           "intellect": 41,
           "stratagem": 41
-        }
-      },
-      {
-        "id": "sanada",
-        "difficulty": "上級",
-        "winRate": 48,
-        "startProvId": "shinano_ueda",
-        "provCount": 1,
-        "myProvinces": [
-          "shinano_ueda"
-        ],
-        "gold": 1400,
-        "rice": 1500,
-        "personality": "balanced",
-        "officerId": "off_sanada_masayuki",
-        "desc": "幸隆・昌幸・幸村と続く智謀の家。上田城を本拠に徳川の大軍を二度にわたり撃退し、「日本一の兵」として後世に語り継がれた。",
-        "name": "真田昌幸",
-        "color": "#922b21",
-        "crest": "真",
-        "kamonSvgId": "kamon-sanada",
-        "clan": "真田家",
-        "tactic": "表裏比興の神謀",
-        "tacticDesc": "神算鬼謀の計略で大軍を狭隘な隘路に誘い込み、完全に殲滅する。",
-        "stats": {
-          "military": 75,
-          "politics": 74,
-          "intellect": 97,
-          "stratagem": 97
         }
       },
       {
@@ -301718,13 +301663,14 @@
         "isCastleLord": false
       },
       "off_yazawa_yoriyasu": {
-        "clanId": "numata_sanada",
+        "clanId": "sanada",
+        "defaultProv": "kozuke_agatsuma",
+        "assignedProvId": "kozuke_agatsuma",
+        "location": "kozuke_agatsuma",
         "isDaimyo": false,
         "isLeader": false,
-        "defaultProv": "kozuke_agatsuma",
-        "location": "kozuke_agatsuma",
         "isCastleLord": true,
-        "assignedProvId": "kozuke_agatsuma"
+        "ignoreLifespan": true
       },
       "off_goto_tameshige_new": {
         "clanId": "toyotomi",
@@ -301801,13 +301747,14 @@
         "ignoreLifespan": true
       },
       "off_oyamada_shigemasa": {
-        "clanId": "numata_sanada",
+        "clanId": "sanada",
+        "defaultProv": "kozuke_numata",
+        "assignedProvId": null,
+        "location": "kozuke_numata",
         "isDaimyo": false,
         "isLeader": false,
-        "defaultProv": "kozuke_numata",
-        "location": "kozuke_numata",
         "isCastleLord": false,
-        "clearAssignment": true
+        "ignoreLifespan": true
       },
       "off_mizuno_katsunari": {
         "clanId": "ronin",
@@ -302336,13 +302283,14 @@
         "defaultProv": "shinano_kawanakajima"
       },
       "off_sanada_nobuyuki": {
-        "clanId": "numata_sanada",
-        "isDaimyo": true,
-        "isLeader": true,
+        "clanId": "sanada",
         "defaultProv": "kozuke_numata",
+        "assignedProvId": "kozuke_numata",
         "location": "kozuke_numata",
+        "isDaimyo": false,
+        "isLeader": false,
         "isCastleLord": true,
-        "assignedProvId": "kozuke_numata"
+        "ignoreLifespan": true
       },
       "off_jd_336": {
         "clanId": "date",
@@ -311595,10 +311543,10 @@
         "provCount": 6,
         "myProvinces": [
           "mutsu_nanbu",
-          "rikuchu_hienuki",
-          "rikuchu_kamiheii",
           "rikuchu_morioka",
+          "rikuchu_kamiheii",
           "rikuchu_shimoheii",
+          "rikuchu_hienuki",
           "rikuchu_waga"
         ],
         "gold": 1200,
@@ -311628,9 +311576,9 @@
         "provCount": 4,
         "myProvinces": [
           "rikuchu_kasai",
-          "rikuzen",
+          "rikuzen_osaki",
           "rikuzen_kurokawa",
-          "rikuzen_osaki"
+          "rikuzen"
         ],
         "gold": 2400,
         "rice": 2800,
@@ -311658,11 +311606,11 @@
         "startProvId": "ugo_minato",
         "provCount": 6,
         "myProvinces": [
-          "ugo_hinai",
-          "ugo_hondoh",
           "ugo_minato",
-          "ugo_rokugoh",
+          "ugo_hinai",
           "ugo_senhoku",
+          "ugo_hondoh",
+          "ugo_rokugoh",
           "ugo_yokote"
         ],
         "gold": 1200,
@@ -311692,11 +311640,11 @@
         "provCount": 6,
         "myProvinces": [
           "ugo_yuri",
-          "uzen_higashimurayama",
-          "uzen_kitamurayama",
+          "uzen_shonai",
           "uzen_mogami",
+          "uzen_kitamurayama",
           "uzen_nishimurayama",
-          "uzen_shonai"
+          "uzen_higashimurayama"
         ],
         "gold": 2500,
         "rice": 3000,
@@ -311724,8 +311672,8 @@
         "startProvId": "uzen_yonezawa",
         "provCount": 2,
         "myProvinces": [
-          "iwashiro_date_shinobu",
-          "uzen_yonezawa"
+          "uzen_yonezawa",
+          "iwashiro_date_shinobu"
         ],
         "gold": 2000,
         "rice": 2400,
@@ -311753,12 +311701,12 @@
         "startProvId": "iwashiro",
         "provCount": 6,
         "myProvinces": [
-          "echigo_higashikanbara",
-          "iwashiro",
-          "iwashiro_ishikawa",
           "iwashiro_nihonmatsu",
           "iwashiro_sukagawa",
-          "iwashiro_tamura"
+          "iwashiro_tamura",
+          "iwashiro",
+          "iwashiro_ishikawa",
+          "echigo_higashikanbara"
         ],
         "gold": 1800,
         "rice": 2200,
@@ -311815,8 +311763,18 @@
         "provCount": 87,
         "myProvinces": [
           "iwaki",
+          "sado",
+          "echigo_uonuma",
+          "echigo",
+          "echizen",
+          "echizen_ohno",
+          "hitachi_fuchu",
+          "hitachi_tsuchiura",
           "hitachi_makabe",
+          "hitachi_shimodate",
+          "hitachi_shimotsuma",
           "hitachi_kashima",
+          "hitachi_shida",
           "shimotsuke",
           "shimotsuke_kanitsuga",
           "shimotsuke_oyama",
@@ -311824,42 +311782,57 @@
           "kozuke_takasaki",
           "kozuke_maebashi",
           "kozuke_nitta_kanayama",
+          "kazusa",
+          "kazusa_togane_naruto",
+          "kazusa_isumi",
+          "shimousa",
+          "shimousa_koga",
+          "shimousa_yuhki",
+          "awa",
           "musashi_oshi",
           "musashi_hachigata",
           "musashi_iwatsuki",
           "musashi_kawagoe",
           "musashi_edo",
           "musashi_tama",
-          "shimousa",
-          "kazusa",
-          "kazusa_isumi",
-          "awa",
           "sagami",
           "sagami_miura",
-          "izu",
-          "suruga",
           "kai",
+          "kai_tsuru",
+          "izu",
           "shinano_kawanakajima",
+          "shinano_sarashina_hanishina",
+          "shinano_suwa",
+          "shinano_takato",
+          "shinano_iida",
           "shinano_chikuma_azumi",
           "shinano_kiso",
-          "echigo",
-          "echizen",
-          "mino",
-          "mino_iwamura",
-          "totomi_hamamatsu",
+          "suruga",
           "totomi_futamata_haibara",
           "totomi_joto",
+          "totomi_hamamatsu",
+          "totomi_kakegawa",
           "mikawa_okazaki",
+          "mikawa_yoshida",
+          "mikawa_shitara",
+          "mino",
+          "mino_gujo",
+          "mino_iwamura",
+          "ise_nagashima",
+          "ise_kuwana",
           "ise_suzuka",
           "shima",
+          "omi_kutsukidani",
           "omi_south",
-          "yamashiro",
+          "omi_koka",
+          "settsu_shimakami",
+          "kawachi_south",
+          "izumi",
           "yamato_koriyama",
           "yamato_takatori",
           "yamato_yoshino",
           "yamato_higashiyamauchi",
-          "izumi",
-          "settsu_shimakami",
+          "yamashiro",
           "tamba_west",
           "tamba_east",
           "tajima",
@@ -311868,39 +311841,14 @@
           "iwami",
           "bitchu_matsuyama",
           "bitchu_takamatsu",
-          "sanuki",
-          "bungo_funai",
-          "sado",
           "awaji",
-          "shimousa_koga",
-          "hitachi_tsuchiura",
-          "hizen_shimabara",
+          "sanuki",
+          "sanuki_west",
           "iyo_ohzu",
           "iyo_uwajima",
-          "shinano_suwa",
-          "ise_kuwana",
-          "ise_nagashima",
-          "echigo_uonuma",
-          "kai_tsuru",
-          "shinano_sarashina_hanishina",
-          "mino_gujo",
-          "kawachi_south",
-          "kazusa_togane_naruto",
-          "hitachi_shida",
-          "mikawa_shitara",
-          "omi_kutsukidani",
-          "omi_koka",
-          "shinano_takato",
-          "shinano_iida",
-          "sanuki_west",
+          "bungo_funai",
           "bungo_kitaamabe",
-          "echizen_ohno",
-          "totomi_kakegawa",
-          "mikawa_yoshida",
-          "hitachi_shimodate",
-          "hitachi_shimotsuma",
-          "shimousa_yuhki",
-          "hitachi_fuchu"
+          "hizen_shimabara"
         ],
         "gold": 7500,
         "rice": 8500,
@@ -312014,9 +311962,9 @@
         "myProvinces": [
           "etchu_east",
           "etchu_west",
+          "noto",
           "kaga_north",
-          "kaga_south",
-          "noto"
+          "kaga_south"
         ],
         "gold": 2800,
         "rice": 3200,
@@ -312038,14 +311986,45 @@
         }
       },
       {
+        "id": "kyogoku",
+        "name": "京極忠高",
+        "clan": "京極家",
+        "title": "若狭後瀬山城主・京極家",
+        "startProvId": "wakasa",
+        "color": "#2c3e50",
+        "kamon": "kamon-kyogoku",
+        "crest": "京",
+        "officerId": "off_succ_kyogoku_1590_81",
+        "desc": "佐々木源氏の名門四職家。北近江・出雲・飛騨・隠岐の守護を兼ね、応仁の乱では京極持清が東軍の有力大名として京洛で奮戦した。",
+        "stats": {
+          "military": 47,
+          "politics": 50,
+          "intellect": 48,
+          "stratagem": 48
+        },
+        "kamonSvgId": "kamon-kyogoku",
+        "difficulty": "上級",
+        "winRate": 44,
+        "provCount": 2,
+        "myProvinces": [
+          "echizen_tsuruga",
+          "wakasa"
+        ],
+        "gold": 1000,
+        "rice": 1300,
+        "personality": "balanced",
+        "tactic": "佐々木源氏の誇り",
+        "tacticDesc": "名門源氏の誇りで将兵の忠誠心を高め、敵の調略を完全に防ぐ。"
+      },
+      {
         "id": "mito",
         "difficulty": "上級",
         "winRate": 50,
         "startProvId": "hitachi_mito",
         "provCount": 2,
         "myProvinces": [
-          "hitachi_mito",
-          "hitachi_ohta"
+          "hitachi_ohta",
+          "hitachi_mito"
         ],
         "gold": 900,
         "rice": 1100,
@@ -312101,8 +312080,8 @@
         "startProvId": "shinano_ueda",
         "provCount": 3,
         "myProvinces": [
-          "kozuke_agatsuma",
           "kozuke_numata",
+          "kozuke_agatsuma",
           "shinano_ueda"
         ],
         "gold": 1200,
@@ -312203,9 +312182,9 @@
         "winRate": 52,
         "provCount": 3,
         "myProvinces": [
-          "hida_kamioka",
+          "hida_takayama",
           "hida_kiun",
-          "hida_takayama"
+          "hida_kamioka"
         ],
         "gold": 1800,
         "rice": 2300,
@@ -312224,8 +312203,8 @@
         "startProvId": "ise",
         "provCount": 3,
         "myProvinces": [
-          "iga",
           "ise",
+          "iga",
           "noshima"
         ],
         "gold": 1000,
@@ -312242,37 +312221,6 @@
           "intellect": 79,
           "stratagem": 79
         }
-      },
-      {
-        "id": "kyogoku",
-        "name": "京極忠高",
-        "clan": "京極家",
-        "title": "若狭後瀬山城主・京極家",
-        "startProvId": "wakasa",
-        "color": "#2c3e50",
-        "kamon": "kamon-kyogoku",
-        "crest": "京",
-        "officerId": "off_succ_kyogoku_1590_81",
-        "desc": "佐々木源氏の名門四職家。北近江・出雲・飛騨・隠岐の守護を兼ね、応仁の乱では京極持清が東軍の有力大名として京洛で奮戦した。",
-        "stats": {
-          "military": 47,
-          "politics": 50,
-          "intellect": 48,
-          "stratagem": 48
-        },
-        "kamonSvgId": "kamon-kyogoku",
-        "difficulty": "上級",
-        "winRate": 44,
-        "provCount": 2,
-        "myProvinces": [
-          "echizen_tsuruga",
-          "wakasa"
-        ],
-        "gold": 1000,
-        "rice": 1300,
-        "personality": "balanced",
-        "tactic": "佐々木源氏の誇り",
-        "tacticDesc": "名門源氏の誇りで将兵の忠誠心を高め、敵の調略を完全に防ぐ。"
       },
       {
         "id": "ii",
@@ -312309,9 +312257,9 @@
         "startProvId": "settsu_osaka",
         "provCount": 3,
         "myProvinces": [
-          "kawachi_north",
           "settsu",
-          "settsu_osaka"
+          "settsu_osaka",
+          "kawachi_north"
         ],
         "gold": 6000,
         "rice": 6500,
@@ -312339,9 +312287,9 @@
         "startProvId": "kii_saika_wakayama",
         "provCount": 3,
         "myProvinces": [
+          "kii_saika_wakayama",
           "kii_kichu",
-          "kii_kumano",
-          "kii_saika_wakayama"
+          "kii_kumano"
         ],
         "gold": 1300,
         "rice": 1500,
@@ -312414,9 +312362,9 @@
         "winRate": 52,
         "provCount": 3,
         "myProvinces": [
-          "bizen",
+          "harima_west",
           "harima_east",
-          "harima_west"
+          "bizen"
         ],
         "gold": 1800,
         "rice": 2300,
@@ -312508,8 +312456,8 @@
         "winRate": 48,
         "provCount": 2,
         "myProvinces": [
-          "mimasaka_east",
-          "mimasaka_west"
+          "mimasaka_west",
+          "mimasaka_east"
         ],
         "gold": 1400,
         "rice": 1800,
@@ -312524,9 +312472,9 @@
         "startProvId": "aki_hiroshima",
         "provCount": 3,
         "myProvinces": [
-          "aki_hiroshima",
+          "bingo",
           "aki_koriyama",
-          "bingo"
+          "aki_hiroshima"
         ],
         "gold": 900,
         "rice": 1100,
@@ -312554,8 +312502,8 @@
         "startProvId": "nagato",
         "provCount": 2,
         "myProvinces": [
-          "nagato",
-          "suo"
+          "suo",
+          "nagato"
         ],
         "gold": 2200,
         "rice": 2600,
@@ -312584,8 +312532,8 @@
         "provCount": 3,
         "myProvinces": [
           "awa_shikoku",
-          "awa_shikoku_south",
-          "awa_shikoku_west"
+          "awa_shikoku_west",
+          "awa_shikoku_south"
         ],
         "gold": 1200,
         "rice": 1400,
@@ -312617,8 +312565,8 @@
         "startProvId": "iyo_matsuyama",
         "provCount": 2,
         "myProvinces": [
-          "iyo_matsuyama",
-          "iyo_nii"
+          "iyo_nii",
+          "iyo_matsuyama"
         ],
         "gold": 1000,
         "rice": 1300,
@@ -312643,8 +312591,8 @@
         "provCount": 4,
         "myProvinces": [
           "tosa_aki",
-          "tosa_gun",
           "tosa_kochi",
+          "tosa_gun",
           "tosa_nakamura"
         ],
         "gold": 1200,
@@ -312673,8 +312621,8 @@
         "startProvId": "buzen_ogura",
         "provCount": 2,
         "myProvinces": [
-          "buzen_nakatsu",
-          "buzen_ogura"
+          "buzen_ogura",
+          "buzen_nakatsu"
         ],
         "gold": 1500,
         "rice": 1800,
@@ -312758,10 +312706,10 @@
         "startProvId": "chikuzen_hakata",
         "provCount": 4,
         "myProvinces": [
-          "chikuzen_akizuki",
           "chikuzen_hakata",
+          "chikuzen_munakata",
           "chikuzen_kamashi",
-          "chikuzen_munakata"
+          "chikuzen_akizuki"
         ],
         "gold": 1600,
         "rice": 1900,
@@ -312989,8 +312937,8 @@
         "startProvId": "higo_kumamoto",
         "provCount": 3,
         "myProvinces": [
-          "higo_aso",
           "higo_kumamoto",
+          "higo_aso",
           "higo_yatsushiro"
         ],
         "gold": 1500,
@@ -313104,9 +313052,9 @@
         "provCount": 4,
         "myProvinces": [
           "hyuga_sadowara",
+          "satsuma",
           "osumi",
-          "ryukyu",
-          "satsuma"
+          "ryukyu"
         ],
         "gold": 2000,
         "rice": 2400,
@@ -313973,11 +313921,11 @@
       "off_pl1614_039": {
         "clanId": "sanada",
         "defaultProv": "kozuke_numata",
-        "assignedProvId": null,
+        "assignedProvId": "kozuke_numata",
         "location": "kozuke_numata",
         "isDaimyo": false,
         "isLeader": false,
-        "isCastleLord": false,
+        "isCastleLord": true,
         "ignoreLifespan": true
       },
       "off_pl1614_040": {
@@ -317713,10 +317661,10 @@
         "provCount": 6,
         "myProvinces": [
           "mutsu_nanbu",
-          "rikuchu_hienuki",
-          "rikuchu_kamiheii",
           "rikuchu_morioka",
+          "rikuchu_kamiheii",
           "rikuchu_shimoheii",
+          "rikuchu_hienuki",
           "rikuchu_waga"
         ],
         "gold": 1100,
@@ -317746,9 +317694,9 @@
         "provCount": 4,
         "myProvinces": [
           "rikuchu_kasai",
-          "rikuzen",
+          "rikuzen_osaki",
           "rikuzen_kurokawa",
-          "rikuzen_osaki"
+          "rikuzen"
         ],
         "gold": 2200,
         "rice": 2600,
@@ -317776,11 +317724,11 @@
         "startProvId": "ugo_minato",
         "provCount": 6,
         "myProvinces": [
-          "ugo_hinai",
-          "ugo_hondoh",
           "ugo_minato",
-          "ugo_rokugoh",
+          "ugo_hinai",
           "ugo_senhoku",
+          "ugo_hondoh",
+          "ugo_rokugoh",
           "ugo_yokote"
         ],
         "gold": 1200,
@@ -317893,9 +317841,9 @@
         "startProvId": "uzen_higashimurayama",
         "provCount": 3,
         "myProvinces": [
-          "uzen_higashimurayama",
           "uzen_kitamurayama",
-          "uzen_nishimurayama"
+          "uzen_nishimurayama",
+          "uzen_higashimurayama"
         ],
         "gold": 2000,
         "rice": 2400,
@@ -317923,8 +317871,8 @@
         "startProvId": "uzen_yonezawa",
         "provCount": 2,
         "myProvinces": [
-          "iwashiro_date_shinobu",
-          "uzen_yonezawa"
+          "uzen_yonezawa",
+          "iwashiro_date_shinobu"
         ],
         "gold": 1500,
         "rice": 1800,
@@ -317956,11 +317904,11 @@
         "startProvId": "iwashiro",
         "provCount": 5,
         "myProvinces": [
-          "echigo_higashikanbara",
+          "iwashiro_nihonmatsu",
+          "iwashiro_sukagawa",
           "iwashiro",
           "iwashiro_ishikawa",
-          "iwashiro_nihonmatsu",
-          "iwashiro_sukagawa"
+          "echigo_higashikanbara"
         ],
         "gold": 1000,
         "rice": 1300,
@@ -317984,9 +317932,22 @@
         "startProvId": "musashi_edo",
         "provCount": 97,
         "myProvinces": [
+          "iwashiro_tamura",
           "iwaki",
+          "sado",
+          "echigo_uonuma",
+          "echigo",
+          "echizen",
+          "echizen_tsuruga",
+          "echizen_ohno",
+          "hitachi_fuchu",
+          "hitachi_tsuchiura",
           "hitachi_makabe",
+          "hitachi_shimodate",
+          "hitachi_shimotsuma",
           "hitachi_kashima",
+          "hitachi_shida",
+          "shimotsuke_nasu",
           "shimotsuke",
           "shimotsuke_kanitsuga",
           "shimotsuke_oyama",
@@ -317994,93 +317955,80 @@
           "kozuke_takasaki",
           "kozuke_maebashi",
           "kozuke_nitta_kanayama",
+          "kazusa",
+          "kazusa_togane_naruto",
+          "kazusa_isumi",
+          "shimousa",
+          "shimousa_koga",
+          "shimousa_yuhki",
+          "awa",
           "musashi_oshi",
           "musashi_hachigata",
           "musashi_iwatsuki",
           "musashi_kawagoe",
           "musashi_edo",
           "musashi_tama",
-          "shimousa",
-          "kazusa",
-          "kazusa_isumi",
-          "awa",
           "sagami",
           "sagami_miura",
-          "izu",
-          "suruga",
           "kai",
+          "kai_tsuru",
+          "izu",
           "shinano_kawanakajima",
+          "shinano_saku_komoro",
+          "shinano_suwa",
+          "shinano_takato",
+          "shinano_iida",
           "shinano_chikuma_azumi",
           "shinano_kiso",
-          "echigo",
-          "echizen",
-          "wakasa",
-          "mino",
-          "mino_iwamura",
-          "totomi_hamamatsu",
+          "suruga",
           "totomi_futamata_haibara",
           "totomi_joto",
+          "totomi_hamamatsu",
+          "totomi_kakegawa",
           "mikawa_okazaki",
-          "ise",
+          "mikawa_yoshida",
+          "mikawa_shitara",
+          "mino",
+          "mino_gujo",
+          "mino_iwamura",
+          "ise_nagashima",
+          "ise_kuwana",
           "ise_suzuka",
+          "ise",
           "shima",
           "iga",
+          "wakasa",
+          "omi_kutsukidani",
           "omi_south",
-          "yamashiro",
+          "omi_koka",
+          "settsu_shimakami",
+          "settsu",
+          "settsu_osaka",
+          "kawachi_north",
+          "kawachi_south",
+          "izumi",
           "yamato_koriyama",
           "yamato_takatori",
           "yamato_yoshino",
           "yamato_higashiyamauchi",
-          "izumi",
-          "settsu",
-          "settsu_shimakami",
-          "settsu_osaka",
+          "yamashiro",
           "tamba_west",
           "tamba_east",
-          "tajima",
           "harima_west",
           "harima_east",
+          "tajima",
           "iwami",
           "bitchu_matsuyama",
           "bitchu_takamatsu",
           "bingo",
-          "sanuki",
-          "bungo_funai",
-          "sado",
-          "iwashiro_tamura",
-          "shimotsuke_nasu",
-          "shimousa_koga",
-          "hitachi_tsuchiura",
-          "iyo_ohzu",
           "noshima",
-          "shinano_saku_komoro",
-          "shinano_suwa",
-          "ise_kuwana",
-          "ise_nagashima",
-          "iyo_matsuyama",
-          "iyo_nii",
-          "echigo_uonuma",
-          "kai_tsuru",
-          "mino_gujo",
-          "kawachi_south",
-          "kazusa_togane_naruto",
-          "kawachi_north",
-          "hitachi_shida",
-          "mikawa_shitara",
-          "omi_kutsukidani",
-          "omi_koka",
-          "shinano_takato",
-          "shinano_iida",
+          "sanuki",
           "sanuki_west",
-          "bungo_kitaamabe",
-          "echizen_ohno",
-          "totomi_kakegawa",
-          "mikawa_yoshida",
-          "hitachi_shimodate",
-          "hitachi_shimotsuma",
-          "shimousa_yuhki",
-          "echizen_tsuruga",
-          "hitachi_fuchu"
+          "iyo_nii",
+          "iyo_matsuyama",
+          "iyo_ohzu",
+          "bungo_funai",
+          "bungo_kitaamabe"
         ],
         "gold": 8500,
         "rice": 9500,
@@ -318224,9 +318172,9 @@
         "myProvinces": [
           "etchu_east",
           "etchu_west",
+          "noto",
           "kaga_north",
-          "kaga_south",
-          "noto"
+          "kaga_south"
         ],
         "gold": 2800,
         "rice": 3300,
@@ -318254,8 +318202,8 @@
         "startProvId": "hitachi_mito",
         "provCount": 2,
         "myProvinces": [
-          "hitachi_mito",
-          "hitachi_ohta"
+          "hitachi_ohta",
+          "hitachi_mito"
         ],
         "gold": 1400,
         "rice": 1700,
@@ -318283,8 +318231,8 @@
         "startProvId": "shinano_sarashina_hanishina",
         "provCount": 3,
         "myProvinces": [
-          "kozuke_agatsuma",
           "kozuke_numata",
+          "kozuke_agatsuma",
           "shinano_sarashina_hanishina"
         ],
         "gold": 1200,
@@ -318385,9 +318333,9 @@
         "winRate": 52,
         "provCount": 3,
         "myProvinces": [
-          "hida_kamioka",
+          "hida_takayama",
           "hida_kiun",
-          "hida_takayama"
+          "hida_kamioka"
         ],
         "gold": 1800,
         "rice": 2300,
@@ -318430,9 +318378,9 @@
         "startProvId": "kii_saika_wakayama",
         "provCount": 3,
         "myProvinces": [
+          "kii_saika_wakayama",
           "kii_kichu",
-          "kii_kumano",
-          "kii_saika_wakayama"
+          "kii_kumano"
         ],
         "gold": 1600,
         "rice": 1900,
@@ -318505,9 +318453,9 @@
         "winRate": 52,
         "provCount": 3,
         "myProvinces": [
-          "hoki_east",
+          "inaba",
           "hoki_west",
-          "inaba"
+          "hoki_east"
         ],
         "gold": 1800,
         "rice": 2300,
@@ -318595,8 +318543,8 @@
         "winRate": 48,
         "provCount": 2,
         "myProvinces": [
-          "mimasaka_east",
-          "mimasaka_west"
+          "mimasaka_west",
+          "mimasaka_east"
         ],
         "gold": 1400,
         "rice": 1800,
@@ -318611,8 +318559,8 @@
         "startProvId": "aki_hiroshima",
         "provCount": 2,
         "myProvinces": [
-          "aki_hiroshima",
-          "aki_koriyama"
+          "aki_koriyama",
+          "aki_hiroshima"
         ],
         "gold": 2200,
         "rice": 2600,
@@ -318640,8 +318588,8 @@
         "startProvId": "nagato",
         "provCount": 2,
         "myProvinces": [
-          "nagato",
-          "suo"
+          "suo",
+          "nagato"
         ],
         "gold": 2200,
         "rice": 2600,
@@ -318669,10 +318617,10 @@
         "startProvId": "awa_shikoku",
         "provCount": 4,
         "myProvinces": [
+          "awaji",
           "awa_shikoku",
-          "awa_shikoku_south",
           "awa_shikoku_west",
-          "awaji"
+          "awa_shikoku_south"
         ],
         "gold": 2200,
         "rice": 2500,
@@ -318729,8 +318677,8 @@
         "provCount": 4,
         "myProvinces": [
           "tosa_aki",
-          "tosa_gun",
           "tosa_kochi",
+          "tosa_gun",
           "tosa_nakamura"
         ],
         "gold": 1200,
@@ -318763,8 +318711,8 @@
         "startProvId": "buzen_ogura",
         "provCount": 2,
         "myProvinces": [
-          "buzen_nakatsu",
-          "buzen_ogura"
+          "buzen_ogura",
+          "buzen_nakatsu"
         ],
         "gold": 1000,
         "rice": 1300,
@@ -318844,10 +318792,10 @@
         "startProvId": "chikuzen_hakata",
         "provCount": 4,
         "myProvinces": [
-          "chikuzen_akizuki",
           "chikuzen_hakata",
+          "chikuzen_munakata",
           "chikuzen_kamashi",
-          "chikuzen_munakata"
+          "chikuzen_akizuki"
         ],
         "gold": 1800,
         "rice": 2100,
@@ -319132,8 +319080,8 @@
         "startProvId": "higo_kumamoto",
         "provCount": 3,
         "myProvinces": [
-          "higo_aso",
           "higo_kumamoto",
+          "higo_aso",
           "higo_yatsushiro"
         ],
         "gold": 1000,
@@ -319243,9 +319191,9 @@
         "provCount": 4,
         "myProvinces": [
           "hyuga_sadowara",
+          "satsuma",
           "osumi",
-          "ryukyu",
-          "satsuma"
+          "ryukyu"
         ],
         "gold": 2000,
         "rice": 2400,
@@ -322009,11 +321957,11 @@
       "off_sanada_nobumasa": {
         "clanId": "sanada",
         "defaultProv": "kozuke_numata",
-        "assignedProvId": null,
+        "assignedProvId": "kozuke_numata",
         "location": "kozuke_numata",
         "isDaimyo": false,
         "isLeader": false,
-        "isCastleLord": false,
+        "isCastleLord": true,
         "ignoreLifespan": true
       },
       "off_kawahara_tsunaie": {
@@ -323371,10 +323319,10 @@
         "provCount": 6,
         "myProvinces": [
           "mutsu_nanbu",
-          "rikuchu_hienuki",
-          "rikuchu_kamiheii",
           "rikuchu_morioka",
+          "rikuchu_kamiheii",
           "rikuchu_shimoheii",
+          "rikuchu_hienuki",
           "rikuchu_waga"
         ],
         "gold": 3600,
@@ -323404,9 +323352,9 @@
         "provCount": 4,
         "myProvinces": [
           "rikuchu_kasai",
-          "rikuzen",
+          "rikuzen_osaki",
           "rikuzen_kurokawa",
-          "rikuzen_osaki"
+          "rikuzen"
         ],
         "gold": 2800,
         "rice": 3200,
@@ -323434,11 +323382,11 @@
         "startProvId": "ugo_minato",
         "provCount": 6,
         "myProvinces": [
-          "ugo_hinai",
-          "ugo_hondoh",
           "ugo_minato",
-          "ugo_rokugoh",
+          "ugo_hinai",
           "ugo_senhoku",
+          "ugo_hondoh",
+          "ugo_rokugoh",
           "ugo_yokote"
         ],
         "gold": 6000,
@@ -323555,8 +323503,21 @@
           "uzen_nishimurayama",
           "uzen_higashimurayama",
           "iwaki",
+          "iwaki_shirakawa",
+          "sado",
+          "echigo_murakami",
+          "echigo_kanbara",
+          "echigo_uonuma",
+          "echigo",
+          "echizen_tsuruga",
+          "hitachi_fuchu",
+          "hitachi_tsuchiura",
           "hitachi_makabe",
+          "hitachi_shimodate",
+          "hitachi_shimotsuma",
           "hitachi_kashima",
+          "hitachi_shida",
+          "shimotsuke_nasu",
           "shimotsuke",
           "shimotsuke_kanitsuga",
           "shimotsuke_oyama",
@@ -323564,95 +323525,82 @@
           "kozuke_takasaki",
           "kozuke_maebashi",
           "kozuke_nitta_kanayama",
+          "kazusa",
+          "kazusa_togane_naruto",
+          "kazusa_isumi",
+          "shimousa",
+          "shimousa_koga",
+          "shimousa_yuhki",
+          "awa",
           "musashi_oshi",
           "musashi_hachigata",
           "musashi_iwatsuki",
           "musashi_kawagoe",
           "musashi_edo",
           "musashi_tama",
-          "shimousa",
-          "kazusa",
-          "kazusa_isumi",
-          "awa",
           "sagami",
           "sagami_miura",
-          "izu",
-          "suruga",
           "kai",
+          "kai_tsuru",
+          "izu",
           "shinano_kawanakajima",
+          "shinano_saku_komoro",
+          "shinano_suwa",
+          "shinano_takato",
+          "shinano_iida",
           "shinano_chikuma_azumi",
           "shinano_kiso",
-          "echigo",
-          "echigo_murakami",
-          "wakasa",
-          "mino",
-          "mino_iwamura",
-          "totomi_hamamatsu",
+          "suruga",
           "totomi_futamata_haibara",
           "totomi_joto",
+          "totomi_hamamatsu",
+          "totomi_kakegawa",
           "mikawa_okazaki",
-          "ise",
+          "mikawa_yoshida",
+          "mikawa_shitara",
+          "mino",
+          "mino_gujo",
+          "mino_iwamura",
+          "ise_nagashima",
+          "ise_kuwana",
           "ise_suzuka",
+          "ise",
           "shima",
           "iga",
+          "wakasa",
+          "omi_kutsukidani",
           "omi_south",
-          "yamashiro",
+          "omi_koka",
+          "settsu_shimakami",
+          "settsu",
+          "settsu_osaka",
+          "kawachi_north",
+          "kawachi_south",
+          "izumi",
           "yamato_koriyama",
           "yamato_takatori",
           "yamato_yoshino",
           "yamato_higashiyamauchi",
-          "izumi",
-          "settsu",
-          "settsu_shimakami",
-          "settsu_osaka",
+          "yamashiro",
           "tamba_west",
           "tamba_east",
-          "tajima",
           "harima_west",
           "harima_east",
+          "tajima",
           "iwami",
           "bitchu_matsuyama",
           "bitchu_takamatsu",
           "bingo",
-          "sanuki",
-          "hizen_karatsu",
-          "bungo_funai",
-          "sado",
-          "iwaki_shirakawa",
-          "shimotsuke_nasu",
-          "shimousa_koga",
-          "hitachi_tsuchiura",
-          "hizen_shimabara",
-          "iyo_ohzu",
           "noshima",
-          "shinano_saku_komoro",
-          "shinano_suwa",
-          "ise_kuwana",
-          "ise_nagashima",
-          "iyo_matsuyama",
-          "iyo_nii",
-          "echigo_kanbara",
-          "echigo_uonuma",
-          "kai_tsuru",
-          "mino_gujo",
-          "kawachi_south",
-          "kazusa_togane_naruto",
-          "kawachi_north",
-          "hitachi_shida",
-          "mikawa_shitara",
-          "omi_kutsukidani",
-          "omi_koka",
-          "shinano_takato",
-          "shinano_iida",
+          "sanuki",
           "sanuki_west",
+          "iyo_nii",
+          "iyo_matsuyama",
+          "iyo_ohzu",
+          "bungo_funai",
           "bungo_kitaamabe",
-          "totomi_kakegawa",
-          "mikawa_yoshida",
-          "hitachi_shimodate",
-          "hitachi_shimotsuma",
-          "shimousa_yuhki",
-          "echizen_tsuruga",
-          "hitachi_fuchu"
+          "hizen_karatsu",
+          "hizen_shimabara"
         ],
         "gold": 9000,
         "rice": 10000,
@@ -323680,8 +323628,8 @@
         "startProvId": "uzen_yonezawa",
         "provCount": 2,
         "myProvinces": [
-          "iwashiro_date_shinobu",
-          "uzen_yonezawa"
+          "uzen_yonezawa",
+          "iwashiro_date_shinobu"
         ],
         "gold": 3600,
         "rice": 4000,
@@ -323737,10 +323685,10 @@
         "startProvId": "iwashiro",
         "provCount": 4,
         "myProvinces": [
-          "echigo_higashikanbara",
+          "iwashiro_sukagawa",
           "iwashiro",
           "iwashiro_ishikawa",
-          "iwashiro_sukagawa"
+          "echigo_higashikanbara"
         ],
         "gold": 2100,
         "rice": 2400,
@@ -323826,9 +323774,9 @@
         "myProvinces": [
           "etchu_east",
           "etchu_west",
+          "noto",
           "kaga_north",
-          "kaga_south",
-          "noto"
+          "kaga_south"
         ],
         "gold": 3500,
         "rice": 4000,
@@ -323885,8 +323833,8 @@
         "startProvId": "hitachi_mito",
         "provCount": 2,
         "myProvinces": [
-          "hitachi_mito",
-          "hitachi_ohta"
+          "hitachi_ohta",
+          "hitachi_mito"
         ],
         "gold": 2100,
         "rice": 2400,
@@ -323914,8 +323862,8 @@
         "startProvId": "shinano_sarashina_hanishina",
         "provCount": 3,
         "myProvinces": [
-          "kozuke_agatsuma",
           "kozuke_numata",
+          "kozuke_agatsuma",
           "shinano_sarashina_hanishina"
         ],
         "gold": 2500,
@@ -324016,9 +323964,9 @@
         "winRate": 52,
         "provCount": 3,
         "myProvinces": [
-          "hida_kamioka",
+          "hida_takayama",
           "hida_kiun",
-          "hida_takayama"
+          "hida_kamioka"
         ],
         "gold": 1800,
         "rice": 2300,
@@ -324061,9 +324009,9 @@
         "startProvId": "kii_saika_wakayama",
         "provCount": 3,
         "myProvinces": [
+          "kii_saika_wakayama",
           "kii_kichu",
-          "kii_kumano",
-          "kii_saika_wakayama"
+          "kii_kumano"
         ],
         "gold": 2100,
         "rice": 2400,
@@ -324121,9 +324069,9 @@
         "startProvId": "inaba",
         "provCount": 3,
         "myProvinces": [
-          "hoki_east",
+          "inaba",
           "hoki_west",
-          "inaba"
+          "hoki_east"
         ],
         "gold": 3600,
         "rice": 4000,
@@ -324224,8 +324172,8 @@
         "winRate": 48,
         "provCount": 2,
         "myProvinces": [
-          "mimasaka_east",
-          "mimasaka_west"
+          "mimasaka_west",
+          "mimasaka_east"
         ],
         "gold": 1400,
         "rice": 1800,
@@ -324240,8 +324188,8 @@
         "startProvId": "aki_hiroshima",
         "provCount": 2,
         "myProvinces": [
-          "aki_hiroshima",
-          "aki_koriyama"
+          "aki_koriyama",
+          "aki_hiroshima"
         ],
         "gold": 2500,
         "rice": 3000,
@@ -324269,8 +324217,8 @@
         "startProvId": "nagato",
         "provCount": 2,
         "myProvinces": [
-          "nagato",
-          "suo"
+          "suo",
+          "nagato"
         ],
         "gold": 2800,
         "rice": 3200,
@@ -324298,10 +324246,10 @@
         "startProvId": "awa_shikoku",
         "provCount": 4,
         "myProvinces": [
+          "awaji",
           "awa_shikoku",
-          "awa_shikoku_south",
           "awa_shikoku_west",
-          "awaji"
+          "awa_shikoku_south"
         ],
         "gold": 2500,
         "rice": 3000,
@@ -324358,8 +324306,8 @@
         "provCount": 4,
         "myProvinces": [
           "tosa_aki",
-          "tosa_gun",
           "tosa_kochi",
+          "tosa_gun",
           "tosa_nakamura"
         ],
         "gold": 2100,
@@ -324388,8 +324336,8 @@
         "startProvId": "buzen_ogura",
         "provCount": 2,
         "myProvinces": [
-          "buzen_nakatsu",
-          "buzen_ogura"
+          "buzen_ogura",
+          "buzen_nakatsu"
         ],
         "gold": 2500,
         "rice": 3000,
@@ -324475,10 +324423,10 @@
         "startProvId": "chikuzen_hakata",
         "provCount": 4,
         "myProvinces": [
-          "chikuzen_akizuki",
           "chikuzen_hakata",
+          "chikuzen_munakata",
           "chikuzen_kamashi",
-          "chikuzen_munakata"
+          "chikuzen_akizuki"
         ],
         "gold": 2500,
         "rice": 3000,
@@ -324707,8 +324655,8 @@
         "startProvId": "higo_kumamoto",
         "provCount": 3,
         "myProvinces": [
-          "higo_aso",
           "higo_kumamoto",
+          "higo_aso",
           "higo_yatsushiro"
         ],
         "gold": 1000,
@@ -324818,9 +324766,9 @@
         "provCount": 4,
         "myProvinces": [
           "hyuga_sadowara",
+          "satsuma",
           "osumi",
-          "ryukyu",
-          "satsuma"
+          "ryukyu"
         ],
         "gold": 3500,
         "rice": 4000,
@@ -327020,11 +326968,11 @@
       "off_sanada_nobumasa": {
         "clanId": "sanada",
         "defaultProv": "kozuke_numata",
-        "assignedProvId": null,
+        "assignedProvId": "kozuke_numata",
         "location": "kozuke_numata",
         "isDaimyo": false,
         "isLeader": false,
-        "isCastleLord": false,
+        "isCastleLord": true,
         "ignoreLifespan": true
       },
       "off_succ2_tsugaru_1610": {

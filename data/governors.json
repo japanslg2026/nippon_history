@@ -4579,7 +4579,8 @@
     "totomi_joto": "off_watase_shigeaki",
     "hitachi_shimodate": "off_pl1590_021",
     "shimousa_yuhki": "off_yuki_hideyasu",
-    "echizen_tsuruga": "off_otani_yoshitsugu"
+    "echizen_tsuruga": "off_otani_yoshitsugu",
+    "kozuke_numata": "off_sanada_nobuyuki"
   },
   "1597": {
     "omi_north": "off_ishida_mitsunari",
@@ -4696,7 +4697,6 @@
     "uzen_nishimurayama": "off_jd_hist_0191",
     "echizen_ohno": "off_pl1590_124",
     "hida_kamioka": "off_kanamori_arishige",
-    "kozuke_agatsuma": "off_yazawa_yoriyasu",
     "mikawa_shitara": "off_pl1590_125",
     "mikawa_okazaki": "off_tanaka_yoshimasa",
     "mikawa_yoshida": "off_ikeda_terumasa",
@@ -4706,7 +4706,9 @@
     "hitachi_shimodate": "off_pl1590_021",
     "shimousa_yuhki": "off_yuki_hideyasu",
     "echizen_tsuruga": "off_otani_yoshitsugu",
-    "echizen": "off_hori_hideharu"
+    "echizen": "off_hori_hideharu",
+    "kozuke_numata": "off_sanada_nobuyuki",
+    "kozuke_agatsuma": "off_yazawa_yoriyasu"
   },
   "1600": {
     "sagami": "off_okubo_tadachika",
@@ -4926,7 +4928,8 @@
     "kozuke_agatsuma": "off_yokoya_yukishige",
     "bungo_minamiamabe": "off_pl1614_003",
     "hitachi_shimodate": "off_edo_tokugawa_1597_88",
-    "hitachi_fuchu": "off_pl1590_042"
+    "hitachi_fuchu": "off_pl1590_042",
+    "kozuke_numata": "off_pl1614_039"
   },
   "1637": {
     "bingo": "off_mizuno_katsunari",
@@ -5056,7 +5059,8 @@
     "rikuchu_kamiheii": "off_hachinohe_naoyoshi",
     "hitachi_shimodate": "off_edo_tokugawa_1597_88",
     "mutsu_nanbu": "off_hachinohe_naoyoshi",
-    "hitachi_fuchu": "off_pl1637_070"
+    "hitachi_fuchu": "off_pl1637_070",
+    "kozuke_numata": "off_sanada_nobumasa"
   },
   "1651": {
     "kozuke_takasaki": "off_edo_tokugawa_1600_96",
@@ -5177,7 +5181,8 @@
     "kawachi_north": "off_edo_tokugawa_1618_103",
     "izumo_south": "off_pl1651_092",
     "kozuke_agatsuma": "off_pl1614_145",
-    "uzen_mogami": "off_yoshitaka_morinobu"
+    "uzen_mogami": "off_yoshitaka_morinobu",
+    "kozuke_numata": "off_sanada_nobumasa"
   },
   "1702": {
     "mikawa_okazaki": "off_mizuno_tadayuki",
@@ -11004,7 +11009,8 @@
       "totomi_joto": "off_watase_shigeaki",
       "hitachi_shimodate": "off_pl1590_021",
       "shimousa_yuhki": "off_yuki_hideyasu",
-      "echizen_tsuruga": "off_otani_yoshitsugu"
+      "echizen_tsuruga": "off_otani_yoshitsugu",
+      "kozuke_numata": "off_sanada_nobuyuki"
     },
     "1597": {
       "omi_north": "off_ishida_mitsunari",
@@ -11121,7 +11127,6 @@
       "uzen_nishimurayama": "off_jd_hist_0191",
       "echizen_ohno": "off_pl1590_124",
       "hida_kamioka": "off_kanamori_arishige",
-      "kozuke_agatsuma": "off_yazawa_yoriyasu",
       "mikawa_shitara": "off_pl1590_125",
       "mikawa_okazaki": "off_tanaka_yoshimasa",
       "mikawa_yoshida": "off_ikeda_terumasa",
@@ -11131,7 +11136,9 @@
       "hitachi_shimodate": "off_pl1590_021",
       "shimousa_yuhki": "off_yuki_hideyasu",
       "echizen_tsuruga": "off_otani_yoshitsugu",
-      "echizen": "off_hori_hideharu"
+      "echizen": "off_hori_hideharu",
+      "kozuke_numata": "off_sanada_nobuyuki",
+      "kozuke_agatsuma": "off_yazawa_yoriyasu"
     },
     "1600": {
       "sagami": "off_okubo_tadachika",
@@ -11351,7 +11358,8 @@
       "kozuke_agatsuma": "off_yokoya_yukishige",
       "bungo_minamiamabe": "off_pl1614_003",
       "hitachi_shimodate": "off_edo_tokugawa_1597_88",
-      "hitachi_fuchu": "off_pl1590_042"
+      "hitachi_fuchu": "off_pl1590_042",
+      "kozuke_numata": "off_pl1614_039"
     },
     "1637": {
       "bingo": "off_mizuno_katsunari",
@@ -11481,7 +11489,8 @@
       "rikuchu_kamiheii": "off_hachinohe_naoyoshi",
       "hitachi_shimodate": "off_edo_tokugawa_1597_88",
       "mutsu_nanbu": "off_hachinohe_naoyoshi",
-      "hitachi_fuchu": "off_pl1637_070"
+      "hitachi_fuchu": "off_pl1637_070",
+      "kozuke_numata": "off_sanada_nobumasa"
     },
     "1651": {
       "kozuke_takasaki": "off_edo_tokugawa_1600_96",
@@ -11602,7 +11611,8 @@
       "kawachi_north": "off_edo_tokugawa_1618_103",
       "izumo_south": "off_pl1651_092",
       "kozuke_agatsuma": "off_pl1614_145",
-      "uzen_mogami": "off_yoshitaka_morinobu"
+      "uzen_mogami": "off_yoshitaka_morinobu",
+      "kozuke_numata": "off_sanada_nobumasa"
     },
     "1702": {
       "mikawa_okazaki": "off_mizuno_tadayuki",
@@ -14314,19 +14324,21 @@
       "mikawa_okazaki": "off_tanaka_yoshimasa",
       "kai": "off_pl1590_116",
       "echizen": "off_hori_hideharu",
-      "echizen_tsuruga": "off_otani_yoshitsugu"
+      "echizen_tsuruga": "off_otani_yoshitsugu",
+      "kozuke_numata": "off_sanada_nobuyuki"
     },
     "1597": {
       "iyo_ohzu": "off_todo_takatora",
       "chikugo_north": "off_jd_033",
       "echizen_ohno": "off_pl1590_124",
       "hida_kamioka": "off_kanamori_arishige",
-      "kozuke_agatsuma": "off_yazawa_yoriyasu",
       "mikawa_shitara": "off_pl1590_125",
       "kai_tsuru": "off_asano_ujishige",
       "bungo_funai": "off_pl1590_143",
       "echizen_tsuruga": "off_otani_yoshitsugu",
-      "echizen": "off_hori_hideharu"
+      "echizen": "off_hori_hideharu",
+      "kozuke_numata": "off_sanada_nobuyuki",
+      "kozuke_agatsuma": "off_yazawa_yoriyasu"
     },
     "1600": {
       "yamato_koriyama": "off_mashita_nagamori",
@@ -14400,7 +14412,8 @@
       "kozuke_agatsuma": "off_yokoya_yukishige",
       "bungo_oka": "off_pl1614_136",
       "bungo_minamiamabe": "off_pl1614_003",
-      "hitachi_kashima": "off_jd_hist_0222"
+      "hitachi_kashima": "off_jd_hist_0222",
+      "kozuke_numata": "off_pl1614_039"
     },
     "1637": {
       "tamba_east": "off_pl1614_118",
@@ -14427,7 +14440,8 @@
       "izumo_north": "off_edo_matsue_1601_161",
       "bungo_oka": "off_pl1614_136",
       "bungo_minamiamabe": "off_pl1651_019",
-      "hitachi_kashima": "off_pl1651_036"
+      "hitachi_kashima": "off_pl1651_036",
+      "kozuke_numata": "off_sanada_nobumasa"
     },
     "1651": {
       "sagami": "off_edo_tokugawa_1623_78",
@@ -14444,7 +14458,8 @@
       "kaga_south": "off_pl1637_057",
       "kozuke_agatsuma": "off_pl1614_145",
       "bungo_oka": "off_pl1614_136",
-      "hitachi_kashima": "off_pl1651_036"
+      "hitachi_kashima": "off_pl1651_036",
+      "kozuke_numata": "off_sanada_nobumasa"
     },
     "1702": {
       "shimotsuke": "off_abe_masakuni",
