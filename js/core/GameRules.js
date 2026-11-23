@@ -11,9 +11,9 @@ export const HISTORICAL_CHOICE_EVENTS = [
     title: '❖ 関東管領就任と上杉家名跡継承 ❖',
     subTitle: '山内上杉憲政より関東管領職と家督・系図を継承！越後上杉家誕生',
     check: (game) => {
-      if (game.year < 1561) return false;
+      if (game.year !== 1561) return false;
       if (game._kantoKanreiOccurred) return false;
-      const hasKagetora = (game.activeOfficers || []).some(o => (o.id === 'off_uesugi_kenshin' || o.name === '長尾景虎' || o.name === '上杉謙信') && !o.isDead);
+      const hasKagetora = (game.activeOfficers || []).some(o => (o.id === 'off_uesugi_kenshin' || o.name === '長尾景虎' || o.name === '上杉政虎' || o.name === '上杉謙信') && !o.isDead);
       const hasNagaoOrUesugi = (game.provinces || []).some(p => p.ownerId === 'nagao' || p.ownerId === 'uesugi');
       return hasKagetora && hasNagaoOrUesugi;
     },

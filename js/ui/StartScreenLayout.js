@@ -85,12 +85,11 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
   const IS_PHONE = !!window.SENGOKU_IS_PHONE;
   const ERA_ICON = { all: '🗾', ancient: '⛩️', genpei_kamakura: '🏹', muromachi: '🌸', medieval: '🏹', sengoku_early: '🔥', sengoku_climax: '⚔️', unification: '🏯', edo_bakumatsu: '⛵', virtual: '🎲' };
   const ERA_SHORT = { all: 'すべて', ancient: '古代・平安', genpei_kamakura: '源平・鎌倉', muromachi: '室町', medieval: '中世', sengoku_early: '黎明', sengoku_climax: '戦国乱世', unification: '天下統一', edo_bakumatsu: '泰平・幕末', virtual: '仮想' };
-  const DIFF_NAME_MAP = { relaxed: '楽級', easy: '初級', normal: '中級', hard: '上級' };
+  const DIFF_NAME_MAP = { relaxed: '初級', easy: '中級', normal: '上級' };
   const DIFF_INFO_MAP = {
-    relaxed: '【楽級】基準値に金+1,200／兵糧+1,500・ゆったり遊べる難易度',
-    easy: '【初級】基準値に金+650／兵糧+850・遊びやすい難易度',
-    normal: '【中級】基準値に金+150／兵糧+200・標準バランス',
-    hard: '【上級】基準値から金-50／兵糧-100・歯ごたえのある難易度'
+    relaxed: '【初級】基準値に金+1,200／兵糧+1,500・自勢力の兵糧収入二倍・敵方AIの兵力増加25%抑制',
+    easy: '【中級】基準値に金+650／兵糧+850・遊びやすい難易度',
+    normal: '【上級】基準値に金+150／兵糧+200・歯ごたえのある難易度'
   };
 
   const FAMOUS_CLANS = new Set([
@@ -222,9 +221,9 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
   function updateDiffDesc() {
     const bar = document.querySelector('.sl-diff-desc-bar');
     if (!bar) return;
-    const selBtn = document.querySelector('.diff-option-btn.selected');
-    const dKey = selBtn?.dataset?.diff || 'normal';
-    bar.textContent = DIFF_INFO_MAP[dKey] || DIFF_INFO_MAP.normal;
+    const selBtn = document.querySelector('.diff-option-btn[data-diff].selected');
+    const dKey = selBtn?.dataset?.diff || game()?.currentDifficulty || 'relaxed';
+    bar.textContent = DIFF_INFO_MAP[dKey] || DIFF_INFO_MAP.relaxed;
   }
 
   // Step 1: シナリオプレビューカード・タイトル・解説更新
@@ -688,16 +687,27 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     });
     syncEraTabsVisibility();
 
-    // 難易度ボタンからピクトグラムを削除し、楽級・初級・中級・上級に設定
+    // 難易度・包囲網ボタンからピクトグラムを削除し、初級・中級・上級・包囲網に設定
     document.querySelectorAll('#startModal .diff-option-btn[data-diff]').forEach(b => {
       b.querySelectorAll('.sl-dicon').forEach(el => el.remove());
       const k = b.dataset.diff;
-      const label = DIFF_NAME_MAP[k] || '中級';
+      const label = DIFF_NAME_MAP[k] || '初級';
       const n = b.querySelector('.diff-btn-name');
       if (n) {
         n.textContent = label;
       } else {
         b.textContent = label;
+      }
+      const sub = b.querySelector('.diff-btn-sub');
+      if (sub) sub.style.display = 'none';
+    });
+    document.querySelectorAll('#startModal .diff-option-btn[data-coalition-toggle]').forEach(b => {
+      b.querySelectorAll('.sl-dicon').forEach(el => el.remove());
+      const n = b.querySelector('.diff-btn-name');
+      if (n) {
+        n.textContent = '包囲網';
+      } else {
+        b.textContent = '包囲網';
       }
       const sub = b.querySelector('.diff-btn-sub');
       if (sub) sub.style.display = 'none';
@@ -768,7 +778,7 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     if (diff) $('.sl-diff', root).appendChild(diff);
     $('.sl-desc-body', root).appendChild(desc);
     buildMap($('.sl-map-body', root));
-    document.querySelectorAll('#startModal .diff-option-btn[data-diff] .diff-btn-name').forEach(n => { n.textContent = n.textContent.replace(/[【】]/g, ''); });
+    document.querySelectorAll('#startModal .diff-option-btn .diff-btn-name').forEach(n => { n.textContent = n.textContent.replace(/[【】]/g, ''); });
 
     if (IS_PHONE) buildPhone(root);
 

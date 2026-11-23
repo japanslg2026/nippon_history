@@ -148,18 +148,25 @@ export const MapRendererMethods = {
     return this.computeProvinceSvgMetrics(d).area;
   },
 
-  /** 領有国数・総石高と領国のSVG面積・幅高さに応じて家紋バッジサイズを返す（狭小1国は縮小、50万石以上・100万石以上は段階拡大） */
-  getKamonBadgeSize(province, ownedCount, totalKoku = 0) {
+  /** 領国オブジェクト単位のSVG面積・最小バウンディング辺長を取得（キャッシュ付き） */
+  getProvinceSvgMetrics(province) {
+    if (!province) return { area: 0, minDim: 0 };
+    if (typeof province._svgArea !== 'number' || typeof province._svgMinDim !== 'number') {
+      const metrics = this.computeProvinceSvgMetrics(province.svgPath || province.d || '');
+      province._svgArea = metrics.area;
+      province._svgMinDim = metrics.minDim;
+    }
+    return { area: province._svgArea, minDim: province._svgMinDim };
+  },
+
+  /** 領有国数・総石高と領国のSVG面積計（2国なら2国計、3国なら3国計）・幅高さに応じて家紋バッジサイズを返す */
+  getKamonBadgeSize(province, ownedCount, totalKoku = 0, totalArea = null) {
     const baseSize = 14;
     if (!province) return Number((baseSize * 0.80).toFixed(2));
-    if (ownedCount === 1) {
-      if (typeof province._svgArea !== 'number' || typeof province._svgMinDim !== 'number') {
-        const metrics = this.computeProvinceSvgMetrics(province.svgPath || province.d || '');
-        province._svgArea = metrics.area;
-        province._svgMinDim = metrics.minDim;
-      }
-      const area = province._svgArea;
-      const minDim = province._svgMinDim;
+    if (ownedCount > 0 && ownedCount <= 3) {
+      const metrics = this.getProvinceSvgMetrics(province);
+      const area = (typeof totalArea === 'number' && totalArea > 0) ? totalArea : metrics.area;
+      const minDim = metrics.minDim;
       if (area > 0 && area < 130) return Number((baseSize * 0.30).toFixed(2));
       if ((area > 0 && area < 535) || (minDim > 0 && minDim < 19.2)) {
         return Number((baseSize * 0.50).toFixed(2));
@@ -174,17 +181,19 @@ export const MapRendererMethods = {
     return Number((baseSize * 0.80).toFixed(2));
   },
 
-  /** 全領国を走査して大名IDごとの領有国数・総石高マップを返す */
+  /** 全領国を走査して大名IDごとの領有国数・総石高・総SVG面積マップを返す */
   getClanTerritoryStats() {
     const counts = {};
     const kokuTotals = {};
+    const areaTotals = {};
     (this.provinces || []).forEach(p => {
       if (p && p.ownerId) {
         counts[p.ownerId] = (counts[p.ownerId] || 0) + 1;
         kokuTotals[p.ownerId] = (kokuTotals[p.ownerId] || 0) + (Number(p.kokudaka) || 0);
+        areaTotals[p.ownerId] = (areaTotals[p.ownerId] || 0) + this.getProvinceSvgMetrics(p).area;
       }
     });
-    return { counts, kokuTotals };
+    return { counts, kokuTotals, areaTotals };
   },
 
   /** 全領国を走査して大名IDごとの領有国数マップを返す */
@@ -721,7 +730,7 @@ export const MapRendererMethods = {
     });
 
     // 領国ポリゴン & 家紋バッジの描画（家紋は大名の本拠地のみに表示）
-    const { counts: ownedCounts, kokuTotals } = this.getClanTerritoryStats();
+    const { counts: ownedCounts, kokuTotals, areaTotals } = this.getClanTerritoryStats();
     this.provinces.forEach(p => {
       const isMine = p.ownerId === this.playerClanId;
       const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -764,8 +773,8 @@ export const MapRendererMethods = {
           badgeG.style.display = 'none';
         }
 
-        // 家紋バッジ (金色の外縁を省略し、狭小1国は縮小、50万石以上は拡大)
-        const badgeSize = this.getKamonBadgeSize(p, p.ownerId ? (ownedCounts[p.ownerId] || 0) : 0, p.ownerId ? (kokuTotals[p.ownerId] || 0) : 0);
+        // 家紋バッジ (金色の外縁を省略し、3国以下の狭小領は合算面積等で縮小、50万石以上は拡大)
+        const badgeSize = this.getKamonBadgeSize(p, p.ownerId ? (ownedCounts[p.ownerId] || 0) : 0, p.ownerId ? (kokuTotals[p.ownerId] || 0) : 0, p.ownerId ? (areaTotals[p.ownerId] || 0) : 0);
         const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
         use.setAttribute('id', `kamon-use-${p.id}`);
         use.setAttribute('href', showKamon ? `#${this.getMapKamonId(p, this.getProvinceColor(p))}` : '');
@@ -1256,7 +1265,7 @@ export const MapRendererMethods = {
 
     // 1勢力につき最大1箇所のみ本拠地家紋を表示するためのトラッカー（2重表示防止フェイルセーフ）
     const displayedKamonClans = new Set();
-    const { counts: ownedCounts, kokuTotals } = this.getClanTerritoryStats();
+    const { counts: ownedCounts, kokuTotals, areaTotals } = this.getClanTerritoryStats();
 
     this.provinces.forEach(p => {
       const isMine = p.ownerId === this.playerClanId;
@@ -1274,7 +1283,7 @@ export const MapRendererMethods = {
         }
       }
       const showKamon = !!(p.ownerId && isCapital);
-      const badgeSize = this.getKamonBadgeSize(p, p.ownerId ? (ownedCounts[p.ownerId] || 0) : 0, p.ownerId ? (kokuTotals[p.ownerId] || 0) : 0);
+      const badgeSize = this.getKamonBadgeSize(p, p.ownerId ? (ownedCounts[p.ownerId] || 0) : 0, p.ownerId ? (kokuTotals[p.ownerId] || 0) : 0, p.ownerId ? (areaTotals[p.ownerId] || 0) : 0);
 
       const cached = this._mapTileCache[p.id];
 

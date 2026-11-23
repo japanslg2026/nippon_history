@@ -4082,7 +4082,7 @@
         'noto': '能登', 'kaga': '加賀', 'echizen': '越前', 'echizen_ohno': '越前', 'sado': '佐渡', 'kai': '甲斐', 'kai_tsuru': '甲斐', 'shinano': '信濃',
         'shinano_kawanakajima': '高井・水内', 'shinano_sarashina_hanishina': '更級・埴科', 'shinano_ueda': '上田', 'shinano_chikuma_kiso': '筑摩・木曽谷', 'shinano_chikuma_azumi': '筑摩・安曇', 'shinano_kiso': '木曽谷', 'shinano_takato': '信濃高遠', 'shinano_iida': '信濃飯田', 'shinano_takato_iida': '高遠・飯田', 'hida': '飛騨', 'hida_takayama': '飛騨', 'hida_kiun': '飛騨', 'hida_kamioka': '飛騨', 'mino': '美濃', 'mino_gujo': '美濃郡上', 'mino_iwamura': '美濃', 'owari': '尾張北', 'owari_south': '尾張南',
         'mikawa_okazaki': '三河', 'mikawa_yoshida': '三河', 'totomi_hamamatsu': '遠江', 'totomi_kakegawa': '遠江', 'totomi_futamata_haibara': '遠江', 'totomi_joto': '遠江', 'suruga': '駿河', 'izu': '伊豆', 'sagami': '相模', 'sagami_miura': '相模', 'musashi': '武蔵', 'musashi_oshi': '武蔵', 'musashi_hachigata': '武蔵', 'musashi_iwatsuki': '武蔵', 'musashi_kawagoe': '武蔵', 'musashi_edo_tama': '武蔵', 'musashi_edo': '武蔵', 'musashi_tama': '武蔵',
-        'kazusa': '上総', 'kazusa_isumi': '上総', 'kazusa_togane_naruto': '上総東金成東', 'shimousa': '下総', 'hitachi': '常陸', 'hitachi_ohta': '常陸', 'hitachi_mito': '常陸', 'hitachi_makabe': '常陸', 'hitachi_kashima': '常陸', 'shimotsuke': '下野', 'shimotsuke_kanitsuga': '下野', 'sano_oyama': '佐野・小山', 'shimotsuke_oyama': '佐野・小山', 'shimotsuke_sano': '佐野・小山', 'kozuke_takasaki': '高崎・箕輪', 'kozuke_agatsuma': '吾妻郡', 'kozuke_numata': '沼田', 'kozuke_maebashi': '厩橋', 'kozuke_nitta_kanayama': '新田・館林',
+        'kazusa': '上総', 'kazusa_isumi': '上総', 'kazusa_togane_naruto': '上総東金成東', 'shimousa': '下総', 'shimousa_koga': '下総古河', 'shimousa_yuhki': '下総', 'hitachi': '常陸', 'hitachi_ohta': '常陸', 'hitachi_mito': '常陸', 'hitachi_makabe': '常陸', 'hitachi_shimodate': '常陸', 'hitachi_shimotsuma': '常陸', 'hitachi_kashima': '常陸', 'shimotsuke': '下野', 'shimotsuke_kanitsuga': '下野', 'sano_oyama': '佐野・小山', 'shimotsuke_oyama': '佐野・小山', 'shimotsuke_sano': '佐野・小山', 'kozuke_takasaki': '高崎・箕輪', 'kozuke_agatsuma': '吾妻郡', 'kozuke_numata': '沼田', 'kozuke_maebashi': '厩橋', 'kozuke_nitta_kanayama': '新田・館林',
         'awa': '安房', 'omi_north': '北近江', 'omi_south': '南近江', 'yamashiro': '山城', 'yamato': '大和', 'yamato_koriyama': '大和', 'yamato_takatori': '大和', 'yamato_yoshino': '大和', 'yamato_higashiyamauchi': '大和',
         'kawachi': '河内北', 'kawachi_south': '河内南', 'izumi': '和泉', 'settsu': '摂津', 'settsu_shimakami': '摂津', 'settsu_osaka': '摂津', 'iga': '伊賀', 'ise': '伊勢', 'ise_suzuka': '伊勢', 'shima': '志摩',
         'kii': '紀伊', 'kii_saika_wakayama': '雑賀・和歌山', 'kii_kichu': '紀中', 'kii_kumano': '紀南・熊野',
@@ -4211,7 +4211,7 @@
       // 武将配属ルールは data/rules.json（officerAffiliationRules）から読み込む（ゲームと同じデータ。2026-11-14）
       async function loadAffiliationRulesSafe() {
         try {
-          var r = await fetchJsonSmart('rules.json?v=20261122_v44');
+          var r = await fetchJsonSmart('rules.json?v=20261123_v57');
           window.RULES_DATA = r || {};
           return (r && Array.isArray(r.officerAffiliationRules)) ? r.officerAffiliationRules : [];
         } catch (_) {
@@ -4300,11 +4300,11 @@
       async function initAllData() {
         var statusEl = document.getElementById('loadingStatusText');
         try {
-          await loadExternalScript(['assets/kamons.js?v=20261122_v44', 'assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
+          await loadExternalScript(['assets/kamons.js?v=20261123_v57', 'assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
           if (typeof window.loadKamonSymbols === 'function') {
             window.loadKamonSymbols();
           }
-          await loadExternalScript(['js/kamonOverrides.js?v=20261122_v44']);
+          await loadExternalScript(['js/kamonOverrides.js?v=20261123_v57']);
 
           var urlParams = new URLSearchParams(window.location.search);
           var initialScenId = urlParams.get('scenario');
@@ -4316,21 +4316,21 @@
             statusEl.textContent = '桶狭間の戦い（1560年）と全国地図データを読み込み中…';
 
             var splitScenPromise = Promise.all([
-              fetchJsonSmart('scenario_1560.json?v=20261122_v44'),
-              fetchJsonSmart('scenarios_meta.json?v=20261122_v44')
+              fetchJsonSmart('scenario_1560.json?v=20261123_v57'),
+              fetchJsonSmart('scenarios_meta.json?v=20261123_v57')
             ]).then(function (pair) {
               return { split: true, s1560: pair[0], meta: pair[1] };
             }).catch(function () {
-              return fetchJsonSmart('scenarios.json?v=20261122_v44').then(function (all) {
+              return fetchJsonSmart('scenarios.json?v=20261123_v57').then(function (all) {
                 return { split: false, all: all };
               });
             });
 
             var phase1Results = await Promise.all([
               splitScenPromise,
-              fetchJsonSmart('provinces.json?v=20261122_v44'),
-              fetchJsonSmart('clans.json?v=20261122_v44'),
-              fetchJsonSmart('map_borders.json?v=20261122_v44').catch(function () { return window.MAP_BORDERS_DATA || null; })
+              fetchJsonSmart('provinces.json?v=20261123_v57'),
+              fetchJsonSmart('clans.json?v=20261123_v57'),
+              fetchJsonSmart('map_borders.json?v=20261123_v57').catch(function () { return window.MAP_BORDERS_DATA || null; })
             ]);
 
             var scenRes = phase1Results[0];
@@ -4421,9 +4421,9 @@
 
             setTimeout(function () {
               Promise.all([
-                fetchJsonSmart('officers.json?v=20261122_v44'),
-                fetchJsonSmart('governors.json?v=20261122_v44').catch(function () { return {}; }),
-                fetchJsonSmart('events.json?v=20261122_v44').catch(function () { return {}; }),
+                fetchJsonSmart('officers.json?v=20261123_v57'),
+                fetchJsonSmart('governors.json?v=20261123_v57').catch(function () { return {}; }),
+                fetchJsonSmart('events.json?v=20261123_v57').catch(function () { return {}; }),
                 loadAffiliationRulesSafe()
               ]).then(function (bgRes) {
                 var officersRaw = bgRes[0];
@@ -4456,7 +4456,7 @@
               });
 
               if (!State.scenariosFullLoaded) {
-                fetchJsonSmart('scenarios.json?v=20261122_v44').then(function (scenariosRaw) {
+                fetchJsonSmart('scenarios.json?v=20261123_v57').then(function (scenariosRaw) {
                   window.SCENARIOS_DATA = scenariosRaw || [];
                   var fullList = filterAndSortScenarios(scenariosRaw);
                   var fullById = new Map(fullList.map(function (s) { return [String(s.id), s]; }));
@@ -4467,10 +4467,13 @@
                   });
                   State.scenariosFullLoaded = true;
 
-                  if (State.currentScenario && State.currentScenario._isStub) {
+                  if (State.currentScenario) {
                     var fullCurrent = fullById.get(String(State.currentScenario.id));
-                    if (fullCurrent) {
-                      State.currentScenario = fullCurrent;
+                    var needsRefresh = !!(fullCurrent && (State.currentScenario._isStub || (function () {
+                      try { return JSON.stringify(fullCurrent) !== JSON.stringify(State.currentScenario); } catch (_) { return true; }
+                    })()));
+                    if (fullCurrent) State.currentScenario = fullCurrent;
+                    if (needsRefresh) {
                       computeScenarioState(fullCurrent);
                       if (State.selectedProvId && State.computedProvs.has(State.selectedProvId)) {
                         var selEntry = State.computedProvs.get(State.selectedProvId);
@@ -4498,14 +4501,14 @@
           var rulesPromise = loadAffiliationRulesSafe();
 
           var results = await Promise.all([
-            fetchJsonSmart('scenarios.json?v=20261122_v44'),
-            fetchJsonSmart('provinces.json?v=20261122_v44'),
-            fetchJsonSmart('clans.json?v=20261122_v44'),
-            fetchJsonSmart('officers.json?v=20261122_v44'),
-            fetchJsonSmart('governors.json?v=20261122_v44').catch(function () { return {}; }),
-            fetchJsonSmart('events.json?v=20261122_v44').catch(function () { return {}; }),
+            fetchJsonSmart('scenarios.json?v=20261123_v57'),
+            fetchJsonSmart('provinces.json?v=20261123_v57'),
+            fetchJsonSmart('clans.json?v=20261123_v57'),
+            fetchJsonSmart('officers.json?v=20261123_v57'),
+            fetchJsonSmart('governors.json?v=20261123_v57').catch(function () { return {}; }),
+            fetchJsonSmart('events.json?v=20261123_v57').catch(function () { return {}; }),
             rulesPromise,
-            fetchJsonSmart('map_borders.json?v=20261122_v44').catch(function () { return window.MAP_BORDERS_DATA || null; })
+            fetchJsonSmart('map_borders.json?v=20261123_v57').catch(function () { return window.MAP_BORDERS_DATA || null; })
           ]);
 
           var scenariosRaw = results[0];
@@ -4709,13 +4712,15 @@
                 leaderName: '',
                 leaderOfficer: null,
                 totalKoku: 0,
-                totalTroops: 0
+                totalTroops: 0,
+                totalSvgArea: 0
               });
             }
             var cEntry = State.computedClans.get(ownerId);
             cEntry.provIds.push(pid);
             cEntry.totalKoku += koku;
             cEntry.totalTroops += troops;
+            cEntry.totalSvgArea += getProvinceSvgMetrics(baseProv).area;
           }
         }
 
@@ -4870,6 +4875,8 @@
             return;
           }
           var matchOff = activeOfficers.find(function (o) {
+            var af = affMap[o.id];
+            if (af && typeof af === 'object' && af.isCastleLord === false) return false;
             return o.clanId === pEntry.ownerId && !o.isDaimyo && !o.assignedProvId && o.defaultProv === pid;
           });
           if (matchOff) {
@@ -5659,17 +5666,23 @@
         return computeProvinceSvgMetrics(d).area;
       }
 
-      function getKamonBadgeSize(p, ownedCount, isMobile, totalKoku) {
+      function getProvinceSvgMetrics(p) {
+        if (!p) return { area: 0, minDim: 0 };
+        if (typeof p._svgArea !== 'number' || typeof p._svgMinDim !== 'number') {
+          var metrics = computeProvinceSvgMetrics(p.svgPath || p.d || '');
+          p._svgArea = metrics.area;
+          p._svgMinDim = metrics.minDim;
+        }
+        return { area: p._svgArea, minDim: p._svgMinDim };
+      }
+
+      function getKamonBadgeSize(p, ownedCount, isMobile, totalKoku, totalArea) {
         var base = isMobile ? 17.5 : 14;
         if (!p) return Number((base * 0.80).toFixed(2));
-        if (ownedCount === 1) {
-          if (typeof p._svgArea !== 'number' || typeof p._svgMinDim !== 'number') {
-            var metrics = computeProvinceSvgMetrics(p.svgPath || p.d || '');
-            p._svgArea = metrics.area;
-            p._svgMinDim = metrics.minDim;
-          }
-          var area = p._svgArea;
-          var minDim = p._svgMinDim;
+        if (ownedCount > 0 && ownedCount <= 3) {
+          var metrics = getProvinceSvgMetrics(p);
+          var area = (typeof totalArea === 'number' && totalArea > 0) ? totalArea : metrics.area;
+          var minDim = metrics.minDim;
           if (area > 0 && area < 130) return Number((base * 0.30).toFixed(2));
           if ((area > 0 && area < 535) || (minDim > 0 && minDim < 19.2)) {
             return Number((base * 0.50).toFixed(2));
@@ -5684,9 +5697,9 @@
         return Number((base * 0.80).toFixed(2));
       }
 
-      function applyKamonBadgeGeometry(p, useEl, labelEl, ownedCount, isMobile, totalKoku) {
+      function applyKamonBadgeGeometry(p, useEl, labelEl, ownedCount, isMobile, totalKoku, totalArea) {
         if (!p || p.cx === undefined || p.cy === undefined) return;
-        var badgeSize = getKamonBadgeSize(p, ownedCount, isMobile, totalKoku);
+        var badgeSize = getKamonBadgeSize(p, ownedCount, isMobile, totalKoku, totalArea);
         var kamonBaseX = p.kamonX !== undefined ? p.kamonX : p.cx;
         var kx = kamonBaseX + (Number.isFinite(p.kamonOffsetX) ? p.kamonOffsetX : 0);
         var ky = p.kamonY !== undefined ? p.kamonY : p.cy;
@@ -5712,9 +5725,10 @@
             var cEntry = (ownerId && State.computedClans) ? State.computedClans.get(ownerId) : null;
             var ownedCount = cEntry ? cEntry.provIds.length : 0;
             var totalKoku = cEntry ? cEntry.totalKoku : 0;
+            var totalArea = cEntry ? cEntry.totalSvgArea : 0;
             var use = document.getElementById('kamon-use-' + p.id);
             var txt = document.getElementById('prov-label-' + p.id);
-            applyKamonBadgeGeometry(p, use, txt, ownedCount, isMobile, totalKoku);
+            applyKamonBadgeGeometry(p, use, txt, ownedCount, isMobile, totalKoku, totalArea);
           }
         }
       }
@@ -5815,7 +5829,8 @@
               var pBase = pEntry.base || State.provById.get(pid);
               var ownedCount = cEntry ? cEntry.provIds.length : 0;
               var totalKoku = cEntry ? cEntry.totalKoku : 0;
-              applyKamonBadgeGeometry(pBase, kamonUse, labelTxt, ownedCount, window.innerWidth <= 1100, totalKoku);
+              var totalArea = cEntry ? cEntry.totalSvgArea : 0;
+              applyKamonBadgeGeometry(pBase, kamonUse, labelTxt, ownedCount, window.innerWidth <= 1100, totalKoku, totalArea);
               kamonG.style.display = '';
               kamonG.classList.toggle('clan-highlighted', isSameClan);
               kamonG.classList.toggle('dimmed', isDimmed);

@@ -1459,8 +1459,8 @@ export const ComputerLogicMethods = {
 
   /** 徴兵：払える分だけ兵を増やし、実際の増分を返す */
   aiPayTroops(clanId, want) {
-    // 楽級：相手方AIの兵力増加を20%削減（2026-11-10）
-    if (this.currentDifficulty === 'relaxed' && !this.isSpectatorMode) want = Math.round(want * 0.8);
+    // 初級（旧・楽級）：相手方AIの兵力増加を25%削減
+    if (this.currentDifficulty === 'relaxed' && !this.isSpectatorMode) want = Math.round(want * 0.75);
     if (want <= 0) return 0;
     const e = this.aiEcon(clanId);
     if (!e) return want;
@@ -2308,9 +2308,9 @@ export const ComputerLogicMethods = {
       const threatened = this.clanFeelsThreatened(clanId);
       let attackProb = tune.attackProb;
 
-      // 包囲網結成時やプレイヤー勢力拡大時は包囲網参加大名が好戦的に（内政型は控えめに）
+      // 包囲網結成時（または包囲網オンでプレイヤー勢力拡大時）は包囲網参加大名が好戦的に（内政型は控えめに）
       const myProvsCount = this.provinces.filter(p => p.ownerId === this.playerClanId).length;
-      if (this.coalitionFormed || myProvsCount >= 12) {
+      if (this.coalitionFormed || (this.coalitionEnabled && myProvsCount >= 12)) {
         attackProb = Math.min(tune.coalitionCap, attackProb + tune.coalitionBoost);
       }
       // 内政型は多正面作戦をほぼ起こさない：既に他所で戦が起きている季は更に自重

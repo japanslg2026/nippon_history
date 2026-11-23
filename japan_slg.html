@@ -26,14 +26,14 @@
 
   <!-- Google Fonts: 武士の魂が宿る力強い和風・毛筆フォント -->
   <!-- 起動高速化: ゲームデータJSONをHTML解析と並行して先読み -->
-  <link rel="preload" href="data/scenario_1560.json?v=20261122_v44" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/scenarios_meta.json?v=20261122_v44" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/clans.json?v=20261122_v44" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/provinces.json?v=20261122_v44" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/officers.json?v=20261122_v44" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/governors.json?v=20261122_v44" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/events.json?v=20261122_v44" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/rules.json?v=20261122_v44" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/scenario_1560.json?v=20261123_v57" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/scenarios_meta.json?v=20261123_v57" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/clans.json?v=20261123_v57" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/provinces.json?v=20261123_v57" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/officers.json?v=20261123_v57" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/governors.json?v=20261123_v57" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/events.json?v=20261123_v57" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/rules.json?v=20261123_v57" as="fetch" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&amp;family=Dela+Gothic+One&amp;family=Sawarabi+Mincho&amp;family=Shippori+Mincho:wght@600;700;800&amp;family=Yuji+Boku&amp;display=swap" rel="stylesheet">
@@ -67,7 +67,7 @@
         <span>天文20年 (1551) 春</span>
       </span>
       <span class="weather-badge" id="weatherDisplay">🌤️ 天候: 晴天</span>
-      <span class="diff-badge-header" id="diffBadgeDisplay" style="color:#f39c12; border-color:#d68910; background:rgba(243, 156, 18, 0.2);">【中級】</span>
+      <span class="diff-badge-header" id="diffBadgeDisplay" style="color:#8de4a7; border-color:#39a85d; background:rgba(57, 168, 93, 0.25);">【初級】</span>
     </div>
 
     <!-- スマホ用クイックアクションボタングループ：全記録一覧(📖)、操作メニュー(⚙️)、勢力情勢(🏯)を1行で配置 -->
@@ -972,17 +972,17 @@
     <div class="diff-selector-wrapper" style="background:rgba(0,0,0,0.4); border:1px solid #553e2a; border-radius:4px; padding:4px 12px; margin: 6px 0 6px 0; display:flex; align-items:center; gap:12px;">
       <span class="diff-selector-label" style="font-size: 12pt; font-weight:bold; color:var(--gold-bright); flex-shrink:0;">⚙️ 難易度:</span>
       <div class="diff-selector-group" style="flex:1; display:grid; grid-template-columns:repeat(4, 1fr); gap:6px;">
-        <button class="diff-option-btn selected" data-diff="relaxed" style="padding:2px 8px; font-size:12pt;" title="【楽級】大名ごとの基準値に金1,200・兵糧1,500を追加し、覇道包囲網は起きず、諸大名はバランス型・内政型で動く、ゆったり遊べる難易度です">
-          <span class="diff-btn-name">【楽級】</span><span class="diff-btn-sub">安泰の世 <span style="color:#aaa; font-size:12pt;">(金+1200/米+1500)</span></span>
+        <button class="diff-option-btn selected" data-diff="relaxed" style="padding:2px 8px; font-size:12pt;" title="【初級：安泰の世】大名ごとの基準値に金1,200・兵糧1,500を追加し、自勢力の兵糧収入二倍、敵方AIの兵力増加を25%抑える、ゆったり遊べる難易度です">
+          <span class="diff-btn-name">【初級】</span><span class="diff-btn-sub">安泰の世 <span style="color:#aaa; font-size:12pt;">(金+1200/米+1500)</span></span>
         </button>
-        <button class="diff-option-btn" data-diff="easy" style="padding:2px 8px; font-size:12pt;" title="【初級：天下泰平】大名ごとの基準値に金650・兵糧850を追加した、遊びやすい難易度です">
-          <span class="diff-btn-name">【初級】</span><span class="diff-btn-sub">天下泰平 <span style="color:#aaa; font-size:12pt;">(金+650/米+850)</span></span>
+        <button class="diff-option-btn" data-diff="easy" style="padding:2px 8px; font-size:12pt;" title="【中級：天下泰平】大名ごとの基準値に金650・兵糧850を追加した、遊びやすい難易度です">
+          <span class="diff-btn-name">【中級】</span><span class="diff-btn-sub">天下泰平 <span style="color:#aaa; font-size:12pt;">(金+650/米+850)</span></span>
         </button>
-        <button class="diff-option-btn" data-diff="normal" style="padding:2px 8px; font-size:12pt;" title="【中級：群雄割拠】標準バランスの難易度です">
-          <span class="diff-btn-name">【中級】</span><span class="diff-btn-sub">群雄割拠 <span style="color:#aaa; font-size:12pt;">(金+150/米+200)</span></span>
+        <button class="diff-option-btn" data-diff="normal" style="padding:2px 8px; font-size:12pt;" title="【上級：群雄割拠】大名ごとの基準値に金150・兵糧200を追加した、歯ごたえのある難易度です">
+          <span class="diff-btn-name">【上級】</span><span class="diff-btn-sub">群雄割拠 <span style="color:#aaa; font-size:12pt;">(金+150/米+200)</span></span>
         </button>
-        <button class="diff-option-btn" data-diff="hard" style="padding:2px 8px; font-size:12pt;" title="【上級：風雲再起】初期金・兵糧が少ない難易度です">
-          <span class="diff-btn-name">【上級】</span><span class="diff-btn-sub">風雲再起 <span style="color:#aaa; font-size:12pt;">(金-50/米-100)</span></span>
+        <button class="diff-option-btn" data-coalition-toggle="1" id="coalitionToggleBtn" style="padding:2px 8px; font-size:12pt;" title="【包囲網】オンにすると、自勢力が15国以上に拡大した際に諸大名による反覇道包囲網が結成されます（初期はオフ）">
+          <span class="diff-btn-name">【包囲網】</span><span class="diff-btn-sub">反覇道包囲網</span>
         </button>
       </div>
     </div>
@@ -1957,17 +1957,17 @@
 
   <!-- モジュール化されたJavaScript群 (順序保証ロード) -->
   <!-- 1. 全大名家・全シナリオ・全106領国データベース -->
-  <script defer src="assets/kamons.js?v=20261122_v44"></script>
-  <script defer src="js/kamonOverrides.js?v=20261122_v44"></script>
+  <script defer src="assets/kamons.js?v=20261123_v57"></script>
+  <script defer src="js/kamonOverrides.js?v=20261123_v57"></script>
   
   <!-- 2. 和洋折衷フルオーケストラBGMエンジン (全15曲) -->
   <script defer src="js/bgm.js?v=20261101_mobfix3"></script>
   <script defer src="js/MobileAudioKeepAlive.js?v=20261101_mobfix3"></script>
 
   <!-- 3. 戦国天下統一伝 ゲームエンジン本体 -->
-  <script type="module" src="js/app.js?v=20261122_v44_kamon85"></script>
+  <script type="module" src="js/app.js?v=20261123_v57"></script>
   <script type="module" src="js/ui/Encyclopedia.js?v=20261109_sp"></script>
-  <script defer src="js/ui/StartScreenLayout.js?v=20261122_v44_zoom90"></script>
+  <script defer src="js/ui/StartScreenLayout.js?v=20261123_v57_zoom90"></script>
   <script defer src="js/ui/TitleBgm.js?v=20261107_horagai_fix"></script>
 
 

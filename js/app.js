@@ -9,12 +9,12 @@
  * @typedef {import('./types.js').GameSaveData} GameSaveData
  */
 
-import { GameState, GameStateMethods } from './core/GameState.js?v=20261122_v44_zoom90';
+import { GameState, GameStateMethods } from './core/GameState.js?v=20261123_v57';
 import { UIManager, UIManagerMethods } from './ui/UIManager.js?v=20261120_zoom90';
-import { MapRenderer, MapRendererMethods } from './render/MapRenderer.js?v=20261122_v44_kamon85';
-import { ComputerLogic, ComputerLogicMethods } from './ai/ComputerLogic.js?v=20261122_v44';
-import { DataLoader } from './core/DataLoader.js?v=20261122_v44';
-import * as GameRules from './core/GameRules.js?v=20261122_v44';
+import { MapRenderer, MapRendererMethods } from './render/MapRenderer.js?v=20261123_v57_kamon85';
+import { ComputerLogic, ComputerLogicMethods } from './ai/ComputerLogic.js?v=20261123_v57';
+import { DataLoader } from './core/DataLoader.js?v=20261123_v57';
+import * as GameRules from './core/GameRules.js?v=20261123_v57';
 
 // 早期初期化: モジュール評価時点で即座に window.getClanAbility を配備
 if (typeof window !== 'undefined') {
@@ -579,6 +579,7 @@ export class SengokuGame {
     // ゲーム進行状態
     this.currentScenarioId = '1560';
     this.currentDifficulty = 'relaxed';
+    this.coalitionEnabled = false;
     this.playerClanId = 'chosokabe';
     this.playerDaimyo = null;
     this.foundingLeaderNames = {};
@@ -712,6 +713,22 @@ async function bootSengokuGame() {
     if (!window.game) {
       window.game = new SengokuGame(gameData);
       window.dispatchEvent(new CustomEvent('gameReady', { detail: window.game }));
+
+      // 分割先読みした 1560 シナリオと scenarios.json の間に差分があった場合、開始前であれば最新データへ自動更新
+      window.addEventListener('fullScenariosLoaded', (ev) => {
+        const g = window.game;
+        if (!g || !ev?.detail?.updated1560) return;
+        const startModal = document.getElementById('startModal');
+        const onStartScreen = startModal && !startModal.classList.contains('hidden');
+        if (!onStartScreen || String(g.currentScenarioId) !== '1560') return;
+        const prevClanId = g.playerClanId;
+        g.switchScenario('1560').then(() => {
+          if (prevClanId && typeof g.selectDaimyo === 'function') {
+            const exists = (g.currentScenario?.playables || []).some(p => p && p.id === prevClanId);
+            if (exists) g.selectDaimyo(prevClanId);
+          }
+        }).catch(() => {});
+      });
     }
   } catch (err) {
     console.error("Fatal error during SengokuGame async initialization:", err);

@@ -3405,7 +3405,7 @@
         "tachibana"
       ],
       "setDaimyo": true,
-      "setDefaultProv": "chikugo_north"
+      "setDefaultProv": "chikugo_south"
     },
     {
       "id": "single_any_toyotomi_黒田官兵衛_30",
@@ -7378,7 +7378,15 @@
     "off_jd_hist_0375": "onodera",
     "off_shakenobe_hidetsuna": "mogami",
     "off_mononobe_toochine": "yamato_court",
-    "off_taika_T1_008": "yamato_court"
+    "off_taika_T1_008": "yamato_court",
+    "off_pl1590_022": {
+      "clanId": "tagaya",
+      "defaultProv": "hitachi_shimotsuma"
+    },
+    "off_tagaya_tsunehiro": {
+      "clanId": "tagaya",
+      "defaultProv": "hitachi_shimotsuma"
+    }
   },
   "factionRosters": {
     "goryokaku": [

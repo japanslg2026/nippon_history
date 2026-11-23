@@ -9,7 +9,7 @@
  */
 
 export class DataLoader {
-  static DATA_VERSION = '20261122_v44'; // japan_slg.html の preload と同じ値にすること
+  static DATA_VERSION = '20261123_v57'; // japan_slg.html の preload と同じ値にすること
   static _fullScenariosPromise = null;
   static _fullScenariosLoaded = false;
   static _gameData = null;
@@ -51,7 +51,7 @@ export class DataLoader {
    * @returns {Promise<Scenario[]>}
    */
   static ensureFullScenarios() {
-    const v = DataLoader.DATA_VERSION || '20261122_v44';
+    const v = DataLoader.DATA_VERSION || '20261123_v57';
     const existing = (typeof window !== 'undefined' && (window.SCENARIOS_DATA || window.SCENARIOS)) || DataLoader._gameData?.scenarios;
     if (DataLoader._fullScenariosLoaded && Array.isArray(existing) && existing.length > 0 && !existing.some(s => s && s._isStub)) {
       return Promise.resolve(existing);
@@ -63,6 +63,16 @@ export class DataLoader {
       .then(fullScenarios => {
         if (!Array.isArray(fullScenarios)) {
           throw new Error('scenarios.json did not return an array');
+        }
+        const prev1560 = Array.isArray(existing) ? existing.find(s => s && String(s.id) === '1560') : null;
+        const next1560 = fullScenarios.find(s => s && String(s.id) === '1560');
+        let updated1560 = false;
+        if (prev1560 && next1560) {
+          try {
+            updated1560 = JSON.stringify(prev1560) !== JSON.stringify(next1560);
+          } catch (_) {
+            updated1560 = true;
+          }
         }
         const targets = new Set();
         if (DataLoader._gameData && Array.isArray(DataLoader._gameData.scenarios)) {
@@ -85,7 +95,7 @@ export class DataLoader {
         }
         DataLoader._fullScenariosLoaded = true;
         if (typeof window !== 'undefined') {
-          window.dispatchEvent(new CustomEvent('fullScenariosLoaded'));
+          window.dispatchEvent(new CustomEvent('fullScenariosLoaded', { detail: { updated1560 } }));
         }
         return DataLoader._gameData?.scenarios || (typeof window !== 'undefined' ? window.SCENARIOS_DATA : fullScenarios) || fullScenarios;
       })

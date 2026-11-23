@@ -1018,7 +1018,10 @@
           "shimotsuke_sano": "fujiwara_hidesato",
           "shimousa_koga": "heian_court",
           "shimotsuke_nasu": "fujiwara_hidesato",
-          "kozuke_nitta_kanayama": "heian_court"
+          "kozuke_nitta_kanayama": "heian_court",
+          "hitachi_shimodate": "heian_court",
+          "hitachi_shimotsuma": "heian_court",
+          "shimousa_yuhki": "heian_court"
         },
         "killOfficerIds": [
           "off_taira_masakado"
@@ -1711,7 +1714,8 @@
           "shimotsuke_oyama": "taira",
           "shimotsuke_sano": "taira",
           "shimotsuke_nasu": "taira",
-          "shimousa_koga": "taira"
+          "shimousa_koga": "taira",
+          "shimousa_yuhki": "taira"
         },
         "killOfficerIds": [
           "off_minamoto_yoshitomo"
@@ -1854,7 +1858,8 @@
           "kaga_south": "kiso",
           "echizen": "kiso",
           "yamashiro": "kiso",
-          "echizen_ohno": "kiso"
+          "echizen_ohno": "kiso",
+          "echizen_tsuruga": "kiso"
         },
         "message": "木曽義仲が京都を占領し、平家一門は西国（屋島・壇ノ浦）へ逃亡しました！"
       },
@@ -2247,7 +2252,8 @@
           "harima_east": "akamatsu",
           "bizen": "akamatsu",
           "shimousa_koga": "ashikaga",
-          "kozuke_nitta_kanayama": "nitta"
+          "kozuke_nitta_kanayama": "nitta",
+          "shimousa_yuhki": "ashikaga"
         },
         "message": "鎌倉幕府が滅亡し、後醍醐天皇による建武の新政が始まりました！",
         "killOfficerIds": [
@@ -3249,7 +3255,8 @@
         "territory": {
           "echizen": "oda",
           "omi_north": "oda",
-          "echizen_ohno": "oda"
+          "echizen_ohno": "oda",
+          "echizen_tsuruga": "oda"
         },
         "appoint": {
           "echizen": "off_shibata_katsuie",
@@ -3670,7 +3677,8 @@
           "kawachi_south": "toyotomi",
           "shinano_takato": "tokugawa",
           "shinano_iida": "tokugawa",
-          "totomi_kakegawa": "tokugawa"
+          "totomi_kakegawa": "tokugawa",
+          "echizen_tsuruga": "shibata"
         },
         "message": "織田信長公落命！天下は羽柴秀吉、柴田勝家、徳川家康ら後継勢力の割拠へ突入しました！"
       },
@@ -3749,7 +3757,8 @@
             "mino_gujo": "oda",
             "kawachi_south": "toyotomi",
             "shinano_takato": "tokugawa",
-            "shinano_iida": "tokugawa"
+            "shinano_iida": "tokugawa",
+            "echizen_tsuruga": "shibata"
           },
           "successors": [
             {
@@ -3913,7 +3922,8 @@
           "kaga_north": "toyotomi",
           "kaga_south": "toyotomi",
           "noto": "toyotomi",
-          "echizen_ohno": "toyotomi"
+          "echizen_ohno": "toyotomi",
+          "echizen_tsuruga": "toyotomi"
         },
         "message": "柴田勝家が滅亡し、羽柴秀吉が北陸諸国を完全に傘下に収めました！",
         "killOfficerIds": [
@@ -5057,7 +5067,9 @@
           "hitachi_ohta": "yamato_court",
           "hitachi_mito": "yamato_court",
           "hitachi_makabe": "yamato_court",
-          "hitachi_kashima": "yamato_court"
+          "hitachi_kashima": "yamato_court",
+          "hitachi_shimodate": "yamato_court",
+          "hitachi_shimotsuma": "yamato_court"
         },
         "alliances": [
           {
@@ -5938,6 +5950,10 @@
             "moraleDelta": -15
           },
           "echizen_ohno": {
+            "orderDelta": -25,
+            "moraleDelta": -15
+          },
+          "echizen_tsuruga": {
             "orderDelta": -25,
             "moraleDelta": -15
           }
@@ -7126,6 +7142,12 @@
             "defenseDelta": -12,
             "orderDelta": -8,
             "moraleDelta": -5
+          },
+          "echizen_tsuruga": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
           }
         },
         "message": "天正の大地震！飛騨の帰雲城が山崩れに埋まり、近江長浜城・越中木舟城も倒壊。中部諸国の兵と城郭が大打撃を受けました。",
@@ -8255,6 +8277,12 @@
             "defenseDelta": -12,
             "orderDelta": -8,
             "moraleDelta": -5
+          },
+          "hitachi_fuchu": {
+            "troopsRate": 0.92,
+            "defenseDelta": -12,
+            "orderDelta": -8,
+            "moraleDelta": -5
           }
         },
         "message": "安政江戸の大地震！将軍のお膝元・江戸が倒壊と大火に見舞われ、武蔵の兵と城郭・治安が大打撃を受けました。"
@@ -8276,7 +8304,8 @@
       "changes": {
         "territory": {
           "echizen": "asakura",
-          "echizen_ohno": "asakura"
+          "echizen_ohno": "asakura",
+          "echizen_tsuruga": "asakura"
         },
         "message": "朝倉孝景が東軍に寝返り越前守護の座を得ました！越前は斯波氏の手を離れ、朝倉氏のものとなりました。"
       }
@@ -11646,6 +11675,140 @@
       [
         9999,
         "吉田城"
+      ]
+    ],
+    "hitachi_shimodate": [
+      [
+        1180,
+        "伊佐館・中村館"
+      ],
+      [
+        1390,
+        "伊佐城"
+      ],
+      [
+        1477,
+        "小栗城・伊佐城"
+      ],
+      [
+        1641,
+        "下館城"
+      ],
+      [
+        1702,
+        "下館城（幕府領）"
+      ],
+      [
+        1871,
+        "下館城"
+      ],
+      [
+        9999,
+        "下館城跡（旧下館藩）"
+      ]
+    ],
+    "hitachi_shimotsuma": [
+      [
+        1189,
+        "豊田館・下妻館"
+      ],
+      [
+        1350,
+        "関城・大宝城"
+      ],
+      [
+        1454,
+        "関城・豊田城"
+      ],
+      [
+        1601,
+        "下妻城"
+      ],
+      [
+        1711,
+        "下妻（幕府領・旧下妻城跡）"
+      ],
+      [
+        1871,
+        "下妻陣屋"
+      ],
+      [
+        9999,
+        "下妻（旧下妻陣屋）"
+      ]
+    ],
+    "shimousa_yuhki": [
+      [
+        1182,
+        "結城荘の館"
+      ],
+      [
+        1601,
+        "結城城"
+      ],
+      [
+        1700,
+        "結城（幕府領・旧結城城跡）"
+      ],
+      [
+        1871,
+        "結城城"
+      ],
+      [
+        9999,
+        "結城城跡（旧結城藩）"
+      ]
+    ],
+    "echizen_tsuruga": [
+      [
+        1220,
+        "敦賀津"
+      ],
+      [
+        1583,
+        "金ヶ崎城"
+      ],
+      [
+        1614,
+        "敦賀城"
+      ],
+      [
+        1681,
+        "敦賀陣屋"
+      ],
+      [
+        9999,
+        "鞠山陣屋"
+      ]
+    ],
+    "hitachi_fuchu": [
+      [
+        645,
+        "霞ヶ浦北岸邑"
+      ],
+      [
+        801,
+        "茨城国造館"
+      ],
+      [
+        1019,
+        "茨城郡衙"
+      ],
+      [
+        1346,
+        "常陸国府"
+      ],
+      [
+        1602,
+        "府中城"
+      ],
+      [
+        1877,
+        "常陸府中陣屋"
+      ],
+      [
+        9999,
+        "常陸府中陣屋跡（石岡）"
       ]
     ]
   },
