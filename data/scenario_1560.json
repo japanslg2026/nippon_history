@@ -318,7 +318,7 @@
     "mikawa_yoshida": "imagawa",
     "chikugo_south": "otomo",
     "hitachi_shimodate": "yuki",
-    "hitachi_shimotsuma": "yuki",
+    "hitachi_shimotsuma": "tagaya",
     "shimousa_yuhki": "yuki",
     "echizen_tsuruga": "asakura",
     "hitachi_fuchu": "daijo"
@@ -886,9 +886,9 @@
       "startProvId": "uzen_yonezawa",
       "provCount": 3,
       "myProvinces": [
-        "iwashiro_date_shinobu",
         "rikuzen",
-        "uzen_yonezawa"
+        "uzen_yonezawa",
+        "iwashiro_date_shinobu"
       ],
       "gold": 650,
       "rice": 800,
@@ -1336,8 +1336,8 @@
       "startProvId": "iwashiro",
       "provCount": 2,
       "myProvinces": [
-        "echigo_higashikanbara",
-        "iwashiro"
+        "iwashiro",
+        "echigo_higashikanbara"
       ],
       "gold": 650,
       "rice": 800,
@@ -1505,10 +1505,10 @@
       "startProvId": "echigo",
       "provCount": 4,
       "myProvinces": [
-        "echigo",
-        "echigo_kanbara",
         "echigo_murakami",
-        "echigo_uonuma"
+        "echigo_kanbara",
+        "echigo_uonuma",
+        "echigo"
       ],
       "gold": 1500,
       "rice": 1800,
@@ -1620,9 +1620,9 @@
       "startProvId": "settsu_osaka",
       "provCount": 5,
       "myProvinces": [
-        "ise_nagashima",
         "kaga_north",
         "kaga_south",
+        "ise_nagashima",
         "settsu_osaka",
         "yamato_yoshino"
       ],
@@ -1653,8 +1653,8 @@
       "provCount": 3,
       "myProvinces": [
         "echizen",
-        "echizen_ohno",
-        "echizen_tsuruga"
+        "echizen_tsuruga",
+        "echizen_ohno"
       ],
       "gold": 650,
       "rice": 800,
@@ -1682,8 +1682,8 @@
       "startProvId": "hitachi_ohta",
       "provCount": 2,
       "myProvinces": [
-        "hitachi_mito",
-        "hitachi_ohta"
+        "hitachi_ohta",
+        "hitachi_mito"
       ],
       "gold": 650,
       "rice": 800,
@@ -1702,6 +1702,63 @@
         "politics": 76,
         "intellect": 66,
         "stratagem": 66
+      }
+    },
+    {
+      "id": "daijo",
+      "difficulty": "超上級",
+      "winRate": 30,
+      "startProvId": "hitachi_fuchu",
+      "provCount": 1,
+      "myProvinces": [
+        "hitachi_fuchu"
+      ],
+      "gold": 800,
+      "rice": 1000,
+      "personality": "defensive",
+      "officerId": "off_daijo_sadakuni",
+      "desc": "桓武平氏国香流、常陸平氏の嫡流。1193年に吉田資幹が源頼朝から常陸大掾職を与えられて惣領となり、子孫は水戸の馬場城を本拠として馬場氏とも呼ばれた。家紋は対い蝶・三つ巴。南北朝期は高幹（浄永）・詮国・満幹が鎌倉府や上杉禅秀と結んで勢力を保ったが、1416年の上杉禅秀の乱で禅秀方について衰え、1426年頃に江戸通房に馬場城を奪われ、1429年に満幹が足利持氏に殺されて没落した。以後は府中城（石岡）に拠ったが、1590年に大掾清幹が佐竹義宣に攻められて滅んだ。",
+      "name": "大掾貞国",
+      "color": "#4a235a",
+      "crest": "大",
+      "kamonSvgId": "kamon-daijo-mukaicho",
+      "clan": "大掾家",
+      "tactic": "常陸平氏の惣領",
+      "tacticDesc": "常陸大掾職を世襲する常陸平氏の嫡流として、真壁・鹿島ら一族の庶家を束ねる。",
+      "stats": {
+        "military": 63,
+        "politics": 64,
+        "intellect": 61,
+        "stratagem": 61
+      }
+    },
+    {
+      "id": "oda_hitachi",
+      "clanId": "oda_hitachi",
+      "difficulty": "上級",
+      "winRate": 40,
+      "startProvId": "hitachi_tsuchiura",
+      "provCount": 1,
+      "myProvinces": [
+        "hitachi_tsuchiura"
+      ],
+      "gold": 700,
+      "rice": 850,
+      "personality": "aggressive",
+      "officerId": "off_hist_1548_oda_ujiharu",
+      "desc": "八田知家を祖とする名門・常陸小田氏。「常陸の不死鳥」小田氏治は上杉謙信や佐竹義重の猛攻を受け幾度も小田城を失うも、領民の支持を得てその都度奪還した不屈の勇将。",
+      "kamonSvgId": "kamon-oda_hitachi",
+      "name": "小田氏治",
+      "color": "#7d3c98",
+      "crest": "小",
+      "clan": "小田家",
+      "tactic": "不死鳥の奮迅",
+      "tacticDesc": "幾度城を奪われても不屈の闘志で奪還し、兵力を急速に回復して反撃する。",
+      "stats": {
+        "military": 73,
+        "politics": 72,
+        "intellect": 70,
+        "stratagem": 70
       }
     },
     {
@@ -1741,10 +1798,9 @@
       "difficulty": "上級",
       "winRate": 44,
       "startProvId": "shimousa_yuhki",
-      "provCount": 3,
+      "provCount": 2,
       "myProvinces": [
         "hitachi_shimodate",
-        "hitachi_shimotsuma",
         "shimousa_yuhki"
       ],
       "gold": 1000,
@@ -1763,32 +1819,32 @@
       }
     },
     {
-      "id": "daijo",
-      "difficulty": "超上級",
-      "winRate": 30,
-      "startProvId": "hitachi_fuchu",
+      "id": "tagaya",
+      "name": "多賀谷経伯",
+      "clan": "多賀谷家",
+      "color": "#2e7d6b",
+      "crest": "多",
+      "kamonSvgId": "kamon-asano",
+      "difficulty": "上級",
+      "winRate": 44,
+      "startProvId": "hitachi_shimotsuma",
       "provCount": 1,
       "myProvinces": [
-        "hitachi_fuchu"
+        "hitachi_shimotsuma"
       ],
-      "gold": 800,
-      "rice": 1000,
-      "personality": "defensive",
-      "officerId": "off_daijo_sadakuni",
-      "desc": "大掾貞国。小田氏治の攻勢や佐竹氏の介入を乗り越えて家督を保ち、府中城から常陸平氏の再興を期す。",
-      "name": "大掾貞国",
-      "color": "#4a235a",
-      "crest": "大",
-      "kamonSvgId": "kamon-daijo-mukaicho",
-      "clan": "大掾家",
-      "tactic": "常陸平氏の惣領",
-      "tacticDesc": "常陸大掾職を世襲する常陸平氏の嫡流として、真壁・鹿島ら一族の庶家を束ねる。",
+      "gold": 1000,
+      "rice": 1300,
+      "tactic": "下妻千挺鉄砲",
+      "tacticDesc": "多賀谷重経が率いた千挺の鉄砲隊を中核に、常陸・下総の国境で堅城下妻を守り抜く。",
       "stats": {
-        "military": 62,
-        "politics": 64,
-        "intellect": 58,
-        "stratagem": 58
-      }
+        "military": 64,
+        "politics": 52,
+        "intellect": 55,
+        "stratagem": 55
+      },
+      "personality": "aggressive",
+      "officerId": "off_tagaya_tsunehiro",
+      "desc": "常陸下妻城を本拠とした関東の戦国大名。結城氏の重臣から自立し、1561年以降は佐竹氏と結んで小田氏・後北条氏と激しく争った。1590年の小田原征伐で豊臣秀吉から下妻6万石の本領安堵を受けたが、関ヶ原の戦い後に改易された。"
     },
     {
       "id": "kashima",
@@ -1816,35 +1872,6 @@
         "politics": 52,
         "intellect": 50,
         "stratagem": 50
-      }
-    },
-    {
-      "id": "oda_hitachi",
-      "clanId": "oda_hitachi",
-      "difficulty": "上級",
-      "winRate": 40,
-      "startProvId": "hitachi_tsuchiura",
-      "provCount": 1,
-      "myProvinces": [
-        "hitachi_tsuchiura"
-      ],
-      "gold": 700,
-      "rice": 850,
-      "personality": "aggressive",
-      "officerId": "off_hist_1548_oda_ujiharu",
-      "desc": "八田知家を祖とする名門・常陸小田氏。「常陸の不死鳥」小田氏治は上杉謙信や佐竹義重の猛攻を受け幾度も小田城を失うも、領民の支持を得てその都度奪還した不屈の勇将。",
-      "kamonSvgId": "kamon-oda_hitachi",
-      "name": "小田氏治",
-      "color": "#7d3c98",
-      "crest": "小",
-      "clan": "小田家",
-      "tactic": "不死鳥の奮迅",
-      "tacticDesc": "幾度城を奪われても不屈の闘志で奪還し、兵力を急速に回復して反撃する。",
-      "stats": {
-        "military": 73,
-        "politics": 72,
-        "intellect": 70,
-        "stratagem": 70
       }
     },
     {
@@ -2022,21 +2049,21 @@
       "startProvId": "sagami",
       "provCount": 15,
       "myProvinces": [
-        "izu",
-        "kazusa_togane_naruto",
+        "kozuke_numata",
         "kozuke_maebashi",
         "kozuke_nitta_kanayama",
-        "kozuke_numata",
-        "musashi_edo",
+        "kazusa_togane_naruto",
+        "shimousa",
+        "shimousa_koga",
+        "musashi_oshi",
         "musashi_hachigata",
         "musashi_iwatsuki",
         "musashi_kawagoe",
-        "musashi_oshi",
+        "musashi_edo",
         "musashi_tama",
         "sagami",
         "sagami_miura",
-        "shimousa",
-        "shimousa_koga"
+        "izu"
       ],
       "gold": 1400,
       "rice": 1700,
@@ -2093,8 +2120,8 @@
       "startProvId": "awa",
       "provCount": 2,
       "myProvinces": [
-        "awa",
-        "kazusa"
+        "kazusa",
+        "awa"
       ],
       "gold": 900,
       "rice": 1100,
@@ -2152,14 +2179,14 @@
       "myProvinces": [
         "kai",
         "kai_tsuru",
-        "shinano_chikuma_azumi",
-        "shinano_iida",
-        "shinano_kiso",
-        "shinano_saku_komoro",
         "shinano_sarashina_hanishina",
+        "shinano_ueda",
+        "shinano_saku_komoro",
         "shinano_suwa",
         "shinano_takato",
-        "shinano_ueda"
+        "shinano_iida",
+        "shinano_chikuma_azumi",
+        "shinano_kiso"
       ],
       "gold": 1150,
       "rice": 1400,
@@ -2215,14 +2242,14 @@
       "startProvId": "suruga",
       "provCount": 8,
       "myProvinces": [
-        "mikawa_okazaki",
-        "mikawa_shitara",
-        "mikawa_yoshida",
         "suruga",
         "totomi_futamata_haibara",
-        "totomi_hamamatsu",
         "totomi_joto",
-        "totomi_kakegawa"
+        "totomi_hamamatsu",
+        "totomi_kakegawa",
+        "mikawa_okazaki",
+        "mikawa_yoshida",
+        "mikawa_shitara"
       ],
       "gold": 1600,
       "rice": 2000,
@@ -2754,15 +2781,15 @@
       "startProvId": "settsu_shimakami",
       "provCount": 9,
       "myProvinces": [
-        "awa_shikoku",
-        "awa_shikoku_south",
-        "awa_shikoku_west",
-        "awaji",
+        "settsu_shimakami",
+        "settsu",
         "izumi",
+        "awaji",
         "sanuki",
         "sanuki_west",
-        "settsu",
-        "settsu_shimakami"
+        "awa_shikoku",
+        "awa_shikoku_west",
+        "awa_shikoku_south"
       ],
       "gold": 2300,
       "rice": 2800,
@@ -3132,8 +3159,8 @@
       "startProvId": "tajima",
       "provCount": 2,
       "myProvinces": [
-        "inaba",
-        "tajima"
+        "tajima",
+        "inaba"
       ],
       "gold": 1150,
       "rice": 1400,
@@ -3161,12 +3188,12 @@
       "startProvId": "izumo_south",
       "provCount": 6,
       "myProvinces": [
-        "hoki_east",
         "hoki_west",
-        "iwami",
+        "hoki_east",
         "izumo_north",
         "izumo_south",
-        "oki"
+        "oki",
+        "iwami"
       ],
       "gold": 1150,
       "rice": 1400,
@@ -3280,13 +3307,13 @@
       "startProvId": "aki_koriyama",
       "provCount": 7,
       "myProvinces": [
-        "aki_hiroshima",
-        "aki_koriyama",
         "bingo",
-        "buzen_ogura",
-        "chikuzen_kamashi",
+        "aki_koriyama",
+        "aki_hiroshima",
+        "suo",
         "nagato",
-        "suo"
+        "buzen_ogura",
+        "chikuzen_kamashi"
       ],
       "gold": 1900,
       "rice": 2300,
@@ -3342,8 +3369,8 @@
       "startProvId": "iyo_matsuyama",
       "provCount": 2,
       "myProvinces": [
-        "iyo_matsuyama",
-        "iyo_nii"
+        "iyo_nii",
+        "iyo_matsuyama"
       ],
       "gold": 650,
       "rice": 800,
@@ -3539,14 +3566,14 @@
       "startProvId": "bungo_funai",
       "provCount": 9,
       "myProvinces": [
+        "buzen_nakatsu",
         "bungo_funai",
         "bungo_kitaamabe",
         "bungo_minamiamabe",
         "bungo_oka",
-        "buzen_nakatsu",
+        "chikuzen_hakata",
         "chikugo_north",
         "chikugo_south",
-        "chikuzen_hakata",
         "higo_kumamoto"
       ],
       "gold": 1400,
@@ -3883,8 +3910,8 @@
       "startProvId": "higo_hitoyoshi",
       "provCount": 2,
       "myProvinces": [
-        "higo_hitoyoshi",
-        "higo_yatsushiro"
+        "higo_yatsushiro",
+        "higo_hitoyoshi"
       ],
       "gold": 650,
       "rice": 800,
@@ -3940,8 +3967,8 @@
       "startProvId": "hyuga_sadowara",
       "provCount": 2,
       "myProvinces": [
-        "hyuga_sadowara",
-        "hyuga_takanabe"
+        "hyuga_takanabe",
+        "hyuga_sadowara"
       ],
       "gold": 650,
       "rice": 800,
@@ -4170,7 +4197,8 @@
     "rokugo": "ugo_rokugoh",
     "hondo": "ugo_hondoh",
     "yuki": "shimousa_yuhki",
-    "daijo": "hitachi_fuchu"
+    "daijo": "hitachi_fuchu",
+    "tagaya": "hitachi_shimotsuma"
   },
   "officerAffiliations": {
     "off_kita_nobuchika": {
@@ -5265,7 +5293,7 @@
       "isCastleLord": false
     },
     "off_pl1570_178": {
-      "clanId": "yuki",
+      "clanId": "tagaya",
       "defaultProv": "hitachi_shimotsuma",
       "assignedProvId": "hitachi_shimotsuma",
       "location": "hitachi_shimotsuma",
@@ -8298,6 +8326,16 @@
       "isDaimyo": false,
       "isLeader": false,
       "isCastleLord": false
+    },
+    "off_tagaya_tsunehiro": {
+      "clanId": "tagaya",
+      "defaultProv": "hitachi_shimotsuma",
+      "assignedProvId": null,
+      "location": "hitachi_shimotsuma",
+      "isDaimyo": false,
+      "isLeader": false,
+      "isCastleLord": false,
+      "ignoreLifespan": true
     }
   },
   "castleLores": {

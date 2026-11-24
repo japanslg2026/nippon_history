@@ -13585,7 +13585,9 @@
       "echigo_murakami": "off_hist_honjo_tokinaga",
       "bungo_kitaamabe": "off_usuki_nagakage",
       "bungo_minamiamabe": "off_saeki_koreyo",
-      "shimotsuke_sano": "off_sano_moritsuna"
+      "shimotsuke_sano": "off_sano_moritsuna",
+      "hitachi_shimotsuma": "off_hist_1495_tagaya_ietsugu",
+      "hitachi_shimodate": "off_mizunoya_katsuuji"
     },
     "1517": {
       "chikuzen_akizuki": "off_akizuki_tanetoki",
@@ -13597,7 +13599,9 @@
       "bungo_kitaamabe": "off_usuki_nagakage",
       "bungo_minamiamabe": "off_saeki_koreharu_sengoku",
       "echigo_higashikanbara": "off_kanagami_morinobu",
-      "shimousa": "off_dm_chiba_1467"
+      "shimousa": "off_dm_chiba_1467",
+      "hitachi_shimotsuma": "off_hist_1495_tagaya_ietsugu",
+      "hitachi_shimodate": "off_mizunoya_katsuuji"
     },
     "1531": {
       "bitchu_matsuyama": "off_hist_1533_ueno_yoriuji",
@@ -13632,7 +13636,8 @@
       "chikuzen_munakata": "off_munakata_masauji_1517",
       "bungo_kitaamabe": "off_usuki_akitsugu",
       "bungo_minamiamabe": "off_saeki_koretsune",
-      "echigo_higashikanbara": "off_kanagami_morinobu"
+      "echigo_higashikanbara": "off_kanagami_morinobu",
+      "hitachi_shimotsuma": "off_tagaya_ieshige"
     },
     "1542": {
       "chikuzen_akizuki": "off_akizuki_fumitane",
@@ -13645,7 +13650,8 @@
       "bungo_kitaamabe": "off_usuki_akitsugu",
       "bungo_minamiamabe": "off_saeki_korenori",
       "echigo_higashikanbara": "off_kanagami_morinobu",
-      "shinano_iida": "off_ogasawara_nobusada"
+      "shinano_iida": "off_ogasawara_nobusada",
+      "hitachi_shimotsuma": "off_tagaya_ieshige"
     },
     "1546": {
       "awa_shikoku": "off_miyoshi_yoshikata",
@@ -13666,7 +13672,8 @@
       "bungo_minamiamabe": "off_saeki_korenori",
       "shinano_iida": "off_ogasawara_nobusada",
       "shimotsuke_oyama": "off_oyama_takatomo",
-      "ugo_hondoh": "off_pl1590_043"
+      "ugo_hondoh": "off_pl1590_043",
+      "hitachi_shimotsuma": "off_tagaya_ieshige"
     },
     "1550": {
       "awa_shikoku": "off_miyoshi_yoshikata",
@@ -13686,7 +13693,8 @@
       "bungo_minamiamabe": "off_saeki_korenori",
       "shimotsuke_oyama": "off_oyama_takatomo",
       "ugo_rokugoh": "off_jd_hist_0375",
-      "ugo_hondoh": "off_pl1590_043"
+      "ugo_hondoh": "off_pl1590_043",
+      "hitachi_shimotsuma": "off_tagaya_ieshige"
     },
     "1555": {
       "nagato": "off_naito_takaharu",
@@ -13717,7 +13725,8 @@
       "bungo_minamiamabe": "off_saeki_korenori",
       "buzen_nakatsu": "off_jd_258",
       "ugo_rokugoh": "off_jd_hist_0375",
-      "ugo_hondoh": "off_pl1590_043"
+      "ugo_hondoh": "off_pl1590_043",
+      "hitachi_shimotsuma": "off_pl1570_178"
     },
     "1560": {
       "settsu": "off_itami_chikaoki",

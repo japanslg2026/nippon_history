@@ -131896,38 +131896,6 @@
     "skill": "島嶼統率"
   },
   {
-    "id": "off_goto_sadatoshi",
-    "name": "五島盛定",
-    "era": "sengoku",
-    "birthYear": 1475,
-    "deathYear": 1545,
-    "defaultProv": "goto",
-    "clanId": "goto",
-    "isDaimyo": true,
-    "comment": "追加領国の独立大名として登録。",
-    "lore": "戦国前期に五島列島の領主権を固めた五島氏当主。",
-    "military": 62,
-    "politic": 62,
-    "intel": 60,
-    "skill": "海上支配"
-  },
-  {
-    "id": "off_goto_sumiakira",
-    "name": "五島純尭",
-    "era": "sengoku",
-    "birthYear": 1526,
-    "deathYear": 1594,
-    "defaultProv": "goto",
-    "clanId": "goto",
-    "isDaimyo": true,
-    "comment": "追加領国の独立大名として登録。",
-    "lore": "福江を本拠とした五島氏当主。豊臣政権下で本領を保全した。",
-    "military": 62,
-    "politic": 62,
-    "intel": 60,
-    "skill": "福江統治"
-  },
-  {
     "id": "off_added_nihonmatsu_01",
     "name": "安達義景",
     "era": "kamakura",
