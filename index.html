@@ -26,12 +26,22 @@
     };
   </script>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <script>
+    /* ナビのリンク（href は検索エンジン向けの静的ページ）。通常クリックは従来どおりモーダルを開く */
+    document.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[data-modal-link]') : null;
+      if (!a) return;
+      if (e.defaultPrevented || e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+    }, false);
+  </script>
   <title>日本史 勢力図・人物一覧 ～日本通史総覧～</title>
 
   <!-- ==================== SEO対策メタデータ ==================== -->
   <meta name="description" content="日本史 勢力図・人物一覧 ～日本通史総覧～ は、紀元前663年（神武東征）から1877年（西南戦争）まで、古代・飛鳥・平安・源平・鎌倉・南北朝・室町・戦国・安土桃山・江戸・幕末明治の全60時代シナリオにおける日本全土の勢力図（大名版図の変遷）、全国城郭解説、歴史人物8,000名以上の能力・列伝を網羅した日本通史データベースです。">
   <meta name="keywords" content="日本史,勢力図,人物一覧,日本通史総覧,歴史地図,大名名鑑,武将名鑑,戦国大名,城郭,古代,飛鳥時代,平安時代,源平合戦,鎌倉時代,南北朝時代,室町時代,戦国時代,安土桃山時代,江戸時代,幕末,明治維新">
   <meta name="author" content="日本史 勢力図・人物一覧 編纂室">
+  <link rel="canonical" href="https://japanslg2026.github.io/nippon_history/">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="format-detection" content="telephone=no">
   <meta name="theme-color" content="#150e08">
@@ -41,8 +51,14 @@
   <meta property="og:locale" content="ja_JP">
   <meta property="og:title" content="日本史 勢力図・人物一覧 ～日本通史総覧～">
   <meta property="og:site_name" content="日本史 勢力図・人物一覧 ～日本通史総覧～">
+  <meta property="og:url" content="https://japanslg2026.github.io/nippon_history/">
+  <meta property="og:image" content="https://japanslg2026.github.io/nippon_history/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="日本史 勢力図・人物一覧 ～日本通史総覧～ の日本地図">
   <meta property="og:description" content="古代から幕末明治まで全60時代の日本史勢力図と8,000名超の人物列伝・全国城郭をインタラクティブに閲覧できる日本通史総覧サイト。">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://japanslg2026.github.io/nippon_history/assets/og-image.png">
   <meta name="twitter:title" content="日本史 勢力図・人物一覧 ～日本通史総覧～">
   <meta name="twitter:description" content="古代から幕末明治まで全60時代の日本史勢力図と人物列伝・全国城郭を網羅したインタラクティブ日本通史データベース。">
 
@@ -52,7 +68,15 @@
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "WebSite",
+        "name": "日本史 勢力図・人物一覧 ～日本通史総覧～",
+        "alternateName": "日本通史総覧",
+        "url": "https://japanslg2026.github.io/nippon_history/",
+        "inLanguage": "ja"
+      },
+      {
         "@type": "WebApplication",
+        "url": "https://japanslg2026.github.io/nippon_history/",
         "name": "日本史 勢力図・人物一覧 ～日本通史総覧～",
         "alternateName": "日本通史総覧 勢力図・武将大名名鑑",
         "applicationCategory": "EducationalApplication",
@@ -3780,15 +3804,18 @@
   <!-- 検索エンジンクローラーおよびJavaScript無効環境向けフォールバック解説 -->
   <noscript>
     <article style="padding:24px; color:#f5eedc; background:#150e08;">
-      <h1>日本史 勢力図・人物一覧 ～日本通史総覧～</h1>
+      <p><strong>日本史 勢力図・人物一覧 ～日本通史総覧～</strong></p>
       <p>本サイトは、古代（紀元前663年・神武東征、邪馬台国、飛鳥・奈良時代）から平安時代、源平合戦（治承・寿永の乱）、鎌倉時代、南北朝時代、室町・応仁の乱、戦国時代、安土桃山時代、江戸時代、幕末・明治維新（1877年・西南戦争）までの全60時代シナリオにおける日本全土の勢力図と、8,000名以上の歴史人物列伝、全国城郭の歴史解説を収録した日本通史総覧データベースです。各領国の石高は、慶長郷帳（1604～1610年）をもとに推計した値です。</p>
+      <nav aria-label="静的ページ">
+        <a href="archive/index.html">全ページ索引</a> ／ <a href="scenario/1560.html">1560年 桶狭間の戦い</a> ／ <a href="scenario/1600.html">1600年 関ヶ原の戦い</a>
+      </nav>
     </article>
   </noscript>
 
   <!-- ローディング表示 -->
   <div class="loading-screen" id="loadingScreen">
     <div class="spinner"></div>
-    <div style="font-size: 14pt; font-weight: bold; color: var(--gold-bright);">日本史 勢力図・人物一覧 ～日本通史総覧～ データを読み込んでいます…</div>
+    <div style="font-size: 14pt; font-weight: bold; color: var(--gold-bright);">データを読み込んでいます…</div>
     <div style="font-size: 12pt; color: var(--text-sub);" id="loadingStatusText">シナリオ・領国・大名・武将データベースを初期化中</div>
   </div>
 
@@ -3819,8 +3846,10 @@
         <button type="button" class="nav-btn primary nav-btn-pc-only" id="openOfficerMeikanBtn" title="ゲーム本編の武将名鑑を開く"><span class="nav-icon" aria-hidden="true">📜</span><span class="nav-text nav-text-pc">武将名鑑</span></button>
 
                 <!-- スマホ用：index.html用の名鑑ボタン（大名・武将名鑑モーダルを開く） -->
-        <button type="button" class="nav-btn primary nav-btn-sp-only" id="openCombinedMeikanBtn" title="名鑑（武将・大名）を開く"><span class="nav-icon" aria-hidden="true">📜</span><span class="nav-text nav-text-sp">名鑑</span></button>
+        <a href="archive/index.html" data-modal-link="1" class="nav-btn primary nav-btn-sp-only" id="openCombinedMeikanBtn" title="名鑑（武将・大名）を開く"><span class="nav-icon" aria-hidden="true">📜</span><span class="nav-text nav-text-sp">名鑑</span></a>
         <button type="button" class="nav-btn" id="btnOpenAbout" title="このサイトの概要と使い方を表示"><span class="nav-icon" aria-hidden="true">ℹ️</span><span class="nav-text nav-text-pc">概要</span><span class="nav-text nav-text-sp">概要</span></button>
+        <a href="archive/index.html" class="nav-btn" id="btnArchiveIndex" title="シナリオ・人物・大名家・領国の全ページ索引を開く"><span class="nav-icon" aria-hidden="true">📚</span><span class="nav-text nav-text-pc">索引</span><span class="nav-text nav-text-sp">索引</span></a>
+        <button type="button" class="nav-btn nav-btn-pc-only" id="btnSaveMapImage" title="いま表示している勢力図を画像（PNG）で保存（ファイル名：西暦年_シナリオ名.png）"><span class="nav-icon" aria-hidden="true">📷</span><span class="nav-text nav-text-pc">画像保存</span></button>
         <a href="form.html" class="nav-btn" id="btnContactForm" title="修正依頼・お問い合わせフォームを開く"><span class="nav-icon" aria-hidden="true">📩</span><span class="nav-text nav-text-pc">問合せ</span><span class="nav-text nav-text-sp">問合せ</span></a>
         <a href="japan_slg.html" class="nav-btn game-go" id="btnGoToGame" title="ゲーム本編（japan_slg.html）へ移動"><span class="nav-icon" aria-hidden="true">⚔️</span><span class="nav-text nav-text-pc">ゲームへ</span><span class="nav-text nav-text-sp">ゲーム</span></a>
       </nav>
@@ -4309,6 +4338,7 @@
           var urlParams = new URLSearchParams(window.location.search);
           var initialScenId = urlParams.get('scenario');
           var initialProvId = urlParams.get('prov') || urlParams.get('province');
+          var initialOfficerId = urlParams.get('officer');
           var fastMode = !initialScenId || String(initialScenId) === '1560';
 
           if (fastMode) {
@@ -4404,6 +4434,9 @@
 
             if (initialProvId) {
               setTimeout(function () { selectProvinceOnMap(initialProvId); }, 100);
+            }
+            if (initialOfficerId) {
+              setTimeout(function () { try { openOfficerBioModal(initialOfficerId); } catch (e) { console.error(e); } }, 300);
             }
 
             document.getElementById('loadingScreen').classList.add('hidden');
@@ -4570,6 +4603,9 @@
 
           if (initialProvId) {
             setTimeout(function () { selectProvinceOnMap(initialProvId); }, 100);
+          }
+          if (initialOfficerId) {
+            setTimeout(function () { try { openOfficerBioModal(initialOfficerId); } catch (e) { console.error(e); } }, 300);
           }
 
           document.getElementById('loadingScreen').classList.add('hidden');
@@ -8218,7 +8254,150 @@
         if (el) el.classList.add('hidden');
       }
 
+      // ==================== 勢力図を画像（PNG）で保存（PC画面。ファイル名：西暦年_シナリオ名.png） ====================
+      async function saveMapAsImage() {
+        var btn = document.getElementById('btnSaveMapImage');
+        var svg = document.getElementById('atlasMapSvg');
+        var scen = State.currentScenario;
+        if (!svg || !scen) return;
+        if (btn) btn.disabled = true;
+        var objUrl = null;
+        try {
+          var NS = 'http://www.w3.org/2000/svg';
+          var VB = [15, 70, 965, 520];            // 列島全体（拡大・移動・右パネルによるずれを無視して全体を出力）
+          var OUT_W = 2940, OUT_H = Math.round(OUT_W * VB[3] / VB[2]);
+          var clone = svg.cloneNode(true);
+
+          // 1) 画面上の見た目（CSSで当てている色・線・表示/非表示）を各要素へ直接書き込む
+          var PROPS = ['fill', 'fill-opacity', 'fill-rule', 'stroke', 'stroke-width', 'stroke-opacity', 'stroke-linejoin', 'stroke-linecap',
+            'stroke-dasharray', 'opacity', 'display', 'visibility', 'filter', 'mix-blend-mode', 'paint-order',
+            'font-family', 'font-size', 'font-weight', 'font-style', 'letter-spacing', 'text-anchor', 'dominant-baseline'];
+          var srcEls = svg.querySelectorAll('*');
+          var dstEls = clone.querySelectorAll('*');
+          for (var i = 0; i < srcEls.length && i < dstEls.length; i++) {
+            var cs = getComputedStyle(srcEls[i]);
+            for (var k = 0; k < PROPS.length; k++) {
+              var v = cs.getPropertyValue(PROPS[k]);
+              if (!v || (PROPS[k] === 'filter' && v === 'none')) continue;
+              dstEls[i].style.setProperty(PROPS[k], v);
+            }
+          }
+
+          // 2) 表示範囲・大きさを固定し、拡大縮小・移動を解除
+          clone.removeAttribute('class');
+          clone.removeAttribute('style');
+          clone.setAttribute('xmlns', NS);
+          clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
+          clone.setAttribute('viewBox', VB.join(' '));
+          clone.setAttribute('width', OUT_W);
+          clone.setAttribute('height', OUT_H);
+          clone.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+          var layer = clone.querySelector('#mapPanZoomLayer');
+          if (layer) layer.removeAttribute('transform');
+
+          // 3) 家紋（<use href="#...">）やグラデーションなど、SVGの外にある定義を画像の中へ取り込む
+          var defs = clone.querySelector('defs') || clone.insertBefore(document.createElementNS(NS, 'defs'), clone.firstChild);
+          var present = {};
+          Array.prototype.forEach.call(clone.querySelectorAll('[id]'), function (el) { present[el.id] = true; });
+          for (var pass = 0; pass < 8; pass++) {
+            var markup = new XMLSerializer().serializeToString(clone);
+            var found = markup.match(/#[A-Za-z0-9_\-:.]+/g) || [];
+            var added = 0;
+            for (var f = 0; f < found.length; f++) {
+              var id = found[f].slice(1);
+              if (present[id]) continue;
+              var ref = document.getElementById(id);
+              if (!ref || svg.contains(ref)) continue;
+              defs.appendChild(ref.cloneNode(true));
+              present[id] = true;
+              added++;
+            }
+            if (!added) break;
+          }
+
+          var svgText = new XMLSerializer().serializeToString(clone);
+          objUrl = URL.createObjectURL(new Blob([svgText], { type: 'image/svg+xml;charset=utf-8' }));
+          var mapImg = await new Promise(function (resolve, reject) {
+            var im = new Image();
+            im.onload = function () { resolve(im); };
+            im.onerror = function () { reject(new Error('地図画像の生成に失敗しました')); };
+            im.src = objUrl;
+          });
+
+          // 4) 背景（海）＋地図＋見出しを描画。背景画像が読めない／キャンバスが汚染される環境では単色背景で再試行
+          var bgImg = await new Promise(function (resolve) {
+            var im = new Image();
+            im.onload = function () { resolve(im); };
+            im.onerror = function () { resolve(null); };
+            im.src = 'assets/images/map_ocean_bg.jpg';
+          });
+          var yearNum = Number(scen.year);
+          var yearLabel = yearNum < 0 ? '紀元前' + (-yearNum) + '年' : yearNum + '年';
+          function draw(useBg) {
+            var cv = document.createElement('canvas');
+            cv.width = OUT_W; cv.height = OUT_H;
+            var cx = cv.getContext('2d');
+            cx.fillStyle = '#070a0d';
+            cx.fillRect(0, 0, OUT_W, OUT_H);
+            if (useBg && bgImg) {
+              var sc = Math.max(OUT_W / bgImg.naturalWidth, OUT_H / bgImg.naturalHeight);
+              var bw = bgImg.naturalWidth * sc, bh = bgImg.naturalHeight * sc;
+              cx.drawImage(bgImg, (OUT_W - bw) / 2, (OUT_H - bh) / 2, bw, bh);
+            }
+            cx.drawImage(mapImg, 0, 0, OUT_W, OUT_H);
+            // 見出し（左上）
+            var pad = 42, titleSize = 96, subSize = 40;
+            var title = yearLabel + '　' + (scen.title || '');
+            var sub = '日本史 勢力図・人物一覧　japanslg2026.github.io/nippon_history';
+            var fam = '"Yu Mincho","YuMincho","Hiragino Mincho ProN","BIZ UDPMincho","MS PMincho",serif';
+            cx.font = 'bold ' + titleSize + 'px ' + fam;
+            var w1 = cx.measureText(title).width;
+            cx.font = subSize + 'px ' + fam;
+            var w2 = cx.measureText(sub).width;
+            var boxW = Math.max(w1, w2) + pad * 2, boxH = titleSize + subSize + pad * 1.6;
+            var bx = 36, by = 36;
+            cx.fillStyle = 'rgba(15,10,6,0.78)';
+            cx.fillRect(bx, by, boxW, boxH);
+            cx.strokeStyle = '#9a7840'; cx.lineWidth = 4;
+            cx.strokeRect(bx, by, boxW, boxH);
+            cx.textBaseline = 'alphabetic';
+            cx.fillStyle = '#ffd700';
+            cx.font = 'bold ' + titleSize + 'px ' + fam;
+            cx.fillText(title, bx + pad, by + pad * 0.6 + titleSize * 0.85);
+            cx.fillStyle = '#d4c5ab';
+            cx.font = subSize + 'px ' + fam;
+            cx.fillText(sub, bx + pad, by + boxH - pad * 0.55);
+            return cv;
+          }
+          function toBlobAsync(cv) {
+            return new Promise(function (resolve, reject) {
+              try { cv.toBlob(function (b) { b ? resolve(b) : reject(new Error('PNG変換に失敗しました')); }, 'image/png'); }
+              catch (e) { reject(e); }
+            });
+          }
+          var blob;
+          try { blob = await toBlobAsync(draw(true)); }
+          catch (e) { blob = await toBlobAsync(draw(false)); }
+
+          // 5) ダウンロード（ファイル名：西暦年_シナリオ名.png）
+          var fname = (yearLabel + '_' + (scen.title || 'シナリオ')).replace(/[\\\/:*?"<>|\s]+/g, '_') + '.png';
+          var dl = URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = dl; a.download = fname;
+          document.body.appendChild(a); a.click(); document.body.removeChild(a);
+          setTimeout(function () { URL.revokeObjectURL(dl); }, 4000);
+        } catch (err) {
+          console.error(err);
+          alert('画像の保存に失敗しました：' + (err && err.message ? err.message : err));
+        } finally {
+          if (objUrl) URL.revokeObjectURL(objUrl);
+          if (btn) btn.disabled = false;
+        }
+      }
+
       function initTopMenuModals() {
+        var saveImgBtn = document.getElementById('btnSaveMapImage');
+        if (saveImgBtn) saveImgBtn.onclick = saveMapAsImage;
         document.querySelectorAll('[data-close]').forEach(function (btn) {
           btn.onclick = function () { closeModal(btn.getAttribute('data-close')); };
         });
