@@ -2620,7 +2620,7 @@ export const GameStateMethods = {
 
           ? master.desc 
 
-          : `${clanFamily}の当主・${leaderName}。${provCount}国を領有し、領民を守りつつ天下統一の覇業に挑む。`;
+          : `${clanFamily}の当主・${leaderName}。${provCount}州を領有し、領民を守りつつ天下統一の覇業に挑む。`;
 
 
 
@@ -7153,7 +7153,7 @@ export const GameStateMethods = {
           o.isDaimyo = false; // 上杉憲政は家臣・一門へ
         }
       });
-      this.log(`🤝【御家統合】関東管領・山内上杉家の領国（${yProvs.length}ヶ国）および麾下の全武将が越後上杉家へ統合されました！`, 'important');
+      this.log(`🤝【御家統合】関東管領・山内上杉家の領国（${yProvs.length}州）および麾下の全武将が越後上杉家へ統合されました！`, 'important');
     }
 
     // 長野家（nagano: 上野箕輪城・長野業正・業盛等）が存在する場合の領国・武将統合
@@ -7169,7 +7169,7 @@ export const GameStateMethods = {
           o.isDaimyo = false; // 長野業正・業盛らは越後上杉家の重臣へ
         }
       });
-      this.log(`🤝【御家統合】上野の盟友・長野家の領国（${nProvs.length}ヶ国）および麾下の全武将が越後上杉家へ統合されました！`, 'important');
+      this.log(`🤝【御家統合】上野の盟友・長野家の領国（${nProvs.length}州）および麾下の全武将が越後上杉家へ統合されました！`, 'important');
     }
 
     // 越後上杉家の家名・家紋・領土色の確立
@@ -11084,7 +11084,7 @@ export const GameStateMethods = {
 
       this.shogunAtStart = true;
 
-      this.log('👑【征夷大将軍】開始時点で京と天下の過半を押さえているため、将軍の位は既に手中にあります。目指すは全国統一のみ。', 'important');
+      this.log('👑【征夷大将軍】開始時点で京と七十州以上を押さえているため、将軍の位は既に手中にあります。目指すは全国統一のみ。', 'important');
 
     }
 
@@ -11690,7 +11690,7 @@ export const GameStateMethods = {
 
     });
 
-    const bonusGold = mineProvs.length * 100; // 1国につき毎季+100貫
+    const bonusGold = mineProvs.length * 100; // 1州につき毎季+100貫
 
     return {
 
@@ -12748,7 +12748,7 @@ export const GameStateMethods = {
 
     this.audio.playHyoshigi();
 
-    this.log(`【一括委任】${count}カ国の領国を「${this.getGovernModeName(mode)}」に一括設定しました。`, 'important');
+    this.log(`【一括委任】${count}州の領国を「${this.getGovernModeName(mode)}」に一括設定しました。`, 'important');
 
   },
 
@@ -12812,9 +12812,9 @@ export const GameStateMethods = {
 
     };
 
-    this.log(`【方針一括適用】${names[presetType]} (${count}カ国) を実施しました。`, 'important');
+    this.log(`【方針一括適用】${names[presetType]} (${count}州) を実施しました。`, 'important');
 
-    this.showOrderResult('📋 委任方針 適用', `${names[presetType]} (${count}カ国)`, '#ffd700');
+    this.showOrderResult('📋 委任方針 適用', `${names[presetType]} (${count}州)`, '#ffd700');
 
   },
 
@@ -16499,7 +16499,7 @@ export const GameStateMethods = {
 
           </div>
 
-          <span style="font-size:10.5pt; color:#ffd700; background:rgba(212,175,55,0.2); border:1px solid var(--gold); border-radius:3px; padding:1px 6px;">${provs.length}国</span>
+          <span style="font-size:10.5pt; color:#ffd700; background:rgba(212,175,55,0.2); border:1px solid var(--gold); border-radius:3px; padding:1px 6px;">${provs.length}州</span>
 
         </div>
 
@@ -16527,7 +16527,7 @@ export const GameStateMethods = {
 
           title: `⚔️ 【${clanName}】として参戦しますか？`,
 
-          html: `<p style="font-size:11.5pt; color:#e0d0b8;">当主・<strong>${lordName}</strong> 率いる ${clanName}（支配${provs.length}国）の覇業を継承し、自ら天下統一を目指します。</p>`,
+          html: `<p style="font-size:11.5pt; color:#e0d0b8;">当主・<strong>${lordName}</strong> 率いる ${clanName}（支配${provs.length}州）の覇業を継承し、自ら天下統一を目指します。</p>`,
 
           icon: 'question',
 
@@ -17447,7 +17447,7 @@ export const GameStateMethods = {
 
       this.gold += mineInfo.bonusGold;
 
-      this.log(`⛏️【金山・銀山産出】${mineInfo.names.join('・')}（${mineInfo.count}カ国）より毎季固定ボーナス金 +${mineInfo.bonusGold}貫を収納！`);
+      this.log(`⛏️【金山・銀山産出】${mineInfo.names.join('・')}（${mineInfo.count}州）より毎季固定ボーナス金 +${mineInfo.bonusGold}貫を収納！`);
 
     }
 
@@ -17497,11 +17497,11 @@ export const GameStateMethods = {
 
       const extras = [];
 
-      if (directRuleCount > 0) extras.push(`直轄領${directRuleCount}カ国は能力半減`);
+      if (directRuleCount > 0) extras.push(`直轄領${directRuleCount}州は能力半減`);
 
       if (specialtyRiceBonus > 0) extras.push(`穀倉シナジー+${specialtyRiceBonus.toLocaleString()}石`);
 
-      if (portGunNotes > 0) extras.push(`南蛮貿易港${portGunNotes}カ国から鉄砲・砲術資材を補給`);
+      if (portGunNotes > 0) extras.push(`南蛮貿易港${portGunNotes}州から鉄砲・砲術資材を補給`);
 
       const extraNote = extras.length ? `（※${extras.join('／')}）` : '。全城主の善政により満額の収穫を達成！';
 
@@ -17511,7 +17511,7 @@ export const GameStateMethods = {
 
     if ((this.seasonIdx === SEASON.MIDSUMMER || this.seasonIdx === SEASON.WINTER) && totalCommerceIncome > 0) {
 
-      const directNote = directRuleCount > 0 ? `（※直轄領${directRuleCount}カ国は能力半減で金収入50%）` : '（全城配備により満額収納）';
+      const directNote = directRuleCount > 0 ? `（※直轄領${directRuleCount}州は能力半減で金収入50%）` : '（全城配備により満額収納）';
 
       this.log(`💰【商港・城下町運上】領国より金 ${totalCommerceIncome.toLocaleString()} 貫を徴収。${directNote}`);
 
@@ -17519,7 +17519,7 @@ export const GameStateMethods = {
 
     if (ikkiCount > 0) {
 
-      this.log(`⚠【一揆報告】今季 ${ikkiCount} カ国で一揆が発生し、当該領の収入が途絶しました。`, 'important');
+      this.log(`⚠【一揆報告】今季 ${ikkiCount}州で一揆が発生し、当該領の収入が途絶しました。`, 'important');
 
     }
 
@@ -18400,11 +18400,11 @@ export const GameStateMethods = {
 
     const commerceClamped = this.clampAllProvinceCommerce?.() || 0;
 
-    if (commerceClamped) this.log?.(`💰【商業上限】${commerceClamped}か国の商業が土地の上限を超えていたため、上限まで改めました。`, 'quiet');
+    if (commerceClamped) this.log?.(`💰【商業上限】${commerceClamped}州の商業が土地の上限を超えていたため、上限まで改めました。`, 'quiet');
 
     const riceClamped = this.clampAllProvinceRice?.() || 0;
 
-    if (riceClamped) this.log?.(`🌾【石高上限】${riceClamped}か国の石高が土地の上限を超えていたため、上限まで改めました。`, 'quiet');
+    if (riceClamped) this.log?.(`🌾【石高上限】${riceClamped}州の石高が土地の上限を超えていたため、上限まで改めました。`, 'quiet');
 
     if (this.currentScenario && this.activeOfficers) {
 
@@ -18632,7 +18632,7 @@ export const GameStateMethods = {
 
 
 
-    // 山城(yamashiro/kyoto)領有 かつ 天下の過半（または30州以上）領有で征夷大将軍宣下
+    // 山城(yamashiro/kyoto)領有 かつ 70州以上領有で征夷大将軍宣下
 
     // 征夷大将軍は道中の節目。天下統一ではないので false を返し、季節の処理とオート進行を止めない（2026-10-11 cc）
 
@@ -18718,7 +18718,7 @@ export const GameStateMethods = {
 
     const hasKyoto = myProvs.some(p => p.id === 'yamashiro' || p.id === 'kyoto');
 
-    const threshold = Math.min(30, Math.floor((this.provinces || []).length * 0.45));
+    const threshold = Math.min(70, (this.provinces || []).length); // 山城制圧＋70州以上（205州中）で征夷大将軍
 
     return hasKyoto && myProvs.length >= threshold;
 
@@ -18744,7 +18744,7 @@ export const GameStateMethods = {
 
     const totalCount = (this.provinces && this.provinces.length > 0) ? this.provinces.length : ((window.PROVINCES_DATA && window.PROVINCES_DATA.length) || 77);
 
-    const halfCount = Math.floor(totalCount / 2) + 1;
+    const halfCount = Math.min(70, totalCount); // 征夷大将軍の州数条件（meetsShogunCondition と同じ）
 
     const kanjiTotal = (typeof toKanjiNumber === 'function') ? toKanjiNumber(totalCount) : `${totalCount}`;
 
@@ -18762,7 +18762,7 @@ export const GameStateMethods = {
 
       this.shogunAppointed = true;
 
-      this.log(`👑【征夷大将軍宣下】朝廷より正二位・征夷大将軍の宣下を受けました！日本全${kanjiTotal}州（全${totalCount}国）完全統一の覇道を邁進します！`, 'important');
+      this.log(`👑【征夷大将軍宣下】朝廷より正二位・征夷大将軍の宣下を受けました！日本全${kanjiTotal}州（全${totalCount}州）完全統一の覇道を邁進します！`, 'important');
 
       if (window.Swal) {
 
@@ -18772,7 +18772,7 @@ export const GameStateMethods = {
 
           title: '👑 征夷大将軍 宣下！',
 
-          text: `朝廷より正二位・征夷大将軍に補任されました！日本全${kanjiTotal}州（全${totalCount}国）完全統一へ向け全軍を指揮しましょう！`,
+          text: `朝廷より正二位・征夷大将軍に補任されました！日本全${kanjiTotal}州（全${totalCount}州）完全統一へ向け全軍を指揮しましょう！`,
 
           background: '#241710',
 
@@ -18802,7 +18802,7 @@ export const GameStateMethods = {
 
     if (threshEl) {
 
-      threshEl.textContent = `京洛・山城国を掌握し、全国過半（全${totalCount}国中${kanjiHalf}州以上）を席捲せし武門の棟梁`;
+      threshEl.textContent = `京洛・山城国を掌握し、全${totalCount}州中${kanjiHalf}州（${halfCount}州）以上を制覇せし武門の棟梁`;
 
     }
 
@@ -18810,7 +18810,7 @@ export const GameStateMethods = {
 
     if (textEl) {
 
-      textEl.innerHTML = `朝廷より勅使が下向し、天下の静謐を成し遂げし貴家に対し、正二位・征夷大将軍の官位宣下が下されました！<br>ここに武門の頂点たる新幕府を開き、万民安穏の泰平の世を築くか、あるいは残る諸勢力をことごとく平定し、日本全${kanjiTotal}州（全${totalCount}国）完全統一の覇道を邁進するか、御下問にございます。`;
+      textEl.innerHTML = `朝廷より勅使が下向し、天下の静謐を成し遂げし貴家に対し、正二位・征夷大将軍の官位宣下が下されました！<br>ここに武門の頂点たる新幕府を開き、万民安穏の泰平の世を築くか、あるいは残る諸勢力をことごとく平定し、日本全${kanjiTotal}州（全${totalCount}州）完全統一の覇道を邁進するか、御下問にございます。`;
 
     }
 
@@ -18924,7 +18924,7 @@ export const GameStateMethods = {
 
     } else {
 
-      if (subTitleEl) subTitleEl.textContent = `【前人未到・日本全${kanjiTotal}州（全${totalCount}国）完全統一】`;
+      if (subTitleEl) subTitleEl.textContent = `【前人未到・日本全${kanjiTotal}州（全${totalCount}州）完全統一】`;
 
       if (mainTitleEl) mainTitleEl.textContent = '❖ 天下布武・不滅の大覇業達成 ❖';
 
@@ -18994,7 +18994,7 @@ export const GameStateMethods = {
 
       ? `<p style="margin-bottom:12px; color:#ffd700; font-size:12.5pt; font-weight:bold;">
 
-          「山城に入洛し都の戦乱を鎮定、天下三十有余州を統べる武威と仁徳を讃え、朝廷より征夷大将軍の重職を拝命す――」
+          「山城に入洛し都の戦乱を鎮定、天下七十有余州を統べる武威と仁徳を讃え、朝廷より征夷大将軍の重職を拝命す――」
 
         </p>
 
@@ -19556,7 +19556,7 @@ export const GameStateMethods = {
 
       '貴殿ハ 京洛ニ入リテ天下ノ動乱ヲ鎮撫シ 山城国ヲ掌握',
 
-      '天下過半ノ諸州ヲ席捲シテ 武威ト仁徳ヲ四海ニ轟カセタリ',
+      '天下七十有余ノ諸州ヲ席捲シテ 武威ト仁徳ヲ四海ニ轟カセタリ',
 
       '茲ニ 朝廷勅命ニ依リテ 正二位征夷大将軍ニ任ジ',
 
@@ -19566,7 +19566,7 @@ export const GameStateMethods = {
 
       '貴殿ハ 幾多ノ激戦ヲ勝チ抜キ 北ハ蝦夷ヨリ南ハ薩摩マデ',
 
-      '日本全土六十六州ヲ席捲 天下布武ノ大偉業ヲ成シ遂ゲラレタリ',
+      `日本全土${(typeof toKanjiNumber === 'function') ? toKanjiNumber((this.provinces && this.provinces.length) || 0) : ((this.provinces && this.provinces.length) || 0)}州ヲ席捲 天下布武ノ大偉業ヲ成シ遂ゲラレタリ`,
 
       '諸民ヲ戦乱ノ塗炭ヨリ救ヒ 永遠ナル泰平ノ世ヲ築キシ',
 
@@ -19798,7 +19798,7 @@ export const GameStateMethods = {
 
       const modeName = this.getGovernModeName ? this.getGovernModeName(targetMode) : (targetMode === 'logistics' ? '兵站輸送' : '内政');
 
-      this.log(`【統治自動転換】前線から後方へ移行した${changedCount}カ国（${changedNames.slice(0, 3).join('・')}${changedNames.length > 3 ? '等' : ''}）の方針を「${modeName}」へ自動切替しました。`, 'normal');
+      this.log(`【統治自動転換】前線から後方へ移行した${changedCount}州（${changedNames.slice(0, 3).join('・')}${changedNames.length > 3 ? '等' : ''}）の方針を「${modeName}」へ自動切替しました。`, 'normal');
 
       if (this.renderGovernTable) this.renderGovernTable();
 
@@ -20047,7 +20047,7 @@ export const GameStateMethods = {
 
       if (cloned.subtitle && cloned.subtitle.length > 20) {
 
-        cloned.subtitle = '全国106国・群雄割拠';
+        cloned.subtitle = '全国106州・群雄割拠';
 
       }
 
@@ -20368,7 +20368,7 @@ export const GameStateMethods = {
 
       title: '群雄割拠オールスター',
 
-      subtitle: '全国106国・群雄割拠',
+      subtitle: '全国106州・群雄割拠',
 
       year: 1582,
 
@@ -20380,11 +20380,11 @@ export const GameStateMethods = {
 
       isVirtual: true,
 
-      desc: '古代・中世・戦国・幕末の日本史を彩る名門・豪族・王朝・志士たちが、全国106国に割拠する究極のオールスターモード！君の選んだ推し大名で、全国105国を平定し、日ノ本史上最強の覇者となれ！',
+      desc: '古代・中世・戦国・幕末の日本史を彩る名門・豪族・王朝・志士たちが、全国106州に割拠する究極のオールスターモード！君の選んだ推し大名で、全国105州を平定し、日ノ本史上最強の覇者となれ！',
 
-      lore_background: '神武東征軍、邪馬台国、ヤマト王権から平将門、奥州藤原氏、源平両氏、南北朝の英雄、戦国大名、そして長州維新軍や西郷軍まで、全106国を舞台に群雄が競う百花繚乱乱世。',
+      lore_background: '神武東征軍、邪馬台国、ヤマト王権から平将門、奥州藤原氏、源平両氏、南北朝の英雄、戦国大名、そして長州維新軍や西郷軍まで、全106州を舞台に群雄が競う百花繚乱乱世。',
 
-      lore_factions: '北は蝦夷・松前、津軽、南部、斯波、葛西、相馬、岩城から南は薩摩・島津、大隅・西郷軍、琉球王家まで、全106国を舞台に開幕。',
+      lore_factions: '北は蝦夷・松前、津軽、南部、斯波、葛西、相馬、岩城から南は薩摩・島津、大隅・西郷軍、琉球王家まで、全106州を舞台に開幕。',
 
       lore_focus: 'お気に入りの英傑・大名家を選び、全国106国統一の偉業を達成せよ！',
 

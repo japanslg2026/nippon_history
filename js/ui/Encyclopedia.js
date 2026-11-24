@@ -473,7 +473,7 @@ class ClanView {
         <div class="mk-dname">${esc(c.c.family)}
           <div class="mk-dmeta">
           ${L.default ? `<span class="mk-pill gold">当主 ${esc(L.default)}</span>` : ''}
-          <span class="mk-pill ghost">${c.sc.length}シナリオ登場</span><span class="mk-pill ghost">最大 ${c.maxProv}国</span></div></div>
+          <span class="mk-pill ghost">${c.sc.length}シナリオ登場</span><span class="mk-pill ghost">最大 ${c.maxProv}州</span></div></div>
       </div>
       ${c.sc.length ? `<div class="mk-panel mk-mappanel"><h4>支配域の変遷</h4>
         <div class="mk-tl-head"><span class="mk-tl-year"></span><span class="mk-tl-title"></span><span class="mk-tl-count"></span></div>

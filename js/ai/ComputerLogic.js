@@ -1400,11 +1400,11 @@ export const ComputerLogicMethods = {
       truceChance: 0.15, truceSeasons: 5, vassalChance: 0.20, vassalSeasons: 20, maxPeacePacts: 3, // 和睦・臣従：同時に最大3件
       breakChance: 0.06, breakChanceAggressive: 0.10,
       autoBorderThreatRatio: 1.5, autoInteriorKeep: 800, autoInteriorKeepRatio: 0.2, autoBorderMoveShare: 0.9, // オート統治：境の目標兵力＝隣の敵の最大兵力×割合、内地の残し方（2026-10-11 cj）
-      coalitionThresholdProvs: 15, coalitionGraceSeasons: 0, coalitionGrowthProvs: 0, // 反覇道包囲網：15国以上で結成。猶予は取り消し（0/0 で ck 以前と同じ。2026-10-11 cm）
+      coalitionThresholdProvs: 15, coalitionGraceSeasons: 0, coalitionGrowthProvs: 0, // 反覇道包囲網：15州以上で結成。猶予は取り消し（0/0 で ck 以前と同じ。2026-10-11 cm）
       aiBorderReinforce: true, aiBorderThreatRatio: 1.2, // AI の国境後詰め（cj と同じ処理。目標＝隣の敵の最大兵力×割合。2026-10-11 cn）
       aiSupportShare: 0.5, aiSupportKeep: 600, aiSupportMax: 3, // 兵の集中：攻め先に接する他の自領から、兵の割合（残す下限）で加勢。加勢する国の上限
       aiWeakTargetBonusMax: 45, aiWeakTargetRatio: 1.5, // プレイヤーの手薄な国を狙う加点（攻め手÷守兵 が割合を超えた分×15、上限）
-      aiRecruitShare: 0, aiRecruitThreatRatio: 1.0, aiRecruitStep: 100, // 既定0（0.05〜0.5 を試すと織田1582が5〜9国まで崩れたため切）。予備費超過分のうち徴兵に回す割合・境の目標（脅威×割合）・1回の人数
+      aiRecruitShare: 0, aiRecruitThreatRatio: 1.0, aiRecruitStep: 100, // 既定0（0.05〜0.5 を試すと織田1582が5〜9州まで崩れたため切）。予備費超過分のうち徴兵に回す割合・境の目標（脅威×割合）・1回の人数
       aiAutumnAttackMult: 1.25, aiEngagedAttackMult: 1.3, aiEngagedTargetBonus: 20, // 時機：秋の出陣、他所と交戦中の敵への出陣・加点
       troopUpkeepGoldPerTroop: 0.01, // 兵の維持費（毎季・兵1人あたりの金。プレイヤー・AI 共通。0.02 ではオート統治の大家の金が尽きたため 0.01。2026-10-11 ci）
       surplusReserveBase: 800, surplusReservePerProv: 150, surplusSpendShare: 0.5, // AI：予備費を超えた金の一部を開発・城普請・徴兵へ（2026-10-11 ci）
@@ -2687,8 +2687,8 @@ export const ComputerLogicMethods = {
     }
 
     if (domesticCount > 0 || militaryCount > 0 || logisticsCount > 0 || conqueredProvinces.length > 0) {
-      const conqueredMsg = conqueredProvinces.length > 0 ? `、前線委任軍が【${conqueredProvinces.length}カ国】を攻略領有` : '';
-      this.log(`【委任統治報告】内政型${domesticCount}国で開発・治安維持、軍事進攻型${militaryCount}国で増強${conqueredMsg}、兵站型から前線へ兵${totalMovedTroops.toLocaleString()}人を輸送完了。`);
+      const conqueredMsg = conqueredProvinces.length > 0 ? `、前線委任軍が【${conqueredProvinces.length}州】を攻略領有` : '';
+      this.log(`【委任統治報告】内政型${domesticCount}州で開発・治安維持、軍事進攻型${militaryCount}州で増強${conqueredMsg}、兵站型から前線へ兵${totalMovedTroops.toLocaleString()}人を輸送完了。`);
     }
   },
 

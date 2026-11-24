@@ -306,7 +306,7 @@ export const UIManagerMethods = {
 
         const totalCount = provs.length || ((window.PROVINCES_DATA && window.PROVINCES_DATA.length) || 77);
 
-        this._latestResumeSummary = `${formatHistoricalYear(latestData.year)}年 ${seasonName} / ${daimyoLabel}（支配: ${myProvs.length}/${totalCount}国 / 兵力: ${myProvs.reduce((a,c)=>a+(c.troops || 0),0).toLocaleString()}人）`;
+        this._latestResumeSummary = `${formatHistoricalYear(latestData.year)}年 ${seasonName} / ${daimyoLabel}（支配: ${myProvs.length}/${totalCount}州 / 兵力: ${myProvs.reduce((a,c)=>a+(c.troops || 0),0).toLocaleString()}人）`;
 
       } catch (e) {
 
@@ -3989,19 +3989,19 @@ export const UIManagerMethods = {
 
               <button id="tabMyProvinces" style="background:${currentTab === 'my' ? '#922b21' : '#2b1d14'}; color:#fff; border:1px solid ${currentTab === 'my' ? '#c0392b' : '#664422'}; padding:6px 16px; border-radius:4px; cursor:pointer; font-size:12pt; font-weight:bold;">
 
-                我が領国 (${myProvs.length}国)
+                我が領国 (${myProvs.length}州)
 
               </button>
 
               <button id="tabAllProvinces" style="background:${currentTab === 'all' ? '#922b21' : '#2b1d14'}; color:#fff; border:1px solid ${currentTab === 'all' ? '#c0392b' : '#664422'}; padding:6px 16px; border-radius:4px; cursor:pointer; font-size:12pt; font-weight:bold;">
 
-                天下の領国 (${allProvs.length}国)
+                天下の領国 (${allProvs.length}州)
 
               </button>
 
               <button id="tabBlankProvinces" style="background:${currentTab === 'blank' ? '#7f8c8d' : '#2b1d14'}; color:${currentTab === 'blank' ? '#fff' : '#bdc3c7'}; border:1px solid ${currentTab === 'blank' ? '#bdc3c7' : '#664422'}; padding:6px 16px; border-radius:4px; cursor:pointer; font-size:12pt; font-weight:bold;">
 
-                空白地 (${blankProvs.length}国)
+                空白地 (${blankProvs.length}州)
 
               </button>
 
@@ -4287,7 +4287,7 @@ export const UIManagerMethods = {
 
           <div class="modal-footer-bar province-footer-bar" style="padding:12px 20px; border-top:1px solid #443322; background:rgba(0,0,0,0.4); display:flex; justify-content:space-between; align-items:center; gap:12px;">
 
-            <span class="modal-footer-info" style="font-size:12pt; color:#aaa;">表示中: ${rows.length}国 (現在年: ${formatHistoricalYear(this.year)}年) ｜ 城主・当主の行は列伝 ｜ 城代・空白地の行は地図を選択</span>
+            <span class="modal-footer-info" style="font-size:12pt; color:#aaa;">表示中: ${rows.length}州 (現在年: ${formatHistoricalYear(this.year)}年) ｜ 城主・当主の行は列伝 ｜ 城代・空白地の行は地図を選択</span>
 
             <button id="closeProvinceModalBtnBottom" class="modal-footer-close-btn" style="background:#555; color:#fff; border:none; padding:7px 14px; border-radius:4px; cursor:pointer; font-size:12pt; font-weight:bold; white-space:nowrap;">閉</button>
 
@@ -8518,7 +8518,7 @@ export const UIManagerMethods = {
     const toKanjiFn = (typeof toKanjiNumber === 'function') ? toKanjiNumber : (window.toKanjiNumber || (n => `${n}`));
     const kanjiProvs = toKanjiFn(totalProvs);
 
-    const titlePrefix = isShogun ? '朝廷勅許・征夷大将軍就任' : `日本全${kanjiProvs}州（全${totalProvs}国）完全平定`;
+    const titlePrefix = isShogun ? '朝廷勅許・征夷大将軍就任' : `日本全${kanjiProvs}州（全${totalProvs}州）完全平定`;
 
     const titleMain = isShogun ? `${clanName}幕府 開府創世録` : '天下統一・不滅の大覇業録';
 
@@ -9259,8 +9259,8 @@ export const UIManagerMethods = {
         }
 
         // 支配領域
-        if (provsEl) provsEl.textContent = `${clanProvs.length} / ${totalCount} 国`;
-        if (progEl) progEl.textContent = `天下統一まで ${Math.max(0, totalCount - clanProvs.length)}国`;
+        if (provsEl) provsEl.textContent = `${clanProvs.length} / ${totalCount} 州`;
+        if (progEl) progEl.textContent = `天下統一まで ${Math.max(0, totalCount - clanProvs.length)}州`;
 
         // 軍略点・評定枚数（軍令権）
         const clanMaxAp = Math.min(5, Math.max(3, 3 + Math.floor(clanProvs.length / 15)));
@@ -9321,7 +9321,7 @@ export const UIManagerMethods = {
         if (probBar) probBar.style.width = '0%';
         if (probDesc) probDesc.textContent = '局地割拠';
 
-        if (provsEl) provsEl.textContent = `1 / ${totalCount} 国`;
+        if (provsEl) provsEl.textContent = `1 / ${totalCount} 州`;
         if (progEl) progEl.textContent = '天下統一対象外';
 
         if (apEl) apEl.textContent = '- / -';
@@ -9418,10 +9418,10 @@ export const UIManagerMethods = {
     const myProvs = this.provinces.filter(p => p.ownerId === this.playerClanId);
     const totalCount = (this.provinces && this.provinces.length > 0) ? this.provinces.length : ((window.PROVINCES_DATA && window.PROVINCES_DATA.length) || 77);
     const provsEl = document.getElementById('statProvinces');
-    if (provsEl) provsEl.textContent = `${myProvs.length} / ${totalCount} 国`;
+    if (provsEl) provsEl.textContent = `${myProvs.length} / ${totalCount} 州`;
 
     const progEl = document.getElementById('statProgression');
-    if (progEl) progEl.textContent = `天下統一まで ${Math.max(0, totalCount - myProvs.length)}国`;
+    if (progEl) progEl.textContent = `天下統一まで ${Math.max(0, totalCount - myProvs.length)}州`;
 
     const prob = Math.min(100, Math.round((myProvs.length / Math.max(1, totalCount)) * 100));
     const probEl = document.getElementById('statProbability');
@@ -9646,11 +9646,11 @@ export const UIManagerMethods = {
       const totalCount = (this.provinces && this.provinces.length > 0) ? this.provinces.length : ((window.PROVINCES_DATA && window.PROVINCES_DATA.length) || 77);
       const toKanjiFn = (typeof toKanjiNumber === 'function') ? toKanjiNumber : (window.toKanjiNumber || (n => `${n}`));
       const kanjiTotal = toKanjiFn(totalCount);
-      this.log(`👑【征夷大将軍宣下】朝廷より征夷大将軍に任ぜられました！残る群雄を平定し日本全${kanjiTotal}州（全${totalCount}国）完全統一へ進軍します！`, 'important');
+      this.log(`👑【征夷大将軍宣下】朝廷より征夷大将軍に任ぜられました！残る群雄を平定し日本全${kanjiTotal}州（全${totalCount}州）完全統一へ進軍します！`, 'important');
       Swal.fire({
         icon: 'success',
         title: '👑 征夷大将軍 拝命！',
-        text: `大将軍の武威を轟かせ、残る群雄を平定し日本全${kanjiTotal}州（全${totalCount}国）の完全統一へ邁進します！`,
+        text: `大将軍の武威を轟かせ、残る群雄を平定し日本全${kanjiTotal}州（全${totalCount}州）の完全統一へ邁進します！`,
         background: '#241710',
         color: '#ffd700'
       });

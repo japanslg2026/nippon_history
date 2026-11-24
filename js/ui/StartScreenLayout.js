@@ -390,7 +390,7 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
       });
       const chips = sorted.map(x => {
         const maj = isMajorClan(x.id, x.provCount || 1);
-        return `<span class="scen-modal-clan-chip ${maj ? 'major' : ''}">${esc(x.name || x.clan)}<small>（${x.provCount || 1}国）</small></span>`;
+        return `<span class="scen-modal-clan-chip ${maj ? 'major' : ''}">${esc(x.name || x.clan)}<small>（${x.provCount || 1}州）</small></span>`;
       }).join('');
       factionHtml = `
         <div class="scen-modal-section">
@@ -744,7 +744,7 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     if (selWrap) {
       // 下部バーは文字切れを避けるため、大名家の家名（織田家・武田家など）のみ表示
       selWrap.innerHTML = `${kamonHtml}<span class="sl-mbar-txt"><b>${esc(ci.name || ci.leader)}</b></span>`;
-      selWrap.title = `${ci.leader || ci.name}・支配${n}国${tr != null ? '・兵力' + tr : ''}`;
+      selWrap.title = `${ci.leader || ci.name}・支配${n}州${tr != null ? '・兵力' + tr : ''}`;
     }
     if (goBtn) {
       goBtn.textContent = '⚔ 出陣';
@@ -1126,7 +1126,7 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
       const ci = clanInfo(id);
       const kid = g?.getClanKamonId(id);
       info.classList.add('sl-sel-badge'); info.style.setProperty('--sl-clan', ci.color);
-      info.innerHTML = `${kid ? `<svg class="sl-sel-kamon" viewBox="0 0 32 32" aria-hidden="true"><use href="#${kid}"></use></svg>` : `<i class="sl-dot sl-sel-dot" style="background:${ci.color}"></i>`}<span class="sl-sel-lbl">選択中</span><b class="sl-sel-name">${esc(ci.leader || ci.name)}</b>${ci.leader ? `<span class="sl-sel-clan">${esc(ci.name)}</span>` : ''}${IS_PHONE ? `<span class="sl-sel-n" title="支配 ${n} 国"><i class="sl-ic" aria-hidden="true">🏯</i>${n}</span>` : `<span class="sl-sel-n">支配 ${n} 国</span>`}${troopsOf(card) != null ? (IS_PHONE ? `<span class="sl-sel-t" title="兵力 ${troopsOf(card)}"><i class="sl-ic" aria-hidden="true">⚔️</i>${troopsOf(card)}</span>` : `<span class="sl-sel-t">兵 ${troopsOf(card)}</span>`) : ''}`;
+      info.innerHTML = `${kid ? `<svg class="sl-sel-kamon" viewBox="0 0 32 32" aria-hidden="true"><use href="#${kid}"></use></svg>` : `<i class="sl-dot sl-sel-dot" style="background:${ci.color}"></i>`}<span class="sl-sel-lbl">選択中</span><b class="sl-sel-name">${esc(ci.leader || ci.name)}</b>${ci.leader ? `<span class="sl-sel-clan">${esc(ci.name)}</span>` : ''}${IS_PHONE ? `<span class="sl-sel-n" title="支配 ${n} 州"><i class="sl-ic" aria-hidden="true">🏯</i>${n}</span>` : `<span class="sl-sel-n">支配 ${n} 州</span>`}${troopsOf(card) != null ? (IS_PHONE ? `<span class="sl-sel-t" title="兵力 ${troopsOf(card)}"><i class="sl-ic" aria-hidden="true">⚔️</i>${troopsOf(card)}</span>` : `<span class="sl-sel-t">兵 ${troopsOf(card)}</span>`) : ''}`;
     } else if (info) {
       info.classList.remove('sl-sel-badge');
     }
@@ -1149,7 +1149,7 @@ window.armorIconHTML = window.armorIconHTML || function (title) {
     const badge = $('#selectedDaimyoBadge');
     if (badge) {
       if (id && card) {
-        badge.textContent = `選択中: ${clanInfo(id).leader}（${clanInfo(id).name}・${n}国）`;
+        badge.textContent = `選択中: ${clanInfo(id).leader}（${clanInfo(id).name}・${n}州）`;
       } else {
         badge.textContent = '選択中: なし（大名家を選択してください）';
       }
