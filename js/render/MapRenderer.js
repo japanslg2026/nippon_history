@@ -369,7 +369,7 @@ export const MapRendererMethods = {
       /* 観戦中は古い選択状態や :hover による見かけ上のハイライトも表示しない。 */
       #sengokuMapSvg.map-spectator-mode .prov-path:hover,
       #sengokuMapSvg.map-spectator-mode .prov-path.selected {
-        fill-opacity: 0.88 !important;
+        fill-opacity: 1 !important;
         stroke: none !important;
         stroke-width: 0 !important;
         filter: none !important;
