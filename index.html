@@ -4240,7 +4240,7 @@
       // 武将配属ルールは data/rules.json（officerAffiliationRules）から読み込む（ゲームと同じデータ。2026-11-14）
       async function loadAffiliationRulesSafe() {
         try {
-          var r = await fetchJsonSmart('rules.json?v=20261123_v57');
+          var r = await fetchJsonSmart('rules.json?v=20261125_v68');
           window.RULES_DATA = r || {};
           return (r && Array.isArray(r.officerAffiliationRules)) ? r.officerAffiliationRules : [];
         } catch (_) {
@@ -4329,11 +4329,11 @@
       async function initAllData() {
         var statusEl = document.getElementById('loadingStatusText');
         try {
-          await loadExternalScript(['assets/kamons.js?v=20261123_v57', 'assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
+          await loadExternalScript(['assets/kamons.js?v=20261125_v68', 'assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
           if (typeof window.loadKamonSymbols === 'function') {
             window.loadKamonSymbols();
           }
-          await loadExternalScript(['js/kamonOverrides.js?v=20261123_v57']);
+          await loadExternalScript(['js/kamonOverrides.js?v=20261125_v68']);
 
           var urlParams = new URLSearchParams(window.location.search);
           var initialScenId = urlParams.get('scenario');
@@ -4346,21 +4346,21 @@
             statusEl.textContent = '桶狭間の戦い（1560年）と全国地図データを読み込み中…';
 
             var splitScenPromise = Promise.all([
-              fetchJsonSmart('scenario_1560.json?v=20261123_v57'),
-              fetchJsonSmart('scenarios_meta.json?v=20261123_v57')
+              fetchJsonSmart('scenario_1560.json?v=20261125_v68'),
+              fetchJsonSmart('scenarios_meta.json?v=20261125_v68')
             ]).then(function (pair) {
               return { split: true, s1560: pair[0], meta: pair[1] };
             }).catch(function () {
-              return fetchJsonSmart('scenarios.json?v=20261123_v57').then(function (all) {
+              return fetchJsonSmart('scenarios.json?v=20261125_v68').then(function (all) {
                 return { split: false, all: all };
               });
             });
 
             var phase1Results = await Promise.all([
               splitScenPromise,
-              fetchJsonSmart('provinces.json?v=20261123_v57'),
-              fetchJsonSmart('clans.json?v=20261123_v57'),
-              fetchJsonSmart('map_borders.json?v=20261123_v57').catch(function () { return window.MAP_BORDERS_DATA || null; })
+              fetchJsonSmart('provinces.json?v=20261125_v68'),
+              fetchJsonSmart('clans.json?v=20261125_v68'),
+              fetchJsonSmart('map_borders.json?v=20261125_v68').catch(function () { return window.MAP_BORDERS_DATA || null; })
             ]);
 
             var scenRes = phase1Results[0];
@@ -4454,9 +4454,9 @@
 
             setTimeout(function () {
               Promise.all([
-                fetchJsonSmart('officers.json?v=20261123_v57'),
-                fetchJsonSmart('governors.json?v=20261123_v57').catch(function () { return {}; }),
-                fetchJsonSmart('events.json?v=20261123_v57').catch(function () { return {}; }),
+                fetchJsonSmart('officers.json?v=20261125_v68'),
+                fetchJsonSmart('governors.json?v=20261125_v68').catch(function () { return {}; }),
+                fetchJsonSmart('events.json?v=20261125_v68').catch(function () { return {}; }),
                 loadAffiliationRulesSafe()
               ]).then(function (bgRes) {
                 var officersRaw = bgRes[0];
@@ -4489,7 +4489,7 @@
               });
 
               if (!State.scenariosFullLoaded) {
-                fetchJsonSmart('scenarios.json?v=20261123_v57').then(function (scenariosRaw) {
+                fetchJsonSmart('scenarios.json?v=20261125_v68').then(function (scenariosRaw) {
                   window.SCENARIOS_DATA = scenariosRaw || [];
                   var fullList = filterAndSortScenarios(scenariosRaw);
                   var fullById = new Map(fullList.map(function (s) { return [String(s.id), s]; }));
@@ -4534,14 +4534,14 @@
           var rulesPromise = loadAffiliationRulesSafe();
 
           var results = await Promise.all([
-            fetchJsonSmart('scenarios.json?v=20261123_v57'),
-            fetchJsonSmart('provinces.json?v=20261123_v57'),
-            fetchJsonSmart('clans.json?v=20261123_v57'),
-            fetchJsonSmart('officers.json?v=20261123_v57'),
-            fetchJsonSmart('governors.json?v=20261123_v57').catch(function () { return {}; }),
-            fetchJsonSmart('events.json?v=20261123_v57').catch(function () { return {}; }),
+            fetchJsonSmart('scenarios.json?v=20261125_v68'),
+            fetchJsonSmart('provinces.json?v=20261125_v68'),
+            fetchJsonSmart('clans.json?v=20261125_v68'),
+            fetchJsonSmart('officers.json?v=20261125_v68'),
+            fetchJsonSmart('governors.json?v=20261125_v68').catch(function () { return {}; }),
+            fetchJsonSmart('events.json?v=20261125_v68').catch(function () { return {}; }),
             rulesPromise,
-            fetchJsonSmart('map_borders.json?v=20261123_v57').catch(function () { return window.MAP_BORDERS_DATA || null; })
+            fetchJsonSmart('map_borders.json?v=20261125_v68').catch(function () { return window.MAP_BORDERS_DATA || null; })
           ]);
 
           var scenariosRaw = results[0];

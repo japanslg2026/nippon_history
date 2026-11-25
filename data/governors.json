@@ -1461,7 +1461,7 @@
     "hizen_saga": "off_hist_1336_ryuzoji_iefusa",
     "iyo_matsuyama": "off_doi_michimasu",
     "kii_kichu": "off_pl1331_055",
-    "wakasa": "off_hist_shiba_iekane",
+    "wakasa": "off_hist_1346_osaki_iekane",
     "musashi_tama": "off_uesugi_noriaki_first",
     "chikuzen_munakata": "off_jd_365",
     "echigo_kanbara": "off_jo_sukemitsu",
@@ -1925,7 +1925,7 @@
     "bingo": "off_onin2_020",
     "nagato": "off_naito_hiromori",
     "buzen_ogura": "off_kurokawa_harunari",
-    "kozuke_agatsuma": "off_hist_1467_saito_kenji",
+    "kozuke_agatsuma": "off_hist_1493_saito_noritsugu",
     "kozuke_numata": "off_hist_1467_numata_kageyasu",
     "harima_east": "off_hist_1495_bessho_noriharu",
     "rikuzen": "off_pl1438_072",
@@ -2149,14 +2149,15 @@
     "higo_yatsushiro": "off_dm_sagara_13_nagatsune",
     "izumo_north": "off_jd_hist_0160",
     "kaga_south": "off_jd_hist_0151",
-    "mikawa_shitara": "off_jd_hist_0159",
+    "mikawa_shitara": "off_jd_hist_0165",
     "sagami_miura": "off_jd_hist_0157",
     "settsu_osaka": "off_hosokawa_tadakata",
     "totomi_futamata_haibara": "off_jd_hist_0158",
     "hitachi_shimodate": "off_mizunoya_katsuuji",
     "hitachi_shimotsuma": "off_hist_1495_tagaya_ietsugu",
     "echizen_tsuruga": "off_asakura_soteki",
-    "hitachi_fuchu": "off_daijo_tadamoto"
+    "hitachi_fuchu": "off_daijo_tadamoto",
+    "rikuchu_shimoheii": "off_jd_hist_0163"
   },
   "1531": {
     "izumi": "off_miyoshi_motonaga",
@@ -2246,7 +2247,7 @@
     "hoki_west": "off_yoshida_mitsutomo",
     "shinano_ueda": "off_fukuzawa_akimasa",
     "chikuzen_akizuki": "off_akizuki_fumitane",
-    "mimasaka_west": "off_miura_sadahisa",
+    "mimasaka_west": "off_jd_hist_0174",
     "hyuga_obi": "off_shimazu_tadahiro_hoshu",
     "higo_yatsushiro": "off_dm_sagara_17_haruhiro",
     "bungo_oka": "off_shiga_chikamori",
@@ -2269,7 +2270,6 @@
     "echigo_kanbara": "off_shibata_tsunasada",
     "kai_tsuru": "off_oyamada_nobuari_gunnai",
     "settsu_shimakami": "off_ibaraki_nagataka",
-    "kaga_north": "off_togashi_harusada",
     "uzen_yonezawa": "off_nakano_munetoki",
     "hoki_east": "off_amago_kunihisa",
     "bungo_kitaamabe": "off_usuki_akitsugu",
@@ -2281,14 +2281,16 @@
     "buzen_ogura": "off_sugi_shigenori",
     "hizen_tsukushi": "off_jd_hist_0168",
     "iyo_nii": "off_jd_hist_0167",
-    "mikawa_shitara": "off_jd_hist_0169",
+    "mikawa_shitara": "off_jd_hist_0173",
     "mimasaka_east": "off_jd_hist_0171",
     "tamba_west": "off_jd_hist_0166",
     "yamato_higashiyamauchi": "off_jd_hist_0170",
     "hitachi_shimodate": "off_mizunoya_harumochi",
     "hitachi_shimotsuma": "off_tagaya_ieshige",
     "echizen_tsuruga": "off_asakura_soteki",
-    "hitachi_fuchu": "off_daijo_norimoto"
+    "hitachi_fuchu": "off_daijo_norimoto",
+    "mikawa_yoshida": "off_jd_hist_0373",
+    "rikuchu_shimoheii": "off_jd_hist_0163"
   },
   "1542": {
     "nagato": "off_naito_okimori",
@@ -2312,7 +2314,7 @@
     "hoki_west": "off_yoshida_mitsutomo",
     "hoki_east": "off_amago_kunihisa",
     "chikuzen_akizuki": "off_akizuki_fumitane",
-    "mimasaka_west": "off_miura_sadahisa",
+    "mimasaka_west": "off_jd_hist_0174",
     "hyuga_obi": "off_shimazu_tadahiro_hoshu",
     "higo_yatsushiro": "off_dm_sagara_17_haruhiro",
     "awaji": "off_atagi_sanetoshi",
@@ -2337,7 +2339,6 @@
     "echigo_kanbara": "off_shibata_tsunasada",
     "kai_tsuru": "off_oyamada_nobuari_gunnai",
     "izumo_north": "off_matsuda_masayasu",
-    "kaga_north": "off_togashi_harusada",
     "bungo_kitaamabe": "off_usuki_akitsugu",
     "bungo_minamiamabe": "off_saeki_korenori",
     "echigo_higashikanbara": "off_kanagami_morinobu",
@@ -2346,7 +2347,7 @@
     "totomi_kakegawa": "off_asahina_yasuyoshi",
     "chikugo_south": "off_jd_057",
     "iyo_nii": "off_jd_hist_0167",
-    "mikawa_shitara": "off_jd_hist_0169",
+    "mikawa_shitara": "off_jd_hist_0173",
     "mimasaka_east": "off_jd_hist_0171",
     "yamato_higashiyamauchi": "off_jd_hist_0170",
     "hitachi_shimodate": "off_pl1570_180",
@@ -2401,7 +2402,6 @@
     "kai_tsuru": "off_oyamada_nobuari_gunnai",
     "izumo_north": "off_matsuda_masayasu",
     "echigo_higashikanbara": "off_pl1570_168",
-    "kaga_north": "off_togashi_harusada",
     "hoki_east": "off_amago_kunihisa",
     "sanuki": "off_sangawa_mitsukazu",
     "bungo_kitaamabe": "off_usuki_akitsugu",
@@ -2414,7 +2414,7 @@
     "chikuzen_kamashi": "off_sagara_muto",
     "higo_yatsushiro": "off_jd_hist_0172",
     "iyo_nii": "off_jd_hist_0167",
-    "mikawa_shitara": "off_jd_hist_0169",
+    "mikawa_shitara": "off_jd_hist_0173",
     "mimasaka_east": "off_jd_hist_0171",
     "ugo_hondoh": "off_pl1590_043",
     "hitachi_shimodate": "off_pl1570_180",
@@ -2473,7 +2473,6 @@
     "kai_tsuru": "off_oyamada_nobuari_gunnai",
     "izumo_north": "off_matsuda_masayasu",
     "echigo_higashikanbara": "off_pl1570_168",
-    "kaga_north": "off_togashi_harusada",
     "hoki_east": "off_amago_kunihisa",
     "bungo_kitaamabe": "off_usuki_akisumi",
     "bungo_minamiamabe": "off_saeki_korenori",
@@ -2790,7 +2789,7 @@
     "kazusa_togane_naruto": "off_pl1570_184",
     "izumo_north": "off_kikkawa_motoharu",
     "echigo_higashikanbara": "off_pl1570_168",
-    "mikawa_shitara": "off_suganuma_masasada",
+    "mikawa_shitara": "off_pl1570_023",
     "shinano_takato": "off_takeda_katsuyori",
     "shinano_iida": "off_akiyama_nobutomo",
     "uzen_mogami": "off_sakenobe_sadatsuna",
@@ -3205,7 +3204,8 @@
     "ugo_rokugoh": "off_jd_hist_0375",
     "hitachi_shimodate": "off_pl1590_021",
     "hitachi_shimotsuma": "off_pl1570_178",
-    "hitachi_fuchu": "off_daijo_sadakuni"
+    "hitachi_fuchu": "off_daijo_sadakuni",
+    "kaga_north": "off_jd_hist_0181"
   },
   "1576": {
     "suruga": "off_anayama_baisetsu",
@@ -3323,7 +3323,8 @@
     "hitachi_shimodate": "off_pl1590_021",
     "hitachi_shimotsuma": "off_pl1570_178",
     "echizen_tsuruga": "off_muto_kiyohide",
-    "hitachi_fuchu": "off_daijo_sadakuni"
+    "hitachi_fuchu": "off_daijo_sadakuni",
+    "kaga_north": "off_jd_hist_0181"
   },
   "1577": {
     "izu": "off_hojo_ujinori",
@@ -3442,7 +3443,8 @@
     "hitachi_shimodate": "off_pl1590_021",
     "hitachi_shimotsuma": "off_pl1590_022",
     "echizen_tsuruga": "off_muto_kiyohide",
-    "hitachi_fuchu": "off_daijo_sadakuni"
+    "hitachi_fuchu": "off_daijo_sadakuni",
+    "kaga_north": "off_jd_hist_0181"
   },
   "1578": {
     "izu": "off_hojo_ujinori",
@@ -3563,7 +3565,8 @@
     "hitachi_shimotsuma": "off_pl1590_022",
     "echizen_tsuruga": "off_muto_kiyohide",
     "hizen_shimabara": "off_yasutomi_tokuen",
-    "hitachi_fuchu": "off_pl1590_025"
+    "hitachi_fuchu": "off_pl1590_025",
+    "kaga_north": "off_jd_hist_0181"
   },
   "1580": {
     "izu": "off_hojo_ujinori",
@@ -4171,7 +4174,7 @@
     "mikawa_yoshida": "off_sakai_tadatsugu",
     "bitchu_takamatsu": "off_jd_371",
     "chikugo_north": "off_jd_024",
-    "chikugo_south": "off_jd_hist_0193",
+    "chikugo_south": "off_ryuzoji_iehare",
     "ise_nagashima": "off_jd_hist_0190",
     "uzen_nishimurayama": "off_jd_hist_0191",
     "wakasa": "off_toda_katsushige",
@@ -4314,7 +4317,8 @@
     "hitachi_shimodate": "off_pl1590_021",
     "hitachi_shimotsuma": "off_pl1590_022",
     "echizen_tsuruga": "off_hachiya_yoritaka",
-    "hitachi_fuchu": "off_pl1590_025"
+    "hitachi_fuchu": "off_pl1590_025",
+    "kozuke_nitta_kanayama": "off_jd_hist_0198"
   },
   "1590": {
     "kai": "off_hiraiwa_chikayoshi",
@@ -4800,7 +4804,6 @@
     "higo_aso": "off_kato_masakata",
     "hitachi_kashima": "off_jd_hist_0203",
     "hoki_west": "off_jd_hist_0210",
-    "iwaki_shirakawa": "off_jd_hist_0213",
     "iyo_ohzu": "off_jd_042",
     "kii_kichu": "off_jd_hist_0208",
     "mimasaka_east": "off_jd_hist_0187",
@@ -4910,7 +4913,7 @@
     "etchu_east": "off_jd_hist_0221",
     "higo_aso": "off_jd_hist_0225",
     "hitachi_kashima": "off_jd_hist_0222",
-    "hoki_east": "off_succ_satomi_1594_154",
+    "hoki_east": "off_pl1590_097",
     "iwashiro_tamura": "off_jd_hist_0218",
     "kawachi_north": "off_pl1614_025",
     "mikawa_shitara": "off_pl1614_107",
@@ -4928,7 +4931,7 @@
     "kozuke_agatsuma": "off_yokoya_yukishige",
     "bungo_minamiamabe": "off_pl1614_003",
     "hitachi_shimodate": "off_edo_tokugawa_1597_88",
-    "hitachi_fuchu": "off_pl1590_042",
+    "hitachi_fuchu": "off_pl1590_014",
     "kozuke_numata": "off_pl1614_039"
   },
   "1637": {
@@ -7891,7 +7894,7 @@
       "hizen_saga": "off_hist_1336_ryuzoji_iefusa",
       "iyo_matsuyama": "off_doi_michimasu",
       "kii_kichu": "off_pl1331_055",
-      "wakasa": "off_hist_shiba_iekane",
+      "wakasa": "off_hist_1346_osaki_iekane",
       "musashi_tama": "off_uesugi_noriaki_first",
       "chikuzen_munakata": "off_jd_365",
       "echigo_kanbara": "off_jo_sukemitsu",
@@ -8355,7 +8358,7 @@
       "bingo": "off_onin2_020",
       "nagato": "off_naito_hiromori",
       "buzen_ogura": "off_kurokawa_harunari",
-      "kozuke_agatsuma": "off_hist_1467_saito_kenji",
+      "kozuke_agatsuma": "off_hist_1493_saito_noritsugu",
       "kozuke_numata": "off_hist_1467_numata_kageyasu",
       "harima_east": "off_hist_1495_bessho_noriharu",
       "rikuzen": "off_pl1438_072",
@@ -8579,14 +8582,15 @@
       "higo_yatsushiro": "off_dm_sagara_13_nagatsune",
       "izumo_north": "off_jd_hist_0160",
       "kaga_south": "off_jd_hist_0151",
-      "mikawa_shitara": "off_jd_hist_0159",
+      "mikawa_shitara": "off_jd_hist_0165",
       "sagami_miura": "off_jd_hist_0157",
       "settsu_osaka": "off_hosokawa_tadakata",
       "totomi_futamata_haibara": "off_jd_hist_0158",
       "hitachi_shimodate": "off_mizunoya_katsuuji",
       "hitachi_shimotsuma": "off_hist_1495_tagaya_ietsugu",
       "echizen_tsuruga": "off_asakura_soteki",
-      "hitachi_fuchu": "off_daijo_tadamoto"
+      "hitachi_fuchu": "off_daijo_tadamoto",
+      "rikuchu_shimoheii": "off_jd_hist_0163"
     },
     "1531": {
       "izumi": "off_miyoshi_motonaga",
@@ -8676,7 +8680,7 @@
       "hoki_west": "off_yoshida_mitsutomo",
       "shinano_ueda": "off_fukuzawa_akimasa",
       "chikuzen_akizuki": "off_akizuki_fumitane",
-      "mimasaka_west": "off_miura_sadahisa",
+      "mimasaka_west": "off_jd_hist_0174",
       "hyuga_obi": "off_shimazu_tadahiro_hoshu",
       "higo_yatsushiro": "off_dm_sagara_17_haruhiro",
       "bungo_oka": "off_shiga_chikamori",
@@ -8699,7 +8703,6 @@
       "echigo_kanbara": "off_shibata_tsunasada",
       "kai_tsuru": "off_oyamada_nobuari_gunnai",
       "settsu_shimakami": "off_ibaraki_nagataka",
-      "kaga_north": "off_togashi_harusada",
       "uzen_yonezawa": "off_nakano_munetoki",
       "hoki_east": "off_amago_kunihisa",
       "bungo_kitaamabe": "off_usuki_akitsugu",
@@ -8711,14 +8714,16 @@
       "buzen_ogura": "off_sugi_shigenori",
       "hizen_tsukushi": "off_jd_hist_0168",
       "iyo_nii": "off_jd_hist_0167",
-      "mikawa_shitara": "off_jd_hist_0169",
+      "mikawa_shitara": "off_jd_hist_0173",
       "mimasaka_east": "off_jd_hist_0171",
       "tamba_west": "off_jd_hist_0166",
       "yamato_higashiyamauchi": "off_jd_hist_0170",
       "hitachi_shimodate": "off_mizunoya_harumochi",
       "hitachi_shimotsuma": "off_tagaya_ieshige",
       "echizen_tsuruga": "off_asakura_soteki",
-      "hitachi_fuchu": "off_daijo_norimoto"
+      "hitachi_fuchu": "off_daijo_norimoto",
+      "mikawa_yoshida": "off_jd_hist_0373",
+      "rikuchu_shimoheii": "off_jd_hist_0163"
     },
     "1542": {
       "nagato": "off_naito_okimori",
@@ -8742,7 +8747,7 @@
       "hoki_west": "off_yoshida_mitsutomo",
       "hoki_east": "off_amago_kunihisa",
       "chikuzen_akizuki": "off_akizuki_fumitane",
-      "mimasaka_west": "off_miura_sadahisa",
+      "mimasaka_west": "off_jd_hist_0174",
       "hyuga_obi": "off_shimazu_tadahiro_hoshu",
       "higo_yatsushiro": "off_dm_sagara_17_haruhiro",
       "awaji": "off_atagi_sanetoshi",
@@ -8767,7 +8772,6 @@
       "echigo_kanbara": "off_shibata_tsunasada",
       "kai_tsuru": "off_oyamada_nobuari_gunnai",
       "izumo_north": "off_matsuda_masayasu",
-      "kaga_north": "off_togashi_harusada",
       "bungo_kitaamabe": "off_usuki_akitsugu",
       "bungo_minamiamabe": "off_saeki_korenori",
       "echigo_higashikanbara": "off_kanagami_morinobu",
@@ -8776,7 +8780,7 @@
       "totomi_kakegawa": "off_asahina_yasuyoshi",
       "chikugo_south": "off_jd_057",
       "iyo_nii": "off_jd_hist_0167",
-      "mikawa_shitara": "off_jd_hist_0169",
+      "mikawa_shitara": "off_jd_hist_0173",
       "mimasaka_east": "off_jd_hist_0171",
       "yamato_higashiyamauchi": "off_jd_hist_0170",
       "hitachi_shimodate": "off_pl1570_180",
@@ -8831,7 +8835,6 @@
       "kai_tsuru": "off_oyamada_nobuari_gunnai",
       "izumo_north": "off_matsuda_masayasu",
       "echigo_higashikanbara": "off_pl1570_168",
-      "kaga_north": "off_togashi_harusada",
       "hoki_east": "off_amago_kunihisa",
       "sanuki": "off_sangawa_mitsukazu",
       "bungo_kitaamabe": "off_usuki_akitsugu",
@@ -8844,7 +8847,7 @@
       "chikuzen_kamashi": "off_sagara_muto",
       "higo_yatsushiro": "off_jd_hist_0172",
       "iyo_nii": "off_jd_hist_0167",
-      "mikawa_shitara": "off_jd_hist_0169",
+      "mikawa_shitara": "off_jd_hist_0173",
       "mimasaka_east": "off_jd_hist_0171",
       "ugo_hondoh": "off_pl1590_043",
       "hitachi_shimodate": "off_pl1570_180",
@@ -8903,7 +8906,6 @@
       "kai_tsuru": "off_oyamada_nobuari_gunnai",
       "izumo_north": "off_matsuda_masayasu",
       "echigo_higashikanbara": "off_pl1570_168",
-      "kaga_north": "off_togashi_harusada",
       "hoki_east": "off_amago_kunihisa",
       "bungo_kitaamabe": "off_usuki_akisumi",
       "bungo_minamiamabe": "off_saeki_korenori",
@@ -9220,7 +9222,7 @@
       "kazusa_togane_naruto": "off_pl1570_184",
       "izumo_north": "off_kikkawa_motoharu",
       "echigo_higashikanbara": "off_pl1570_168",
-      "mikawa_shitara": "off_suganuma_masasada",
+      "mikawa_shitara": "off_pl1570_023",
       "shinano_takato": "off_takeda_katsuyori",
       "shinano_iida": "off_akiyama_nobutomo",
       "uzen_mogami": "off_sakenobe_sadatsuna",
@@ -9635,7 +9637,8 @@
       "ugo_rokugoh": "off_jd_hist_0375",
       "hitachi_shimodate": "off_pl1590_021",
       "hitachi_shimotsuma": "off_pl1570_178",
-      "hitachi_fuchu": "off_daijo_sadakuni"
+      "hitachi_fuchu": "off_daijo_sadakuni",
+      "kaga_north": "off_jd_hist_0181"
     },
     "1576": {
       "suruga": "off_anayama_baisetsu",
@@ -9753,7 +9756,8 @@
       "hitachi_shimodate": "off_pl1590_021",
       "hitachi_shimotsuma": "off_pl1570_178",
       "echizen_tsuruga": "off_muto_kiyohide",
-      "hitachi_fuchu": "off_daijo_sadakuni"
+      "hitachi_fuchu": "off_daijo_sadakuni",
+      "kaga_north": "off_jd_hist_0181"
     },
     "1577": {
       "izu": "off_hojo_ujinori",
@@ -9872,7 +9876,8 @@
       "hitachi_shimodate": "off_pl1590_021",
       "hitachi_shimotsuma": "off_pl1590_022",
       "echizen_tsuruga": "off_muto_kiyohide",
-      "hitachi_fuchu": "off_daijo_sadakuni"
+      "hitachi_fuchu": "off_daijo_sadakuni",
+      "kaga_north": "off_jd_hist_0181"
     },
     "1578": {
       "izu": "off_hojo_ujinori",
@@ -9993,7 +9998,8 @@
       "hitachi_shimotsuma": "off_pl1590_022",
       "echizen_tsuruga": "off_muto_kiyohide",
       "hizen_shimabara": "off_yasutomi_tokuen",
-      "hitachi_fuchu": "off_pl1590_025"
+      "hitachi_fuchu": "off_pl1590_025",
+      "kaga_north": "off_jd_hist_0181"
     },
     "1580": {
       "izu": "off_hojo_ujinori",
@@ -10601,7 +10607,7 @@
       "mikawa_yoshida": "off_sakai_tadatsugu",
       "bitchu_takamatsu": "off_jd_371",
       "chikugo_north": "off_jd_024",
-      "chikugo_south": "off_jd_hist_0193",
+      "chikugo_south": "off_ryuzoji_iehare",
       "ise_nagashima": "off_jd_hist_0190",
       "uzen_nishimurayama": "off_jd_hist_0191",
       "wakasa": "off_toda_katsushige",
@@ -10744,7 +10750,8 @@
       "hitachi_shimodate": "off_pl1590_021",
       "hitachi_shimotsuma": "off_pl1590_022",
       "echizen_tsuruga": "off_hachiya_yoritaka",
-      "hitachi_fuchu": "off_pl1590_025"
+      "hitachi_fuchu": "off_pl1590_025",
+      "kozuke_nitta_kanayama": "off_jd_hist_0198"
     },
     "1590": {
       "kai": "off_hiraiwa_chikayoshi",
@@ -11230,7 +11237,6 @@
       "higo_aso": "off_kato_masakata",
       "hitachi_kashima": "off_jd_hist_0203",
       "hoki_west": "off_jd_hist_0210",
-      "iwaki_shirakawa": "off_jd_hist_0213",
       "iyo_ohzu": "off_jd_042",
       "kii_kichu": "off_jd_hist_0208",
       "mimasaka_east": "off_jd_hist_0187",
@@ -11340,7 +11346,7 @@
       "etchu_east": "off_jd_hist_0221",
       "higo_aso": "off_jd_hist_0225",
       "hitachi_kashima": "off_jd_hist_0222",
-      "hoki_east": "off_succ_satomi_1594_154",
+      "hoki_east": "off_pl1590_097",
       "iwashiro_tamura": "off_jd_hist_0218",
       "kawachi_north": "off_pl1614_025",
       "mikawa_shitara": "off_pl1614_107",
@@ -11358,7 +11364,7 @@
       "kozuke_agatsuma": "off_yokoya_yukishige",
       "bungo_minamiamabe": "off_pl1614_003",
       "hitachi_shimodate": "off_edo_tokugawa_1597_88",
-      "hitachi_fuchu": "off_pl1590_042",
+      "hitachi_fuchu": "off_pl1590_014",
       "kozuke_numata": "off_pl1614_039"
     },
     "1637": {
@@ -13468,7 +13474,7 @@
       "oki": "off_jd_399",
       "bizen": "off_kojima_takanori",
       "hizen_saga": "off_hist_1336_ryuzoji_iefusa",
-      "wakasa": "off_hist_shiba_iekane",
+      "wakasa": "off_hist_1346_osaki_iekane",
       "chikuzen_munakata": "off_jd_365",
       "kozuke_takasaki": "off_pl1331_110",
       "kawachi_north": "off_pl1331_025"
@@ -13601,7 +13607,9 @@
       "echigo_higashikanbara": "off_kanagami_morinobu",
       "shimousa": "off_dm_chiba_1467",
       "hitachi_shimotsuma": "off_hist_1495_tagaya_ietsugu",
-      "hitachi_shimodate": "off_mizunoya_katsuuji"
+      "hitachi_shimodate": "off_mizunoya_katsuuji",
+      "mikawa_shitara": "off_jd_hist_0165",
+      "rikuchu_shimoheii": "off_jd_hist_0163"
     },
     "1531": {
       "bitchu_matsuyama": "off_hist_1533_ueno_yoriuji",
@@ -13627,7 +13635,7 @@
       "oki": "off_oki_tamekiyo",
       "iwami": "off_honjo_tsunemitsu",
       "chikuzen_akizuki": "off_akizuki_fumitane",
-      "mimasaka_west": "off_miura_sadahisa",
+      "mimasaka_west": "off_jd_hist_0174",
       "hyuga_obi": "off_shimazu_tadahiro_hoshu",
       "nagato": "off_naito_okimori",
       "bungo_oka": "off_shiga_chikamori",
@@ -13637,11 +13645,14 @@
       "bungo_kitaamabe": "off_usuki_akitsugu",
       "bungo_minamiamabe": "off_saeki_koretsune",
       "echigo_higashikanbara": "off_kanagami_morinobu",
-      "hitachi_shimotsuma": "off_tagaya_ieshige"
+      "hitachi_shimotsuma": "off_tagaya_ieshige",
+      "mikawa_yoshida": "off_jd_hist_0373",
+      "mikawa_shitara": "off_jd_hist_0173",
+      "rikuchu_shimoheii": "off_jd_hist_0163"
     },
     "1542": {
       "chikuzen_akizuki": "off_akizuki_fumitane",
-      "mimasaka_west": "off_miura_sadahisa",
+      "mimasaka_west": "off_jd_hist_0174",
       "hyuga_obi": "off_shimazu_tadahiro_hoshu",
       "totomi_hamamatsu": "off_iio_noritsura",
       "bungo_oka": "off_shiga_chikamori",
@@ -13651,7 +13662,8 @@
       "bungo_minamiamabe": "off_saeki_korenori",
       "echigo_higashikanbara": "off_kanagami_morinobu",
       "shinano_iida": "off_ogasawara_nobusada",
-      "hitachi_shimotsuma": "off_tagaya_ieshige"
+      "hitachi_shimotsuma": "off_tagaya_ieshige",
+      "mikawa_shitara": "off_jd_hist_0173"
     },
     "1546": {
       "awa_shikoku": "off_miyoshi_yoshikata",
@@ -13673,7 +13685,8 @@
       "shinano_iida": "off_ogasawara_nobusada",
       "shimotsuke_oyama": "off_oyama_takatomo",
       "ugo_hondoh": "off_pl1590_043",
-      "hitachi_shimotsuma": "off_tagaya_ieshige"
+      "hitachi_shimotsuma": "off_tagaya_ieshige",
+      "mikawa_shitara": "off_jd_hist_0173"
     },
     "1550": {
       "awa_shikoku": "off_miyoshi_yoshikata",
@@ -13771,7 +13784,8 @@
     },
     "1565": {
       "ugo_rokugoh": "off_jd_hist_0375",
-      "ugo_hondoh": "off_pl1590_043"
+      "ugo_hondoh": "off_pl1590_043",
+      "mikawa_shitara": "off_pl1570_023"
     },
     "1567": {
       "mimasaka_east": "off_jd_055",
@@ -13899,7 +13913,8 @@
       "tosa_nakamura": "off_pl1570_121",
       "osumi": "off_pl1570_154",
       "yamato_takatori": "off_ochi_iemasu",
-      "ugo_rokugoh": "off_jd_hist_0375"
+      "ugo_rokugoh": "off_jd_hist_0375",
+      "kaga_north": "off_jd_hist_0181"
     },
     "1576": {
       "ise": "off_jd_059",
@@ -13945,7 +13960,8 @@
       "bungo_minamiamabe": "off_saeki_korenori",
       "buzen_nakatsu": "off_jd_258",
       "ugo_rokugoh": "off_jd_hist_0375",
-      "hitachi_fuchu": "off_daijo_sadakuni"
+      "hitachi_fuchu": "off_daijo_sadakuni",
+      "kaga_north": "off_jd_hist_0181"
     },
     "1577": {
       "izu": "off_hojo_ujinori",
@@ -13997,7 +14013,8 @@
       "bungo_minamiamabe": "off_saeki_korenori",
       "buzen_nakatsu": "off_jd_258",
       "ugo_rokugoh": "off_jd_hist_0375",
-      "hitachi_fuchu": "off_daijo_sadakuni"
+      "hitachi_fuchu": "off_daijo_sadakuni",
+      "kaga_north": "off_jd_hist_0181"
     },
     "1578": {
       "izu": "off_hojo_ujinori",
@@ -14050,7 +14067,8 @@
       "buzen_nakatsu": "off_jd_258",
       "sanuki_west": "off_kagawa_yukikage",
       "ugo_rokugoh": "off_jd_hist_0375",
-      "hitachi_fuchu": "off_pl1590_025"
+      "hitachi_fuchu": "off_pl1590_025",
+      "kaga_north": "off_jd_hist_0181"
     },
     "1580": {
       "hoki_east": "off_nanjo_mototsugu",
@@ -14073,7 +14091,8 @@
       "buzen_nakatsu": "off_jd_258",
       "sanuki_west": "off_jd_021",
       "ugo_rokugoh": "off_jd_hist_0375",
-      "hitachi_fuchu": "off_pl1590_025"
+      "hitachi_fuchu": "off_pl1590_025",
+      "tamba_west": "off_jd_018"
     },
     "1582": {
       "echizen": "off_shibata_katsuie",
@@ -14257,7 +14276,8 @@
       "hida_kamioka": "off_kanamori_arishige",
       "echizen": "off_hori_hidemasa",
       "echizen_tsuruga": "off_hachiya_yoritaka",
-      "hitachi_fuchu": "off_pl1590_025"
+      "hitachi_fuchu": "off_pl1590_025",
+      "kozuke_nitta_kanayama": "off_jd_hist_0198"
     },
     "1590": {
       "shimousa": "off_chiba_naoshige_bridge",
@@ -14422,7 +14442,9 @@
       "bungo_oka": "off_pl1614_136",
       "bungo_minamiamabe": "off_pl1614_003",
       "hitachi_kashima": "off_jd_hist_0222",
-      "kozuke_numata": "off_pl1614_039"
+      "kozuke_numata": "off_pl1614_039",
+      "hoki_east": "off_pl1590_097",
+      "hitachi_fuchu": "off_pl1590_014"
     },
     "1637": {
       "tamba_east": "off_pl1614_118",

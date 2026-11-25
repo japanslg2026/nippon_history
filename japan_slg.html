@@ -26,14 +26,14 @@
 
   <!-- Google Fonts: 武士の魂が宿る力強い和風・毛筆フォント -->
   <!-- 起動高速化: ゲームデータJSONをHTML解析と並行して先読み -->
-  <link rel="preload" href="data/scenario_1560.json?v=20261123_v57" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/scenarios_meta.json?v=20261123_v57" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/clans.json?v=20261123_v57" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/provinces.json?v=20261123_v57" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/officers.json?v=20261123_v57" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/governors.json?v=20261123_v57" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/events.json?v=20261123_v57" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="data/rules.json?v=20261123_v57" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/scenario_1560.json?v=20261125_v68" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/scenarios_meta.json?v=20261125_v68" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/clans.json?v=20261125_v68" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/provinces.json?v=20261125_v68" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/officers.json?v=20261125_v68" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/governors.json?v=20261125_v68" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/events.json?v=20261125_v68" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="data/rules.json?v=20261125_v68" as="fetch" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&amp;family=Dela+Gothic+One&amp;family=Sawarabi+Mincho&amp;family=Shippori+Mincho:wght@600;700;800&amp;family=Yuji+Boku&amp;display=swap" rel="stylesheet">
@@ -972,7 +972,7 @@
     <div class="diff-selector-wrapper" style="background:rgba(0,0,0,0.4); border:1px solid #553e2a; border-radius:4px; padding:4px 12px; margin: 6px 0 6px 0; display:flex; align-items:center; gap:12px;">
       <span class="diff-selector-label" style="font-size: 12pt; font-weight:bold; color:var(--gold-bright); flex-shrink:0;">⚙️ 難易度:</span>
       <div class="diff-selector-group" style="flex:1; display:grid; grid-template-columns:repeat(4, 1fr); gap:6px;">
-        <button class="diff-option-btn selected" data-diff="relaxed" style="padding:2px 8px; font-size:12pt;" title="【初級：安泰の世】大名ごとの基準値に金1,200・兵糧1,500を追加し、自勢力の兵糧収入二倍、敵方AIの兵力増加を25%抑える、ゆったり遊べる難易度です">
+        <button class="diff-option-btn selected" data-diff="relaxed" style="padding:2px 8px; font-size:12pt;" title="【初級：安泰の世】大名ごとの基準値に金1,200・兵糧1,500を追加し、自勢力の兵糧収入２倍、敵方AIの兵力増加を25%抑える、ゆったり遊べる難易度です">
           <span class="diff-btn-name">【初級】</span><span class="diff-btn-sub">安泰の世 <span style="color:#aaa; font-size:12pt;">(金+1200/米+1500)</span></span>
         </button>
         <button class="diff-option-btn" data-diff="easy" style="padding:2px 8px; font-size:12pt;" title="【中級：天下泰平】大名ごとの基準値に金650・兵糧850を追加した、遊びやすい難易度です">
@@ -1957,17 +1957,17 @@
 
   <!-- モジュール化されたJavaScript群 (順序保証ロード) -->
   <!-- 1. 全大名家・全シナリオ・全106領国データベース -->
-  <script defer src="assets/kamons.js?v=20261123_v57"></script>
-  <script defer src="js/kamonOverrides.js?v=20261123_v57"></script>
+  <script defer src="assets/kamons.js?v=20261125_v68"></script>
+  <script defer src="js/kamonOverrides.js?v=20261125_v68"></script>
   
   <!-- 2. 和洋折衷フルオーケストラBGMエンジン (全15曲) -->
   <script defer src="js/bgm.js?v=20261101_mobfix3"></script>
   <script defer src="js/MobileAudioKeepAlive.js?v=20261101_mobfix3"></script>
 
   <!-- 3. 戦国天下統一伝 ゲームエンジン本体 -->
-  <script type="module" src="js/app.js?v=20261123_v57"></script>
+  <script type="module" src="js/app.js?v=20261125_v68"></script>
   <script type="module" src="js/ui/Encyclopedia.js?v=20261109_sp"></script>
-  <script defer src="js/ui/StartScreenLayout.js?v=20261123_v57_zoom90"></script>
+  <script defer src="js/ui/StartScreenLayout.js?v=20261125_v68_zoom90"></script>
   <script defer src="js/ui/TitleBgm.js?v=20261107_horagai_fix"></script>
 
 
