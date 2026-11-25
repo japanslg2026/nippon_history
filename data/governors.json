@@ -5044,8 +5044,6 @@
     "sanuki_west": "off_pl1637_096",
     "izu": "off_pl1651_044",
     "iwashiro_date_shinobu": "off_pl1614_092",
-    "sagami": "off_pl1614_046",
-    "omi_koka": "off_pl1651_008",
     "echizen_ohno": "off_pl1614_018",
     "totomi_kakegawa": "off_matsudaira_tadashige_sakurai",
     "mikawa_yoshida": "off_pl1637_068",
@@ -6393,12 +6391,10 @@
     "bungo_kitaamabe": "off_nomura_oshisuke",
     "rikuchu_morioka": "off_pl1853_138",
     "hitachi_mito": "off_nomura_iho",
-    "kozuke_maebashi": "off_hist_1853_matsudaira_noritsune",
     "musashi_iwatsuki": "off_pl1877_098",
     "omi_south": "off_matsuda_michiyuki",
     "settsu_osaka": "off_miyoshi_shigeomi",
     "settsu": "off_watanabe_noboru",
-    "izumi": "off_jd_342",
     "izumo_north": "off_pl1877_101",
     "aki_hiroshima": "off_miura_goro",
     "buzen_nakatsu": "off_pl1877_017",
@@ -6427,9 +6423,7 @@
     "owari_north": "off_yasuba_yasukazu",
     "kawachi_north": "off_jd_429",
     "inaba": "off_pl1877_088",
-    "sanuki_west": "off_kyogoku_akiyuki",
-    "hyuga_nobeoka": "off_murata_shinpachi",
-    "bungo_oka": "off_ochi_hikoshiro"
+    "hyuga_nobeoka": "off_murata_shinpachi"
   },
   "governors": {
     "97": {
@@ -11477,8 +11471,6 @@
       "sanuki_west": "off_pl1637_096",
       "izu": "off_pl1651_044",
       "iwashiro_date_shinobu": "off_pl1614_092",
-      "sagami": "off_pl1614_046",
-      "omi_koka": "off_pl1651_008",
       "echizen_ohno": "off_pl1614_018",
       "totomi_kakegawa": "off_matsudaira_tadashige_sakurai",
       "mikawa_yoshida": "off_pl1637_068",
@@ -12826,12 +12818,10 @@
       "bungo_kitaamabe": "off_nomura_oshisuke",
       "rikuchu_morioka": "off_pl1853_138",
       "hitachi_mito": "off_nomura_iho",
-      "kozuke_maebashi": "off_hist_1853_matsudaira_noritsune",
       "musashi_iwatsuki": "off_pl1877_098",
       "omi_south": "off_matsuda_michiyuki",
       "settsu_osaka": "off_miyoshi_shigeomi",
       "settsu": "off_watanabe_noboru",
-      "izumi": "off_jd_342",
       "izumo_north": "off_pl1877_101",
       "aki_hiroshima": "off_miura_goro",
       "buzen_nakatsu": "off_pl1877_017",
@@ -12860,9 +12850,7 @@
       "owari_north": "off_yasuba_yasukazu",
       "kawachi_north": "off_jd_429",
       "inaba": "off_pl1877_088",
-      "sanuki_west": "off_kyogoku_akiyuki",
-      "hyuga_nobeoka": "off_murata_shinpachi",
-      "bungo_oka": "off_ochi_hikoshiro"
+      "hyuga_nobeoka": "off_murata_shinpachi"
     },
     "-663": {
       "izumi": "off_itsuse",
@@ -14661,7 +14649,6 @@
     "allstar_feudal": {
       "tosa_nakamura": "off_pl1570_119",
       "higo_hitoyoshi": "off_dm_sagara_1560",
-      "goto": "off_goto_sumiakira",
       "shinano_suwa": "",
       "ise_kuwana": "off_jd_hist_0368",
       "rikuzen_kurokawa": "off_pl1590_147",

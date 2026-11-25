@@ -6507,15 +6507,6 @@
       "isLeader": false,
       "isCastleLord": false
     },
-    "off_goto_sumiakira": {
-      "clanId": "goto",
-      "defaultProv": "goto",
-      "assignedProvId": "goto",
-      "location": "goto",
-      "isDaimyo": true,
-      "isLeader": true,
-      "isCastleLord": true
-    },
     "off_takeda_nobutora": {
       "clanId": "imagawa",
       "isDaimyo": false,

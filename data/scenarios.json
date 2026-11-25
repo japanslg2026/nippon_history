@@ -107051,12 +107051,6 @@
         "clanId": "arima",
         "defaultProv": "hizen_shimabara"
       },
-      "off_goto_sadatoshi": {
-        "isDaimyo": false,
-        "demoteDaimyo": true,
-        "clanId": "goto",
-        "defaultProv": "goto"
-      },
       "off_jinbo_nagatomo": {
         "isDaimyo": false,
         "demoteDaimyo": true,
@@ -114004,12 +113998,6 @@
         "demoteDaimyo": true,
         "clanId": "murakami_noshima",
         "defaultProv": "noshima"
-      },
-      "off_goto_sadatoshi": {
-        "isDaimyo": false,
-        "demoteDaimyo": true,
-        "clanId": "goto",
-        "defaultProv": "goto"
       },
       "off_added_goto_09": {
         "isDaimyo": false,
@@ -127123,15 +127111,6 @@
         "isLeader": false,
         "isCastleLord": false
       },
-      "off_goto_sadatoshi": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "assignedProvId": "goto",
-        "location": "goto",
-        "isDaimyo": true,
-        "isLeader": true,
-        "isCastleLord": true
-      },
       "off_nishina_moriyoshi": {
         "clanId": "ogasawara",
         "defaultProv": "shinano_chikuma_azumi",
@@ -134285,15 +134264,6 @@
         "clanId": "kono",
         "defaultProv": "iyo_matsuyama",
         "isDaimyo": true
-      },
-      "off_goto_sadatoshi": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "assignedProvId": "goto",
-        "location": "goto",
-        "isDaimyo": true,
-        "isLeader": true,
-        "isCastleLord": true
       },
       "off_nishina_moriyoshi": {
         "clanId": "ogasawara",
@@ -143646,12 +143616,6 @@
         "clanId": "iyo_utsunomiya",
         "defaultProv": "iyo_ohzu"
       },
-      "off_goto_sadatoshi": {
-        "isDaimyo": false,
-        "demoteDaimyo": true,
-        "clanId": "goto",
-        "defaultProv": "goto"
-      },
       "off_shiina_nagatsune": {
         "isDaimyo": false,
         "demoteDaimyo": true,
@@ -151042,12 +151006,6 @@
         "demoteDaimyo": true,
         "clanId": "anekoji",
         "defaultProv": "hida_takayama"
-      },
-      "off_goto_sumiakira": {
-        "isDaimyo": false,
-        "demoteDaimyo": true,
-        "clanId": "goto",
-        "defaultProv": "goto"
       },
       "off_hatano_motohide": {
         "isDaimyo": false,
@@ -158994,12 +158952,6 @@
       "off_hist_1566_arima_yoshisada": {
         "clanId": "arima",
         "defaultProv": "hizen_shimabara",
-        "isDaimyo": false,
-        "demoteDaimyo": true
-      },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
         "isDaimyo": false,
         "demoteDaimyo": true
       },
@@ -167120,12 +167072,6 @@
         "isDaimyo": false,
         "demoteDaimyo": true
       },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "isDaimyo": false,
-        "demoteDaimyo": true
-      },
       "off_hojo_ujimasa": {
         "clanId": "hojo",
         "defaultProv": "sagami",
@@ -174743,15 +174689,6 @@
         "isDaimyo": false,
         "isLeader": false,
         "isCastleLord": false
-      },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "assignedProvId": "goto",
-        "location": "goto",
-        "isDaimyo": true,
-        "isLeader": true,
-        "isCastleLord": true
       },
       "off_takeda_nobutora": {
         "clanId": "imagawa",
@@ -183373,11 +183310,6 @@
         "defaultProv": "noshima",
         "isDaimyo": false
       },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "isDaimyo": true
-      },
       "off_takeda_nobutora": {
         "clanId": "imagawa",
         "isDaimyo": false,
@@ -191662,11 +191594,6 @@
         "clanId": "kono",
         "defaultProv": "iyo_matsuyama",
         "isDaimyo": false
-      },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "isDaimyo": true
       },
       "off_takeda_nobutora": {
         "clanId": "imagawa",
@@ -200324,11 +200251,6 @@
         "defaultProv": "mino",
         "isDaimyo": false
       },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "isDaimyo": true
-      },
       "off_added_nihonmatsu_05": {
         "clanId": "nihonmatsu_hatakeyama",
         "defaultProv": "iwashiro_nihonmatsu",
@@ -205585,15 +205507,6 @@
         "location": "ise",
         "isCastleLord": true,
         "isDaimyo": false
-      },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "assignedProvId": "goto",
-        "location": "goto",
-        "isDaimyo": false,
-        "isLeader": false,
-        "isCastleLord": true
       },
       "off_added_nihonmatsu_05": {
         "clanId": "nihonmatsu_hatakeyama",
@@ -217959,15 +217872,6 @@
         "clanId": "oda",
         "defaultProv": "ise"
       },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "assignedProvId": "goto",
-        "location": "goto",
-        "isDaimyo": false,
-        "isLeader": false,
-        "isCastleLord": true
-      },
       "off_added_nihonmatsu_05": {
         "clanId": "nihonmatsu_hatakeyama",
         "defaultProv": "iwashiro_nihonmatsu",
@@ -226086,15 +225990,6 @@
         "clanId": "oda",
         "defaultProv": "ise"
       },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "assignedProvId": "goto",
-        "location": "goto",
-        "isDaimyo": false,
-        "isLeader": false,
-        "isCastleLord": true
-      },
       "off_added_nihonmatsu_05": {
         "clanId": "nihonmatsu_hatakeyama",
         "defaultProv": "iwashiro_nihonmatsu",
@@ -234132,15 +234027,6 @@
       "off_oda_nobukatsu": {
         "clanId": "oda",
         "defaultProv": "ise"
-      },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "assignedProvId": "goto",
-        "location": "goto",
-        "isDaimyo": false,
-        "isLeader": false,
-        "isCastleLord": true
       },
       "off_kiso_yoshimasa": {
         "clanId": "takeda",
@@ -242319,15 +242205,6 @@
         "isCastleLord": false,
         "isDaimyo": false
       },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "assignedProvId": "goto",
-        "location": "goto",
-        "isDaimyo": false,
-        "isLeader": false,
-        "isCastleLord": true
-      },
       "off_kiso_yoshimasa": {
         "clanId": "takeda",
         "defaultProv": "shinano_kiso",
@@ -250357,15 +250234,6 @@
         "isCastleLord": false,
         "isDaimyo": false
       },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "assignedProvId": "goto",
-        "location": "goto",
-        "isDaimyo": false,
-        "isLeader": false,
-        "isCastleLord": true
-      },
       "off_kiso_yoshimasa": {
         "clanId": "takeda",
         "defaultProv": "shinano_kiso",
@@ -257998,12 +257866,6 @@
         "defaultProv": "ise",
         "isDaimyo": false,
         "isCastleLord": false
-      },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "isDaimyo": false,
-        "isLeader": false
       },
       "off_kiso_yoshimasa": {
         "clanId": "takeda",
@@ -265678,15 +265540,6 @@
         "location": "ise",
         "isCastleLord": true,
         "isDaimyo": false
-      },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "assignedProvId": "goto",
-        "location": "goto",
-        "isDaimyo": false,
-        "isLeader": false,
-        "isCastleLord": true
       },
       "off_sano_munetsuna": {
         "clanId": "sano",
@@ -273432,12 +273285,6 @@
         "location": "owari_south",
         "isCastleLord": true
       },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "isDaimyo": false,
-        "isLeader": false
-      },
       "off_suwa_yoritada": {
         "clanId": "tokugawa",
         "defaultProv": "shinano_suwa",
@@ -280795,15 +280642,6 @@
         "defaultProv": "ise_nagashima",
         "isDaimyo": true
       },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "assignedProvId": "goto",
-        "location": "goto",
-        "isDaimyo": false,
-        "isLeader": false,
-        "isCastleLord": true
-      },
       "off_suwa_yoritada": {
         "clanId": "tokugawa",
         "defaultProv": "shinano_suwa",
@@ -287836,15 +287674,6 @@
         "isLeader": true,
         "assignedProvId": "ise_nagashima",
         "location": "ise_nagashima",
-        "isCastleLord": true
-      },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "assignedProvId": "goto",
-        "location": "goto",
-        "isDaimyo": false,
-        "isLeader": false,
         "isCastleLord": true
       },
       "off_suwa_yoritada": {
@@ -294894,15 +294723,6 @@
         "isCastleLord": true,
         "defaultProv": "ise"
       },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "assignedProvId": "goto",
-        "location": "goto",
-        "isDaimyo": false,
-        "isLeader": false,
-        "isCastleLord": true
-      },
       "off_yazawa_yoriyasu": {
         "clanId": "sanada",
         "defaultProv": "kozuke_numata"
@@ -296235,7 +296055,7 @@
         "isDaimyo": false
       },
       "off_jd_hist_0190": {
-        "clanId": "oda",
+        "clanId": "toyotomi",
         "defaultProv": "ise_nagashima",
         "isDaimyo": false
       },
@@ -302146,15 +301966,6 @@
         "isLeader": false,
         "isCastleLord": true
       },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "assignedProvId": "goto",
-        "location": "goto",
-        "isDaimyo": false,
-        "isLeader": false,
-        "isCastleLord": true
-      },
       "off_yazawa_yoriyasu": {
         "clanId": "sanada",
         "defaultProv": "shinano_ueda",
@@ -303184,7 +302995,7 @@
         "isDaimyo": false
       },
       "off_jd_hist_0190": {
-        "clanId": "oda",
+        "clanId": "toyotomi",
         "defaultProv": "ise_nagashima",
         "isDaimyo": false
       },
@@ -308499,15 +308310,6 @@
         "isDaimyo": true,
         "isLeader": false,
         "isCastleLord": false
-      },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "defaultProv": "goto",
-        "assignedProvId": "goto",
-        "location": "goto",
-        "isDaimyo": false,
-        "isLeader": false,
-        "isCastleLord": true
       },
       "off_yazawa_yoriyasu": {
         "clanId": "sanada",
@@ -340352,7 +340154,7 @@
         "ignoreLifespan": true
       },
       "off_succ2_tsugaru_1610": {
-        "clanId": "tokugawa",
+        "clanId": "tsugaru",
         "defaultProv": "musashi_edo",
         "assignedProvId": null,
         "location": "musashi_edo",
@@ -385140,7 +384942,7 @@
         "isCastleLord": true
       },
       "off_pl1853_108": {
-        "clanId": "meiji",
+        "clanId": "tosa",
         "defaultProv": "yamashiro",
         "clearAssignment": true,
         "isDaimyo": false
@@ -394683,11 +394485,6 @@
         "clanId": "ronin",
         "isDaimyo": false,
         "defaultProv": "bingo"
-      },
-      "off_goto_sumiakira": {
-        "clanId": "goto",
-        "isDaimyo": true,
-        "assignedProvId": "goto"
       },
       "off_yazawa_yoriyasu": {
         "clanId": "sanada"
