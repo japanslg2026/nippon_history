@@ -18,7 +18,8 @@
 
 
 
-import { OpeningMovie } from './OpeningMovie.js?v=20261101_mobfix1';
+import { escapeHtml, sanitizeImportedSave } from '../core/Html.js?v=20261128_v74';
+import { OpeningMovie } from './OpeningMovie.js?v=20261128_v74';
 
 
 
@@ -2114,7 +2115,7 @@ export const UIManagerMethods = {
 
               <span class="modal-search-label" style="font-size:12pt; color:#aaa;">検索:</span>
 
-              <input id="inputGovSearch" type="text" placeholder="武将名・特技..." value="${searchQuery}" style="background:#22160d; color:#fff; border:1px solid #775533; padding:5px 10px; border-radius:4px; font-size:12pt; width:180px;">
+              <input id="inputGovSearch" type="text" placeholder="武将名・特技..." value="${escapeHtml(searchQuery)}" style="background:#22160d; color:#fff; border:1px solid #775533; padding:5px 10px; border-radius:4px; font-size:12pt; width:180px;">
 
             </div>
 
@@ -3220,7 +3221,7 @@ export const UIManagerMethods = {
 
               <span class="modal-search-label" style="font-size:12pt; color:#aaa;">検索:</span>
 
-              <input id="inputOfficerSearch" type="text" placeholder="武将名・所属..." value="${searchQuery}" style="background:#22160d; color:#fff; border:1px solid #775533; padding:5px 10px; border-radius:4px; font-size:12pt; width:190px;">
+              <input id="inputOfficerSearch" type="text" placeholder="武将名・所属..." value="${escapeHtml(searchQuery)}" style="background:#22160d; color:#fff; border:1px solid #775533; padding:5px 10px; border-radius:4px; font-size:12pt; width:190px;">
 
             </div>
 
@@ -4751,7 +4752,7 @@ export const UIManagerMethods = {
 
               <span class="modal-search-label" style="font-size:12pt; color:#aaa;">勢力検索:</span>
 
-              <input id="inputFactionSearch" type="text" placeholder="大名家・当主・本拠..." value="${searchQuery}" style="background:#22160d; color:#fff; border:1px solid #775533; padding:5px 10px; border-radius:4px; font-size:12pt; width:200px;">
+              <input id="inputFactionSearch" type="text" placeholder="大名家・当主・本拠..." value="${escapeHtml(searchQuery)}" style="background:#22160d; color:#fff; border:1px solid #775533; padding:5px 10px; border-radius:4px; font-size:12pt; width:200px;">
 
             </div>
 
@@ -5828,7 +5829,7 @@ export const UIManagerMethods = {
 
 
 
-    const isSuccess = (Math.random() * 100) < rate;
+    const isSuccess = ((globalThis.GameRng ? globalThis.GameRng.random() : Math.random()) * 100) < rate;
 
 
 
@@ -6134,7 +6135,7 @@ export const UIManagerMethods = {
 
               <span style="font-size:12pt; color:#aaa;">検索:</span>
 
-              <input id="inputRecruitSearch" type="text" placeholder="武将名・流浪地..." value="${searchQuery}" style="background:#22160d; color:#fff; border:1px solid #775533; padding:5px 10px; border-radius:4px; font-size:12pt; width:190px;">
+              <input id="inputRecruitSearch" type="text" placeholder="武将名・流浪地..." value="${escapeHtml(searchQuery)}" style="background:#22160d; color:#fff; border:1px solid #775533; padding:5px 10px; border-radius:4px; font-size:12pt; width:190px;">
 
             </div>
 
@@ -6696,7 +6697,7 @@ export const UIManagerMethods = {
 
               <span class="modal-search-label" style="font-size:11.5pt; color:#aaa;">検索:</span>
 
-              <input id="inputProvOfficerSearch" type="text" placeholder="武将名・所属・略歴..." value="${searchQuery}" style="background:#22160d; color:#fff; border:1px solid #775533; padding:4px 8px; border-radius:4px; font-size:11.5pt; width:180px;">
+              <input id="inputProvOfficerSearch" type="text" placeholder="武将名・所属・略歴..." value="${escapeHtml(searchQuery)}" style="background:#22160d; color:#fff; border:1px solid #775533; padding:4px 8px; border-radius:4px; font-size:11.5pt; width:180px;">
 
             </div>
 
@@ -10103,7 +10104,7 @@ export const UIManagerMethods = {
 
           const jsonText = evt.target?.result;
 
-          const data = JSON.parse(jsonText);
+          const data = sanitizeImportedSave(JSON.parse(jsonText)); // 外部ファイル由来の文字列から危険なタグ等を除去
 
           const val = validateSaveData(data);
 
@@ -10525,7 +10526,7 @@ export const UIManagerMethods = {
 
             } else {
 
-              Swal.fire({ icon: 'error', title: '保存失敗', text: '保存処理に失敗しました。', background: '#241710', color: '#fff' });
+              Swal.fire({ icon: 'error', title: '保存失敗', text: '保存処理に失敗しました。ブラウザの保存容量が不足している可能性があります（不要な記録を削除してください）。', background: '#241710', color: '#fff' });
 
             }
 

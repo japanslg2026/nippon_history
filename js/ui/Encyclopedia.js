@@ -28,14 +28,16 @@ let DB = null;
 async function loadDB() {
   if (DB) return DB;
   const w = window;
-  const get = async (f) => (await fetch(`data/${f}?v=meikan_20261107_hist_v16`)).json();
+  const get = async (f) => (await fetch(`data/${f}?v=20261128_v74`)).json();
+  // 全シナリオ = data/scenarios/<id>.json（scenarios_meta.json の順）
+  const getAllScenarios = async () => Promise.all((await get('scenarios_meta.json')).map(m => get(`scenarios/${encodeURIComponent(m.id)}.json`)));
   let officers = w.OFFICERS_MASTER, scenarios = w.SCENARIOS_DATA, provinces = w.PROVINCES_DATA, clansRaw = null;
   const clans = w.CLAN_MASTER_DATA || w.CLAN_MASTER;
   const [o, s, p, c] = await Promise.all([
     officers?.length ? officers : get('officers.json'),
     (scenarios?.length && !scenarios.some(x => x?._isStub))
       ? scenarios
-      : (w.DataLoader?.ensureFullScenarios ? w.DataLoader.ensureFullScenarios() : get('scenarios.json')),
+      : (w.DataLoader?.ensureFullScenarios ? w.DataLoader.ensureFullScenarios() : getAllScenarios()),
     provinces?.length ? provinces : get('provinces.json'),
     clans && Object.keys(clans).length ? { clans } : get('clans.json'),
   ]);
@@ -43,7 +45,7 @@ async function loadDB() {
   const provName = Object.fromEntries(provinces.map(x => [x.id, x.name]));
   // 城主判定（GameState.newGame の初期城主任命と同じ順序：①本拠に当主 ②governors.json の史実城代 ③ゆかりの国(defaultProv)の一般武将）
   let govAll = w.SCENARIO_HISTORICAL_GOVERNORS;
-  if (!govAll) { try { govAll = (await (await fetch('data/governors.json?v=meikan_20261107_hist_v16')).json()).governors || {}; } catch (_) { govAll = {}; } }
+  if (!govAll) { try { govAll = (await (await fetch('data/governors.json?v=20261128_v74')).json()).governors || {}; } catch (_) { govAll = {}; } }
   const capBase = w.CLAN_CAPITAL_PROVINCES_BASE || w.CLAN_CAPITAL_PROVINCES || {};
   const provCastle = Object.fromEntries(provinces.map(x => [x.id, x.castle]));
   const lordOf = new Map(); // `${scId}|${oid}` -> provId
@@ -325,6 +327,11 @@ class OfficerView {
       if (prov && !r.provSet.has(prov)) return false;
       if (sc) {
         const o = r.o;
+        if (o.nonAppearing && !r.scSet.has(String(sc.id))) return false;
+        if (Array.isArray(sc.excludeOfficers) && sc.excludeOfficers.includes(o.id)) return false;
+        if (o.lateDebut && sy < 1878) return false;
+        if (o.debutYear != null && Number.isFinite(Number(o.debutYear)) && sy < Number(o.debutYear) && !r.scSet.has(String(sc.id))) return false;
+        if (sc.fieldLandedOnly && !r.scSet.has(String(sc.id))) return false;
         const alive = o.birthYear != null && o.birthYear + 12 <= sy && (o.deathYear == null || o.deathYear >= sy);
         if (!r.scSet.has(scen) && !alive) return false;
       }
@@ -371,7 +378,9 @@ class OfficerView {
       return `<div class="mk-ap"><span class="mk-ap-y">${fmtYear(+a.sc.year)}</span><span class="mk-ap-t">${esc(a.sc.title)}</span>
         <span class="mk-ap-c" style="border-color:${DB.clans[a.clanId]?.color || '#666'}">${esc(DB.clanName(a.clanId))}${!isRoninAp && a.isDaimyo ? '（当主）' : ''}${lc ? `・城主（${esc(lc)}）` : ''}</span><span class="mk-ap-p">${esc(DB.provName[a.prov] || a.prov || '')}</span></div>`;
     }).join('')
-      : `<div class="mk-note">シナリオ固有の配属記録なし。本籍「${esc(DB.provName[o.defaultProv] || '不明')}」・${esc(DB.clanName(o.clanId))}所属として、生没年に応じ登場します（ゲーム規則により追加登場あり）。</div>`;
+      : (o.nonAppearing
+        ? `<div class="mk-note">史実シナリオの配置対象外（未登場）です。</div>`
+        : `<div class="mk-note">シナリオ固有の配属記録なし。本籍「${esc(DB.provName[o.defaultProv] || '不明')}」・${esc(DB.clanName(o.clanId))}所属として、生没年に応じ登場します（ゲーム規則により追加登場あり）。</div>`);
     const life = (o.birthYear != null || o.deathYear != null) ? `${fmtYear(o.birthYear)}年 〜 ${fmtYear(o.deathYear)}年${o.birthYear != null && o.deathYear != null ? `（享年${o.deathYear - o.birthYear + 1}）` : ''}` : '生没年不詳';
     const d = this.$('.mk-detail');
     d.innerHTML = `<div class="mk-dcard" style="--clan:${col}">

@@ -9,12 +9,13 @@
  * @typedef {import('./types.js').GameSaveData} GameSaveData
  */
 
-import { GameState, GameStateMethods } from './core/GameState.js?v=20261125_v71';
-import { UIManager, UIManagerMethods } from './ui/UIManager.js?v=20261120_zoom90';
-import { MapRenderer, MapRendererMethods } from './render/MapRenderer.js?v=20261125_v71_kamon85';
-import { ComputerLogic, ComputerLogicMethods } from './ai/ComputerLogic.js?v=20261125_v71';
-import { DataLoader } from './core/DataLoader.js?v=20261125_v71';
-import * as GameRules from './core/GameRules.js?v=20261125_v71';
+import './core/Rng.js?v=20261128_v74';
+import { GameState, GameStateMethods } from './core/GameState.js?v=20261128_v74';
+import { UIManager, UIManagerMethods } from './ui/UIManager.js?v=20261128_v74';
+import { MapRenderer, MapRendererMethods } from './render/MapRenderer.js?v=20261128_v74';
+import { ComputerLogic, ComputerLogicMethods } from './ai/ComputerLogic.js?v=20261128_v74';
+import { DataLoader } from './core/DataLoader.js?v=20261128_v74';
+import * as GameRules from './core/GameRules.js?v=20261128_v74';
 
 // 早期初期化: モジュール評価時点で即座に window.getClanAbility を配備
 if (typeof window !== 'undefined') {
@@ -714,7 +715,7 @@ async function bootSengokuGame() {
       window.game = new SengokuGame(gameData);
       window.dispatchEvent(new CustomEvent('gameReady', { detail: window.game }));
 
-      // 分割先読みした 1560 シナリオと scenarios.json の間に差分があった場合、開始前であれば最新データへ自動更新
+      // 先読みした 1560 シナリオと全シナリオ取得結果の間に差分があった場合、開始前であれば最新データへ自動更新
       window.addEventListener('fullScenariosLoaded', (ev) => {
         const g = window.game;
         if (!g || !ev?.detail?.updated1560) return;

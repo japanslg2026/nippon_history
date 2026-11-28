@@ -9,14 +9,14 @@
  */
 
 export class DataLoader {
-  static DATA_VERSION = '20261125_v71'; // japan_slg.html の preload と同じ値にすること
+  static DATA_VERSION = '20261128_v74'; // japan_slg.html の preload と同じ値にすること
   static _fullScenariosPromise = null;
   static _fullScenariosLoaded = false;
   static _gameData = null;
 
   /**
-   * 初回起動高速化のため、scenarios_meta.json と scenario_1560.json のみを先読みして統合する。
-   * 片方でも取得に失敗した場合は従来の scenarios.json へフォールバックする。
+   * 初回起動高速化のため、scenarios_meta.json と scenarios/1560.json のみを先読みして統合する。
+   * 片方でも取得に失敗した場合は全シナリオの個別ファイル取得へフォールバックする。
    * @param {string} v
    * @returns {Promise<Scenario[]>}
    */
@@ -24,7 +24,7 @@ export class DataLoader {
     try {
       const [metaList, s1560] = await Promise.all([
         DataLoader.fetchJson(`data/scenarios_meta.json?v=${v}`),
-        DataLoader.fetchJson(`data/scenario_1560.json?v=${v}`)
+        DataLoader.fetchJson(`data/scenarios/1560.json?v=${v}`)
       ]);
       if (!Array.isArray(metaList) || !s1560 || typeof s1560 !== 'object') {
         throw new Error('Invalid initial scenario payload');
@@ -40,18 +40,83 @@ export class DataLoader {
       if (!replaced) merged.push(s1560);
       return merged;
     } catch (err) {
-      console.warn('DataLoader: split initial scenarios fetch failed, falling back to scenarios.json', err);
+      console.warn('DataLoader: 初期シナリオの先読みに失敗。全シナリオを個別ファイルから取得します', err);
       DataLoader._fullScenariosLoaded = true;
-      return await DataLoader.fetchJson(`data/scenarios.json?v=${v}`);
+      return await DataLoader._fetchAllScenarios();
     }
   }
 
+  static _scenarioPromises = new Map();
+
   /**
-   * 全シナリオ完全版 (data/scenarios.json) を1回だけフェッチし、既存の配列参照をインプレース更新する。
+   * 全シナリオを data/scenarios/<id>.json から並列取得し、scenarios_meta.json の順に並べて返す。
+   * （data/scenarios/ が正本。旧 scenarios.json は廃止）
+   * @returns {Promise<Scenario[]>}
+   */
+  static async _fetchAllScenarios() {
+    const v = DataLoader.DATA_VERSION;
+    const meta = await DataLoader.fetchJson(`data/scenarios_meta.json?v=${v}`);
+    if (!Array.isArray(meta)) throw new Error('scenarios_meta.json did not return an array');
+    return await Promise.all(meta.map(m =>
+      DataLoader.fetchJson(`data/scenarios/${encodeURIComponent(String(m.id))}.json?v=${v}`)));
+  }
+
+  /** 既存のシナリオ配列（同一参照は重複排除） */
+  static _scenarioArrays() {
+    const set = new Set();
+    if (DataLoader._gameData && Array.isArray(DataLoader._gameData.scenarios)) set.add(DataLoader._gameData.scenarios);
+    if (typeof window !== 'undefined') {
+      if (Array.isArray(window.SCENARIOS_DATA)) set.add(window.SCENARIOS_DATA);
+      if (Array.isArray(window.SCENARIOS)) set.add(window.SCENARIOS);
+    }
+    return [...set];
+  }
+
+  /**
+   * 指定シナリオ1本だけを data/scenarios/<id>.json から取得し、スタブをその場で完全版に置き換える
+   * （オブジェクトの参照は維持）。個別ファイルが取れなければ全シナリオの個別取得へフォールバック。
+   * @param {string|number} id
+   * @returns {Promise<Scenario|null>}
+   */
+  static ensureScenario(id) {
+    const sid = String(id);
+    const find = () => {
+      for (const a of DataLoader._scenarioArrays()) {
+        const s = a.find(x => x && String(x.id) === sid);
+        if (s) return s;
+      }
+      return null;
+    };
+    const cur = find();
+    if (cur && !cur._isStub) return Promise.resolve(cur);
+    if (DataLoader._scenarioPromises.has(sid)) return DataLoader._scenarioPromises.get(sid);
+    const v = DataLoader.DATA_VERSION;
+    const p = DataLoader.fetchJson(`data/scenarios/${encodeURIComponent(sid)}.json?v=${v}`)
+      .then(full => {
+        if (!full || typeof full !== 'object' || String(full.id) !== sid) throw new Error(`Invalid scenario payload: ${sid}`);
+        let applied = false;
+        for (const a of DataLoader._scenarioArrays()) {
+          const stub = a.find(x => x && String(x.id) === sid);
+          if (stub) { Object.assign(stub, full); delete stub._isStub; applied = true; }
+        }
+        if (!applied) { const arrs = DataLoader._scenarioArrays(); if (arrs[0]) arrs[0].push(full); }
+        return find() || full;
+      })
+      .catch(err => {
+        console.warn(`DataLoader.ensureScenario(${sid}): 個別取得に失敗。全シナリオ取得にフォールバックします`, err);
+        return DataLoader.ensureFullScenarios().then(() => find());
+      })
+      .finally(() => { DataLoader._scenarioPromises.delete(sid); });
+    DataLoader._scenarioPromises.set(sid, p);
+    return p;
+  }
+
+  /**
+   * 全シナリオ完全版 (data/scenarios/*.json) を1回だけフェッチし、既存の配列参照をインプレース更新する。
    * @returns {Promise<Scenario[]>}
    */
   static ensureFullScenarios() {
-    const v = DataLoader.DATA_VERSION || '20261125_v71';
+    const v = DataLoader.DATA_VERSION || '20261128_v74';
     const existing = (typeof window !== 'undefined' && (window.SCENARIOS_DATA || window.SCENARIOS)) || DataLoader._gameData?.scenarios;
     if (DataLoader._fullScenariosLoaded && Array.isArray(existing) && existing.length > 0 && !existing.some(s => s && s._isStub)) {
       return Promise.resolve(existing);
@@ -59,10 +124,10 @@ export class DataLoader {
     if (DataLoader._fullScenariosPromise) {
       return DataLoader._fullScenariosPromise;
     }
-    DataLoader._fullScenariosPromise = DataLoader.fetchJson(`data/scenarios.json?v=${v}`)
+    DataLoader._fullScenariosPromise = DataLoader._fetchAllScenarios()
       .then(fullScenarios => {
         if (!Array.isArray(fullScenarios)) {
-          throw new Error('scenarios.json did not return an array');
+          throw new Error('scenario files did not return an array');
         }
         const prev1560 = Array.isArray(existing) ? existing.find(s => s && String(s.id) === '1560') : null;
         const next1560 = fullScenarios.find(s => s && String(s.id) === '1560');
@@ -181,15 +246,7 @@ export class DataLoader {
       // 既存のコードとの100%完全な互換性を確保するためのグローバル参照同期
       DataLoader.syncGlobalReferences(gameData);
 
-      // 残りの全シナリオデータをバックグラウンドで先読み
-      if (!DataLoader._fullScenariosLoaded && Array.isArray(gameData.scenarios) && gameData.scenarios.some(s => s && s._isStub)) {
-        setTimeout(() => {
-          DataLoader.ensureFullScenarios().catch(err => {
-            console.warn('DataLoader: background full scenarios load failed:', err);
-          });
-        }, 0);
-      }
-
+      // 他シナリオは選択時に data/scenarios/<id>.json を1本ずつ取得する（ensureScenario）。一括先読みはしない。
       return gameData;
     } catch (err) {
       console.warn('DataLoader: fetch failed or running under restricted protocol (e.g. file://). Attempting fallback.', err);

@@ -11,6 +11,7 @@
 var getClanAbility = (clanId) => (typeof window !== 'undefined' && typeof window.getClanAbility === 'function')
   ? window.getClanAbility(clanId)
   : ((typeof window !== 'undefined' && window.CLAN_ABILITIES?.[clanId]) || { politics: 60, military: 60, stratagem: 55, personality: 'balanced' });
+var gameRandom = () => (globalThis.GameRng ? globalThis.GameRng.random() : Math.random());
 var HISTORICAL_ALLIANCE_BONDS = (typeof window !== 'undefined' && window.HISTORICAL_ALLIANCE_BONDS) || [];
 var AI_PERSONALITY_TUNING = (typeof window !== 'undefined' && window.AI_PERSONALITY_TUNING) || {
   aggressive: { attackProb: 0.65, requiredRatio: 0.95, forceRatio: 0.78, minSourceTroops: 1300, coalitionBoost: 0.28, coalitionCap: 0.90, ignoreRice: true,  allianceBonus: -0.10, frontShiftMax: 1200 },
@@ -162,7 +163,7 @@ export const ComputerLogicMethods = {
       let candidates = localRonins.filter(o => this.isFormerDaimyo(o));
       if (candidates.length === 0) {
         const chance = window.RONIN_BLANK_UPRISING_CHANCE || 0.28;
-        if (Math.random() > chance) continue;
+        if (gameRandom() > chance) continue;
         candidates = [...localRonins];
       }
       if (candidates.length === 0) continue;
@@ -258,7 +259,7 @@ export const ComputerLogicMethods = {
         ? (this.activeOfficers || []).find(o => o.id === p.governorId && !o.isDead)
         : null;
       const isHomeCastellan = gov && gov.defaultProv === p.id && !gov.isDaimyo;
-      if (isHomeCastellan && Math.random() < chance) {
+      if (isHomeCastellan && gameRandom() < chance) {
         const newClanId = 'clan_' + gov.id.replace(/^off_/, '');
         p.ownerId = newClanId;
         p.governorId = gov.id;
@@ -604,7 +605,7 @@ export const ComputerLogicMethods = {
           this.ap -= 1;
           this.gold -= 50;
           this.rice -= 50;
-          const recruitCount = Math.round(350 + Math.random() * 200);
+          const recruitCount = Math.round(350 + gameRandom() * 200);
           weak.p.troops = (Number(weak.p.troops) || 0) + recruitCount;
           this.log(`🚩【オート政務・境の徴募】隣国の兵に備え、${weak.p.name}にて兵員${recruitCount}人を徴募しました。`);
           continue;
@@ -626,7 +627,7 @@ export const ComputerLogicMethods = {
         this.ap -= 1;
         this.gold -= 50;
         this.rice -= 50;
-        const recruitCount = Math.round(350 + Math.random() * 200);
+        const recruitCount = Math.round(350 + gameRandom() * 200);
         capital.troops = (capital.troops || 0) + recruitCount;
         this.log(`🚩【オート政務・兵員徴募】本拠・${capital.name}にて兵員${recruitCount}人を徴募・訓練しました。`);
         continue;
@@ -726,7 +727,7 @@ export const ComputerLogicMethods = {
       const aFresh = (this.year - a.from) <= 1 ? 1 : 0;
       const bFresh = (this.year - b.from) <= 1 ? 1 : 0;
       if (aFresh !== bFresh) return bFresh - aFresh;
-      return Math.random() - 0.5;
+      return gameRandom() - 0.5;
     });
 
     let formed = 0;
@@ -753,7 +754,7 @@ export const ComputerLogicMethods = {
         if (this.playerClanId && this.clansShareBorder(id, this.playerClanId)) chance -= 0.06;
       });
       if (this.clanFeelsThreatened(bond.a) || this.clanFeelsThreatened(bond.b)) chance += 0.12;
-      if (Math.random() > Math.min(0.95, chance)) continue;
+      if (gameRandom() > Math.min(0.95, chance)) continue;
 
       if (!this.alliances) this.alliances = [];
       this.alliances.push({
@@ -810,7 +811,7 @@ export const ComputerLogicMethods = {
       const baseProb = Math.max(0.05, (power - 55) * 0.008);
       const threatened = this.clanFeelsThreatened(clanId);
       const prob = threatened ? baseProb * 1.3 : baseProb;
-      if (Math.random() > prob) continue;
+      if (gameRandom() > prob) continue;
 
       // 前線城の探索
       const myProvs = this.provinces.filter(p => p.ownerId === clanId);
@@ -877,7 +878,7 @@ export const ComputerLogicMethods = {
       const diff = targetStrat - power;
       const orderBonus = (targetOrder - 70) * 0.003;
       const counterSuccessRate = Math.max(0.20, Math.min(0.85, 0.45 + diff * 0.007 + orderBonus));
-      const counterSuccess = Math.random() < counterSuccessRate;
+      const counterSuccess = gameRandom() < counterSuccessRate;
 
       stratagemCount++;
       if (isTargetPlayer) targetPlayerCount++;
@@ -887,7 +888,7 @@ export const ComputerLogicMethods = {
       // 1: 放火・城割（defense低下）
       // 2: 流言・扇動（morale & order低下）
       // 3: 内応・調略（troops引き抜き脱走：知謀75以上限定）
-      const typeRoll = Math.random();
+      const typeRoll = gameRandom();
       let stratType = 'fire';
       if (isPlanTarget) {
         // 次に攻める城：放火・城割で城防を削る（知将は内応で守兵も減らす）
@@ -913,8 +914,8 @@ export const ComputerLogicMethods = {
 
           let extraReward = '';
           // 城主知謀が極めて高い（85以上）場合、敵の忍びを捕縛して工作資金を押収
-          if (targetStrat >= 85 && Math.random() < 0.5) {
-            const seizedGold = Math.round(20 + Math.random() * 25);
+          if (targetStrat >= 85 && gameRandom() < 0.5) {
+            const seizedGold = Math.round(20 + gameRandom() * 25);
             this.gold += seizedGold;
             extraReward = ` さらに潜入した敵忍びを捕縛し、工作資金【金${seizedGold}貫】を押収しました！`;
           }
@@ -1745,7 +1746,7 @@ export const ComputerLogicMethods = {
           const a = around[i], b = around[j];
           if (this.isAllied(a, b) || this.aiCooledDown(a, b)) continue;
           const chance = S === player ? B.counterAllianceChanceVsPlayer : B.counterAllianceChance;
-          if (Math.random() > chance) continue;
+          if (gameRandom() > chance) continue;
           const sName = this.getClanFamilyName(S);
           this.aiAddAlliance([a, b], 'counter', `対${sName}同盟`, B.counterAllianceSeasons);
           formed++;
@@ -1775,11 +1776,11 @@ export const ComputerLogicMethods = {
       if (!foes.length || (!lost && w.troops >= 0.2 * st[foes[0]].troops)) continue;
       const X = foes[0];
       if (this.aiCooledDown(X, W)) continue;
-      if (vassals < 1 && w.provs === 1 && st[X].provs >= 6 && Math.random() < B.vassalChance) {
+      if (vassals < 1 && w.provs === 1 && st[X].provs >= 6 && gameRandom() < B.vassalChance) {
         this.aiAddAlliance([X, W], 'vassal', '臣従', B.vassalSeasons);
         vassals++;
         this.log(`🙇【臣従】${this.allianceClanLabel(W)}は${this.allianceClanLabel(X)}の大軍を前に臣従し、その傘下に入りました。`);
-      } else if (truces < 1 && Math.random() < B.truceChance) {
+      } else if (truces < 1 && gameRandom() < B.truceChance) {
         this.aiAddAlliance([X, W], 'truce', '和睦', B.truceSeasons);
         truces++;
         this.log(`🕊️【和睦】${this.allianceClanLabel(W)}は劣勢のため、${this.allianceClanLabel(X)}と一年間の和睦を結びました。`);
@@ -1804,7 +1805,7 @@ export const ComputerLogicMethods = {
       let chance = (pers === 'scheming') ? Math.min(0.85, (Number(B.breakChanceAggressive) || 0.35) * 1.8) // 梟雄は相手が弱ると積極的に破棄
                  : (pers === 'aggressive') ? (Number(B.breakChanceAggressive) || 0.35)
                  : (Number(B.breakChance) || 0.15);
-      if (Math.random() > chance) { keep.push(g); return; }
+      if (gameRandom() > chance) { keep.push(g); return; }
       broken++;
       this.rememberAllianceBreak(members);
       const msg = `💔【同盟破棄】${this.allianceClanLabel(A)}は${partner === player ? '貴家' : this.allianceClanLabel(partner)}との同盟を一方的に破棄しました。`;
@@ -2127,7 +2128,7 @@ export const ComputerLogicMethods = {
 
         // --- E. 勝算ボーナスと揺らぎ ---
         score += Math.min(30, Math.max(0, (powerRatio - tune.requiredRatio) * 20));
-        score += (Math.random() * 16 - 8);
+        score += (gameRandom() * 16 - 8);
 
         motiveFactors.sort((a, b) => b.weight - a.weight);
         const topMotive = motiveFactors[0] || {
@@ -2174,7 +2175,7 @@ export const ComputerLogicMethods = {
     myProvs.forEach(p => {
       const maxTroops = this.getProvinceTroopCap(p);
       if (!this.isProvinceFrontier(p) && (p.order || 80) >= 70 && p.troops < maxTroops) {
-        const naturalRecovery = Math.round(40 + Math.random() * 40);
+        const naturalRecovery = Math.round(40 + gameRandom() * 40);
         p.troops = Math.min(maxTroops, p.troops + naturalRecovery);
       }
     });
@@ -2208,7 +2209,7 @@ export const ComputerLogicMethods = {
           }
           p.morale = Math.min(100, (Number(p.morale) || 70) + 1);
           // 開墾：ときどき石高が伸びる（基準石高の1.5倍まで）
-          if (Math.random() < 0.2) {
+          if (gameRandom() < 0.2) {
             const init = (window.PROVINCES_DATA || []).find(item => item.id === p.id);
             const cap = Math.round((Number(init?.kokudaka) || 50000) / 1000 * 1.5);
             if (p.rice < cap) p.rice += 1;
@@ -2233,7 +2234,7 @@ export const ComputerLogicMethods = {
             p.troops += this.aiPayTroops(clanId, Math.min(maxTroops - p.troops, gain));
           }
           // 攻勢型は治安より軍備：後方の治安は緩む
-          if (!isFrontier && (p.order || 80) > 60 && Math.random() < 0.3) p.order = (p.order || 80) - 1;
+          if (!isFrontier && (p.order || 80) > 60 && gameRandom() < 0.3) p.order = (p.order || 80) - 1;
         }
       });
 
@@ -2332,7 +2333,7 @@ export const ComputerLogicMethods = {
       if (typeof this.computeMaxApForClan === 'function') attackProb *= 0.85 + 0.05 * this.computeMaxApForClan(clanId);
       attackProb = Math.min(0.95, attackProb);
 
-      if (Math.random() > attackProb) continue;
+      if (gameRandom() > attackProb) continue;
 
       // AI思考改善第1弾: 大局観・戦略目標・背後急襲（隙突き）に基づく最適侵攻計画の策定
       const plan = this.findBestInvasionPlan(clanId, tune, ability);
@@ -2409,7 +2410,7 @@ export const ComputerLogicMethods = {
         const m = (defBoost.smallClanDefendOddsMult && ownedN <= (defBoost.smallClanProvinces || 0)) ? defBoost.smallClanDefendOddsMult : defBoost.defendOddsMult;
         if (m) siegeP = siegeP * m;
       }
-      const attackerWins = Math.random() < siegeP;
+      const attackerWins = gameRandom() < siegeP;
 
       // 出陣兵は全数を出陣元から差し引き、合戦後の生存兵だけが攻略先へ移る（敗退時は生存兵が帰還）
       srcProv.troops = Math.max(0, (Number(srcProv.troops) || 0) - mainForce);
@@ -2638,7 +2639,7 @@ export const ComputerLogicMethods = {
 
       // 項目27（2026-10-11 az）委任軍も同じ落城率で判定
       const siegeOdds = this.computeSiegeOdds({ attackerClanId: this.playerClanId, srcProv, dstProv: target, attackTroops: attackForce, defenders: Number(target.troops) || 0 });
-      const won = Math.random() < siegeOdds.p;
+      const won = gameRandom() < siegeOdds.p;
 
       const enemyClanId = target.ownerId;
       const enemyClanName = isBlank ? '無主' : this.getClanFamilyName(enemyClanId);
