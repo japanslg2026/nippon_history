@@ -100,7 +100,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&amp;family=Shippori+Mincho:wght@500;700;800&amp;display=swap" rel="stylesheet">
   <!-- 既存の encyclopedia.css が存在する場合の読み込み（単一HTMLでも下の内蔵CSSで完全動作） -->
-  <link rel="stylesheet" href="css/encyclopedia.css?v=20261120_zoom90">
+  <link rel="stylesheet" href="css/encyclopedia.css?v=20261128_v74">
 
   <style>
     :root {
@@ -4237,10 +4237,16 @@
         throw new Error(filename + ' を読み込めませんでした');
       }
 
+      // 全シナリオ = data/scenarios/<id>.json（scenarios_meta.json の順に並列取得。正本は個別ファイル）
+      async function fetchAllScenariosSmart() {
+        var meta = await fetchJsonSmart('scenarios_meta.json?v=20261128_v74');
+        return Promise.all(meta.map(function (m) { return fetchJsonSmart('scenarios/' + encodeURIComponent(m.id) + '.json?v=20261128_v74'); }));
+      }
+
       // 武将配属ルールは data/rules.json（officerAffiliationRules）から読み込む（ゲームと同じデータ。2026-11-14）
       async function loadAffiliationRulesSafe() {
         try {
-          var r = await fetchJsonSmart('rules.json?v=20261125_v71');
+          var r = await fetchJsonSmart('rules.json?v=20261128_v74');
           window.RULES_DATA = r || {};
           return (r && Array.isArray(r.officerAffiliationRules)) ? r.officerAffiliationRules : [];
         } catch (_) {
@@ -4329,11 +4335,11 @@
       async function initAllData() {
         var statusEl = document.getElementById('loadingStatusText');
         try {
-          await loadExternalScript(['assets/kamons.js?v=20261125_v71', 'assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
+          await loadExternalScript(['assets/kamons.js?v=20261128_v74', 'assets/kamons.js', 'kamons.js', './assets/kamons.js', './kamons.js']);
           if (typeof window.loadKamonSymbols === 'function') {
             window.loadKamonSymbols();
           }
-          await loadExternalScript(['js/kamonOverrides.js?v=20261125_v71']);
+          await loadExternalScript(['js/kamonOverrides.js?v=20261128_v74']);
 
           var urlParams = new URLSearchParams(window.location.search);
           var initialScenId = urlParams.get('scenario');
@@ -4346,21 +4352,21 @@
             statusEl.textContent = '桶狭間の戦い（1560年）と全国地図データを読み込み中…';
 
             var splitScenPromise = Promise.all([
-              fetchJsonSmart('scenario_1560.json?v=20261125_v71'),
-              fetchJsonSmart('scenarios_meta.json?v=20261125_v71')
+              fetchJsonSmart('scenarios/1560.json?v=20261128_v74'),
+              fetchJsonSmart('scenarios_meta.json?v=20261128_v74')
             ]).then(function (pair) {
               return { split: true, s1560: pair[0], meta: pair[1] };
             }).catch(function () {
-              return fetchJsonSmart('scenarios.json?v=20261125_v71').then(function (all) {
+              return fetchAllScenariosSmart().then(function (all) {
                 return { split: false, all: all };
               });
             });
 
             var phase1Results = await Promise.all([
               splitScenPromise,
-              fetchJsonSmart('provinces.json?v=20261125_v71'),
-              fetchJsonSmart('clans.json?v=20261125_v71'),
-              fetchJsonSmart('map_borders.json?v=20261125_v71').catch(function () { return window.MAP_BORDERS_DATA || null; })
+              fetchJsonSmart('provinces.json?v=20261128_v74'),
+              fetchJsonSmart('clans.json?v=20261128_v74'),
+              fetchJsonSmart('map_borders.json?v=20261128_v74').catch(function () { return window.MAP_BORDERS_DATA || null; })
             ]);
 
             var scenRes = phase1Results[0];
@@ -4454,9 +4460,9 @@
 
             setTimeout(function () {
               Promise.all([
-                fetchJsonSmart('officers.json?v=20261125_v71'),
-                fetchJsonSmart('governors.json?v=20261125_v71').catch(function () { return {}; }),
-                fetchJsonSmart('events.json?v=20261125_v71').catch(function () { return {}; }),
+                fetchJsonSmart('officers.json?v=20261128_v74'),
+                fetchJsonSmart('governors.json?v=20261128_v74').catch(function () { return {}; }),
+                fetchJsonSmart('events.json?v=20261128_v74').catch(function () { return {}; }),
                 loadAffiliationRulesSafe()
               ]).then(function (bgRes) {
                 var officersRaw = bgRes[0];
@@ -4489,7 +4495,7 @@
               });
 
               if (!State.scenariosFullLoaded) {
-                fetchJsonSmart('scenarios.json?v=20261125_v71').then(function (scenariosRaw) {
+                fetchAllScenariosSmart().then(function (scenariosRaw) {
                   window.SCENARIOS_DATA = scenariosRaw || [];
                   var fullList = filterAndSortScenarios(scenariosRaw);
                   var fullById = new Map(fullList.map(function (s) { return [String(s.id), s]; }));
@@ -4534,14 +4540,14 @@
           var rulesPromise = loadAffiliationRulesSafe();
 
           var results = await Promise.all([
-            fetchJsonSmart('scenarios.json?v=20261125_v71'),
-            fetchJsonSmart('provinces.json?v=20261125_v71'),
-            fetchJsonSmart('clans.json?v=20261125_v71'),
-            fetchJsonSmart('officers.json?v=20261125_v71'),
-            fetchJsonSmart('governors.json?v=20261125_v71').catch(function () { return {}; }),
-            fetchJsonSmart('events.json?v=20261125_v71').catch(function () { return {}; }),
+            fetchAllScenariosSmart(),
+            fetchJsonSmart('provinces.json?v=20261128_v74'),
+            fetchJsonSmart('clans.json?v=20261128_v74'),
+            fetchJsonSmart('officers.json?v=20261128_v74'),
+            fetchJsonSmart('governors.json?v=20261128_v74').catch(function () { return {}; }),
+            fetchJsonSmart('events.json?v=20261128_v74').catch(function () { return {}; }),
             rulesPromise,
-            fetchJsonSmart('map_borders.json?v=20261125_v71').catch(function () { return window.MAP_BORDERS_DATA || null; })
+            fetchJsonSmart('map_borders.json?v=20261128_v74').catch(function () { return window.MAP_BORDERS_DATA || null; })
           ]);
 
           var scenariosRaw = results[0];
@@ -4778,7 +4784,9 @@
         for (var idx = 0; idx < State.officers.length; idx++) {
           var master = State.officers[idx];
           if (excludeSet.has(master.id)) continue;
+          if (master.nonAppearing && !startHeadIds.has(master.id)) continue;
           if (master.lateDebut && year < 1878) continue;
+          if (master.debutYear != null && Number.isFinite(Number(master.debutYear)) && year < Number(master.debutYear) && !startHeadIds.has(master.id)) continue;
 
           var bYear = Number(master.birthYear);
           var dYear = Number(master.deathYear);
@@ -4843,6 +4851,19 @@
           }
 
           activeOfficers.push(copy);
+        }
+
+        activeOfficers = activeOfficers.filter(function (off) {
+          if (/天皇|上皇|法皇|神祇/.test(off.name) && !activeOwnersSet.has(off.clanId)) return false;
+          return true;
+        });
+
+        if (scen.fieldLandedOnly) {
+          var govIdSet = new Set(Object.values(histGovs || {}));
+          var keepRoninSet = new Set(Array.isArray(scen.keepRonin) ? scen.keepRonin : []);
+          activeOfficers = activeOfficers.filter(function (off) {
+            return off.clanId !== 'ronin' || govIdSet.has(off.id) || keepRoninSet.has(off.id);
+          });
         }
 
         State.computedClans.forEach(function (cEntry, cid) {
@@ -7932,6 +7953,11 @@
           if (sc) {
             var o = r.o;
             var alive = o.birthYear != null && o.birthYear + 12 <= sy && (o.deathYear == null || o.deathYear >= sy);
+            if (o.nonAppearing && !r.scSet.has(String(sc.id))) return false;
+            if (Array.isArray(sc.excludeOfficers) && sc.excludeOfficers.indexOf(o.id) !== -1) return false;
+            if (o.lateDebut && sy < 1878) return false;
+            if (o.debutYear != null && Number.isFinite(Number(o.debutYear)) && sy < Number(o.debutYear) && !r.scSet.has(String(sc.id))) return false;
+            if (sc.fieldLandedOnly && !r.scSet.has(String(sc.id))) return false;
             if (!r.scSet.has(scen) && !alive) return false;
           }
           return true;
@@ -8008,7 +8034,9 @@
           return '<div class="mk-ap"><span class="mk-ap-y">' + fmtYear(Number(a.sc.year)) + '</span><span class="mk-ap-t">' + esc(a.sc.title) + '</span>' +
             '<span class="mk-ap-c" style="border-color:' + cCol + '">' + esc(DB.clanName(a.clanId)) + (!isRoninAp && a.isDaimyo ? '（当主）' : '') + (lc ? '・城主（' + esc(lc) + '）' : '') + '</span>' +
             '<span class="mk-ap-p">' + esc(DB.provName[a.prov] || a.prov || '') + '</span></div>';
-        }).join('') : '<div class="mk-note">シナリオ固有の配属記録なし。本籍「' + esc(DB.provName[o.defaultProv] || '不明') + '」・' + esc(DB.clanName(dispClanId)) + '所属として、生没年に応じ登場します。</div>';
+        }).join('') : (o.nonAppearing
+          ? '<div class="mk-note">史実シナリオの配置対象外（未登場）です。</div>'
+          : '<div class="mk-note">シナリオ固有の配属記録なし。本籍「' + esc(DB.provName[o.defaultProv] || '不明') + '」・' + esc(DB.clanName(dispClanId)) + '所属として、生没年に応じ登場します。</div>');
         var life = (o.birthYear != null || o.deathYear != null)
           ? fmtYear(o.birthYear) + '年 〜 ' + fmtYear(o.deathYear) + '年' + (o.birthYear != null && o.deathYear != null ? '（享年' + (o.deathYear - o.birthYear + 1) + '）' : '')
           : '生没年不詳';

@@ -1,0 +1,7 @@
+{
+  "_説明": "同名・生年近接の武将ペアの判定結果。判定ルール: 同名かつ生年差±10年以内を重複の疑いとし、人間が史実で確認した結果をここに記録する。distinct=別人(警告抑止) / duplicate=同一人物の疑い(統合は未実施・要判断)。",
+  "reviewed": [
+    { "name": "酒井忠勝", "ids": ["off_hist_1622_sakai_tadamasa", "off_sakai_tadakatsu_obama"], "verdict": "distinct", "note": "小浜藩主(1587-1662)と庄内藩主(1594-1647)は別人" },
+    { "name": "宗義功", "ids": ["off_succ_so_1755_183", "off_h_so_yoshikatsu_1771"], "verdict": "duplicate", "note": "対馬藩主の同一人物と思われる(生年1773/1771)。シナリオ参照があるため統合は影響確認後に実施" }
+  ]
+}

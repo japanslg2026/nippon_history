@@ -102,19 +102,6 @@
       "setDaimyo": false
     },
     {
-      "id": "pre13th_scenario_historical_fixes_20261015_1019_1028_tsuneharu",
-      "officerIds": [
-        "off_taira_tsuneharu"
-      ],
-      "scenarioIds": [
-        "1019",
-        "1028"
-      ],
-      "setClanId": "taira_tadatsune",
-      "setDefaultProv": "awa",
-      "setDaimyo": false
-    },
-    {
       "id": "pre13th_scenario_historical_fixes_20261015_1180_1184_bando",
       "officerIds": [
         "off_chiba_tanemasa",
@@ -137,18 +124,6 @@
       "setClanId": "genji_yoritomo",
       "setDefaultProv": "sanuki",
       "setDaimyo": false
-    },
-    {
-      "id": "user_scenario_updates_20261015_mimura_1555",
-      "officerIds": [
-        "off_mimura_iechika"
-      ],
-      "scenarioIds": [
-        "1555"
-      ],
-      "setClanId": "mimura",
-      "setDefaultProv": "bitchu_matsuyama",
-      "setDaimyo": true
     },
     {
       "id": "user_scenario_updates_20261015_nagao_uzen",
@@ -345,31 +320,8 @@
         "mori"
       ],
       "setDefaultProv": "nagato",
-      "setDaimyo": false
-    },
-    {
-      "id": "akamatsu_norihide_ronin_awa_1614plus",
-      "officerIds": [
-        "off_akamatsu_norihide"
-      ],
-      "setClanId": "ronin",
-      "fromYear": 1614,
-      "setDefaultProv": "awa_shikoku",
-      "clearAssignment": true,
-      "setDaimyo": false
-    },
-    {
-      "id": "nakagawa_hidemasa_tokugawa_1614plus",
-      "officerIds": [
-        "off_nakagawa_hidemasa"
-      ],
-      "setClanId": "tokugawa",
-      "fromYear": 1614,
-      "requireOwners": [
-        "tokugawa"
-      ],
-      "setDefaultProv": "bungo_oka",
-      "setDaimyo": false
+      "setDaimyo": false,
+      "toYear": 1630
     },
     {
       "id": "maeda_yoshiyasu_daimyo_kaga_1866",
@@ -641,6 +593,7 @@
         1850,
         1851,
         1852,
+        1853,
         1854,
         1855,
         1856,
@@ -964,7 +917,7 @@
     {
       "id": "ito_former_leader_1789_hist",
       "officerIds": [
-        "off_edo_ito_sukeyoshi_1789"
+        "off_ito_sukeatsu"
       ],
       "scenarioIds": [
         "1789"
@@ -1116,7 +1069,7 @@
         "tokugawa"
       ],
       "setClanId": "tokugawa",
-      "setDefaultProv": "yamashiro",
+      "setDefaultProv": "shimotsuke",
       "setDaimyo": false
     },
     {
@@ -1484,7 +1437,7 @@
     {
       "id": "ito_daimyo_hyuga_1789",
       "officerIds": [
-        "off_edo_ito_sukeyoshi_1789"
+        "off_ito_sukeatsu"
       ],
       "scenarioIds": [
         "1783",
@@ -1514,7 +1467,7 @@
         "off_ashina_yoshihiro"
       ],
       "fromYear": 1603,
-      "toYear": 1868,
+      "toYear": 1631,
       "setClanId": "satake",
       "setDefaultProv": "ugo_minato",
       "setAssignedProv": "ugo_minato",
@@ -1528,7 +1481,7 @@
       "officerIds": [
         "off_succ2_hojo_1558"
       ],
-      "fromYear": 1590,
+      "fromYear": 1591,
       "toYear": 1618,
       "setClanId": "tokugawa",
       "setDefaultProv": "sagami",
@@ -1615,8 +1568,8 @@
       "officerIds": [
         "off_ryuzoji_nagamori"
       ],
-      "fromYear": 1603,
-      "toYear": 1868,
+      "fromYear": 1630,
+      "toYear": 1690,
       "setClanId": "nabeshima",
       "setDefaultProv": "hizen_saga",
       "setAssignedProv": "hizen_saga",
@@ -1690,8 +1643,8 @@
         "1651"
       ],
       "setClanId": "tokugawa",
-      "setDefaultProv": "yamashiro",
-      "setAssignedProv": "yamashiro",
+      "setDefaultProv": "shimotsuke",
+      "setAssignedProv": "shimotsuke",
       "setDaimyo": false
     },
     {
@@ -1700,9 +1653,11 @@
         "off_hongo_tadamori"
       ],
       "setClanId": "shimazu",
-      "setDefaultProv": "osumi",
-      "setAssignedProv": "osumi",
-      "setDaimyo": false
+      "setDefaultProv": "satsuma",
+      "setAssignedProv": "satsuma",
+      "setDaimyo": false,
+      "fromYear": 1505,
+      "toYear": 1559
     },
     {
       "id": "gamo_clan_south_omi_oda",
@@ -1783,8 +1738,8 @@
         "1614"
       ],
       "setClanId": "tokugawa",
-      "setDefaultProv": "ise",
-      "setAssignedProv": "ise",
+      "setDefaultProv": "tamba_west",
+      "setAssignedProv": "tamba_west",
       "setDaimyo": false
     },
     {
@@ -1808,7 +1763,9 @@
       "setDefaultProv": "owari_south",
       "setAssignedProv": "owari_south",
       "setClanId": "owari",
-      "setDaimyo": false
+      "setDaimyo": false,
+      "fromYear": 1614,
+      "toYear": 1625
     },
     {
       "id": "ono_yoshifuru_court",
@@ -1924,19 +1881,6 @@
       "requireOwners": [
         "anekoji"
       ],
-      "setDaimyo": false
-    },
-    {
-      "id": "tsuneharu_1028",
-      "officerIds": [
-        "off_taira_tsuneharu"
-      ],
-      "scenarioIds": [
-        "1028"
-      ],
-      "setClanId": "taira_tadatsune",
-      "setDefaultProv": "awa",
-      "setAssignedProv": "awa",
       "setDaimyo": false
     },
     {
@@ -2074,19 +2018,6 @@
       "setDaimyo": false
     },
     {
-      "id": "masakiyo_yoshitomo_1159",
-      "officerIds": [
-        "off_kamata_masakiyo"
-      ],
-      "scenarioIds": [
-        "1159"
-      ],
-      "setClanId": "minamoto_yoshitomo",
-      "setDefaultProv": "yamashiro",
-      "setAssignedProv": "yamashiro",
-      "setDaimyo": false
-    },
-    {
       "id": "kikuchi_clan_genpei",
       "officerIds": [
         "off_succ2_kikuchi_1160"
@@ -2131,7 +2062,7 @@
       ],
       "setClanId": "taira",
       "setDefaultProv": "sanuki",
-      "setAssignedProv": "settsu",
+      "setAssignedProv": "sanuki",
       "setDaimyo": false
     },
     {
@@ -2212,19 +2143,6 @@
       "setClanId": "soma",
       "setDefaultProv": "iwaki_soma",
       "setAssignedProv": "iwaki_soma",
-      "setDaimyo": false
-    },
-    {
-      "id": "masakiyo_yoshitomo_1159",
-      "officerIds": [
-        "off_kamata_masakiyo"
-      ],
-      "scenarioIds": [
-        "1159"
-      ],
-      "setClanId": "minamoto_yoshitomo",
-      "setDefaultProv": "sagami",
-      "setAssignedProv": "sagami",
       "setDaimyo": false
     },
     {
@@ -2330,24 +2248,6 @@
       "setDaimyo": false
     },
     {
-      "id": "mizuno_katsunari_suruga_1587",
-      "officerIds": [
-        "off_mizuno_katsunari"
-      ],
-      "scenarioIds": [
-        "1587"
-      ],
-      "fromYear": 1585,
-      "toYear": 1590,
-      "setClanId": "tokugawa",
-      "setDefaultProv": "suruga",
-      "setAssignedProv": "suruga",
-      "requireOwners": [
-        "tokugawa"
-      ],
-      "setDaimyo": false
-    },
-    {
       "id": "kiso_retainers_south_shinano_1180",
       "officerIds": [
         "off_jd_208",
@@ -2381,21 +2281,6 @@
       "setDaimyo": false,
       "setDefaultProv": "omi_north",
       "setAssignedProv": "omi_north"
-    },
-    {
-      "id": "mizuno_katsunari_suruga_1587",
-      "officerIds": [
-        "off_mizuno_katsunari"
-      ],
-      "scenarioIds": [
-        "1587"
-      ],
-      "setClanId": "tokugawa",
-      "fromYear": 1587,
-      "toYear": 1587,
-      "setDaimyo": false,
-      "setDefaultProv": "suruga",
-      "setAssignedProv": "suruga"
     },
     {
       "id": "ukita_retainers_toyotomi_1587_1590",
@@ -2490,10 +2375,10 @@
       "scenarioIds": [
         "1274"
       ],
-      "setClanId": "ogasawara",
+      "setClanId": "hojo_kamakura",
       "fromYear": 1274,
       "toYear": 1274,
-      "setDaimyo": true,
+      "setDaimyo": false,
       "setDefaultProv": "shinano_chikuma_azumi",
       "setAssignedProv": "shinano_chikuma_azumi"
     },
@@ -2524,8 +2409,8 @@
       "fromYear": 1274,
       "toYear": 1274,
       "setDaimyo": true,
-      "setDefaultProv": "hizen_saga",
-      "setAssignedProv": "hizen_saga"
+      "setDefaultProv": "hizen_hirado",
+      "setAssignedProv": "hizen_hirado"
     },
     {
       "id": "date_munetsuna_1274",
@@ -2539,8 +2424,8 @@
       "fromYear": 1274,
       "toYear": 1274,
       "setDaimyo": false,
-      "setDefaultProv": "uzen_yonezawa",
-      "setAssignedProv": "uzen_yonezawa"
+      "setDefaultProv": "iwashiro_date_shinobu",
+      "setAssignedProv": "iwashiro_date_shinobu"
     },
     {
       "id": "hindu_yuan_1274",
@@ -2561,9 +2446,7 @@
       "id": "yoshitsune_benkei_rikuchu_1189",
       "officerIds": [
         "off_minamoto_yoshitsune",
-        "off_musashibo_benkei",
-        "off_sato_tadanobu",
-        "off_sato_tsugunobu"
+        "off_musashibo_benkei"
       ],
       "scenarioIds": [
         "1189"
@@ -2572,8 +2455,8 @@
       "fromYear": 1189,
       "toYear": 1189,
       "setDaimyo": false,
-      "setDefaultProv": "rikuchu_morioka",
-      "setAssignedProv": "rikuchu_morioka"
+      "setDefaultProv": "rikuchu_kasai",
+      "setAssignedProv": "rikuchu_kasai"
     },
     {
       "id": "yoshitsune_aki_daimyo_1185",
@@ -2589,21 +2472,6 @@
       "setDaimyo": false,
       "setDefaultProv": "aki_hiroshima",
       "setAssignedProv": "aki_hiroshima"
-    },
-    {
-      "id": "ezo_leader_aterui_801",
-      "officerIds": [
-        "off_ezo_leader_801"
-      ],
-      "scenarioIds": [
-        "801"
-      ],
-      "setClanId": "aterui",
-      "fromYear": 801,
-      "toYear": 801,
-      "setDaimyo": false,
-      "setDefaultProv": "ezo",
-      "setAssignedProv": "ezo"
     },
     {
       "id": "yoshiaki_ronin_bingo_full",
@@ -2645,7 +2513,7 @@
       "setClanId": "otomo",
       "setDaimyo": true,
       "setDefaultProv": "bungo_funai",
-      "fromYear": 1587,
+      "fromYear": 1590,
       "toYear": 1593,
       "requireOwners": [
         "otomo"
@@ -2761,7 +2629,9 @@
       "setClanId": "chosokabe",
       "requireOwners": [
         "chosokabe"
-      ]
+      ],
+      "fromYear": 1330,
+      "toYear": 1380
     },
     {
       "id": "tameyoshi_1156",
@@ -3405,7 +3275,9 @@
         "tachibana"
       ],
       "setDaimyo": true,
-      "setDefaultProv": "chikugo_south"
+      "setDefaultProv": "chikugo_south",
+      "fromYear": 1620,
+      "toYear": 1643
     },
     {
       "id": "single_any_toyotomi_黒田官兵衛_30",
@@ -3486,7 +3358,10 @@
       "requireOwners": [
         "shimazu"
       ],
-      "setDaimyo": false
+      "setDaimyo": false,
+      "fromYear": 1582,
+      "toYear": 1587,
+      "unlessOwner": "sagara"
     },
     {
       "id": "single_any_tsutsui_島左近_37",
@@ -3570,17 +3445,6 @@
       "setDaimyo": false
     },
     {
-      "id": "single_any_uesugi_相馬義胤_43",
-      "officerIds": [
-        "off_soma_yoshitane"
-      ],
-      "setClanId": "uesugi",
-      "requireOwners": [
-        "uesugi"
-      ],
-      "setDaimyo": false
-    },
-    {
       "id": "single_any_toyotomi_淀殿_44",
       "officerIds": [
         "off_yododono",
@@ -3645,15 +3509,16 @@
     {
       "id": "single_any_tokugawa_丹羽長重_48",
       "officerIds": [
-        "off_niwa_nagashige",
-        "off_soma_yoshitane",
-        "off_shakenobe_hidetsuna"
+        "off_niwa_nagashige"
       ],
       "setClanId": "tokugawa",
       "requireOwners": [
         "tokugawa"
       ],
-      "setDaimyo": false
+      "setDaimyo": false,
+      "fromYear": 1603,
+      "toYear": 1626,
+      "unlessOwner": "niwa"
     },
     {
       "id": "single_1570_tokugawa_家康_49",
@@ -3950,32 +3815,6 @@
         "nabeshima"
       ],
       "setDaimyo": false
-    },
-    {
-      "id": "custom_1184_kikuchi_hitoyoshi",
-      "officerIds": [
-        "off_kikuchi_norinao"
-      ],
-      "scenarioIds": [
-        "1184"
-      ],
-      "setClanId": "kikuchi",
-      "setDefaultProv": "higo_hitoyoshi",
-      "setAssignedProv": "higo_hitoyoshi",
-      "setDaimyo": false
-    },
-    {
-      "id": "custom_1184_matsura_hirado",
-      "officerIds": [
-        "off_matsura_hisa"
-      ],
-      "scenarioIds": [
-        "1184"
-      ],
-      "setClanId": "matsura",
-      "setDefaultProv": "hizen_hirado",
-      "setAssignedProv": "hizen_hirado",
-      "setDaimyo": true
     },
     {
       "id": "amago_haruhisa_1560",
@@ -4468,8 +4307,8 @@
         "1359"
       ],
       "setClanId": "kitabatake",
-      "setDefaultProv": "yamato_koriyama",
-      "setAssignedProv": "yamato_koriyama",
+      "setDefaultProv": "ise",
+      "setAssignedProv": "ise",
       "setDaimyo": false
     },
     {
@@ -4495,8 +4334,8 @@
         "1493"
       ],
       "setClanId": "namioka",
-      "setDefaultProv": "mutsu_tsugaru",
-      "setAssignedProv": "mutsu_tsugaru",
+      "setDefaultProv": "mutsu_namioka",
+      "setAssignedProv": "mutsu_namioka",
       "setDaimyo": true
     },
     {
@@ -4558,8 +4397,8 @@
         "1538"
       ],
       "setClanId": "namioka",
-      "setDefaultProv": "mutsu_tsugaru",
-      "setAssignedProv": "mutsu_tsugaru",
+      "setDefaultProv": "mutsu_namioka",
+      "setAssignedProv": "mutsu_namioka",
       "setDaimyo": true
     },
     {
@@ -4572,8 +4411,8 @@
         "1555"
       ],
       "setClanId": "namioka",
-      "setDefaultProv": "mutsu_tsugaru",
-      "setAssignedProv": "mutsu_tsugaru",
+      "setDefaultProv": "mutsu_namioka",
+      "setAssignedProv": "mutsu_namioka",
       "setDaimyo": true
     },
     {
@@ -4585,8 +4424,8 @@
         "1560"
       ],
       "setClanId": "namioka",
-      "setDefaultProv": "mutsu_tsugaru",
-      "setAssignedProv": "mutsu_tsugaru",
+      "setDefaultProv": "mutsu_namioka",
+      "setAssignedProv": "mutsu_namioka",
       "setDaimyo": true
     },
     {
@@ -4598,36 +4437,9 @@
         "1570"
       ],
       "setClanId": "namioka",
-      "setDefaultProv": "mutsu_tsugaru",
-      "setAssignedProv": "mutsu_tsugaru",
+      "setDefaultProv": "mutsu_namioka",
+      "setAssignedProv": "mutsu_namioka",
       "setDaimyo": true
-    },
-    {
-      "id": "oura_tamenori_tsugaru_1538_1560",
-      "officerIds": [
-        "off_jd_013"
-      ],
-      "scenarioIds": [
-        "1555",
-        "1560"
-      ],
-      "setClanId": "namioka",
-      "setDefaultProv": "mutsu_tsugaru",
-      "setAssignedProv": "mutsu_tsugaru",
-      "setDaimyo": false
-    },
-    {
-      "id": "oura_tamenobu_tsugaru_1570",
-      "officerIds": [
-        "off_tsugaru_tamenobu"
-      ],
-      "scenarioIds": [
-        "1570"
-      ],
-      "setClanId": "namioka",
-      "setDefaultProv": "mutsu_tsugaru",
-      "setAssignedProv": "mutsu_tsugaru",
-      "setDaimyo": false
     },
     {
       "id": "tsugaru_tamenobu_tsugaru_1573_1582",
@@ -4656,8 +4468,8 @@
         "1467"
       ],
       "setClanId": "kasai",
-      "setDefaultProv": "rikuchu_morioka",
-      "setAssignedProv": "rikuchu_morioka",
+      "setDefaultProv": "rikuchu_kasai",
+      "setAssignedProv": "rikuchu_kasai",
       "setDaimyo": true
     },
     {
@@ -4668,8 +4480,9 @@
       "scenarioIds": [
         "1467"
       ],
-      "setDefaultProv": "rikuchu_morioka",
-      "setAssignedProv": "rikuchu_morioka"
+      "setDefaultProv": "mutsu_nanbu",
+      "setAssignedProv": "mutsu_nanbu",
+      "setClanId": "nanbu"
     },
     {
       "id": "isshiki_mitsunori_tango_1400",
@@ -5063,8 +4876,10 @@
         "1331"
       ],
       "setDefaultProv": "yamashiro",
-      "setAssignedProv": "yamashiro",
-      "setDaimyo": false
+      "setAssignedProv": null,
+      "setDaimyo": false,
+      "setClanId": "ronin",
+      "clearAssignment": true
     },
     {
       "id": "jo_nitta_1331",
@@ -5072,7 +4887,7 @@
         "off_jo_sukemitsu"
       ],
       "scenarioIds": [
-        "1331"
+        "1333"
       ],
       "setClanId": "nitta",
       "setDefaultProv": "echigo",
@@ -5129,8 +4944,8 @@
         "1400"
       ],
       "setClanId": "kasai",
-      "setDefaultProv": "rikuchu_morioka",
-      "setAssignedProv": "rikuchu_morioka",
+      "setDefaultProv": "rikuchu_kasai",
+      "setAssignedProv": "rikuchu_kasai",
       "setDaimyo": true
     },
     {
@@ -5181,8 +4996,8 @@
         "1438"
       ],
       "setClanId": "kasai",
-      "setDefaultProv": "rikuchu_morioka",
-      "setAssignedProv": "rikuchu_morioka",
+      "setDefaultProv": "rikuchu_kasai",
+      "setAssignedProv": "rikuchu_kasai",
       "setDaimyo": true
     },
     {
@@ -5259,8 +5074,8 @@
         "1467"
       ],
       "setClanId": "namioka",
-      "setDefaultProv": "mutsu_tsugaru",
-      "setAssignedProv": "mutsu_tsugaru",
+      "setDefaultProv": "mutsu_namioka",
+      "setAssignedProv": "mutsu_namioka",
       "setDaimyo": true
     },
     {
@@ -5328,8 +5143,8 @@
         "1493"
       ],
       "setClanId": "kasai",
-      "setDefaultProv": "rikuchu_morioka",
-      "setAssignedProv": "rikuchu_morioka",
+      "setDefaultProv": "rikuchu_kasai",
+      "setAssignedProv": "rikuchu_kasai",
       "setDaimyo": true
     },
     {
@@ -5700,26 +5515,12 @@
       "setDaimyo": false
     },
     {
-      "id": "sanada_juyushi_settsu_1614",
-      "officerIds": [
-        "off_unno_rokuro"
-      ],
-      "scenarioIds": [
-        "1614"
-      ],
-      "setClanId": "toyotomi",
-      "setDefaultProv": "settsu_osaka",
-      "setAssignedProv": "settsu_osaka",
-      "setDaimyo": false
-    },
-    {
       "id": "nanbu_toshinao_rikuchu_1614",
       "officerIds": [
         "off_nanbu_toshinao"
       ],
       "scenarioIds": [
-        "1614",
-        "1637"
+        "1614"
       ],
       "setClanId": "nanbu",
       "setDefaultProv": "rikuchu_morioka",
@@ -5814,7 +5615,9 @@
       "setDefaultProv": "owari_south",
       "clearAssignment": true,
       "isStandby": true,
-      "setDaimyo": false
+      "setDaimyo": false,
+      "fromYear": 1562,
+      "toYear": 1582
     },
     {
       "id": "hara_tanehide_shimousa",
@@ -5823,7 +5626,13 @@
       ],
       "setDefaultProv": "shimousa",
       "clearAssignment": true,
-      "isStandby": true
+      "isStandby": true,
+      "fromYear": 1566,
+      "toYear": 1590,
+      "requireOwners": [
+        "hojo"
+      ],
+      "setClanId": "hojo"
     },
     {
       "id": "miura_tokitaka_sagami_1331",
@@ -5853,23 +5662,17 @@
       "setDaimyo": true
     },
     {
-      "id": "muto_akiuji_uzen_1331",
-      "officerIds": [
-        "off_jd_320"
-      ],
-      "setClanId": "daihoji",
-      "setDefaultProv": "uzen_shonai",
-      "setDaimyo": false
-    },
-    {
       "id": "uesugi_shigenori_yamashiro_1331",
       "officerIds": [
         "off_uesugi_shigenori"
       ],
-      "scenarioIds": [],
+      "scenarioIds": [
+        "1333",
+        "1336"
+      ],
       "setClanId": "ashikaga",
-      "setDefaultProv": "shimotsuke",
-      "setAssignedProv": "shimotsuke",
+      "setDefaultProv": "izu",
+      "setAssignedProv": "izu",
       "setDaimyo": false
     },
     {
@@ -5909,7 +5712,8 @@
       "requireOwners": [
         "hojo"
       ],
-      "setDaimyo": false
+      "setDaimyo": false,
+      "toYear": 1496
     },
     {
       "id": "onin2_nagao_off_onin2_162",
@@ -5934,7 +5738,8 @@
       "requireOwners": [
         "ouchi"
       ],
-      "setDaimyo": false
+      "setDaimyo": false,
+      "toYear": 1524
     },
     {
       "id": "onin2_hatakeyama_off_onin2_055",
@@ -5953,43 +5758,6 @@
         "hatakeyama_bishu"
       ],
       "unlessOwner": "tsutsui",
-      "setDaimyo": false
-    },
-    {
-      "id": "onin2_saito_off_onin2_029",
-      "officerIds": [
-        "off_onin2_029",
-        "off_onin2_143"
-      ],
-      "setClanId": "saito",
-      "fromYear": 1500,
-      "requireOwners": [
-        "saito"
-      ],
-      "setDaimyo": false
-    },
-    {
-      "id": "onin2_miyoshi_off_onin2_152",
-      "officerIds": [
-        "off_onin2_152"
-      ],
-      "setClanId": "miyoshi",
-      "fromYear": 1500,
-      "requireOwners": [
-        "miyoshi"
-      ],
-      "setDaimyo": false
-    },
-    {
-      "id": "onin2_uragami_off_onin2_173",
-      "officerIds": [
-        "off_onin2_173"
-      ],
-      "setClanId": "uragami",
-      "fromYear": 1480,
-      "requireOwners": [
-        "uragami"
-      ],
       "setDaimyo": false
     },
     {
@@ -6322,7 +6090,7 @@
       "clanIds": [
         "shiina"
       ],
-      "setClanId": "jinbo",
+      "setClanId": "hatakeyama",
       "fromYear": 1400,
       "toYear": 1437
     },
@@ -6392,8 +6160,7 @@
     {
       "clanIds": [
         "minamoto_yoshitomo",
-        "chiba",
-        "kazusa_nosuke"
+        "chiba"
       ],
       "setClanId": "genji_yoritomo",
       "fromYear": 1180,
@@ -6414,14 +6181,6 @@
       "setClanId": "uragami",
       "fromYear": 1530,
       "toYear": 1559
-    },
-    {
-      "clanIds": [
-        "takenaka"
-      ],
-      "setClanId": "oda",
-      "fromYear": 1567,
-      "toYear": 1582
     },
     {
       "clanIds": [
@@ -6476,7 +6235,7 @@
         "takanashi"
       ],
       "setClanId": "uesugi",
-      "fromYear": 1553,
+      "fromYear": 1561,
       "toYear": 1582
     },
     {
@@ -6485,7 +6244,7 @@
       ],
       "setClanId": "nagao",
       "fromYear": 1553,
-      "toYear": 1582
+      "toYear": 1560
     }
   ],
   "leaderNameAliases": [
